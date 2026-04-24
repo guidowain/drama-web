@@ -25,28 +25,5 @@
         "order": 0
       }
     ]
-  },
-  {
-    "id": "4",
-    "name": "Matilda",
-    "slug": "matilda",
-    "year": 2023,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "Teatro",
-      "Diseño"
-    ],
-    "coverImage": "/uploads/matilda-cover.jpg",
-    "coverImageAlt": "Matilda el Musical",
-    "contentBlocks": [
-      {
-        "id": "b7",
-        "type": "text",
-        "title": "El proyecto",
-        "text": "Diseño de material gráfico para la producción de Matilda el Musical. Piezas para redes sociales, cartelería y material de prensa.",
-        "order": 0
-      }
-    ]
   }
 ]
