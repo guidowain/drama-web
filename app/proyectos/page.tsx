@@ -55,11 +55,11 @@ function ProyectosContent() {
 
   return (
     <>
-      <main className="min-h-screen pt-16 md:pt-[72px]" style={{ background: 'linear-gradient(135deg, #F504FF 0%, #FE8B97 28%, #FE796D 50%, #FCC028 75%, #FED791 100%)' }}>
+      <main className="min-h-screen bg-black pt-16 md:pt-[72px]">
         {/* Page header */}
         <div className="px-5 md:px-10 pt-10 md:pt-14 pb-6">
           <div className="mx-auto w-full max-w-6xl">
-            <h1 className="text-black font-black uppercase text-5xl md:text-7xl leading-none">
+            <h1 className="text-white font-black uppercase text-5xl md:text-7xl leading-none">
               PROYECTOS
             </h1>
           </div>
