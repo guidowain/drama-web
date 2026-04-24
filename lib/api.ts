@@ -1,40 +1,46 @@
+import { kv } from '@vercel/kv'
 import fs from 'fs'
 import path from 'path'
 import type { Proyecto, SiteSettings } from './types'
 
 const DATA_DIR = path.join(process.cwd(), 'data')
-const PROJECTS_FILE = path.join(DATA_DIR, 'projects.json')
-const SITE_FILE = path.join(DATA_DIR, 'site.json')
 
-function readJSON<T>(filePath: string): T {
-  const content = fs.readFileSync(filePath, 'utf-8')
-  return JSON.parse(content)
+function readLocalJSON<T>(file: string): T {
+  return JSON.parse(fs.readFileSync(path.join(DATA_DIR, file), 'utf-8'))
 }
 
-function writeJSON(filePath: string, data: unknown) {
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8')
+export async function getProjects(): Promise<Proyecto[]> {
+  const projects = await kv.get<Proyecto[]>('projects')
+  if (projects) return projects
+  // First run: seed from local JSON
+  const initial = readLocalJSON<Proyecto[]>('projects.json')
+  await kv.set('projects', initial)
+  return initial
 }
 
-export function getProjects(): Proyecto[] {
-  return readJSON<Proyecto[]>(PROJECTS_FILE)
+export async function getPublishedProjects(): Promise<Proyecto[]> {
+  const projects = await getProjects()
+  return projects.filter((p) => p.published)
 }
 
-export function getPublishedProjects(): Proyecto[] {
-  return getProjects().filter((p) => p.published)
+export async function getProjectBySlug(slug: string): Promise<Proyecto | undefined> {
+  const projects = await getProjects()
+  return projects.find((p) => p.slug === slug && p.published)
 }
 
-export function getProjectBySlug(slug: string): Proyecto | undefined {
-  return getProjects().find((p) => p.slug === slug && p.published)
+export async function saveProjects(projects: Proyecto[]): Promise<void> {
+  await kv.set('projects', projects)
 }
 
-export function saveProjects(projects: Proyecto[]) {
-  writeJSON(PROJECTS_FILE, projects)
+export async function getSiteSettings(): Promise<SiteSettings> {
+  const settings = await kv.get<SiteSettings>('site')
+  if (settings) return settings
+  // First run: seed from local JSON
+  const initial = readLocalJSON<SiteSettings>('site.json')
+  await kv.set('site', initial)
+  return initial
 }
 
-export function getSiteSettings(): SiteSettings {
-  return readJSON<SiteSettings>(SITE_FILE)
-}
-
-export function saveSiteSettings(settings: SiteSettings) {
-  writeJSON(SITE_FILE, settings)
+export async function saveSiteSettings(settings: SiteSettings): Promise<void> {
+  await kv.set('site', settings)
 }

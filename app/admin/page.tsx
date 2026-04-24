@@ -50,7 +50,7 @@ const cards = [
 ]
 
 export default async function AdminDashboard() {
-  const projects = getProjects()
+  const projects = await getProjects()
   const published = projects.filter((p) => p.published).length
   const drafts = projects.length - published
 

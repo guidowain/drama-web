@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { writeFile, mkdir } from 'fs/promises'
-import path from 'path'
+import { put } from '@vercel/blob'
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData()
@@ -15,15 +14,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid file type' }, { status: 400 })
   }
 
-  const bytes = await file.arrayBuffer()
-  const buffer = Buffer.from(bytes)
-
   const ext = file.name.split('.').pop()
   const safeName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
-  const uploadsDir = path.join(process.cwd(), 'public', 'uploads')
 
-  await mkdir(uploadsDir, { recursive: true })
-  await writeFile(path.join(uploadsDir, safeName), buffer)
+  const blob = await put(safeName, file, { access: 'public' })
 
-  return NextResponse.json({ url: `/uploads/${safeName}` })
+  return NextResponse.json({ url: blob.url })
 }
