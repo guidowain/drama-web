@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export const runtime = 'nodejs'
-
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
@@ -23,21 +21,21 @@ export async function POST(request: NextRequest) {
 
     const ext = file.name.split('.').pop()
     const safeName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
-
-    // Read file as buffer to avoid streaming issues in serverless
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
 
     const { put } = await import('@vercel/blob')
-    const blob = await put(safeName, buffer, {
-      access: 'public',
-      contentType: file.type,
-    })
 
-    return NextResponse.json({ url: blob.url })
+    const blob = await Promise.race([
+      put(safeName, buffer, { access: 'public', contentType: file.type }),
+      new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('Blob timeout after 8s')), 8000)
+      ),
+    ])
+
+    return NextResponse.json({ url: (blob as { url: string }).url })
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)
-    console.error('Upload error:', message)
     return NextResponse.json({ error: message }, { status: 500 })
   }
 }
