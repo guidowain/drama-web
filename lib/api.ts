@@ -1,4 +1,3 @@
-import { put, list } from '@vercel/blob'
 import fs from 'fs'
 import path from 'path'
 import type { Proyecto, SiteSettings } from './types'
@@ -10,6 +9,7 @@ function readLocalJSON<T>(file: string): T {
 }
 
 async function getBlob<T>(name: string): Promise<T | null> {
+  const { list } = await import('@vercel/blob')
   const { blobs } = await list({ prefix: `data/${name}` })
   if (blobs.length === 0) return null
   const res = await fetch(blobs[0].url, { cache: 'no-store' })
@@ -17,6 +17,7 @@ async function getBlob<T>(name: string): Promise<T | null> {
 }
 
 async function setBlob(name: string, data: unknown): Promise<void> {
+  const { put } = await import('@vercel/blob')
   await put(`data/${name}`, JSON.stringify(data), {
     access: 'public',
     addRandomSuffix: false,
