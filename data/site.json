@@ -84,14 +84,14 @@
         "scale": 1.15
       },
       {
-        "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777046780/drama-web/uploads/va9llytzezhgte8iaaec.webp",
-        "alt": "CAMARERA",
-        "scale": 0.6
-      },
-      {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777062759/drama-web/uploads/apji0mtxfpa1btxaglvn.webp",
         "alt": "",
         "scale": 1
+      },
+      {
+        "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777046780/drama-web/uploads/va9llytzezhgte8iaaec.webp",
+        "alt": "CAMARERA",
+        "scale": 0.6
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777048586/drama-web/uploads/qia2tqexopa39em718cp.webp",
