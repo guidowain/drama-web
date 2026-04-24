@@ -87,7 +87,7 @@ function ServiceCard({
           <div className="text-white opacity-80">{icon}</div>
           <h3
             className="text-white font-black uppercase tracking-tight text-center leading-none w-full"
-            style={{ fontSize: 'clamp(1.2rem, 5vw, 2.5rem)' }}
+            style={{ fontSize: 'clamp(1.8rem, 4vw, 3.4rem)' }}
           >
             {name}
           </h3>
@@ -95,11 +95,13 @@ function ServiceCard({
 
         {/* Back */}
         <div className="flip-card-back glass-card rounded-2xl flex flex-col justify-center gap-2 p-6">
-          <h3 className="text-white font-black text-lg uppercase mb-1 leading-tight">{name}</h3>
-          <ul className="columns-2 gap-x-4 space-y-1">
+          <h3 className="text-white font-black text-3xl md:text-4xl uppercase mb-4 leading-none tracking-tight">
+            {name}
+          </h3>
+          <ul className="columns-2 gap-x-8 space-y-2">
             {items.map((item) => (
-              <li key={item} className="flex items-center gap-1.5 text-white/80 text-xs break-inside-avoid leading-snug">
-                <span className="w-1 h-1 rounded-full gradient-bg shrink-0" />
+              <li key={item} className="flex items-center gap-2 text-white/80 text-sm md:text-base break-inside-avoid leading-snug">
+                <span className="w-1.5 h-1.5 rounded-full gradient-bg shrink-0" />
                 {item}
               </li>
             ))}
