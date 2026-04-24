@@ -1,49 +1,5 @@
 [
   {
-    "id": "1",
-    "name": "La Sirenita",
-    "slug": "la-sirenita",
-    "year": 2025,
-    "featured": true,
-    "published": true,
-    "tags": [
-      "Teatro",
-      "Diseño",
-      "Comunicación"
-    ],
-    "coverImage": "/uploads/sirenita-cover.jpg",
-    "coverImageAlt": "La Sirenita - Teatro Gran Rex",
-    "contentBlocks": [
-      {
-        "id": "b1",
-        "type": "imageText",
-        "image": "/uploads/sirenita-1.jpg",
-        "imageAlt": "Afiche La Sirenita",
-        "imageSide": "left",
-        "title": "El desafío",
-        "text": "Un proyecto de diseño integral para la producción de La Sirenita en el Teatro Gran Rex. Trabajamos en la identidad visual completa del espectáculo, desde el afiche principal hasta todas las piezas de comunicación digital.",
-        "order": 0
-      },
-      {
-        "id": "b2",
-        "type": "text",
-        "title": "Nuestra propuesta",
-        "text": "Desarrollamos piezas gráficas para todos los canales de comunicación, desde redes sociales hasta cartelería de gran escala, manteniendo la coherencia visual que exige un espectáculo de esta magnitud.",
-        "order": 1
-      },
-      {
-        "id": "b3",
-        "type": "imageText",
-        "image": "/uploads/sirenita-2.jpg",
-        "imageAlt": "Campaña La Sirenita",
-        "imageSide": "right",
-        "title": "El resultado",
-        "text": "La campaña logró posicionar al espectáculo como uno de los más importantes de la temporada, con una identidad visual reconocible y memorable que conectó con el público de todas las edades.",
-        "order": 2
-      }
-    ]
-  },
-  {
     "id": "2",
     "name": "School of Rock",
     "slug": "school-of-rock",
