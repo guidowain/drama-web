@@ -44,14 +44,14 @@
         "scale": 1.2
       },
       {
-        "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777043676/drama-web/uploads/guqa29r5xohcgrssm8sc.webp",
-        "alt": "BARE",
-        "scale": 0.7
-      },
-      {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777047892/drama-web/uploads/bplavxfa46d3y9wy4nqn.webp",
         "alt": "",
         "scale": 1
+      },
+      {
+        "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777043676/drama-web/uploads/guqa29r5xohcgrssm8sc.webp",
+        "alt": "BARE",
+        "scale": 0.7
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777047015/drama-web/uploads/jxetseq7exubhdon1wvb.webp",
