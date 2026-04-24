@@ -63,21 +63,6 @@ export default function AdminHomePage() {
     })
   }
 
-  async function updateLogos(logos: Logo[]) {
-    if (!settings) return
-
-    const nextSettings = {
-      ...settings,
-      home: {
-        ...settings.home,
-        logos,
-      },
-    }
-
-    setSettings(nextSettings)
-    await persistSettings(nextSettings)
-  }
-
   if (!settings) return <div className="p-10 text-white/30">Cargando...</div>
 
   return (
@@ -139,12 +124,9 @@ export default function AdminHomePage() {
             <span className="text-white/50">altura 120 px</span> × ancho libre (aprox. 200–400 px).
             Se muestran en escala de grises automáticamente.
           </div>
-          <p className="text-white/25 text-xs mb-3">
-            Los logos se guardan automaticamente cuando los subis o los eliminas.
-          </p>
           <LogosEditor
             logos={settings.home.logos}
-            onChange={updateLogos}
+            onChange={(logos) => updateHome({ logos })}
           />
         </Section>
 
