@@ -178,6 +178,11 @@ function LogosEditor({
   logos: Logo[]
   onChange: (logos: Logo[]) => void
 }) {
+  function sanitizeScale(value: number) {
+    if (!Number.isFinite(value)) return 1
+    return Math.min(1.5, Math.max(0.6, Number(value.toFixed(2))))
+  }
+
   function updateLogo(i: number, changes: Partial<Logo>) {
     const next = logos.map((l, j) => (j === i ? { ...l, ...changes } : l))
     onChange(next)
@@ -188,7 +193,7 @@ function LogosEditor({
   }
 
   function addLogo() {
-    onChange([...logos, { src: '', alt: '' }])
+    onChange([...logos, { src: '', alt: '', scale: 1 }])
   }
 
   return (
@@ -220,6 +225,22 @@ function LogosEditor({
                 aspect="1/1"
                 fit="contain"
                 placeholder="Logo PNG"
+              />
+            </div>
+
+            <div className="space-y-1">
+              <div className="flex items-center justify-between text-[10px] uppercase tracking-wider text-white/35">
+                <span>Escala visual</span>
+                <span>{((logo.scale ?? 1) * 100).toFixed(0)}%</span>
+              </div>
+              <input
+                type="range"
+                min="0.6"
+                max="1.5"
+                step="0.05"
+                value={logo.scale ?? 1}
+                onChange={(e) => updateLogo(i, { scale: sanitizeScale(Number(e.target.value)) })}
+                className="w-full accent-white"
               />
             </div>
 

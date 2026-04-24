@@ -34,6 +34,7 @@ export interface ServiceInfo {
 export interface Logo {
   src: string
   alt: string
+  scale?: number
 }
 
 export interface SiteSettings {

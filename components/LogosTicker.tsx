@@ -27,7 +27,14 @@ export default function LogosTicker({ logos }: Props) {
           >
             {logo.src ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={logo.src} alt={logo.alt} className="h-16 md:h-24 w-auto object-contain" />
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                className="w-auto object-contain"
+                style={{
+                  height: `calc(clamp(64px, 8vw, 96px) * ${logo.scale ?? 1})`,
+                }}
+              />
             ) : (
               <span className="text-white font-bold text-2xl md:text-4xl uppercase tracking-widest whitespace-nowrap">
                 {logo.alt}

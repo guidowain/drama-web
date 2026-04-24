@@ -71,6 +71,13 @@ const DEFAULT_SITE_SETTINGS: SiteSettings = {
 
 function normalizeSiteSettings(raw: unknown): SiteSettings {
   const data = raw && typeof raw === 'object' ? (raw as Partial<SiteSettings>) : {}
+  const normalizedLogos = Array.isArray(data.home?.logos)
+    ? data.home.logos.map((logo) => ({
+        src: logo?.src ?? '',
+        alt: logo?.alt ?? '',
+        scale: typeof logo?.scale === 'number' ? logo.scale : 1,
+      }))
+    : DEFAULT_SITE_SETTINGS.home.logos
 
   return {
     home: {
@@ -88,7 +95,7 @@ function normalizeSiteSettings(raw: unknown): SiteSettings {
           items: data.home?.services?.communication?.items ?? DEFAULT_SITE_SETTINGS.home.services.communication.items,
         },
       },
-      logos: data.home?.logos ?? DEFAULT_SITE_SETTINGS.home.logos,
+      logos: normalizedLogos,
       contact: {
         ...DEFAULT_SITE_SETTINGS.home.contact,
         ...data.home?.contact,
