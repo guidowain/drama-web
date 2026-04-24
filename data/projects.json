@@ -144,5 +144,25 @@
     "seoTitle": "",
     "seoDescription": "",
     "excerpt": ""
+  },
+  {
+    "id": "modbhpubocxnmlsff6",
+    "name": "Matilda",
+    "slug": "matilda",
+    "year": 2023,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "diseño",
+      "creatividad",
+      "identidad visual",
+      "Retoque fotográfico"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777059744/drama-web/uploads/crcu25parjraaitxido7.webp",
+    "coverImageAlt": "",
+    "contentBlocks": [],
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": ""
   }
 ]
