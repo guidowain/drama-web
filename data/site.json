@@ -3,7 +3,6 @@
     "heroVideo": "/video/Logo Drama Match cut_export_16-9.mp4",
     "heroLine1": "LA HISTORIA DEBAJO",
     "heroLine2": "DEL ESCENARIO.",
-    "wheelText": "COMUNICACIÓN Y DISEÑO PARA ENTRETENIMIENTO",
     "services": {
       "design": {
         "name": "DISEÑO",
@@ -35,7 +34,7 @@
     },
     "logos": [
       {
-        "src": "",
+        "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777043159/drama-web/uploads/ypq6zoo7zgejdawc1zuy.png",
         "alt": "Avenida"
       },
       {
@@ -79,7 +78,8 @@
       "mail": "LOS@drama.com.ar",
       "whatsapp": "+5491153207223",
       "instagram": "https://instagram.com/drama.com.ar"
-    }
+    },
+    "wheelText": "COMUNICACIÓN Y DISEÑO PARA ENTRETENIMIENTO"
   },
   "about": {
     "image": "",
