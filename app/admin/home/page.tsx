@@ -193,15 +193,55 @@ function LogosEditor({
     onChange(logos.filter((_, j) => j !== i))
   }
 
+  function moveLogo(from: number, to: number) {
+    if (to < 0 || to >= logos.length || from === to) return
+
+    const next = [...logos]
+    const [moved] = next.splice(from, 1)
+    next.splice(to, 0, moved)
+    onChange(next)
+  }
+
   function addLogo() {
     onChange([...logos, { src: '', alt: '', scale: 1 }])
   }
 
   return (
     <div className="space-y-3">
+      <div className="text-[11px] uppercase tracking-wider text-white/35">
+        Reordená con las flechas. El orden acá es el orden real del ticker.
+      </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {logos.map((logo, i) => (
           <div key={i} className="relative rounded-xl border border-white/8 bg-zinc-900 p-3 space-y-2">
+            <div className="flex items-center justify-between gap-2 pr-7">
+              <span className="text-[10px] uppercase tracking-[0.22em] text-white/35">
+                Logo {i + 1}
+              </span>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => moveLogo(i, i - 1)}
+                  disabled={i === 0}
+                  className="w-7 h-7 flex items-center justify-center rounded-md border border-white/10 bg-zinc-800 text-white/60 transition-colors hover:text-white hover:border-white/20 disabled:opacity-25 disabled:hover:text-white/60"
+                  aria-label={`Mover logo ${i + 1} a la izquierda`}
+                  title="Mover antes"
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  onClick={() => moveLogo(i, i + 1)}
+                  disabled={i === logos.length - 1}
+                  className="w-7 h-7 flex items-center justify-center rounded-md border border-white/10 bg-zinc-800 text-white/60 transition-colors hover:text-white hover:border-white/20 disabled:opacity-25 disabled:hover:text-white/60"
+                  aria-label={`Mover logo ${i + 1} a la derecha`}
+                  title="Mover después"
+                >
+                  →
+                </button>
+              </div>
+            </div>
+
             {/* Remove */}
             <button
               type="button"
