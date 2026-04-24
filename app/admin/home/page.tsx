@@ -121,7 +121,8 @@ export default function AdminHomePage() {
         <Section title="Logos de clientes (ticker)">
           <div className="rounded-xl bg-zinc-900/50 border border-white/5 p-4 text-white/30 text-xs leading-relaxed mb-2">
             <span className="text-white/50 font-semibold">Tamaño recomendado:</span> PNG con fondo transparente,{' '}
-            <span className="text-white/50">altura 120 px</span> × ancho libre (aprox. 200–400 px).
+            <span className="text-white/50">altura 120 px</span> y sin demasiado aire alrededor.
+            El ticker ahora limita también el ancho visual de cada logo para emparejar mejor los más horizontales.
             Se muestran en escala de grises automáticamente.
           </div>
           <LogosEditor
