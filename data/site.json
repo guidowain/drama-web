@@ -35,53 +35,43 @@
     "logos": [
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777043159/drama-web/uploads/ypq6zoo7zgejdawc1zuy.png",
-        "alt": "Avenida",
-        "scale": 1
+        "alt": "Avenida"
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777043676/drama-web/uploads/guqa29r5xohcgrssm8sc.webp",
-        "alt": "BARE",
-        "scale": 1
+        "alt": "BARE"
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777044636/drama-web/uploads/xgi9itmh8zveeivc7i52.webp",
-        "alt": "CAMARERA",
-        "scale": 1
+        "alt": "CAMARERA"
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777045022/drama-web/uploads/bhvxty6tluwox3alckhh.webp",
-        "alt": "CASI NORMALES",
-        "scale": 1
+        "alt": "CASI NORMALES"
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777045262/drama-web/uploads/szqukb2gngtzjgsjvj8t.webp",
-        "alt": "CLOSER",
-        "scale": 1
+        "alt": "CLOSER"
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777045586/drama-web/uploads/msewukvixnbcyr3ljefo.webp",
-        "alt": "Avenida",
-        "scale": 1
+        "alt": "Avenida"
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777046353/drama-web/uploads/arnvdnckzlb7wlswl1y4.webp",
-        "alt": "BARE",
-        "scale": 1
+        "alt": "BARE"
+      },
+      {
+        "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777046780/drama-web/uploads/va9llytzezhgte8iaaec.webp",
+        "alt": "CAMARERA"
       },
       {
         "src": "",
-        "alt": "CAMARERA",
-        "scale": 1
+        "alt": "CASI NORMALES"
       },
       {
         "src": "",
-        "alt": "CASI NORMALES",
-        "scale": 1
-      },
-      {
-        "src": "",
-        "alt": "CLOSER",
-        "scale": 1
+        "alt": "CLOSER"
       }
     ],
     "contact": {
