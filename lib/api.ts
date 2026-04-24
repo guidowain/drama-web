@@ -1,4 +1,4 @@
-import { kv } from '@vercel/kv'
+import { put, list } from '@vercel/blob'
 import fs from 'fs'
 import path from 'path'
 import type { Proyecto, SiteSettings } from './types'
@@ -9,12 +9,26 @@ function readLocalJSON<T>(file: string): T {
   return JSON.parse(fs.readFileSync(path.join(DATA_DIR, file), 'utf-8'))
 }
 
+async function getBlob<T>(name: string): Promise<T | null> {
+  const { blobs } = await list({ prefix: `data/${name}` })
+  if (blobs.length === 0) return null
+  const res = await fetch(blobs[0].url, { cache: 'no-store' })
+  return res.json()
+}
+
+async function setBlob(name: string, data: unknown): Promise<void> {
+  await put(`data/${name}`, JSON.stringify(data), {
+    access: 'public',
+    addRandomSuffix: false,
+    contentType: 'application/json',
+  })
+}
+
 export async function getProjects(): Promise<Proyecto[]> {
-  const projects = await kv.get<Proyecto[]>('projects')
+  const projects = await getBlob<Proyecto[]>('projects.json')
   if (projects) return projects
-  // First run: seed from local JSON
   const initial = readLocalJSON<Proyecto[]>('projects.json')
-  await kv.set('projects', initial)
+  await setBlob('projects.json', initial)
   return initial
 }
 
@@ -29,18 +43,17 @@ export async function getProjectBySlug(slug: string): Promise<Proyecto | undefin
 }
 
 export async function saveProjects(projects: Proyecto[]): Promise<void> {
-  await kv.set('projects', projects)
+  await setBlob('projects.json', projects)
 }
 
 export async function getSiteSettings(): Promise<SiteSettings> {
-  const settings = await kv.get<SiteSettings>('site')
+  const settings = await getBlob<SiteSettings>('site.json')
   if (settings) return settings
-  // First run: seed from local JSON
   const initial = readLocalJSON<SiteSettings>('site.json')
-  await kv.set('site', initial)
+  await setBlob('site.json', initial)
   return initial
 }
 
 export async function saveSiteSettings(settings: SiteSettings): Promise<void> {
-  await kv.set('site', settings)
+  await setBlob('site.json', settings)
 }
