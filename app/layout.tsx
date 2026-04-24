@@ -16,11 +16,22 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const headersList = headers()
-  const pathname = headersList.get('x-pathname') ?? ''
-  const isAdmin = pathname.startsWith('/admin')
+  let isAdmin = false
 
-  const settings = await getSiteSettings()
+  try {
+    const headersList = headers()
+    const pathname = headersList.get('x-pathname') ?? ''
+    isAdmin = pathname.startsWith('/admin')
+  } catch {
+    isAdmin = false
+  }
+
+  let settings = { settings: null }
+  try {
+    settings = await getSiteSettings()
+  } catch {
+    settings = { settings: null }
+  }
 
   return (
     <html lang="es">
@@ -29,8 +40,8 @@ export default async function RootLayout({
           children
         ) : (
           <MenuProvider>
-            <Header settings={settings.settings} />
-            <Menu settings={settings.settings} />
+            <Header settings={settings?.settings} />
+            <Menu settings={settings?.settings} />
             {children}
           </MenuProvider>
         )}
