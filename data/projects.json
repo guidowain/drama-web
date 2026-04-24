@@ -127,5 +127,22 @@
     "seoTitle": "",
     "seoDescription": "",
     "excerpt": ""
+  },
+  {
+    "id": "modaoixnfk4hht2h38w",
+    "name": "Aquí no podemos hacerlo",
+    "slug": "aqui-no-podemos-hacerlo",
+    "year": 2026,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "identidad visual"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777058382/drama-web/uploads/a8keqjy6ihmzdopsxi2j.webp",
+    "coverImageAlt": "",
+    "contentBlocks": [],
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": ""
   }
 ]
