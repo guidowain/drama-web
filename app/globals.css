@@ -1,11 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @font-face {
   font-family: 'Enriq';
-  src: url('/fonts/Enriq-Round.woff2') format('woff2'),
-       url('/fonts/Enriq-Round.woff') format('woff');
+  src: url('/fonts/enriq/ENRIQRegular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -13,12 +8,31 @@
 
 @font-face {
   font-family: 'Enriq';
-  src: url('/fonts/Enriq-Round-Bold.woff2') format('woff2'),
-       url('/fonts/Enriq-Round-Bold.woff') format('woff');
+  src: url('/fonts/enriq/ENRIQMedium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Enriq';
+  src: url('/fonts/enriq/ENRIQBold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'Enriq';
+  src: url('/fonts/enriq/ENRIQBlack.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   /* Canonical 5-color mesh gradient — master spec */

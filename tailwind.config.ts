@@ -9,6 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
+        sans: ['Enriq', 'Nunito', 'system-ui', 'sans-serif'],
         enriq: ['Enriq', 'Nunito', 'system-ui', 'sans-serif'],
       },
       colors: {
