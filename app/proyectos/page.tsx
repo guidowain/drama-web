@@ -58,17 +58,21 @@ function ProyectosContent() {
       <main className="min-h-screen pt-16 md:pt-[72px]" style={{ background: 'linear-gradient(135deg, #F504FF 0%, #FE8B97 28%, #FE796D 50%, #FCC028 75%, #FED791 100%)' }}>
         {/* Page header */}
         <div className="px-5 md:px-10 pt-10 md:pt-14 pb-6">
-          <h1 className="text-black font-black uppercase text-5xl md:text-7xl leading-none">
-            PROYECTOS
-          </h1>
+          <div className="mx-auto w-full max-w-[1440px]">
+            <h1 className="text-black font-black uppercase text-5xl md:text-7xl leading-none">
+              PROYECTOS
+            </h1>
+          </div>
         </div>
 
         {/* Grid — all cards, no pagination */}
         <div className="px-5 md:px-10 pb-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} onClick={handleOpen} />
-            ))}
+          <div className="mx-auto w-full max-w-[1440px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {projects.map((project) => (
+                <ProjectCard key={project.id} project={project} onClick={handleOpen} />
+              ))}
+            </div>
           </div>
         </div>
       </main>
