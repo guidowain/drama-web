@@ -66,5 +66,26 @@
     "seoTitle": "School of rock",
     "seoDescription": "",
     "excerpt": ""
+  },
+  {
+    "id": "mod95mm7bzd6bgvrl74",
+    "name": "Chanta",
+    "slug": "chanta",
+    "year": 2025,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "identidad visual",
+      "retoque fotográfico",
+      "creatividad",
+      "diseño",
+      "animación"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777055815/drama-web/uploads/vl5yv9itzwv7zdd2vejq.webp",
+    "coverImageAlt": "",
+    "contentBlocks": [],
+    "seoTitle": "chanta",
+    "seoDescription": "",
+    "excerpt": ""
   }
 ]
