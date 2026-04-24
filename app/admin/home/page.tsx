@@ -13,17 +13,21 @@ export default function AdminHomePage() {
     fetch('/api/admin/site').then((r) => r.json()).then(setSettings)
   }, [])
 
-  async function handleSave() {
-    if (!settings) return
+  async function persistSettings(nextSettings: SiteSettings) {
     setSaving(true)
     await fetch('/api/admin/site', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(settings),
+      body: JSON.stringify(nextSettings),
     })
     setSaving(false)
     setSaved(true)
     setTimeout(() => setSaved(false), 2500)
+  }
+
+  async function handleSave() {
+    if (!settings) return
+    await persistSettings(settings)
   }
 
   function updateHome(changes: Partial<SiteSettings['home']>) {
@@ -57,6 +61,21 @@ export default function AdminHomePage() {
         },
       },
     })
+  }
+
+  async function updateLogos(logos: Logo[]) {
+    if (!settings) return
+
+    const nextSettings = {
+      ...settings,
+      home: {
+        ...settings.home,
+        logos,
+      },
+    }
+
+    setSettings(nextSettings)
+    await persistSettings(nextSettings)
   }
 
   if (!settings) return <div className="p-10 text-white/30">Cargando...</div>
@@ -120,9 +139,12 @@ export default function AdminHomePage() {
             <span className="text-white/50">altura 120 px</span> × ancho libre (aprox. 200–400 px).
             Se muestran en escala de grises automáticamente.
           </div>
+          <p className="text-white/25 text-xs mb-3">
+            Los logos se guardan automaticamente cuando los subis o los eliminas.
+          </p>
           <LogosEditor
             logos={settings.home.logos}
-            onChange={(logos) => updateHome({ logos })}
+            onChange={updateLogos}
           />
         </Section>
 
