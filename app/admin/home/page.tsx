@@ -235,7 +235,8 @@ function LogosEditor({
               <ImageUploader
                 value={logo.src}
                 onChange={(url) => updateLogo(i, { src: url })}
-                aspect="2/1"
+                aspect="1/1"
+                fit="contain"
                 placeholder="Logo PNG"
               />
             </div>

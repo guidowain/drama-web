@@ -1,5 +1,5 @@
 import type { Proyecto, SiteSettings } from './types'
-import { put, list } from '@vercel/blob'
+import { put, list, del } from '@vercel/blob'
 
 const DEFAULT_SITE_SETTINGS: SiteSettings = {
   home: {
@@ -98,6 +98,75 @@ function normalizeSiteSettings(raw: unknown): SiteSettings {
   }
 }
 
+function isManagedUploadUrl(value: string | undefined): value is string {
+  if (!value) return false
+
+  try {
+    const url = new URL(value)
+    return url.pathname.includes('/uploads/')
+  } catch {
+    return false
+  }
+}
+
+function collectProjectAssetUrls(projects: Proyecto[]): Set<string> {
+  const urls = new Set<string>()
+
+  for (const project of projects) {
+    if (isManagedUploadUrl(project.coverImage)) {
+      urls.add(project.coverImage)
+    }
+
+    for (const block of project.contentBlocks) {
+      if (isManagedUploadUrl(block.image)) {
+        urls.add(block.image)
+      }
+    }
+  }
+
+  return urls
+}
+
+function collectSiteAssetUrls(settings: SiteSettings): Set<string> {
+  const urls = new Set<string>()
+
+  if (isManagedUploadUrl(settings.about.image)) {
+    urls.add(settings.about.image)
+  }
+
+  if (isManagedUploadUrl(settings.settings.logoMain)) {
+    urls.add(settings.settings.logoMain)
+  }
+
+  if (isManagedUploadUrl(settings.settings.logoMenu)) {
+    urls.add(settings.settings.logoMenu)
+  }
+
+  if (isManagedUploadUrl(settings.settings.favicon)) {
+    urls.add(settings.settings.favicon)
+  }
+
+  for (const logo of settings.home.logos) {
+    if (isManagedUploadUrl(logo.src)) {
+      urls.add(logo.src)
+    }
+  }
+
+  return urls
+}
+
+async function deleteOrphanedAssets(previousUrls: Set<string>, nextUrls: Set<string>) {
+  const removedUrls = Array.from(previousUrls).filter((url) => !nextUrls.has(url))
+
+  if (!removedUrls.length) return
+
+  try {
+    await del(removedUrls)
+  } catch (error) {
+    console.error('Blob cleanup error:', error)
+  }
+}
+
 export async function getProjects(): Promise<Proyecto[]> {
   try {
     const blobs = await list({ prefix: 'data/projects.json' })
@@ -124,11 +193,25 @@ export async function getProjectBySlug(slug: string): Promise<Proyecto | undefin
 }
 
 export async function saveProjects(projects: Proyecto[]) {
+  const previousProjects = await getProjects()
+  const currentSiteSettings = await getSiteSettings()
+
   const blob = await put('data/projects.json', JSON.stringify(projects, null, 2), {
     access: 'public',
     contentType: 'application/json',
     allowOverwrite: true,
   })
+
+  const previousUrls = new Set([
+    ...Array.from(collectProjectAssetUrls(previousProjects)),
+    ...Array.from(collectSiteAssetUrls(currentSiteSettings)),
+  ])
+  const nextUrls = new Set([
+    ...Array.from(collectProjectAssetUrls(projects)),
+    ...Array.from(collectSiteAssetUrls(currentSiteSettings)),
+  ])
+
+  await deleteOrphanedAssets(previousUrls, nextUrls)
 
   return blob.url
 }
@@ -150,6 +233,8 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 }
 
 export async function saveSiteSettings(settings: SiteSettings) {
+  const previousSettings = await getSiteSettings()
+  const currentProjects = await getProjects()
   const normalizedSettings = normalizeSiteSettings(settings)
 
   const blob = await put('data/site.json', JSON.stringify(normalizedSettings, null, 2), {
@@ -157,6 +242,17 @@ export async function saveSiteSettings(settings: SiteSettings) {
     contentType: 'application/json',
     allowOverwrite: true,
   })
+
+  const previousUrls = new Set([
+    ...Array.from(collectProjectAssetUrls(currentProjects)),
+    ...Array.from(collectSiteAssetUrls(previousSettings)),
+  ])
+  const nextUrls = new Set([
+    ...Array.from(collectProjectAssetUrls(currentProjects)),
+    ...Array.from(collectSiteAssetUrls(normalizedSettings)),
+  ])
+
+  await deleteOrphanedAssets(previousUrls, nextUrls)
 
   return blob.url
 }

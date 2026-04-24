@@ -9,9 +9,16 @@ type Props = {
   /** Aspect ratio hint for the preview box, e.g. '16/9' or '1/1'. Default: '16/9' */
   aspect?: string
   placeholder?: string
+  fit?: 'cover' | 'contain'
 }
 
-export default function ImageUploader({ value, onChange, aspect = '16/9', placeholder }: Props) {
+export default function ImageUploader({
+  value,
+  onChange,
+  aspect = '16/9',
+  placeholder,
+  fit = 'cover',
+}: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [uploading, setUploading] = useState(false)
   const [dragOver, setDragOver] = useState(false)
@@ -69,7 +76,7 @@ export default function ImageUploader({ value, onChange, aspect = '16/9', placeh
             src={value}
             alt="Preview"
             fill
-            className="object-cover"
+            className={fit === 'contain' ? 'object-contain' : 'object-cover'}
             unoptimized
           />
           {/* overlay hover */}
