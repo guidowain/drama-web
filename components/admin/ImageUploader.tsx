@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import Image from 'next/image'
 
 type Props = {
@@ -12,6 +12,38 @@ type Props = {
   fit?: 'cover' | 'contain'
 }
 
+declare global {
+  interface Window {
+    cloudinary?: {
+      createUploadWidget: (
+        options: {
+          cloudName: string
+          uploadPreset: string
+          folder?: string
+          sources?: string[]
+          multiple?: boolean
+          maxFiles?: number
+          resourceType?: string
+          clientAllowedFormats?: string[]
+          maxFileSize?: number
+        },
+        callback: (
+          error: unknown,
+          result?: {
+            event?: string
+            info?: {
+              secure_url?: string
+              url?: string
+            }
+          }
+        ) => void
+      ) => {
+        open: () => void
+      }
+    }
+  }
+}
+
 export default function ImageUploader({
   value,
   onChange,
@@ -19,49 +51,100 @@ export default function ImageUploader({
   placeholder,
   fit = 'cover',
 }: Props) {
-  const inputRef = useRef<HTMLInputElement>(null)
   const [uploading, setUploading] = useState(false)
   const [dragOver, setDragOver] = useState(false)
   const [error, setError] = useState('')
 
-  const upload = useCallback(
-    async (file: File) => {
-      setError('')
-      setUploading(true)
-      try {
-        const fd = new FormData()
-        fd.append('file', file)
-        const res = await fetch('/api/upload', { method: 'POST', body: fd })
-        if (!res.ok) {
-          const data = await res.json().catch(() => ({}))
-          throw new Error(data.error || 'Error al subir')
-        }
-        const { url } = await res.json()
-        onChange(url)
-      } catch (e: unknown) {
-        setError(e instanceof Error ? e.message : 'Error al subir imagen')
-      } finally {
-        setUploading(false)
-      }
-    },
-    [onChange]
-  )
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
 
-  const handleFiles = useCallback(
-    (files: FileList | null) => {
-      if (!files || files.length === 0) return
-      upload(files[0])
-    },
-    [upload]
-  )
+  const openCloudinaryWidget = useCallback(async () => {
+    setError('')
+
+    if (!cloudName || !uploadPreset) {
+      setError('Falta configurar Cloudinary')
+      return
+    }
+
+    try {
+      setUploading(true)
+
+      if (!window.cloudinary) {
+        await new Promise<void>((resolve, reject) => {
+          const existingScript = document.querySelector<HTMLScriptElement>('script[data-cloudinary-upload-widget]')
+
+          if (existingScript) {
+            existingScript.addEventListener('load', () => resolve(), { once: true })
+            existingScript.addEventListener('error', () => reject(new Error('No se pudo cargar Cloudinary')), { once: true })
+            return
+          }
+
+          const script = document.createElement('script')
+          script.src = 'https://upload-widget.cloudinary.com/global/all.js'
+          script.async = true
+          script.dataset.cloudinaryUploadWidget = 'true'
+          script.onload = () => resolve()
+          script.onerror = () => reject(new Error('No se pudo cargar Cloudinary'))
+          document.body.appendChild(script)
+        })
+      }
+
+      if (!window.cloudinary) {
+        throw new Error('No se pudo iniciar Cloudinary')
+      }
+
+      const widget = window.cloudinary.createUploadWidget(
+        {
+          cloudName,
+          uploadPreset,
+          folder: 'drama-web/uploads',
+          sources: ['local', 'url'],
+          multiple: false,
+          maxFiles: 1,
+          resourceType: 'image',
+          clientAllowedFormats: ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'],
+          maxFileSize: 10 * 1024 * 1024,
+        },
+        (error, result) => {
+          if (error) {
+            setError('Error al subir la imagen')
+            setUploading(false)
+            return
+          }
+
+          if (result?.event === 'success') {
+            const url = result.info?.secure_url || result.info?.url
+
+            if (!url) {
+              setError('No se pudo obtener la URL de la imagen')
+              setUploading(false)
+              return
+            }
+
+            onChange(url)
+            setUploading(false)
+          }
+
+          if (result?.event === 'close') {
+            setUploading(false)
+          }
+        }
+      )
+
+      widget.open()
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Error al abrir Cloudinary')
+      setUploading(false)
+    }
+  }, [cloudName, onChange, uploadPreset])
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
       e.preventDefault()
       setDragOver(false)
-      handleFiles(e.dataTransfer.files)
+      openCloudinaryWidget()
     },
-    [handleFiles]
+    [openCloudinaryWidget]
   )
 
   /* ─── con imagen ─── */
@@ -83,7 +166,7 @@ export default function ImageUploader({
           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
             <button
               type="button"
-              onClick={() => inputRef.current?.click()}
+              onClick={openCloudinaryWidget}
               disabled={uploading}
               className="px-4 py-2 bg-white text-black text-sm font-bold rounded-lg hover:bg-white/90 transition-colors"
             >
@@ -104,13 +187,6 @@ export default function ImageUploader({
           )}
         </div>
         {error && <p className="text-red-400 text-xs">{error}</p>}
-        <input
-          ref={inputRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={(e) => handleFiles(e.target.files)}
-        />
       </div>
     )
   }
@@ -120,7 +196,7 @@ export default function ImageUploader({
     <div className="space-y-2">
       <button
         type="button"
-        onClick={() => inputRef.current?.click()}
+        onClick={openCloudinaryWidget}
         onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
         onDragLeave={() => setDragOver(false)}
         onDrop={handleDrop}
@@ -143,7 +219,7 @@ export default function ImageUploader({
             <UploadIcon />
             <div className="text-center">
               <p className="text-white/50 text-sm font-medium">
-                {placeholder || 'Arrastrá una imagen o hacé click para subir'}
+                {placeholder || 'Subí una imagen a Cloudinary'}
               </p>
               <p className="text-white/20 text-xs mt-0.5">JPG, PNG, WEBP, GIF — máx 10MB</p>
             </div>
@@ -151,13 +227,6 @@ export default function ImageUploader({
         )}
       </button>
       {error && <p className="text-red-400 text-xs">{error}</p>}
-      <input
-        ref={inputRef}
-        type="file"
-        accept="image/*"
-        className="hidden"
-        onChange={(e) => handleFiles(e.target.files)}
-      />
     </div>
   )
 }
