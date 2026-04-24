@@ -27,33 +27,6 @@
     ]
   },
   {
-    "id": "3",
-    "name": "Casi Normales",
-    "slug": "casi-normales",
-    "year": 2024,
-    "featured": true,
-    "published": true,
-    "tags": [
-      "Teatro",
-      "Diseño",
-      "Branding"
-    ],
-    "coverImage": "/uploads/casi-normales-cover.jpg",
-    "coverImageAlt": "Casi Normales",
-    "contentBlocks": [
-      {
-        "id": "b6",
-        "type": "imageText",
-        "image": "/uploads/cn-1.jpg",
-        "imageAlt": "Casi Normales afiche",
-        "imageSide": "right",
-        "title": "Identidad visual",
-        "text": "Diseño de identidad visual y comunicación para la obra Casi Normales. Un proyecto que combina diseño contemporáneo con la esencia teatral de una historia poderosa.",
-        "order": 0
-      }
-    ]
-  },
-  {
     "id": "4",
     "name": "Matilda",
     "slug": "matilda",
