@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { put } from '@vercel/blob'
+import { v2 as cloudinary } from 'cloudinary'
 
 export async function POST(request: NextRequest) {
   try {
@@ -20,14 +20,26 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'File too large' }, { status: 400 })
     }
 
-    const ext = file.name.split('.').pop() || 'jpg'
-    const filename = `uploads/${Date.now()}-${crypto.randomUUID()}.${ext}`
+    const bytes = await file.arrayBuffer()
+    const buffer = Buffer.from(bytes)
 
-    const blob = await put(filename, file, {
-      access: 'public',
+    const result = await new Promise<any>((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: 'drama-web/uploads',
+          resource_type: 'image',
+          overwrite: true,
+        },
+        (error, result) => {
+          if (error || !result) reject(error)
+          else resolve(result)
+        }
+      )
+
+      stream.end(buffer)
     })
 
-    return NextResponse.json({ url: blob.url })
+    return NextResponse.json({ url: result.secure_url })
   } catch (error) {
     console.error('Upload error:', error)
     return NextResponse.json({ error: 'Upload failed' }, { status: 500 })
