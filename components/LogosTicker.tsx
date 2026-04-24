@@ -14,7 +14,6 @@ export default function LogosTicker({ logos }: Props) {
           <div
             key={i}
             className="shrink-0 flex items-center justify-center h-10"
-            style={{ filter: 'grayscale(1)', opacity: 0.6 }}
           >
             {logo.src ? (
               // eslint-disable-next-line @next/next/no-img-element
