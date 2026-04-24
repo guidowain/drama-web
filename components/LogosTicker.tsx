@@ -23,6 +23,8 @@ export default function LogosTicker({ logos }: Props) {
     <div className="overflow-hidden py-10 md:py-14 bg-black border-y border-white/10">
       <div className="ticker-track-logos gap-12 md:gap-20 px-6 md:px-8">
         {doubled.map((logo, i) => {
+          const scale = Math.min((logo.scale ?? 1) * 72, 100)
+
           return (
             <div
               key={i}
@@ -35,8 +37,7 @@ export default function LogosTicker({ logos }: Props) {
                   alt={logo.alt}
                   className="block w-auto h-auto max-h-full object-contain max-w-[180px] md:max-w-[320px]"
                   style={{
-                    transform: `scale(${logo.scale ?? 1})`,
-                    transformOrigin: 'center',
+                    height: `${scale}%`,
                   }}
                 />
               ) : (

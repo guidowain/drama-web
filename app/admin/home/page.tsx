@@ -212,8 +212,11 @@ function LogosEditor({
         Reordená con las flechas. El orden acá es el orden real del ticker.
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-        {logos.map((logo, i) => (
-          <div key={i} className="relative rounded-xl border border-white/8 bg-zinc-900 p-3 space-y-2">
+        {logos.map((logo, i) => {
+          const previewScale = Math.min((logo.scale ?? 1) * 72, 100)
+
+          return (
+            <div key={i} className="relative rounded-xl border border-white/8 bg-zinc-900 p-3 space-y-2">
             <div className="flex items-center justify-between gap-2 pr-7">
               <span className="text-[10px] uppercase tracking-[0.22em] text-white/35">
                 Logo {i + 1}
@@ -284,9 +287,28 @@ function LogosEditor({
                 className="w-full accent-white"
               />
             </div>
-
-          </div>
-        ))}
+            
+            <div className="rounded-lg border border-white/8 bg-black/60 h-20 flex items-center justify-center px-3 overflow-hidden">
+              {logo.src ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={logo.src}
+                  alt={logo.alt || `Preview logo ${i + 1}`}
+                  className="block w-auto max-w-full object-contain"
+                  style={{ height: `${previewScale}%` }}
+                />
+              ) : (
+                <span
+                  className="max-w-full text-center text-white font-bold text-sm uppercase tracking-[0.2em] leading-none"
+                  style={{ fontSize: `${Math.max(12, Math.min(24, previewScale * 0.24))}px` }}
+                >
+                  {logo.alt || 'Preview'}
+                </span>
+              )}
+            </div>
+            </div>
+          )
+        })}
 
         {/* Add button */}
         <button
