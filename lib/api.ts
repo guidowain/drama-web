@@ -175,6 +175,13 @@ function getMostRecentBlob<T extends { uploadedAt?: string | Date | undefined }>
   })[0]
 }
 
+async function fetchBlobJson<T>(url: string, uploadedAt?: string | Date): Promise<T> {
+  const version = uploadedAt ? new Date(uploadedAt).getTime() : Date.now()
+  const bustUrl = `${url}${url.includes('?') ? '&' : '?'}v=${version}`
+  const res = await fetch(bustUrl, { cache: 'no-store' })
+  return await res.json()
+}
+
 export async function getProjects(): Promise<Proyecto[]> {
   try {
     const blobs = await list({ prefix: 'data/projects.json' })
@@ -186,8 +193,7 @@ export async function getProjects(): Promise<Proyecto[]> {
     const latestBlob = getMostRecentBlob(blobs.blobs)
     if (!latestBlob) return []
 
-    const res = await fetch(latestBlob.url)
-    return await res.json()
+    return await fetchBlobJson<Proyecto[]>(latestBlob.url, latestBlob.uploadedAt)
   } catch {
     return []
   }
@@ -238,8 +244,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     const latestBlob = getMostRecentBlob(blobs.blobs)
     if (!latestBlob) return DEFAULT_SITE_SETTINGS
 
-    const res = await fetch(latestBlob.url)
-    const data = await res.json()
+    const data = await fetchBlobJson<SiteSettings>(latestBlob.url, latestBlob.uploadedAt)
     return normalizeSiteSettings(data)
   } catch {
     return DEFAULT_SITE_SETTINGS
