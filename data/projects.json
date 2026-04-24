@@ -1,0 +1,163 @@
+[
+  {
+    "id": "1",
+    "name": "La Sirenita",
+    "slug": "la-sirenita",
+    "year": 2025,
+    "featured": true,
+    "published": true,
+    "tags": [
+      "Teatro",
+      "Diseño",
+      "Comunicación"
+    ],
+    "coverImage": "/uploads/sirenita-cover.jpg",
+    "coverImageAlt": "La Sirenita - Teatro Gran Rex",
+    "contentBlocks": [
+      {
+        "id": "b1",
+        "type": "imageText",
+        "image": "/uploads/sirenita-1.jpg",
+        "imageAlt": "Afiche La Sirenita",
+        "imageSide": "left",
+        "title": "El desafío",
+        "text": "Un proyecto de diseño integral para la producción de La Sirenita en el Teatro Gran Rex. Trabajamos en la identidad visual completa del espectáculo, desde el afiche principal hasta todas las piezas de comunicación digital.",
+        "order": 0
+      },
+      {
+        "id": "b2",
+        "type": "text",
+        "title": "Nuestra propuesta",
+        "text": "Desarrollamos piezas gráficas para todos los canales de comunicación, desde redes sociales hasta cartelería de gran escala, manteniendo la coherencia visual que exige un espectáculo de esta magnitud.",
+        "order": 1
+      },
+      {
+        "id": "b3",
+        "type": "imageText",
+        "image": "/uploads/sirenita-2.jpg",
+        "imageAlt": "Campaña La Sirenita",
+        "imageSide": "right",
+        "title": "El resultado",
+        "text": "La campaña logró posicionar al espectáculo como uno de los más importantes de la temporada, con una identidad visual reconocible y memorable que conectó con el público de todas las edades.",
+        "order": 2
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "School of Rock",
+    "slug": "school-of-rock",
+    "year": 2024,
+    "featured": true,
+    "published": true,
+    "tags": [
+      "Teatro",
+      "Comunicación",
+      "Prensa"
+    ],
+    "coverImage": "/uploads/school-of-rock-cover.jpg",
+    "coverImageAlt": "School of Rock",
+    "contentBlocks": [
+      {
+        "id": "b4",
+        "type": "imageText",
+        "image": "/uploads/sor-1.jpg",
+        "imageAlt": "School of Rock - Promo",
+        "imageSide": "left",
+        "title": "Comunicación integral",
+        "text": "Estrategia de comunicación digital para School of Rock. Gestión de redes sociales, contenido creativo y coordinación de prensa para uno de los musicales más exitosos de la temporada.",
+        "order": 0
+      },
+      {
+        "id": "b5",
+        "type": "imageText",
+        "image": "/uploads/sor-2.jpg",
+        "imageAlt": "School of Rock - Redes",
+        "imageSide": "right",
+        "title": "Resultados",
+        "text": "La estrategia de comunicación generó un crecimiento sostenido en todas las plataformas digitales, con alta participación del público y cobertura en medios especializados.",
+        "order": 1
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "name": "Casi Normales",
+    "slug": "casi-normales",
+    "year": 2024,
+    "featured": true,
+    "published": true,
+    "tags": [
+      "Teatro",
+      "Diseño",
+      "Branding"
+    ],
+    "coverImage": "/uploads/casi-normales-cover.jpg",
+    "coverImageAlt": "Casi Normales",
+    "contentBlocks": [
+      {
+        "id": "b6",
+        "type": "imageText",
+        "image": "/uploads/cn-1.jpg",
+        "imageAlt": "Casi Normales afiche",
+        "imageSide": "right",
+        "title": "Identidad visual",
+        "text": "Diseño de identidad visual y comunicación para la obra Casi Normales. Un proyecto que combina diseño contemporáneo con la esencia teatral de una historia poderosa.",
+        "order": 0
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "name": "Matilda",
+    "slug": "matilda",
+    "year": 2023,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "Teatro",
+      "Diseño"
+    ],
+    "coverImage": "/uploads/matilda-cover.jpg",
+    "coverImageAlt": "Matilda el Musical",
+    "contentBlocks": [
+      {
+        "id": "b7",
+        "type": "text",
+        "title": "El proyecto",
+        "text": "Diseño de material gráfico para la producción de Matilda el Musical. Piezas para redes sociales, cartelería y material de prensa.",
+        "order": 0
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "name": "Closer",
+    "slug": "closer",
+    "year": 2023,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "Teatro",
+      "Comunicación"
+    ],
+    "coverImage": "/uploads/closer-cover.jpg",
+    "coverImageAlt": "Closer",
+    "contentBlocks": []
+  },
+  {
+    "id": "6",
+    "name": "BARE",
+    "slug": "bare",
+    "year": 2023,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "Diseño",
+      "Branding"
+    ],
+    "coverImage": "/uploads/bare-cover.jpg",
+    "coverImageAlt": "BARE",
+    "contentBlocks": []
+  }
+]

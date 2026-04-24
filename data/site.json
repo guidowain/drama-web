@@ -1,0 +1,99 @@
+{
+  "home": {
+    "heroVideo": "/video/Logo Drama Match cut_export_16-9.mp4",
+    "heroLine1": "LA HISTORIA DEBAJO",
+    "heroLine2": "DEL ESCENARIO.",
+    "wheelText": "COMUNICACIÓN Y DISEÑO PARA ENTRETENIMIENTO",
+    "services": {
+      "design": {
+        "name": "DISEÑO",
+        "description": "",
+        "items": [
+          "DiseÑo grÁfico",
+          "EdiciÓn de video",
+          "Animaciones",
+          "Webs",
+          "FotografÍa",
+          "Retoque fotogrÁfico",
+          "Branding",
+          "AI",
+          "3D"
+        ]
+      },
+      "communication": {
+        "name": "COMUNICACIÓN",
+        "description": "",
+        "items": [
+          "Redes sociales",
+          "Estrategia",
+          "Creatividad",
+          "Pauta publicitaria",
+          "SEO",
+          "Email marketing"
+        ]
+      }
+    },
+    "logos": [
+      {
+        "src": "",
+        "alt": "Avenida"
+      },
+      {
+        "src": "",
+        "alt": "BARE"
+      },
+      {
+        "src": "",
+        "alt": "CAMARERA"
+      },
+      {
+        "src": "",
+        "alt": "CASI NORMALES"
+      },
+      {
+        "src": "",
+        "alt": "CLOSER"
+      },
+      {
+        "src": "",
+        "alt": "Avenida"
+      },
+      {
+        "src": "",
+        "alt": "BARE"
+      },
+      {
+        "src": "",
+        "alt": "CAMARERA"
+      },
+      {
+        "src": "",
+        "alt": "CASI NORMALES"
+      },
+      {
+        "src": "",
+        "alt": "CLOSER"
+      }
+    ],
+    "contact": {
+      "mail": "LOS@drama.com.ar",
+      "whatsapp": "+5491153207223",
+      "instagram": "https://instagram.com/drama.com.ar"
+    }
+  },
+  "about": {
+    "image": "",
+    "imageAlt": "El equipo de Drama",
+    "quienesSomos": "Somos Drama, una agencia de comunicación y diseño especializada en entretenimiento. Trabajamos con productoras, teatros y artistas para contar historias que conectan.",
+    "comoTrabajamos": "Nos involucramos en cada proyecto desde el inicio, entendiendo la esencia del espectáculo para traducirla en comunicación y diseño que resuena con el público.",
+    "queDiferencia": "Vivimos el teatro y el entretenimiento. Eso nos da una perspectiva única para crear piezas que hablan el mismo idioma que el público al que querés llegar."
+  },
+  "settings": {
+    "instagram": "https://instagram.com/drama.com.ar",
+    "whatsapp": "https://wa.me/5491153207223",
+    "mail": "LOS@drama.com.ar",
+    "logoMain": "",
+    "logoMenu": "",
+    "favicon": ""
+  }
+}
