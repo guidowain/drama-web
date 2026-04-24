@@ -38,7 +38,7 @@ const DEFAULT_SITE_SETTINGS: SiteSettings = {
     logos: [],
     contact: {
       mail: 'LOS@drama.com.ar',
-      whatsapp: '+5491153207223',
+      whatsapp: '+5491163357223',
       instagram: 'https://instagram.com/drama.com.ar',
     },
   },
@@ -54,12 +54,48 @@ const DEFAULT_SITE_SETTINGS: SiteSettings = {
   },
   settings: {
     instagram: 'https://instagram.com/drama.com.ar',
-    whatsapp: 'https://wa.me/5491153207223',
+    whatsapp: 'https://wa.me/5491163357223',
     mail: 'LOS@drama.com.ar',
     logoMain: '',
     logoMenu: '',
     favicon: '',
   },
+}
+
+function normalizeSiteSettings(raw: unknown): SiteSettings {
+  const data = (raw && typeof raw === 'object') ? raw as Partial<SiteSettings> : {}
+
+  return {
+    home: {
+      ...DEFAULT_SITE_SETTINGS.home,
+      ...data.home,
+      services: {
+        design: {
+          ...DEFAULT_SITE_SETTINGS.home.services.design,
+          ...data.home?.services?.design,
+          items: data.home?.services?.design?.items ?? DEFAULT_SITE_SETTINGS.home.services.design.items,
+        },
+        communication: {
+          ...DEFAULT_SITE_SETTINGS.home.services.communication,
+          ...data.home?.services?.communication,
+          items: data.home?.services?.communication?.items ?? DEFAULT_SITE_SETTINGS.home.services.communication.items,
+        },
+      },
+      logos: data.home?.logos ?? DEFAULT_SITE_SETTINGS.home.logos,
+      contact: {
+        ...DEFAULT_SITE_SETTINGS.home.contact,
+        ...data.home?.contact,
+      },
+    },
+    about: {
+      ...DEFAULT_SITE_SETTINGS.about,
+      ...data.about,
+    },
+    settings: {
+      ...DEFAULT_SITE_SETTINGS.settings,
+      ...data.settings,
+    },
+  }
 }
 
 export async function getProjects(): Promise<Proyecto[]> {
@@ -106,14 +142,17 @@ export async function getSiteSettings(): Promise<SiteSettings> {
     }
 
     const res = await fetch(blobs.blobs[0].url)
-    return await res.json()
+    const data = await res.json()
+    return normalizeSiteSettings(data)
   } catch {
     return DEFAULT_SITE_SETTINGS
   }
 }
 
 export async function saveSiteSettings(settings: SiteSettings) {
-  const blob = await put('data/site.json', JSON.stringify(settings, null, 2), {
+  const normalizedSettings = normalizeSiteSettings(settings)
+
+  const blob = await put('data/site.json', JSON.stringify(normalizedSettings, null, 2), {
     access: 'public',
     contentType: 'application/json',
     allowOverwrite: true,
