@@ -35,43 +35,53 @@
     "logos": [
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777043159/drama-web/uploads/ypq6zoo7zgejdawc1zuy.png",
-        "alt": "Avenida"
+        "alt": "Avenida",
+        "scale": 1
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777043676/drama-web/uploads/guqa29r5xohcgrssm8sc.webp",
-        "alt": "BARE"
+        "alt": "BARE",
+        "scale": 1
+      },
+      {
+        "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777044636/drama-web/uploads/xgi9itmh8zveeivc7i52.webp",
+        "alt": "CAMARERA",
+        "scale": 1
       },
       {
         "src": "",
-        "alt": "CAMARERA"
+        "alt": "CASI NORMALES",
+        "scale": 1
       },
       {
         "src": "",
-        "alt": "CASI NORMALES"
+        "alt": "CLOSER",
+        "scale": 1
       },
       {
         "src": "",
-        "alt": "CLOSER"
+        "alt": "Avenida",
+        "scale": 1
       },
       {
         "src": "",
-        "alt": "Avenida"
+        "alt": "BARE",
+        "scale": 1
       },
       {
         "src": "",
-        "alt": "BARE"
+        "alt": "CAMARERA",
+        "scale": 1
       },
       {
         "src": "",
-        "alt": "CAMARERA"
+        "alt": "CASI NORMALES",
+        "scale": 1
       },
       {
         "src": "",
-        "alt": "CASI NORMALES"
-      },
-      {
-        "src": "",
-        "alt": "CLOSER"
+        "alt": "CLOSER",
+        "scale": 1
       }
     ],
     "contact": {
