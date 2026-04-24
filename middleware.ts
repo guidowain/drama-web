@@ -7,11 +7,22 @@ function getSecret() {
   )
 }
 
+function withPathnameHeader(request: NextRequest) {
+  const requestHeaders = new Headers(request.headers)
+  requestHeaders.set('x-pathname', request.nextUrl.pathname)
+
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  })
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   if (pathname === '/admin/login') {
-    return NextResponse.next()
+    return withPathnameHeader(request)
   }
 
   const token = request.cookies.get('admin-token')?.value
@@ -22,7 +33,7 @@ export async function middleware(request: NextRequest) {
 
   try {
     await jwtVerify(token, getSecret())
-    return NextResponse.next()
+    return withPathnameHeader(request)
   } catch {
     const response = NextResponse.redirect(new URL('/admin/login', request.url))
     response.cookies.delete('admin-token')
