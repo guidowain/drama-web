@@ -1,5 +1,12 @@
 import type { Proyecto, SiteSettings } from './types'
-import { put, list, del } from '@vercel/blob'
+
+const GITHUB_OWNER = process.env.GITHUB_OWNER || 'guidowain'
+const GITHUB_REPO = process.env.GITHUB_REPO || 'drama-web'
+const GITHUB_BRANCH = process.env.GITHUB_BRANCH || 'main'
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN || process.env.GITHUB_CONTENT_TOKEN
+
+const PROJECTS_PATH = 'data/projects.json'
+const SITE_PATH = 'data/site.json'
 
 const DEFAULT_SITE_SETTINGS: SiteSettings = {
   home: {
@@ -63,7 +70,7 @@ const DEFAULT_SITE_SETTINGS: SiteSettings = {
 }
 
 function normalizeSiteSettings(raw: unknown): SiteSettings {
-  const data = (raw && typeof raw === 'object') ? raw as Partial<SiteSettings> : {}
+  const data = raw && typeof raw === 'object' ? (raw as Partial<SiteSettings>) : {}
 
   return {
     home: {
@@ -98,105 +105,90 @@ function normalizeSiteSettings(raw: unknown): SiteSettings {
   }
 }
 
-function isManagedUploadUrl(value: string | undefined): value is string {
-  if (!value) return false
+function getGithubHeaders() {
+  if (!GITHUB_TOKEN) {
+    throw new Error('Missing GITHUB_TOKEN or GITHUB_CONTENT_TOKEN')
+  }
 
+  return {
+    Authorization: `Bearer ${GITHUB_TOKEN}`,
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+  }
+}
+
+function getGithubFileUrl(path: string) {
+  return `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`
+}
+
+async function readGithubJson<T>(path: string, fallback: T): Promise<{ data: T; sha?: string }> {
   try {
-    const url = new URL(value)
-    return url.pathname.includes('/uploads/')
-  } catch {
-    return false
-  }
-}
+    const res = await fetch(`${getGithubFileUrl(path)}?ref=${GITHUB_BRANCH}`, {
+      headers: getGithubHeaders(),
+      cache: 'no-store',
+    })
 
-function collectProjectAssetUrls(projects: Proyecto[]): Set<string> {
-  const urls = new Set<string>()
-
-  for (const project of projects) {
-    if (isManagedUploadUrl(project.coverImage)) {
-      urls.add(project.coverImage)
+    if (res.status === 404) {
+      return { data: fallback }
     }
 
-    for (const block of project.contentBlocks) {
-      if (isManagedUploadUrl(block.image)) {
-        urls.add(block.image)
-      }
+    if (!res.ok) {
+      console.error('GitHub read error:', await res.text())
+      return { data: fallback }
     }
-  }
 
-  return urls
-}
+    const payload = await res.json()
+    const decoded = Buffer.from(String(payload.content).replace(/\n/g, ''), 'base64').toString('utf-8')
 
-function collectSiteAssetUrls(settings: SiteSettings): Set<string> {
-  const urls = new Set<string>()
-
-  if (isManagedUploadUrl(settings.about.image)) {
-    urls.add(settings.about.image)
-  }
-
-  if (isManagedUploadUrl(settings.settings.logoMain)) {
-    urls.add(settings.settings.logoMain)
-  }
-
-  if (isManagedUploadUrl(settings.settings.logoMenu)) {
-    urls.add(settings.settings.logoMenu)
-  }
-
-  if (isManagedUploadUrl(settings.settings.favicon)) {
-    urls.add(settings.settings.favicon)
-  }
-
-  for (const logo of settings.home.logos) {
-    if (isManagedUploadUrl(logo.src)) {
-      urls.add(logo.src)
+    return {
+      data: JSON.parse(decoded) as T,
+      sha: payload.sha,
     }
-  }
-
-  return urls
-}
-
-async function deleteOrphanedAssets(previousUrls: Set<string>, nextUrls: Set<string>) {
-  const removedUrls = Array.from(previousUrls).filter((url) => !nextUrls.has(url))
-
-  if (!removedUrls.length) return
-
-  try {
-    await del(removedUrls)
   } catch (error) {
-    console.error('Blob cleanup error:', error)
+    console.error('GitHub read error:', error)
+    return { data: fallback }
   }
 }
 
-function getMostRecentBlob<T extends { uploadedAt?: string | Date | undefined }>(blobs: T[]): T | undefined {
-  return [...blobs].sort((a, b) => {
-    const aTime = a.uploadedAt ? new Date(a.uploadedAt).getTime() : 0
-    const bTime = b.uploadedAt ? new Date(b.uploadedAt).getTime() : 0
-    return bTime - aTime
-  })[0]
-}
+async function writeGithubJson(path: string, data: unknown, message: string) {
+  const existing = await readGithubJson(path, null)
 
-async function fetchBlobJson<T>(url: string, uploadedAt?: string | Date): Promise<T> {
-  const version = uploadedAt ? new Date(uploadedAt).getTime() : Date.now()
-  const bustUrl = `${url}${url.includes('?') ? '&' : '?'}v=${version}`
-  const res = await fetch(bustUrl, { cache: 'no-store' })
+  const body: {
+    message: string
+    content: string
+    branch: string
+    sha?: string
+  } = {
+    message,
+    content: Buffer.from(JSON.stringify(data, null, 2), 'utf-8').toString('base64'),
+    branch: GITHUB_BRANCH,
+  }
+
+  if (existing.sha) {
+    body.sha = existing.sha
+  }
+
+  const res = await fetch(getGithubFileUrl(path), {
+    method: 'PUT',
+    headers: {
+      ...getGithubHeaders(),
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  })
+
+  if (!res.ok) {
+    const errorText = await res.text()
+    console.error('GitHub write error:', errorText)
+    throw new Error('GitHub write failed')
+  }
+
   return await res.json()
 }
 
 export async function getProjects(): Promise<Proyecto[]> {
-  try {
-    const blobs = await list({ prefix: 'data/projects.json' })
-
-    if (!blobs.blobs.length) {
-      return []
-    }
-
-    const latestBlob = getMostRecentBlob(blobs.blobs)
-    if (!latestBlob) return []
-
-    return await fetchBlobJson<Proyecto[]>(latestBlob.url, latestBlob.uploadedAt)
-  } catch {
-    return []
-  }
+  const { data } = await readGithubJson<Proyecto[]>(PROJECTS_PATH, [])
+  return Array.isArray(data) ? data : []
 }
 
 export async function getPublishedProjects(): Promise<Proyecto[]> {
@@ -210,68 +202,14 @@ export async function getProjectBySlug(slug: string): Promise<Proyecto | undefin
 }
 
 export async function saveProjects(projects: Proyecto[]) {
-  const previousProjects = await getProjects()
-  const currentSiteSettings = await getSiteSettings()
-
-  const blob = await put('data/projects.json', JSON.stringify(projects, null, 2), {
-    access: 'public',
-    contentType: 'application/json',
-    allowOverwrite: true,
-  })
-
-  const previousUrls = new Set([
-    ...Array.from(collectProjectAssetUrls(previousProjects)),
-    ...Array.from(collectSiteAssetUrls(currentSiteSettings)),
-  ])
-  const nextUrls = new Set([
-    ...Array.from(collectProjectAssetUrls(projects)),
-    ...Array.from(collectSiteAssetUrls(currentSiteSettings)),
-  ])
-
-  await deleteOrphanedAssets(previousUrls, nextUrls)
-
-  return blob.url
+  return await writeGithubJson(PROJECTS_PATH, projects, 'Update projects data')
 }
 
 export async function getSiteSettings(): Promise<SiteSettings> {
-  try {
-    const blobs = await list({ prefix: 'data/site.json' })
-
-    if (!blobs.blobs.length) {
-      return DEFAULT_SITE_SETTINGS
-    }
-
-    const latestBlob = getMostRecentBlob(blobs.blobs)
-    if (!latestBlob) return DEFAULT_SITE_SETTINGS
-
-    const data = await fetchBlobJson<SiteSettings>(latestBlob.url, latestBlob.uploadedAt)
-    return normalizeSiteSettings(data)
-  } catch {
-    return DEFAULT_SITE_SETTINGS
-  }
+  const { data } = await readGithubJson<SiteSettings>(SITE_PATH, DEFAULT_SITE_SETTINGS)
+  return normalizeSiteSettings(data)
 }
 
 export async function saveSiteSettings(settings: SiteSettings) {
-  const previousSettings = await getSiteSettings()
-  const currentProjects = await getProjects()
-  const normalizedSettings = normalizeSiteSettings(settings)
-
-  const blob = await put('data/site.json', JSON.stringify(normalizedSettings, null, 2), {
-    access: 'public',
-    contentType: 'application/json',
-    allowOverwrite: true,
-  })
-
-  const previousUrls = new Set([
-    ...Array.from(collectProjectAssetUrls(currentProjects)),
-    ...Array.from(collectSiteAssetUrls(previousSettings)),
-  ])
-  const nextUrls = new Set([
-    ...Array.from(collectProjectAssetUrls(currentProjects)),
-    ...Array.from(collectSiteAssetUrls(normalizedSettings)),
-  ])
-
-  await deleteOrphanedAssets(previousUrls, nextUrls)
-
-  return blob.url
+  return await writeGithubJson(SITE_PATH, normalizeSiteSettings(settings), 'Update site settings')
 }
