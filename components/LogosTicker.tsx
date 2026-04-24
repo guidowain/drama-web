@@ -10,13 +10,10 @@ export default function LogosTicker({ logos }: Props) {
   if (!logos.length) return null
 
   const minVisibleItems = 10
-  const repeatedLogos: Logo[] = []
-
-  while (repeatedLogos.length < minVisibleItems) {
-    repeatedLogos.push(...logos)
-  }
-
-  const trackLogos = repeatedLogos.slice(0, minVisibleItems)
+  const trackLogos =
+    logos.length >= minVisibleItems
+      ? logos
+      : Array.from({ length: Math.ceil(minVisibleItems / logos.length) }, () => logos).flat()
   const doubled = [...trackLogos, ...trackLogos]
 
   return (
