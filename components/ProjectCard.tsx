@@ -16,7 +16,7 @@ export default function ProjectCard({ project, onClick }: Props) {
       onClick={() => onClick(project)}
       className="cursor-pointer rounded-2xl bg-[linear-gradient(135deg,#F504FF_0%,#FE8B97_28%,#FE796D_50%,#FCC028_75%,#FED791_100%)] p-px shadow-md transition-shadow hover:shadow-[0_0_28px_rgba(245,4,255,0.15)]"
     >
-      <div className="rounded-[calc(1rem-1px)] bg-black p-3">
+      <div className="rounded-[calc(1rem-1px)] bg-white p-3">
         {/* Cover image */}
         <div className="relative aspect-square rounded-xl overflow-hidden bg-zinc-950">
           {project.coverImage ? (
@@ -37,13 +37,13 @@ export default function ProjectCard({ project, onClick }: Props) {
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="border border-transparent bg-[linear-gradient(#000,#000)_padding-box,var(--gradient)_border-box] text-white text-[0.6rem] md:text-[0.65rem] font-semibold uppercase tracking-[0.04em] px-2.5 py-[2px] rounded-full inline-block"
+                className="border border-transparent bg-[linear-gradient(#fff,#fff)_padding-box,var(--gradient)_border-box] text-black text-[0.6rem] md:text-[0.65rem] font-semibold uppercase tracking-[0.04em] px-2.5 py-[2px] rounded-full inline-block"
               >
                 {tag}
               </span>
             ))}
           </div>
-          <span className="text-white/40 text-xs font-medium shrink-0">{project.year}</span>
+          <span className="text-black/35 text-xs font-medium shrink-0">{project.year}</span>
         </div>
       </div>
     </motion.article>
