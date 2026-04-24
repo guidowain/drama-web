@@ -23,14 +23,14 @@ export default function LogosTicker({ logos }: Props) {
         {doubled.map((logo, i) => (
           <div
             key={i}
-            className="shrink-0 flex items-center justify-center h-20 w-[140px] md:h-28 md:w-[220px]"
+            className="shrink-0 inline-flex items-center justify-center h-20 md:h-28"
           >
             {logo.src ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={logo.src}
                 alt={logo.alt}
-                className="h-full w-full object-contain"
+                className="block h-full w-auto max-w-[140px] object-contain md:max-w-[220px]"
                 style={{
                   transform: `scale(${logo.scale ?? 1})`,
                   transformOrigin: 'center',
