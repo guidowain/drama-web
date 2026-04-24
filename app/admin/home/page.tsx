@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { SiteSettings, Logo } from '@/lib/types'
 import ImageUploader from '@/components/admin/ImageUploader'
 
@@ -8,10 +8,39 @@ export default function AdminHomePage() {
   const [settings, setSettings] = useState<SiteSettings | null>(null)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const lastSavedLogosRef = useRef('')
+  const logosAutosaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    fetch('/api/admin/site').then((r) => r.json()).then(setSettings)
+    fetch('/api/admin/site')
+      .then((r) => r.json())
+      .then((data: SiteSettings) => {
+        setSettings(data)
+        lastSavedLogosRef.current = JSON.stringify(data.home.logos)
+      })
   }, [])
+
+  useEffect(() => {
+    if (!settings) return
+
+    const nextSerializedLogos = JSON.stringify(settings.home.logos)
+    if (!lastSavedLogosRef.current || nextSerializedLogos === lastSavedLogosRef.current) return
+
+    if (logosAutosaveTimerRef.current) {
+      clearTimeout(logosAutosaveTimerRef.current)
+    }
+
+    logosAutosaveTimerRef.current = setTimeout(async () => {
+      await persistSettings(settings)
+      lastSavedLogosRef.current = nextSerializedLogos
+    }, 800)
+
+    return () => {
+      if (logosAutosaveTimerRef.current) {
+        clearTimeout(logosAutosaveTimerRef.current)
+      }
+    }
+  }, [settings])
 
   async function persistSettings(nextSettings: SiteSettings) {
     setSaving(true)
@@ -27,7 +56,12 @@ export default function AdminHomePage() {
 
   async function handleSave() {
     if (!settings) return
+    if (logosAutosaveTimerRef.current) {
+      clearTimeout(logosAutosaveTimerRef.current)
+      logosAutosaveTimerRef.current = null
+    }
     await persistSettings(settings)
+    lastSavedLogosRef.current = JSON.stringify(settings.home.logos)
   }
 
   function updateHome(changes: Partial<SiteSettings['home']>) {
