@@ -26,14 +26,14 @@ export default function LogosTicker({ logos }: Props) {
           return (
             <div
               key={i}
-              className="shrink-0 inline-flex w-[170px] md:w-[280px] h-[84px] md:h-[124px] items-center justify-center"
+              className="shrink-0 inline-flex h-[84px] md:h-[124px] items-center justify-center px-3 md:px-4"
             >
               {logo.src ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={logo.src}
                   alt={logo.alt}
-                  className="block max-w-full max-h-full w-auto h-auto object-contain"
+                  className="block w-auto h-auto max-h-full object-contain max-w-[180px] md:max-w-[320px]"
                   style={{
                     transform: `scale(${logo.scale ?? 1})`,
                     transformOrigin: 'center',
