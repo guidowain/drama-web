@@ -58,7 +58,7 @@ function ProyectosContent() {
       <main className="min-h-screen bg-black pt-16 md:pt-[72px]">
         {/* Page header */}
         <div className="px-5 md:px-10 pt-10 md:pt-14 pb-6">
-          <div className="mx-auto w-full max-w-6xl">
+          <div className="mx-auto w-full max-w-6xl" data-page="proyectos">
             <h1 className="text-white font-black uppercase text-5xl md:text-7xl leading-none">
               PROYECTOS
             </h1>
