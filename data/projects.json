@@ -25,5 +25,24 @@
         "order": 0
       }
     ]
+  },
+  {
+    "id": "mod6zy9css11lnhvi4o",
+    "name": "La Sirenita",
+    "slug": "la-sirenita",
+    "year": 2025,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "ai",
+      "diseño",
+      "creatividad"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777052154/drama-web/uploads/huros5cqtavrvnqr3pwa.webp",
+    "coverImageAlt": "",
+    "contentBlocks": [],
+    "seoTitle": "La sirenita",
+    "seoDescription": "",
+    "excerpt": ""
   }
 ]
