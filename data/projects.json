@@ -83,7 +83,18 @@
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777055815/drama-web/uploads/vl5yv9itzwv7zdd2vejq.webp",
     "coverImageAlt": "",
-    "contentBlocks": [],
+    "contentBlocks": [
+      {
+        "id": "modbxg1cb86ybuumez",
+        "type": "image",
+        "order": 0,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777060494/drama-web/uploads/peko090t2gwyhikaermo.webp",
+        "imageAlt": "",
+        "imageSide": "left"
+      }
+    ],
     "seoTitle": "chanta",
     "seoDescription": "",
     "excerpt": ""
