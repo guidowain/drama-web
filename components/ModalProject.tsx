@@ -93,7 +93,7 @@ export default function ModalProject({ project, onClose }: Props) {
               <div className="border-t border-white/10 px-6 md:px-12 py-8">
                 <p className="text-white/40 text-sm text-center">
                   ¿Te gustaría un proyecto similar?{' '}
-                  <a href="/#contacto" onClick={onClose} className="text-brand-pink hover:underline">
+                  <a href="mailto:los@drama.com.ar" onClick={onClose} className="text-brand-pink hover:underline">
                     Escribinos
                   </a>
                 </p>
