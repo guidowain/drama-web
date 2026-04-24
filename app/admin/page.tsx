@@ -56,13 +56,11 @@ export default async function AdminDashboard() {
 
   return (
     <div className="p-8 md:p-12">
-      {/* Header */}
       <div className="mb-10">
         <h1 className="text-white font-black text-4xl uppercase tracking-tight mb-1">Dashboard</h1>
         <p className="text-white/30 text-sm">Bienvenido al panel de administración de Drama.</p>
       </div>
 
-      {/* Stats */}
       <div className="flex gap-5 mb-10">
         <div className="bg-zinc-900 border border-white/5 rounded-2xl px-6 py-4 min-w-[120px]">
           <p className="text-white font-black text-3xl">{projects.length}</p>
@@ -78,7 +76,6 @@ export default async function AdminDashboard() {
         </div>
       </div>
 
-      {/* Section cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
         {cards.map((card) => (
           <Link
