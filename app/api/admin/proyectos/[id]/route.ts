@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getProjects, saveProjects } from '@/lib/api'
 
 export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
-  const projects = getProjects()
+  const projects = await getProjects()
   const project = projects.find((p) => p.id === params.id)
   if (!project) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   return NextResponse.json(project)
@@ -10,7 +10,7 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   const body = await request.json()
-  const projects = getProjects()
+  const projects = await getProjects()
   const index = projects.findIndex((p) => p.id === params.id)
   if (index === -1) return NextResponse.json({ error: 'Not found' }, { status: 404 })
 
@@ -29,16 +29,16 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       : projects[index].contentBlocks,
   }
 
-  saveProjects(projects)
+  await saveProjects(projects)
   return NextResponse.json(projects[index])
 }
 
 export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
-  const projects = getProjects()
+  const projects = await getProjects()
   const filtered = projects.filter((p) => p.id !== params.id)
   if (filtered.length === projects.length) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 })
   }
-  saveProjects(filtered)
+  await saveProjects(filtered)
   return NextResponse.json({ ok: true })
 }

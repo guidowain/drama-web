@@ -1,40 +1,60 @@
-import fs from 'fs'
-import path from 'path'
 import type { Proyecto, SiteSettings } from './types'
+import { put, list } from '@vercel/blob'
 
-const DATA_DIR = path.join(process.cwd(), 'data')
-const PROJECTS_FILE = path.join(DATA_DIR, 'projects.json')
-const SITE_FILE = path.join(DATA_DIR, 'site.json')
+export async function getProjects(): Promise<Proyecto[]> {
+  try {
+    const blobs = await list({ prefix: 'data/projects.json' })
 
-function readJSON<T>(filePath: string): T {
-  const content = fs.readFileSync(filePath, 'utf-8')
-  return JSON.parse(content)
+    if (!blobs.blobs.length) {
+      return []
+    }
+
+    const res = await fetch(blobs.blobs[0].url)
+    return await res.json()
+  } catch {
+    return []
+  }
 }
 
-function writeJSON(filePath: string, data: unknown) {
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8')
+export async function getPublishedProjects(): Promise<Proyecto[]> {
+  const projects = await getProjects()
+  return projects.filter((p) => p.published)
 }
 
-export function getProjects(): Proyecto[] {
-  return readJSON<Proyecto[]>(PROJECTS_FILE)
+export async function getProjectBySlug(slug: string): Promise<Proyecto | undefined> {
+  const projects = await getProjects()
+  return projects.find((p) => p.slug === slug && p.published)
 }
 
-export function getPublishedProjects(): Proyecto[] {
-  return getProjects().filter((p) => p.published)
+export async function saveProjects(projects: Proyecto[]) {
+  const blob = await put('data/projects.json', JSON.stringify(projects, null, 2), {
+    access: 'public',
+    contentType: 'application/json',
+  })
+
+  return blob.url
 }
 
-export function getProjectBySlug(slug: string): Proyecto | undefined {
-  return getProjects().find((p) => p.slug === slug && p.published)
+export async function getSiteSettings(): Promise<SiteSettings> {
+  try {
+    const blobs = await list({ prefix: 'data/site.json' })
+
+    if (!blobs.blobs.length) {
+      return {} as SiteSettings
+    }
+
+    const res = await fetch(blobs.blobs[0].url)
+    return await res.json()
+  } catch {
+    return {} as SiteSettings
+  }
 }
 
-export function saveProjects(projects: Proyecto[]) {
-  writeJSON(PROJECTS_FILE, projects)
-}
+export async function saveSiteSettings(settings: SiteSettings) {
+  const blob = await put('data/site.json', JSON.stringify(settings, null, 2), {
+    access: 'public',
+    contentType: 'application/json',
+  })
 
-export function getSiteSettings(): SiteSettings {
-  return readJSON<SiteSettings>(SITE_FILE)
-}
-
-export function saveSiteSettings(settings: SiteSettings) {
-  writeJSON(SITE_FILE, settings)
+  return blob.url
 }

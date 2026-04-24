@@ -4,13 +4,13 @@ import { generateId } from '@/lib/utils'
 import type { Proyecto } from '@/lib/types'
 
 export async function GET() {
-  const projects = getProjects()
+  const projects = await getProjects()
   return NextResponse.json(projects)
 }
 
 export async function POST(request: NextRequest) {
   const body = await request.json()
-  const projects = getProjects()
+  const projects = await getProjects()
 
   const newProject: Proyecto = {
     id: generateId(),
@@ -29,6 +29,6 @@ export async function POST(request: NextRequest) {
   }
 
   projects.push(newProject)
-  saveProjects(projects)
+  await saveProjects(projects)
   return NextResponse.json(newProject, { status: 201 })
 }
