@@ -17,7 +17,11 @@ export async function POST(request: NextRequest) {
   const ext = file.name.split('.').pop()
   const safeName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
 
-  const blob = await put(safeName, file, { access: 'public' })
-
-  return NextResponse.json({ url: blob.url })
+  try {
+    const blob = await put(safeName, file, { access: 'public' })
+    return NextResponse.json({ url: blob.url })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err)
+    return NextResponse.json({ error: message }, { status: 500 })
+  }
 }
