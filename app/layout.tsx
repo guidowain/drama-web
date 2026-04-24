@@ -26,11 +26,11 @@ export default async function RootLayout({
     isAdmin = false
   }
 
-  let settings = { settings: null }
+  let settings: Awaited<ReturnType<typeof getSiteSettings>> | null = null
   try {
     settings = await getSiteSettings()
   } catch {
-    settings = { settings: null }
+    settings = null
   }
 
   return (
@@ -40,8 +40,22 @@ export default async function RootLayout({
           children
         ) : (
           <MenuProvider>
-            <Header settings={settings?.settings} />
-            <Menu settings={settings?.settings} />
+            <Header settings={settings?.settings ?? {
+              instagram: '',
+              whatsapp: '',
+              mail: '',
+              logoMain: '',
+              logoMenu: '',
+              favicon: '',
+            }} />
+            <Menu settings={settings?.settings ?? {
+              instagram: '',
+              whatsapp: '',
+              mail: '',
+              logoMain: '',
+              logoMenu: '',
+              favicon: '',
+            }} />
             {children}
           </MenuProvider>
         )}
