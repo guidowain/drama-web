@@ -34,14 +34,14 @@
     },
     "logos": [
       {
-        "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777043159/drama-web/uploads/ypq6zoo7zgejdawc1zuy.png",
-        "alt": "Avenida",
-        "scale": 1.2
-      },
-      {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777045262/drama-web/uploads/szqukb2gngtzjgsjvj8t.webp",
         "alt": "CLOSER",
         "scale": 0.75
+      },
+      {
+        "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777043159/drama-web/uploads/ypq6zoo7zgejdawc1zuy.png",
+        "alt": "Avenida",
+        "scale": 1.2
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777043676/drama-web/uploads/guqa29r5xohcgrssm8sc.webp",
