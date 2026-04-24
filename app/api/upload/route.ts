@@ -18,33 +18,26 @@ export async function POST(request: NextRequest) {
 
     const token = process.env.BLOB_READ_WRITE_TOKEN
     if (!token) {
-      return NextResponse.json({ error: 'BLOB_READ_WRITE_TOKEN not set' }, { status: 500 })
+      return NextResponse.json({ error: 'BLOB_READ_WRITE_TOKEN not configured' }, { status: 500 })
     }
 
     const ext = file.name.split('.').pop()
     const safeName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
 
-    const res = await fetch(`https://blob.vercel-storage.com/${safeName}`, {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'x-content-type': file.type,
-        'x-add-random-suffix': '0',
-      },
-      body: file.stream(),
-      // @ts-expect-error - needed for streaming in Node.js
-      duplex: 'half',
+    // Read file as buffer to avoid streaming issues in serverless
+    const bytes = await file.arrayBuffer()
+    const buffer = Buffer.from(bytes)
+
+    const { put } = await import('@vercel/blob')
+    const blob = await put(safeName, buffer, {
+      access: 'public',
+      contentType: file.type,
     })
 
-    if (!res.ok) {
-      const text = await res.text()
-      return NextResponse.json({ error: `Blob API error: ${res.status} ${text}` }, { status: 500 })
-    }
-
-    const data = await res.json() as { url: string }
-    return NextResponse.json({ url: data.url })
+    return NextResponse.json({ url: blob.url })
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)
+    console.error('Upload error:', message)
     return NextResponse.json({ error: message }, { status: 500 })
   }
 }
