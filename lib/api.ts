@@ -27,9 +27,7 @@ async function setBlob(name: string, data: unknown): Promise<void> {
 export async function getProjects(): Promise<Proyecto[]> {
   const projects = await getBlob<Proyecto[]>('projects.json')
   if (projects) return projects
-  const initial = readLocalJSON<Proyecto[]>('projects.json')
-  await setBlob('projects.json', initial)
-  return initial
+  return readLocalJSON<Proyecto[]>('projects.json')
 }
 
 export async function getPublishedProjects(): Promise<Proyecto[]> {
@@ -49,9 +47,7 @@ export async function saveProjects(projects: Proyecto[]): Promise<void> {
 export async function getSiteSettings(): Promise<SiteSettings> {
   const settings = await getBlob<SiteSettings>('site.json')
   if (settings) return settings
-  const initial = readLocalJSON<SiteSettings>('site.json')
-  await setBlob('site.json', initial)
-  return initial
+  return readLocalJSON<SiteSettings>('site.json')
 }
 
 export async function saveSiteSettings(settings: SiteSettings): Promise<void> {
