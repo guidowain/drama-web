@@ -1,38 +1,28 @@
 [
   {
     "id": "2",
-    "name": "School of Rock",
-    "slug": "school-of-rock",
-    "year": 2024,
-    "featured": true,
+    "name": "LA CENA DE LOS TONTOS",
+    "slug": "la-cena-de-los-tontos",
+    "year": 2025,
+    "featured": false,
     "published": true,
     "tags": [
-      "Teatro",
-      "Comunicación",
-      "Prensa"
+      "CREATIVIDAD",
+      "COMUNICACIÓN",
+      "ANIMACIÓN"
     ],
-    "coverImage": "/uploads/school-of-rock-cover.jpg",
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777043279/drama-web/uploads/gmolxsdjzr2ktqfgewcd.webp",
     "coverImageAlt": "School of Rock",
     "contentBlocks": [
       {
         "id": "b4",
         "type": "imageText",
-        "image": "/uploads/sor-1.jpg",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777043329/drama-web/uploads/wplh4k5atqgab33buamx.webp",
         "imageAlt": "School of Rock - Promo",
         "imageSide": "left",
         "title": "Comunicación integral",
         "text": "Estrategia de comunicación digital para School of Rock. Gestión de redes sociales, contenido creativo y coordinación de prensa para uno de los musicales más exitosos de la temporada.",
         "order": 0
-      },
-      {
-        "id": "b5",
-        "type": "imageText",
-        "image": "/uploads/sor-2.jpg",
-        "imageAlt": "School of Rock - Redes",
-        "imageSide": "right",
-        "title": "Resultados",
-        "text": "La estrategia de comunicación generó un crecimiento sostenido en todas las plataformas digitales, con alta participación del público y cobertura en medios especializados.",
-        "order": 1
       }
     ]
   },
