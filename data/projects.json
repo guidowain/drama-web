@@ -63,20 +63,5 @@
     "coverImage": "/uploads/closer-cover.jpg",
     "coverImageAlt": "Closer",
     "contentBlocks": []
-  },
-  {
-    "id": "6",
-    "name": "BARE",
-    "slug": "bare",
-    "year": 2023,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "Diseño",
-      "Branding"
-    ],
-    "coverImage": "/uploads/bare-cover.jpg",
-    "coverImageAlt": "BARE",
-    "contentBlocks": []
   }
 ]
