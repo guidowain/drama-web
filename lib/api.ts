@@ -167,6 +167,14 @@ async function deleteOrphanedAssets(previousUrls: Set<string>, nextUrls: Set<str
   }
 }
 
+function getMostRecentBlob<T extends { uploadedAt?: string | Date | undefined }>(blobs: T[]): T | undefined {
+  return [...blobs].sort((a, b) => {
+    const aTime = a.uploadedAt ? new Date(a.uploadedAt).getTime() : 0
+    const bTime = b.uploadedAt ? new Date(b.uploadedAt).getTime() : 0
+    return bTime - aTime
+  })[0]
+}
+
 export async function getProjects(): Promise<Proyecto[]> {
   try {
     const blobs = await list({ prefix: 'data/projects.json' })
@@ -175,7 +183,10 @@ export async function getProjects(): Promise<Proyecto[]> {
       return []
     }
 
-    const res = await fetch(blobs.blobs[0].url)
+    const latestBlob = getMostRecentBlob(blobs.blobs)
+    if (!latestBlob) return []
+
+    const res = await fetch(latestBlob.url)
     return await res.json()
   } catch {
     return []
@@ -224,7 +235,10 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       return DEFAULT_SITE_SETTINGS
     }
 
-    const res = await fetch(blobs.blobs[0].url)
+    const latestBlob = getMostRecentBlob(blobs.blobs)
+    if (!latestBlob) return DEFAULT_SITE_SETTINGS
+
+    const res = await fetch(latestBlob.url)
     const data = await res.json()
     return normalizeSiteSettings(data)
   } catch {
