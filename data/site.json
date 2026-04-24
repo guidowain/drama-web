@@ -59,14 +59,14 @@
         "scale": 1
       },
       {
-        "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777045022/drama-web/uploads/bhvxty6tluwox3alckhh.webp",
-        "alt": "CASI NORMALES",
-        "scale": 1
-      },
-      {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777045262/drama-web/uploads/szqukb2gngtzjgsjvj8t.webp",
         "alt": "CLOSER",
         "scale": 0.75
+      },
+      {
+        "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777045022/drama-web/uploads/bhvxty6tluwox3alckhh.webp",
+        "alt": "CASI NORMALES",
+        "scale": 1
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777045586/drama-web/uploads/msewukvixnbcyr3ljefo.webp",
