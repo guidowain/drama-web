@@ -148,6 +148,21 @@ button,
   transform: rotateY(180deg);
 }
 
+.flip-card.is-flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card.is-peeking .flip-card-inner {
+  animation: service-card-peek 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes service-card-peek {
+  0% { transform: rotateY(0deg); }
+  38% { transform: rotateY(180deg); }
+  64% { transform: rotateY(180deg); }
+  100% { transform: rotateY(0deg); }
+}
+
 .flip-card-front,
 .flip-card-back {
   position: absolute;
@@ -159,6 +174,42 @@ button,
 
 .flip-card-back {
   transform: rotateY(180deg);
+}
+
+.menu-nav-link {
+  position: relative;
+  isolation: isolate;
+  transition: transform 0.35s ease, opacity 0.25s ease;
+}
+
+.menu-nav-link::before {
+  content: '';
+  position: absolute;
+  inset: 18% -0.06em 12%;
+  z-index: -1;
+  background: var(--gradient);
+  border-radius: 999px;
+  filter: blur(28px);
+  opacity: 0;
+  transform: scaleX(0.82) translateX(-10px);
+  transform-origin: left center;
+  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.menu-nav-link:hover,
+.menu-nav-link:focus-visible {
+  transform: translateX(10px);
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.menu-nav-link:hover::before,
+.menu-nav-link:focus-visible::before {
+  opacity: 0.55;
+  transform: scaleX(1) translateX(0);
 }
 
 /* SEO text — in DOM for indexing, invisible visually (no display:none/visibility:hidden) */

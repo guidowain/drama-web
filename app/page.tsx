@@ -4,6 +4,7 @@ import LogosTicker from '@/components/LogosTicker'
 import HeroGradientPlaque from '@/components/HeroGradientPlaque'
 import CTAProyectos from '@/components/CTAProyectos'
 import ContactStrip from '@/components/ContactStrip'
+import ServicesGrid from '@/components/ServicesGrid'
 
 export default async function HomePage() {
   const settings = await getSiteSettings()
@@ -38,18 +39,20 @@ export default async function HomePage() {
 
       {/* ── SERVICES ── */}
       <section className="bg-black py-12 md:py-20 px-5 md:px-8">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
-          <ServiceCard
-            name={home.services.design.name}
-            items={home.services.design.items}
-            icon={<IconDesign />}
-          />
-          <ServiceCard
-            name={home.services.communication.name}
-            items={home.services.communication.items}
-            icon={<IconComm />}
-          />
-        </div>
+        <ServicesGrid
+          services={[
+            {
+              name: home.services.design.name,
+              items: home.services.design.items,
+              icon: <IconDesign />,
+            },
+            {
+              name: home.services.communication.name,
+              items: home.services.communication.items,
+              icon: <IconComm />,
+            },
+          ]}
+        />
       </section>
 
       {/* ── LOGOS TICKER ── */}
@@ -67,48 +70,6 @@ export default async function HomePage() {
         mail={home.contact.mail}
       />
     </main>
-  )
-}
-
-function ServiceCard({
-  name,
-  items,
-  icon,
-}: {
-  name: string
-  items: string[]
-  icon: React.ReactNode
-}) {
-  return (
-    <div className="flip-card h-72 md:h-80 rounded-2xl">
-      <div className="flip-card-inner rounded-2xl">
-        {/* Front */}
-        <div className="flip-card-front glass-card rounded-2xl flex flex-col items-center justify-center gap-4 p-6 overflow-hidden">
-          <div className="text-white opacity-80">{icon}</div>
-          <h3
-            className="text-white font-black uppercase tracking-tight text-center leading-none w-full"
-            style={{ fontSize: 'clamp(1.8rem, 4vw, 3.4rem)' }}
-          >
-            {name}
-          </h3>
-        </div>
-
-        {/* Back */}
-        <div className="flip-card-back glass-card rounded-2xl flex flex-col justify-center gap-2 p-6">
-          <h3 className="text-white font-black text-3xl md:text-4xl uppercase mb-4 leading-none tracking-tight">
-            {name}
-          </h3>
-          <ul className="columns-2 gap-x-8 space-y-2">
-            {items.map((item) => (
-              <li key={item} className="flex items-center gap-2 text-white/80 text-sm md:text-base break-inside-avoid leading-snug">
-                <span className="w-1.5 h-1.5 rounded-full gradient-bg shrink-0" />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
   )
 }
 

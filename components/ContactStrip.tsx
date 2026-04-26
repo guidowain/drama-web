@@ -14,7 +14,7 @@ export default function ContactStrip({ instagram, whatsapp, mail }: Props) {
     >
       {/* Left */}
       <p className="text-black font-black uppercase leading-[1.05] text-4xl md:text-6xl lg:text-7xl">
-        ESCRIBINOS,<br />NO HAY DRAMA
+        ESCRIBINOS,<br />NO HAY DRAMA.
       </p>
 
       {/* Right — contact icons */}

@@ -12,7 +12,7 @@ export default function ProjectCard({ project, onClick }: Props) {
   const hasManyTags = project.tags.length >= 5
   const tagClassName = hasManyTags
     ? 'text-[0.52rem] md:text-[0.56rem] px-2 py-[1px] tracking-[0.03em]'
-    : 'text-[0.58rem] md:text-[0.62rem] px-2.5 py-[2px] tracking-[0.04em]'
+    : 'text-[0.58rem] md:text-[0.62rem] px-2.5 py-[1px] tracking-[0.04em]'
 
   return (
     <motion.article
@@ -37,12 +37,12 @@ export default function ProjectCard({ project, onClick }: Props) {
         </div>
 
         {/* Info */}
-        <div className="mt-3 grid min-h-[4.6rem] grid-cols-[1fr_auto] items-end gap-2 px-1 pb-1 md:min-h-[4.9rem]">
+        <div className="mt-2 grid min-h-[3.15rem] grid-cols-[1fr_auto] items-start gap-2 px-1 pb-1 md:min-h-[3.35rem]">
           <div className="flex flex-wrap content-start gap-1">
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className={`inline-block rounded-full border border-transparent bg-[linear-gradient(#fff,#fff)_padding-box,var(--gradient)_border-box] font-semibold uppercase text-black ${tagClassName}`}
+                className={`inline-block rounded-full border-[0.5px] border-black/20 font-semibold uppercase text-black ${tagClassName}`}
               >
                 {tag}
               </span>

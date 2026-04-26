@@ -73,7 +73,7 @@ export default function Menu({ settings }: Props) {
                 <Link
                   href={item.href}
                   onClick={close}
-                  className="block py-5 md:py-7 text-white font-bold italic text-5xl md:text-7xl lg:text-8xl hover:opacity-70 transition-opacity leading-none"
+                  className="menu-nav-link block py-5 md:py-7 text-white font-bold italic text-5xl md:text-7xl lg:text-8xl leading-none"
                 >
                   {item.label}
                 </Link>
