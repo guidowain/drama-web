@@ -32,6 +32,27 @@ export default function AdminProyectosPage() {
     fetchProjects()
   }
 
+  async function handleMoveProject(index: number, direction: -1 | 1) {
+    const nextIndex = index + direction
+    if (nextIndex < 0 || nextIndex >= projects.length) return
+
+    const reordered = [...projects]
+    const [moved] = reordered.splice(index, 1)
+    reordered.splice(nextIndex, 0, moved)
+    setProjects(reordered)
+
+    const res = await fetch('/api/admin/proyectos/reorder', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ids: reordered.map((project) => project.id) }),
+    })
+
+    if (!res.ok) {
+      fetchProjects()
+      alert('No se pudo guardar el orden. Probá de nuevo.')
+    }
+  }
+
   return (
     <div className="p-8 md:p-10">
       <div className="flex items-center justify-between mb-8">
@@ -48,11 +69,31 @@ export default function AdminProyectosPage() {
         <p className="text-white/30">Cargando...</p>
       ) : (
         <div className="space-y-3">
-          {projects.map((project) => (
+          {projects.map((project, index) => (
             <div
               key={project.id}
               className="flex items-center gap-4 bg-zinc-900 border border-white/5 rounded-xl px-5 py-4"
             >
+              {/* Order controls */}
+              <div className="flex flex-col gap-1 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => handleMoveProject(index, -1)}
+                  disabled={index === 0}
+                  className="text-[10px] px-2 py-1 rounded-md bg-zinc-800 text-white/60 hover:text-white hover:bg-zinc-700 transition-colors disabled:opacity-25 disabled:pointer-events-none"
+                >
+                  Subir
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleMoveProject(index, 1)}
+                  disabled={index === projects.length - 1}
+                  className="text-[10px] px-2 py-1 rounded-md bg-zinc-800 text-white/60 hover:text-white hover:bg-zinc-700 transition-colors disabled:opacity-25 disabled:pointer-events-none"
+                >
+                  Bajar
+                </button>
+              </div>
+
               {/* Cover thumbnail */}
               <div className="w-12 h-12 rounded-lg bg-zinc-800 overflow-hidden shrink-0">
                 {project.coverImage ? (

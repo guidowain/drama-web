@@ -10,14 +10,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (isLogin) {
     return (
-      <div className="min-h-screen bg-zinc-950 text-white">
+      <div className="admin-shell min-h-screen bg-zinc-950 text-white">
         {children}
       </div>
     )
   }
 
   return (
-    <div className="flex min-h-screen bg-zinc-950 text-white">
+    <div className="admin-shell flex min-h-screen bg-zinc-950 text-white">
       <AdminSidebar />
       <main className="flex-1 overflow-auto">{children}</main>
     </div>

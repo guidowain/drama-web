@@ -126,16 +126,40 @@ function ContentBlockRenderer({ block }: { block: ContentBlock }) {
     return (
       <div className="w-full">
         {block.image && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <ScaledImage
             src={block.image}
             alt={block.imageAlt || ''}
-            className="w-full object-contain rounded-xl"
+            scale={block.imageScale}
           />
         )}
         {block.title && (
           <p className="text-white/40 text-sm mt-2 text-center">{block.title}</p>
         )}
+      </div>
+    )
+  }
+
+  if (block.type === 'imageImage') {
+    return (
+      <div className="grid md:grid-cols-2 gap-6 items-center">
+        <div>
+          {block.image && (
+            <ScaledImage
+              src={block.image}
+              alt={block.imageAlt || ''}
+              scale={block.imageScale}
+            />
+          )}
+        </div>
+        <div>
+          {block.image2 && (
+            <ScaledImage
+              src={block.image2}
+              alt={block.image2Alt || ''}
+              scale={block.image2Scale}
+            />
+          )}
+        </div>
       </div>
     )
   }
@@ -146,11 +170,10 @@ function ContentBlockRenderer({ block }: { block: ContentBlock }) {
       <div className={`grid md:grid-cols-2 gap-8 items-center ${isRight ? 'md:[&>*:first-child]:order-2' : ''}`}>
         <div>
           {block.image && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <ScaledImage
               src={block.image}
               alt={block.imageAlt || ''}
-              className="w-full object-contain rounded-xl"
+              scale={block.imageScale}
             />
           )}
         </div>
@@ -169,4 +192,25 @@ function ContentBlockRenderer({ block }: { block: ContentBlock }) {
   }
 
   return null
+}
+
+function ScaledImage({ src, alt, scale }: { src: string; alt: string; scale?: number }) {
+  const width = `${clampScale(scale)}%`
+
+  return (
+    <div className="w-full flex justify-center">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={alt}
+        className="w-full object-contain rounded-xl"
+        style={{ width, maxWidth: '140%' }}
+      />
+    </div>
+  )
+}
+
+function clampScale(value?: number) {
+  if (!Number.isFinite(value)) return 100
+  return Math.min(140, Math.max(40, Math.round(Number(value))))
 }

@@ -20,6 +20,10 @@ export default function ContentBlockEditor({ blocks, onChange }: Props) {
       text: '',
       image: '',
       imageAlt: '',
+      imageScale: 100,
+      image2: '',
+      image2Alt: '',
+      image2Scale: 100,
       imageSide: 'left',
     }
     onChange([...blocks, newBlock])
@@ -62,6 +66,7 @@ export default function ContentBlockEditor({ blocks, onChange }: Props) {
       <div className="flex gap-2 flex-wrap pt-1">
         <AddBlockBtn icon={<TextIcon />} label="Texto" onClick={() => addBlock('text')} />
         <AddBlockBtn icon={<ImageIcon />} label="Imagen" onClick={() => addBlock('image')} />
+        <AddBlockBtn icon={<DoubleImageIcon />} label="Imagen + Imagen" onClick={() => addBlock('imageImage')} />
         <AddBlockBtn icon={<ImageTextIcon />} label="Imagen + Texto" onClick={() => addBlock('imageText')} />
       </div>
     </div>
@@ -90,6 +95,7 @@ function BlockCard({
   const typeLabel: Record<ContentBlock['type'], string> = {
     text: 'Texto',
     image: 'Imagen',
+    imageImage: 'Imagen + Imagen',
     imageText: 'Imagen + Texto',
   }
 
@@ -101,6 +107,7 @@ function BlockCard({
         <span className="flex items-center gap-1.5 text-white/30 text-xs uppercase tracking-widest">
           {block.type === 'text' && <TextIcon size={12} />}
           {block.type === 'image' && <ImageIcon size={12} />}
+          {block.type === 'imageImage' && <DoubleImageIcon size={12} />}
           {block.type === 'imageText' && <ImageTextIcon size={12} />}
           {typeLabel[block.type]}
         </span>
@@ -132,6 +139,7 @@ function BlockCard({
         <div className="p-4">
           {block.type === 'text' && <TextBlock block={block} onChange={onChange} />}
           {block.type === 'image' && <ImageBlock block={block} onChange={onChange} />}
+          {block.type === 'imageImage' && <ImageImageBlock block={block} onChange={onChange} />}
           {block.type === 'imageText' && <ImageTextBlock block={block} onChange={onChange} />}
         </div>
       )}
@@ -191,6 +199,36 @@ function ImageBlock({ block, onChange }: { block: ContentBlock; onChange: (c: Pa
           className="w-full bg-zinc-800 border border-white/8 text-white text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-white/25 placeholder-white/15 transition-colors"
         />
       </div>
+      <ScaleControl
+        label="Escala"
+        value={block.imageScale}
+        onChange={(imageScale) => onChange({ imageScale })}
+      />
+    </div>
+  )
+}
+
+function ImageImageBlock({ block, onChange }: { block: ContentBlock; onChange: (c: Partial<ContentBlock>) => void }) {
+  return (
+    <div className="grid grid-cols-2 gap-3">
+      <ImageEditor
+        label="Imagen izquierda"
+        image={block.image}
+        imageAlt={block.imageAlt}
+        imageScale={block.imageScale}
+        onImageChange={(image) => onChange({ image })}
+        onAltChange={(imageAlt) => onChange({ imageAlt })}
+        onScaleChange={(imageScale) => onChange({ imageScale })}
+      />
+      <ImageEditor
+        label="Imagen derecha"
+        image={block.image2}
+        imageAlt={block.image2Alt}
+        imageScale={block.image2Scale}
+        onImageChange={(image2) => onChange({ image2 })}
+        onAltChange={(image2Alt) => onChange({ image2Alt })}
+        onScaleChange={(image2Scale) => onChange({ image2Scale })}
+      />
     </div>
   )
 }
@@ -247,6 +285,11 @@ function ImageTextBlock({ block, onChange }: { block: ContentBlock; onChange: (c
                 placeholder="Alt de imagen…"
                 className="mt-2 w-full bg-zinc-800 border border-white/8 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-white/25 placeholder-white/15"
               />
+              <ScaleControl
+                label="Escala"
+                value={block.imageScale}
+                onChange={(imageScale) => onChange({ imageScale })}
+              />
             </div>
             <div>
               <label className="block text-white/30 text-xs uppercase tracking-wider mb-1.5">Texto</label>
@@ -299,6 +342,11 @@ function ImageTextBlock({ block, onChange }: { block: ContentBlock; onChange: (c
                 placeholder="Alt de imagen…"
                 className="mt-2 w-full bg-zinc-800 border border-white/8 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-white/25 placeholder-white/15"
               />
+              <ScaleControl
+                label="Escala"
+                value={block.imageScale}
+                onChange={(imageScale) => onChange({ imageScale })}
+              />
             </div>
           </>
         )}
@@ -320,6 +368,74 @@ function AddBlockBtn({ icon, label, onClick }: { icon: React.ReactNode; label: s
       + {label}
     </button>
   )
+}
+
+function ImageEditor({
+  label,
+  image,
+  imageAlt,
+  imageScale,
+  onImageChange,
+  onAltChange,
+  onScaleChange,
+}: {
+  label: string
+  image?: string
+  imageAlt?: string
+  imageScale?: number
+  onImageChange: (value: string) => void
+  onAltChange: (value: string) => void
+  onScaleChange: (value: number) => void
+}) {
+  return (
+    <div>
+      <label className="block text-white/30 text-xs uppercase tracking-wider mb-1.5">{label}</label>
+      <ImageUploader
+        value={image || ''}
+        onChange={onImageChange}
+        aspect="4/3"
+      />
+      <input
+        type="text"
+        value={imageAlt || ''}
+        onChange={(e) => onAltChange(e.target.value)}
+        placeholder="Alt de imagen…"
+        className="mt-2 w-full bg-zinc-800 border border-white/8 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-white/25 placeholder-white/15"
+      />
+      <ScaleControl
+        label="Escala"
+        value={imageScale}
+        onChange={onScaleChange}
+      />
+    </div>
+  )
+}
+
+function ScaleControl({ label, value, onChange }: { label: string; value?: number; onChange: (value: number) => void }) {
+  const scale = clampScale(value)
+
+  return (
+    <div className="mt-2">
+      <div className="flex items-center justify-between text-[10px] uppercase tracking-wider text-white/30 mb-1">
+        <span>{label}</span>
+        <span>{scale}%</span>
+      </div>
+      <input
+        type="range"
+        min={40}
+        max={140}
+        step={5}
+        value={scale}
+        onChange={(e) => onChange(clampScale(Number(e.target.value)))}
+        className="w-full accent-white"
+      />
+    </div>
+  )
+}
+
+function clampScale(value?: number) {
+  if (!Number.isFinite(value)) return 100
+  return Math.min(140, Math.max(40, Math.round(Number(value))))
 }
 
 function MoveBtn({ onClick, disabled, direction }: { onClick: () => void; disabled: boolean; direction: 'up' | 'down' }) {
@@ -367,6 +483,17 @@ function ImageIcon({ size = 14 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+    </svg>
+  )
+}
+
+function DoubleImageIcon({ size = 14 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="5" width="8" height="14" rx="1"/>
+      <rect x="13" y="5" width="8" height="14" rx="1"/>
+      <path d="M3 16l3-3 5 5"/>
+      <path d="M13 16l3-3 5 5"/>
     </svg>
   )
 }

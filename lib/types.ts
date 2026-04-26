@@ -1,10 +1,14 @@
 export interface ContentBlock {
   id: string
-  type: 'image' | 'imageText' | 'text'
+  type: 'image' | 'imageImage' | 'imageText' | 'text'
   title?: string
   text?: string
   image?: string
   imageAlt?: string
+  imageScale?: number
+  image2?: string
+  image2Alt?: string
+  image2Scale?: number
   imageSide?: 'left' | 'right' | 'auto'
   order: number
 }
