@@ -8,12 +8,12 @@
         "name": "DISEÑO",
         "description": "",
         "items": [
-          "DiseÑo grÁfico",
-          "EdiciÓn de video",
+          "Diseño gráfico",
+          "Edición de video",
           "Animaciones",
           "Webs",
-          "FotografÍa",
-          "Retoque fotogrÁfico",
+          "Fotografía",
+          "Retoque fotográfico",
           "Branding",
           "AI",
           "3D"
@@ -131,9 +131,6 @@
   "settings": {
     "instagram": "https://instagram.com/drama.com.ar",
     "whatsapp": "https://wa.me/5491163357223",
-    "mail": "los@drama.com.ar",
-    "logoMain": "",
-    "logoMenu": "",
-    "favicon": ""
+    "mail": "los@drama.com.ar"
   }
 }

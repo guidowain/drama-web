@@ -63,9 +63,6 @@ const DEFAULT_SITE_SETTINGS: SiteSettings = {
     instagram: 'https://instagram.com/drama.com.ar',
     whatsapp: 'https://wa.me/5491163357223',
     mail: 'LOS@drama.com.ar',
-    logoMain: '',
-    logoMenu: '',
-    favicon: '',
   },
 }
 
@@ -106,8 +103,9 @@ function normalizeSiteSettings(raw: unknown): SiteSettings {
       ...data.about,
     },
     settings: {
-      ...DEFAULT_SITE_SETTINGS.settings,
-      ...data.settings,
+      instagram: data.settings?.instagram ?? DEFAULT_SITE_SETTINGS.settings.instagram,
+      whatsapp: data.settings?.whatsapp ?? DEFAULT_SITE_SETTINGS.settings.whatsapp,
+      mail: data.settings?.mail ?? DEFAULT_SITE_SETTINGS.settings.mail,
     },
   }
 }

@@ -68,8 +68,5 @@ export interface SiteSettings {
     instagram: string
     whatsapp: string
     mail: string
-    logoMain: string
-    logoMenu: string
-    favicon: string
   }
 }

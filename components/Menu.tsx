@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useMenu } from '@/lib/MenuContext'
@@ -48,16 +47,7 @@ export default function Menu({ settings }: Props) {
           <div className="h-[6px] gradient-bg shrink-0" />
 
           {/* Inner header */}
-          <div className="flex items-center justify-between px-5 md:px-8 h-16 md:h-[72px] shrink-0">
-            <Link href="/" onClick={close} className="relative block h-8 w-[132px]" aria-label="Drama — Inicio">
-              <Image
-                src="/logos/Logo oficial.png"
-                alt="Drama"
-                fill
-                className="object-contain object-left"
-                priority
-              />
-            </Link>
+          <div className="flex items-center justify-end px-5 md:px-8 h-16 md:h-[72px] shrink-0">
             <button
               onClick={close}
               aria-label="Cerrar menú"

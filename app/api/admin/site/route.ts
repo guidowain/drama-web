@@ -51,8 +51,9 @@ function mergeSiteSettings(current: SiteSettings, incoming: unknown): SiteSettin
       ...next.about,
     },
     settings: {
-      ...current.settings,
-      ...next.settings,
+      instagram: next.settings?.instagram ?? current.settings.instagram,
+      whatsapp: next.settings?.whatsapp ?? current.settings.whatsapp,
+      mail: next.settings?.mail ?? current.settings.mail,
     },
   }
 }

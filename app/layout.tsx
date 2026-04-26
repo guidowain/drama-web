@@ -9,6 +9,20 @@ import { headers } from 'next/headers'
 export const metadata: Metadata = {
   title: 'Drama — Comunicación y Diseño para Entretenimiento',
   description: 'La historia debajo del escenario.',
+  icons: {
+    icon: [
+      {
+        url: '/favicon/favicon.webp',
+        type: 'image/webp',
+      },
+    ],
+    apple: [
+      {
+        url: '/favicon/apple-touch-icon.png',
+        type: 'image/png',
+      },
+    ],
+  },
 }
 
 export default async function RootLayout({
@@ -44,17 +58,11 @@ export default async function RootLayout({
               instagram: '',
               whatsapp: '',
               mail: '',
-              logoMain: '',
-              logoMenu: '',
-              favicon: '',
             }} />
             <Menu settings={settings?.settings ?? {
               instagram: '',
               whatsapp: '',
               mail: '',
-              logoMain: '',
-              logoMenu: '',
-              favicon: '',
             }} />
             {children}
           </MenuProvider>

@@ -75,33 +75,6 @@ export default function AdminAjustesPage() {
           </Field>
         </Section>
 
-        <Section title="Logos">
-          <Field label="Logo principal (URL)">
-            <input
-              type="text"
-              value={settings.settings.logoMain}
-              onChange={(e) => update({ logoMain: e.target.value })}
-              className="admin-input"
-              placeholder="/logos/drama-logo.svg"
-            />
-          </Field>
-          <Field label="Logo menú (URL)">
-            <input
-              type="text"
-              value={settings.settings.logoMenu}
-              onChange={(e) => update({ logoMenu: e.target.value })}
-              className="admin-input"
-            />
-          </Field>
-          <Field label="Favicon (URL)">
-            <input
-              type="text"
-              value={settings.settings.favicon}
-              onChange={(e) => update({ favicon: e.target.value })}
-              className="admin-input"
-            />
-          </Field>
-        </Section>
       </div>
     </div>
   )
