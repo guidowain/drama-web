@@ -83,6 +83,26 @@
     "excerpt": ""
   },
   {
+    "id": "mod9mw1kgsr4f2qknxc",
+    "name": "Mi amiga y yo",
+    "slug": "mi-amiga-y-yo",
+    "year": 2025,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "identidad visual",
+      "retoque fotográfico",
+      "creatividad",
+      "diseño"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777056624/drama-web/uploads/z15hocfs9wsqmqyt5ssv.webp",
+    "coverImageAlt": "",
+    "contentBlocks": [],
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": ""
+  },
+  {
     "id": "2",
     "name": "LA CENA DE LOS TONTOS",
     "slug": "la-cena-de-los-tontos",
@@ -108,26 +128,6 @@
         "order": 0
       }
     ]
-  },
-  {
-    "id": "mod9mw1kgsr4f2qknxc",
-    "name": "Mi amiga y yo",
-    "slug": "mi-amiga-y-yo",
-    "year": 2025,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "identidad visual",
-      "retoque fotográfico",
-      "creatividad",
-      "diseño"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777056624/drama-web/uploads/z15hocfs9wsqmqyt5ssv.webp",
-    "coverImageAlt": "",
-    "contentBlocks": [],
-    "seoTitle": "",
-    "seoDescription": "",
-    "excerpt": ""
   },
   {
     "id": "modah3k8jvhnhvprpxk",
