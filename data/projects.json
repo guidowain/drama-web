@@ -61,6 +61,28 @@
     "excerpt": ""
   },
   {
+    "id": "mod7llya4r2rz5jhxk9",
+    "name": "School of rock",
+    "slug": "school-of-rock",
+    "year": 2024,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "comunicación",
+      "diseño",
+      "identidad visual",
+      "creatividad",
+      "retoque fotográfico",
+      "Animación"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777054319/drama-web/uploads/pzepxnnq2tlhrx3qmiku.webp",
+    "coverImageAlt": "",
+    "contentBlocks": [],
+    "seoTitle": "School of rock",
+    "seoDescription": "",
+    "excerpt": ""
+  },
+  {
     "id": "2",
     "name": "LA CENA DE LOS TONTOS",
     "slug": "la-cena-de-los-tontos",
@@ -86,28 +108,6 @@
         "order": 0
       }
     ]
-  },
-  {
-    "id": "mod7llya4r2rz5jhxk9",
-    "name": "School of rock",
-    "slug": "school-of-rock",
-    "year": 2024,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "comunicación",
-      "diseño",
-      "identidad visual",
-      "creatividad",
-      "retoque fotográfico",
-      "Animación"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777054319/drama-web/uploads/pzepxnnq2tlhrx3qmiku.webp",
-    "coverImageAlt": "",
-    "contentBlocks": [],
-    "seoTitle": "School of rock",
-    "seoDescription": "",
-    "excerpt": ""
   },
   {
     "id": "mod9mw1kgsr4f2qknxc",
