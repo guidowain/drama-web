@@ -46,28 +46,6 @@
     "excerpt": ""
   },
   {
-    "id": "mod7llya4r2rz5jhxk9",
-    "name": "School of rock",
-    "slug": "school-of-rock",
-    "year": 2024,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "comunicación",
-      "diseño",
-      "identidad visual",
-      "creatividad",
-      "retoque fotográfico",
-      "Animación"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777054319/drama-web/uploads/pzepxnnq2tlhrx3qmiku.webp",
-    "coverImageAlt": "",
-    "contentBlocks": [],
-    "seoTitle": "School of rock",
-    "seoDescription": "",
-    "excerpt": ""
-  },
-  {
     "id": "mod95mm7bzd6bgvrl74",
     "name": "Chanta",
     "slug": "chanta",
@@ -106,6 +84,28 @@
       }
     ],
     "seoTitle": "chanta",
+    "seoDescription": "",
+    "excerpt": ""
+  },
+  {
+    "id": "mod7llya4r2rz5jhxk9",
+    "name": "School of rock",
+    "slug": "school-of-rock",
+    "year": 2024,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "comunicación",
+      "diseño",
+      "identidad visual",
+      "creatividad",
+      "retoque fotográfico",
+      "Animación"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777054319/drama-web/uploads/pzepxnnq2tlhrx3qmiku.webp",
+    "coverImageAlt": "",
+    "contentBlocks": [],
+    "seoTitle": "School of rock",
     "seoDescription": "",
     "excerpt": ""
   },
