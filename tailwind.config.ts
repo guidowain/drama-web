@@ -9,8 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Enriq', 'Nunito', 'system-ui', 'sans-serif'],
-        enriq: ['Enriq', 'Nunito', 'system-ui', 'sans-serif'],
+        sans: ['Archivo', 'system-ui', 'sans-serif'],
+        enriq: ['Enriq', 'Archivo', 'system-ui', 'sans-serif'],
       },
       colors: {
         'brand-pink': '#FF3E9E',

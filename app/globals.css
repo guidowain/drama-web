@@ -30,6 +30,22 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Archivo';
+  src: url('/fonts/archivo/Archivo-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Archivo';
+  src: url('/fonts/archivo/Archivo-Italic-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -58,9 +74,21 @@ html {
 body {
   background-color: #000;
   color: #fff;
-  font-family: 'Enriq', 'Nunito', system-ui, sans-serif;
+  font-family: 'Archivo', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+button,
+.uppercase,
+.ticker-track,
+.btn-proyectos,
+.cta-btn,
+.tag-gradient {
+  font-family: 'Enriq', 'Archivo', system-ui, sans-serif;
 }
 
 /* Gradient utilities */
