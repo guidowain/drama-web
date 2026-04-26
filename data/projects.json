@@ -83,26 +83,6 @@
     "excerpt": ""
   },
   {
-    "id": "mod9mw1kgsr4f2qknxc",
-    "name": "Mi amiga y yo",
-    "slug": "mi-amiga-y-yo",
-    "year": 2025,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "identidad visual",
-      "retoque fotográfico",
-      "creatividad",
-      "diseño"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777056624/drama-web/uploads/z15hocfs9wsqmqyt5ssv.webp",
-    "coverImageAlt": "",
-    "contentBlocks": [],
-    "seoTitle": "",
-    "seoDescription": "",
-    "excerpt": ""
-  },
-  {
     "id": "modbhpubocxnmlsff6",
     "name": "Matilda",
     "slug": "matilda",
@@ -116,6 +96,26 @@
       "Retoque fotográfico"
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777059744/drama-web/uploads/crcu25parjraaitxido7.webp",
+    "coverImageAlt": "",
+    "contentBlocks": [],
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": ""
+  },
+  {
+    "id": "mod9mw1kgsr4f2qknxc",
+    "name": "Mi amiga y yo",
+    "slug": "mi-amiga-y-yo",
+    "year": 2025,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "identidad visual",
+      "retoque fotográfico",
+      "creatividad",
+      "diseño"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777056624/drama-web/uploads/z15hocfs9wsqmqyt5ssv.webp",
     "coverImageAlt": "",
     "contentBlocks": [],
     "seoTitle": "",
