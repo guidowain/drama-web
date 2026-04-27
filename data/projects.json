@@ -240,5 +240,24 @@
     "seoTitle": "",
     "seoDescription": "",
     "excerpt": ""
+  },
+  {
+    "id": "mogsvbm3w066py1wp4",
+    "name": "Lucky Hank",
+    "slug": "lucky-hank",
+    "year": 2024,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "CREATIVIDAD",
+      "MARKETING",
+      "DISEÑO"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777270315/drama-web/uploads/f1kjj7j5shkr2fyrkya3.webp",
+    "coverImageAlt": "Gráfica oficial de Lucky Hank con Bob Odenkirk",
+    "contentBlocks": [],
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": ""
   }
 ]
