@@ -169,7 +169,8 @@
         "image2": "",
         "image2Alt": "",
         "image2Scale": 100,
-        "imageSide": "left"
+        "imageSide": "left",
+        "imageShowMuteButton": false
       },
       {
         "id": "mohpdzg60ua9skjisufk",
