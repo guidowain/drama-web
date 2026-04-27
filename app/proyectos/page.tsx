@@ -87,7 +87,7 @@ function ProyectosContent() {
         </div>
       </main>
 
-      <Ticker text="COMUNICACIÓN Y DISEÑO PARA ENTRETENIMIENTO" bg="#000" speed={55} />
+      <Ticker text="DISEÑO Y COMUNICACIÓN PARA ENTRETENIMIENTO" bg="#000" speed={55} />
 
       <ContactStrip
         instagram={CONTACT.instagram}

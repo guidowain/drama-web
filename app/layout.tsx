@@ -3,11 +3,12 @@ import './globals.css'
 import { MenuProvider } from '@/lib/MenuContext'
 import Header from '@/components/Header'
 import Menu from '@/components/Menu'
+import TabTitle from '@/components/TabTitle'
 import { getSiteSettings } from '@/lib/api'
 import { headers } from 'next/headers'
 
 export const metadata: Metadata = {
-  title: 'Drama — Comunicación y Diseño para Entretenimiento',
+  title: 'Drama - Agencia',
   description: 'La historia debajo del escenario.',
   icons: {
     icon: [
@@ -64,6 +65,7 @@ export default async function RootLayout({
               whatsapp: '',
               mail: '',
             }} />
+            <TabTitle />
             {children}
           </MenuProvider>
         )}

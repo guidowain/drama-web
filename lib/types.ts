@@ -58,10 +58,14 @@ export interface SiteSettings {
     }
   }
   about: {
+    title: string
     image: string
     imageAlt: string
+    quienesSomosTitle: string
     quienesSomos: string
+    comoTrabajamosTitle: string
     comoTrabajamos: string
+    queDiferenciaTitle: string
     queDiferencia: string
   }
   settings: {

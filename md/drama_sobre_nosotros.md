@@ -128,7 +128,7 @@ Dividido en 3 bloques:
 
 - mismo que HOME
 - texto en loop:
-  "COMUNICACIÓN Y DISEÑO PARA ENTRETENIMIENTO"
+  "DISEÑO Y COMUNICACIÓN PARA ENTRETENIMIENTO"
 
 - reutilizar mismo componente del home (no duplicar lógica)
 

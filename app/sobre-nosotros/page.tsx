@@ -5,6 +5,7 @@ import ContactStrip from '@/components/ContactStrip'
 export default async function SobreNosotrosPage() {
   const settings = await getSiteSettings()
   const { about, settings: siteSettings } = settings
+  const aboutTitle = about.title.split('\n').map((line) => line.trim()).filter(Boolean)
 
   return (
     <main className="min-h-screen pt-16 md:pt-[72px]" style={{ background: 'linear-gradient(135deg, #FF3E9E 0%, #FFA24A 60%, #FF3E9E 100%)' }}>
@@ -12,7 +13,9 @@ export default async function SobreNosotrosPage() {
       <div className="px-5 md:px-10 py-12 md:py-20">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
           <h1 className="order-1 text-black font-black uppercase text-5xl leading-none md:hidden">
-            SOMOS<br />DRAMA
+            {aboutTitle.map((line) => (
+              <span key={line} className="block">{line}</span>
+            ))}
           </h1>
 
           {/* Left — image */}
@@ -34,21 +37,23 @@ export default async function SobreNosotrosPage() {
           {/* Right — content */}
           <div className="order-3 md:order-2 flex flex-col gap-6">
             <h1 className="hidden text-black font-black uppercase leading-none md:block md:text-6xl lg:text-7xl">
-              SOMOS<br />DRAMA
+              {aboutTitle.map((line) => (
+                <span key={line} className="block">{line}</span>
+              ))}
             </h1>
 
             {/* Black content box */}
             <div className="bg-black rounded-2xl p-6 md:p-8 space-y-6">
               <ContentBlock
-                title="QUIÉNES SOMOS"
+                title={about.quienesSomosTitle}
                 text={about.quienesSomos}
               />
               <ContentBlock
-                title="CÓMO TRABAJAMOS"
+                title={about.comoTrabajamosTitle}
                 text={about.comoTrabajamos}
               />
               <ContentBlock
-                title="QUÉ NOS DIFERENCIA"
+                title={about.queDiferenciaTitle}
                 text={about.queDiferencia}
               />
             </div>
@@ -58,7 +63,7 @@ export default async function SobreNosotrosPage() {
       </div>
 
       {/* Ticker */}
-      <Ticker text="COMUNICACIÓN Y DISEÑO PARA ENTRETENIMIENTO" bg="#000" />
+      <Ticker text="DISEÑO Y COMUNICACIÓN PARA ENTRETENIMIENTO" bg="#000" />
 
       {/* Contacto */}
       <ContactStrip

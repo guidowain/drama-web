@@ -50,12 +50,16 @@ const DEFAULT_SITE_SETTINGS: SiteSettings = {
     },
   },
   about: {
+    title: 'SOMOS\nDRAMA',
     image: '',
     imageAlt: 'El equipo de Drama',
+    quienesSomosTitle: 'QUIÉNES SOMOS',
     quienesSomos:
-      'Somos Drama, una agencia de comunicación y diseño especializada en entretenimiento. Trabajamos con productoras, teatros y artistas para contar historias que conectan.',
+      'Somos Drama, una agencia de diseño y comunicación especializada en entretenimiento. Trabajamos con productoras, teatros y artistas para contar historias que conectan.',
+    comoTrabajamosTitle: 'CÓMO TRABAJAMOS',
     comoTrabajamos:
-      'Nos involucramos en cada proyecto desde el inicio, entendiendo la esencia del espectáculo para traducirla en comunicación y diseño que resuena con el público.',
+      'Nos involucramos en cada proyecto desde el inicio, entendiendo la esencia del espectáculo para traducirla en diseño y comunicación que resuena con el público.',
+    queDiferenciaTitle: 'QUÉ NOS DIFERENCIA',
     queDiferencia:
       'Vivimos el teatro y el entretenimiento. Eso nos da una perspectiva única para crear piezas que hablan el mismo idioma que el público al que querés llegar.',
   },

@@ -33,7 +33,7 @@ export default async function HomePage() {
 
         {/* Gradient plaque: texto + ticker adentro */}
         <HeroGradientPlaque lines={[home.heroLine1, home.heroLine2]}>
-          <Ticker text="COMUNICACIÓN Y DISEÑO PARA ENTRETENIMIENTO" speed={55} bg="#000" color="#fff" />
+          <Ticker text="DISEÑO Y COMUNICACIÓN PARA ENTRETENIMIENTO" speed={55} bg="#000" color="#fff" />
         </HeroGradientPlaque>
       </section>
 

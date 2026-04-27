@@ -119,13 +119,17 @@
       "whatsapp": "+5491163357223",
       "instagram": "https://instagram.com/drama.com.ar"
     },
-    "wheelText": "COMUNICACIÓN Y DISEÑO PARA ENTRETENIMIENTO"
+    "wheelText": "DISEÑO Y COMUNICACIÓN PARA ENTRETENIMIENTO"
   },
   "about": {
+    "title": "SOMOS\nDRAMA",
     "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777240121/Socios_pezw24.webp",
     "imageAlt": "Matías Gordon y Guido Wain. Los Drama.",
-    "quienesSomos": "Somos Drama, una agencia de comunicación y diseño especializada en entretenimiento. Trabajamos con productoras, teatros y artistas para contar historias que conectan.",
-    "comoTrabajamos": "Nos involucramos en cada proyecto desde el inicio, entendiendo la esencia del espectáculo para traducirla en comunicación y diseño que resuena con el público.",
+    "quienesSomosTitle": "QUIÉNES SOMOS",
+    "quienesSomos": "Somos Drama, una agencia de diseño y comunicación especializada en entretenimiento. Trabajamos con productoras, teatros y artistas para contar historias que conectan.",
+    "comoTrabajamosTitle": "CÓMO TRABAJAMOS",
+    "comoTrabajamos": "Nos involucramos en cada proyecto desde el inicio, entendiendo la esencia del espectáculo para traducirla en diseño y comunicación que resuena con el público.",
+    "queDiferenciaTitle": "QUÉ NOS DIFERENCIA",
     "queDiferencia": "Vivimos el teatro y el entretenimiento. Eso nos da una perspectiva única para crear piezas que hablan el mismo idioma que el público al que querés llegar."
   },
   "settings": {

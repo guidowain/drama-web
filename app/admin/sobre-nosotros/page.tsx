@@ -46,6 +46,15 @@ export default function AdminSobreNosotrosPage() {
       </div>
 
       <div className="space-y-5">
+        <Field label="Título principal">
+          <textarea
+            value={settings.about.title}
+            onChange={(e) => update({ title: e.target.value })}
+            rows={2}
+            placeholder={'SOMOS\nDRAMA'}
+            className="admin-textarea"
+          />
+        </Field>
         <Field label="Imagen (URL)">
           <input
             type="text"
@@ -63,7 +72,15 @@ export default function AdminSobreNosotrosPage() {
             className="admin-input"
           />
         </Field>
-        <Field label="Quiénes Somos">
+        <Field label="Título sección 1">
+          <input
+            type="text"
+            value={settings.about.quienesSomosTitle}
+            onChange={(e) => update({ quienesSomosTitle: e.target.value })}
+            className="admin-input"
+          />
+        </Field>
+        <Field label="Texto sección 1">
           <textarea
             value={settings.about.quienesSomos}
             onChange={(e) => update({ quienesSomos: e.target.value })}
@@ -71,7 +88,15 @@ export default function AdminSobreNosotrosPage() {
             className="admin-textarea"
           />
         </Field>
-        <Field label="Cómo Trabajamos">
+        <Field label="Título sección 2">
+          <input
+            type="text"
+            value={settings.about.comoTrabajamosTitle}
+            onChange={(e) => update({ comoTrabajamosTitle: e.target.value })}
+            className="admin-input"
+          />
+        </Field>
+        <Field label="Texto sección 2">
           <textarea
             value={settings.about.comoTrabajamos}
             onChange={(e) => update({ comoTrabajamos: e.target.value })}
@@ -79,7 +104,15 @@ export default function AdminSobreNosotrosPage() {
             className="admin-textarea"
           />
         </Field>
-        <Field label="Qué Nos Diferencia">
+        <Field label="Título sección 3">
+          <input
+            type="text"
+            value={settings.about.queDiferenciaTitle}
+            onChange={(e) => update({ queDiferenciaTitle: e.target.value })}
+            className="admin-input"
+          />
+        </Field>
+        <Field label="Texto sección 3">
           <textarea
             value={settings.about.queDiferencia}
             onChange={(e) => update({ queDiferencia: e.target.value })}

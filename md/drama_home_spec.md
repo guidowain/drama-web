@@ -169,7 +169,7 @@
 - color: #FFFFFF
 - uppercase
 - contenido:
-  "COMUNICACIÓN Y DISEÑO PARA ENTRETENIMIENTO •" repetido en loop
+  "DISEÑO Y COMUNICACIÓN PARA ENTRETENIMIENTO •" repetido en loop
 
 ### Animación
 - scroll horizontal infinito (right → left)
