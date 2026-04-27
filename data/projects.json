@@ -156,7 +156,22 @@
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777054319/drama-web/uploads/pzepxnnq2tlhrx3qmiku.webp",
     "coverImageAlt": "",
-    "contentBlocks": [],
+    "contentBlocks": [
+      {
+        "id": "mohongr97yt245u9j8f",
+        "type": "image",
+        "order": 0,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777323731/drama-web/uploads/fydmm18gq8ujzeg2h99o.webm",
+        "imageAlt": "Logo animado de School of rock Argentina",
+        "imageScale": 100,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "imageSide": "left"
+      }
+    ],
     "seoTitle": "School of rock",
     "seoDescription": "",
     "excerpt": ""
