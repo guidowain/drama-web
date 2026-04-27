@@ -140,12 +140,14 @@ export function ProjectFormFields({
       {/* Cover */}
       <div>
         <label className="admin-label">Imagen de portada</label>
-        <ImageUploader
-          value={form.coverImage}
-          onChange={(url) => onChange({ coverImage: url })}
-          aspect="16/9"
-          placeholder="Arrastrá la portada del proyecto o hacé click para subir"
-        />
+        <div className="w-full max-w-64 md:max-w-72">
+          <ImageUploader
+            value={form.coverImage}
+            onChange={(url) => onChange({ coverImage: url })}
+            aspect="1/1"
+            placeholder="Arrastrá la portada del proyecto o hacé click para subir"
+          />
+        </div>
         {form.coverImage && (
           <input
             type="text"

@@ -79,8 +79,13 @@ function ProyectosContent() {
         <div className="px-5 md:px-10 pb-20">
           <div className="mx-auto w-full max-w-6xl">
             <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 md:gap-8">
-              {projects.map((project) => (
-                <ProjectCard key={project.id} project={project} onClick={handleCardOpen} />
+              {projects.map((project, index) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  index={index}
+                  onClick={handleCardOpen}
+                />
               ))}
             </div>
           </div>

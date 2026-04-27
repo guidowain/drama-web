@@ -1,21 +1,58 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import type { Proyecto } from '@/lib/types'
 
 type Props = {
   project: Proyecto
+  index: number
   onClick: (project: Proyecto, originRect: DOMRect) => void
 }
 
-export default function ProjectCard({ project, onClick }: Props) {
+const revealVariants = {
+  hidden: {
+    opacity: 0,
+    y: 22,
+    scale: 0.985,
+  },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1],
+      delay: index < 2 ? 0.12 + index * 0.1 : 0,
+    },
+  }),
+}
+
+export default function ProjectCard({ project, index, onClick }: Props) {
+  const [isDesktop, setIsDesktop] = useState<boolean | null>(null)
   const hasManyTags = project.tags.length >= 5
   const tagClassName = hasManyTags
     ? 'text-[0.5rem] md:text-[0.54rem] px-2 py-[1px] tracking-[0.025em]'
     : 'text-[0.58rem] md:text-[0.62rem] px-2.5 py-[1px] tracking-[0.04em]'
 
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 768px)')
+    const syncMedia = () => setIsDesktop(media.matches)
+
+    syncMedia()
+    media.addEventListener('change', syncMedia)
+
+    return () => media.removeEventListener('change', syncMedia)
+  }, [])
+
   return (
     <motion.article
+      custom={index}
+      variants={revealVariants}
+      initial="hidden"
+      animate={isDesktop === false || (isDesktop && index < 2) ? 'visible' : undefined}
+      whileInView={isDesktop && index >= 2 ? 'visible' : undefined}
+      viewport={{ once: true, amount: 0.22, margin: '0px 0px -8% 0px' }}
       whileHover={{ scale: 1.02 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       onClick={(event) => onClick(project, event.currentTarget.getBoundingClientRect())}
