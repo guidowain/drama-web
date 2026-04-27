@@ -200,5 +200,25 @@
     "seoTitle": "",
     "seoDescription": "",
     "excerpt": ""
+  },
+  {
+    "id": "mogrtbmlbdegoq7jpn5",
+    "name": "Avenida Q",
+    "slug": "avenida-q",
+    "year": 2024,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "CREATIVIDAD",
+      "RETOQUE FOTOGRÁFICO",
+      "DISEÑO",
+      "IDENTIDAD VISUAL"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777268493/drama-web/uploads/cbp263qmerayjwysoxzu.webp",
+    "coverImageAlt": "Gráfica oficial de Avenida Q Argentina.",
+    "contentBlocks": [],
+    "seoTitle": "Avenida Q Argentina",
+    "seoDescription": "",
+    "excerpt": ""
   }
 ]
