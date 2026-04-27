@@ -132,6 +132,20 @@
         "image2Alt": "",
         "image2Scale": 100,
         "imageSide": "right"
+      },
+      {
+        "id": "mohj637ixaa7i953bh",
+        "type": "image",
+        "order": 3,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777314514/drama-web/uploads/w0ge8r8uzjqqmlcbtuuh.webp",
+        "imageAlt": "",
+        "imageScale": 100,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "imageSide": "left"
       }
     ],
     "seoTitle": "",
