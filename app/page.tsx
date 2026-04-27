@@ -83,9 +83,10 @@ function IconDesign() {
           <stop offset="1" stopColor="#FCC028" />
         </linearGradient>
       </defs>
-      <path d="M12 20h9" />
-      <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
-      <path d="m14 6 4 4" />
+      <path d="M18.5 3.5 9 13" />
+      <path d="m16.5 5.5 2 2" />
+      <path d="m8.5 13.5 2 2" />
+      <path d="M7.8 14.4c-2.3.4-3.8 2.1-3.8 4.8 1.9 0 4.1-.4 5.1-2 .5-.9.1-2.1-1.3-2.8Z" />
     </svg>
   )
 }

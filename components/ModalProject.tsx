@@ -46,10 +46,10 @@ export default function ModalProject({ project, onClose }: Props) {
 
           {/* Modal */}
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 18 }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, scale: 0.97, y: 18 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.97, y: 18 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-[201] flex items-center justify-center p-0 md:p-6"
             onClick={onClose}
           >
@@ -69,31 +69,13 @@ export default function ModalProject({ project, onClose }: Props) {
                 </svg>
               </button>
 
-              {/* Cover */}
-              <motion.div
-                layoutId={`project-cover-${project.id}`}
-                transition={{ type: 'spring', stiffness: 190, damping: 24, mass: 0.8 }}
-                className="relative h-[42vh] max-h-[430px] min-h-[260px] w-full overflow-hidden bg-zinc-950 md:rounded-t-3xl"
-              >
-                {project.coverImage ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={project.coverImage}
-                    alt={project.coverImageAlt}
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <div className="h-full w-full gradient-bg opacity-70" />
-                )}
-              </motion.div>
-
               {/* Header */}
               <motion.div
                 variants={contentVariants}
                 initial="hidden"
                 animate="visible"
                 exit="hidden"
-                className="relative gradient-bg px-6 md:px-10 pt-8 pb-8"
+                className="relative gradient-bg px-6 pt-12 pb-8 md:rounded-t-3xl md:px-10"
               >
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.tags.map((tag) => (
