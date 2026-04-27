@@ -14,16 +14,14 @@ export default function LogosTicker({ logos }: Props) {
     logos.length >= minVisibleItems
       ? logos
       : Array.from({ length: Math.ceil(minVisibleItems / logos.length) }, () => logos).flat()
-  const doubled = [...trackLogos, ...trackLogos]
   const shifted = [...trackLogos.slice(Math.ceil(trackLogos.length / 2)), ...trackLogos.slice(0, Math.ceil(trackLogos.length / 2))]
-  const doubledShifted = [...shifted, ...shifted]
 
-  const renderLogo = (logo: Logo, i: number) => {
+  const renderLogo = (logo: Logo, i: number, group: string) => {
     const scale = Math.min((logo.scale ?? 1) * 72, 100)
 
     return (
       <div
-        key={i}
+        key={`${group}-${i}`}
         className="shrink-0 inline-flex h-[72px] items-center justify-center px-3 md:h-[124px] md:px-4"
       >
         {logo.src ? (
@@ -45,13 +43,21 @@ export default function LogosTicker({ logos }: Props) {
     )
   }
 
+  const renderLogoGroup = (items: Logo[], group: string, className: string) => (
+    <div className={`flex shrink-0 items-center ${className}`} aria-hidden={group.endsWith('-copy')}>
+      {items.map((logo, i) => renderLogo(logo, i, group))}
+    </div>
+  )
+
   return (
     <div className="overflow-hidden py-8 md:py-14 bg-black border-y border-white/10">
-      <div className="ticker-track-logos gap-12 md:gap-20 px-6 md:px-8">
-        {doubled.map(renderLogo)}
+      <div className="ticker-track-logos">
+        {renderLogoGroup(trackLogos, 'main', 'gap-12 px-6 md:gap-20 md:px-8')}
+        {renderLogoGroup(trackLogos, 'main-copy', 'gap-12 px-6 md:gap-20 md:px-8')}
       </div>
-      <div className="ticker-track-logos ticker-track-logos-alt mt-5 gap-12 px-6 md:hidden">
-        {doubledShifted.map(renderLogo)}
+      <div className="ticker-track-logos ticker-track-logos-alt mt-5 md:hidden">
+        {renderLogoGroup(shifted, 'mobile-alt', 'gap-12 px-6')}
+        {renderLogoGroup(shifted, 'mobile-alt-copy', 'gap-12 px-6')}
       </div>
     </div>
   )
