@@ -17,7 +17,17 @@ export default function Header({ settings }: Props) {
       className="fixed top-0 left-0 right-0 z-50 h-16 md:h-[72px] flex items-center justify-between px-5 md:px-8"
       style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)' }}
     >
-      <Link href="/" className="group shrink-0 relative h-7 w-[120px] block" aria-label="Drama — Inicio">
+      <Link href="/" className="shrink-0 relative h-7 w-[120px] block md:hidden" aria-label="Drama — Inicio">
+        <Image
+          src="/logos/Logo oficial.png"
+          alt="Drama"
+          fill
+          className="object-contain object-left"
+          priority
+        />
+      </Link>
+
+      <Link href="/" className="group shrink-0 relative h-7 w-[120px] hidden md:block" aria-label="Drama — Inicio">
         <Image
           src="/logos/Logo ByN invertido.png"
           alt="Drama"

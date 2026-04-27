@@ -13,15 +13,20 @@ type Props = {
 }
 
 export default function ServicesGrid({ services }: Props) {
+  const [activeMobileIndex, setActiveMobileIndex] = useState<number | null>(null)
+
   return (
     <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
       {services.map((service, index) => (
         <ServiceCard
           key={service.name}
+          index={index}
           name={service.name}
           items={service.items}
           icon={service.icon}
           shouldHint={index === 0}
+          activeMobileIndex={activeMobileIndex}
+          setActiveMobileIndex={setActiveMobileIndex}
         />
       ))}
     </div>
@@ -29,19 +34,24 @@ export default function ServicesGrid({ services }: Props) {
 }
 
 function ServiceCard({
+  index,
   name,
   items,
   icon,
   shouldHint,
+  activeMobileIndex,
+  setActiveMobileIndex,
 }: {
+  index: number
   name: string
   items: string[]
   icon: React.ReactNode
   shouldHint: boolean
+  activeMobileIndex: number | null
+  setActiveMobileIndex: React.Dispatch<React.SetStateAction<number | null>>
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
-  const [isFlipped, setIsFlipped] = useState(false)
   const [isNudging, setIsNudging] = useState(false)
   const hasInteractedRef = useRef(false)
   const nudgeTimerRef = useRef<number | null>(null)
@@ -51,7 +61,7 @@ function ServiceCard({
     const media = window.matchMedia('(max-width: 767px)')
     const syncMedia = () => {
       setIsMobile(media.matches)
-      if (!media.matches) setIsFlipped(false)
+      if (!media.matches) setActiveMobileIndex(null)
     }
 
     syncMedia()
@@ -73,7 +83,14 @@ function ServiceCard({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (isMobile) {
-          setIsFlipped(entry.isIntersecting && entry.intersectionRatio >= 0.45)
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.68) {
+            setActiveMobileIndex(index)
+            return
+          }
+
+          if (entry.intersectionRatio <= 0.18) {
+            setActiveMobileIndex((current) => current === index ? null : current)
+          }
           return
         }
 
@@ -95,7 +112,7 @@ function ServiceCard({
 
         clearNudgeTimer()
       },
-      { threshold: [0, 0.35, 0.45, 0.7] },
+      { threshold: [0, 0.18, 0.45, 0.68, 0.85] },
     )
 
     observer.observe(element)
@@ -103,7 +120,7 @@ function ServiceCard({
       clearNudgeTimer()
       observer.disconnect()
     }
-  }, [isMobile, shouldHint])
+  }, [index, isMobile, setActiveMobileIndex, shouldHint])
 
   function handlePointerEnter() {
     hasInteractedRef.current = true
@@ -118,7 +135,7 @@ function ServiceCard({
     <div
       ref={ref}
       onPointerEnter={handlePointerEnter}
-      className={`flip-card h-72 md:h-80 rounded-2xl ${isFlipped ? 'is-flipped' : ''} ${isNudging ? 'is-nudging' : ''}`}
+      className={`flip-card h-72 md:h-80 rounded-2xl ${activeMobileIndex === index ? 'is-flipped' : ''} ${isNudging ? 'is-nudging' : ''}`}
     >
       <div className="flip-card-inner rounded-2xl">
         {/* Front */}

@@ -18,7 +18,7 @@ export default function ContactStrip({ instagram, whatsapp, mail }: Props) {
       </p>
 
       {/* Right — contact icons */}
-      <nav aria-label="Contacto" className="flex items-center gap-8 md:gap-10">
+      <nav aria-label="Contacto" className="flex w-full items-center justify-end gap-8 md:w-auto md:justify-start md:gap-10">
         <a
           href={instagram}
           target="_blank"

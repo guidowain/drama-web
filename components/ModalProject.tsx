@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Proyecto, ContentBlock } from '@/lib/types'
 
@@ -19,6 +19,11 @@ type Props = {
 }
 
 export default function ModalProject({ project, originRect, onClose }: Props) {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const touchStartYRef = useRef<number | null>(null)
+  const touchStartedAtTopRef = useRef(false)
+  const touchCloseReadyRef = useRef(false)
+
   useEffect(() => {
     if (!project) return
     document.body.style.overflow = 'hidden'
@@ -79,6 +84,40 @@ export default function ModalProject({ project, originRect, onClose }: Props) {
       }
     : { opacity: 0 }
 
+  const isMobileViewport = () => (
+    typeof window !== 'undefined' &&
+    window.matchMedia('(max-width: 767px)').matches
+  )
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!isMobileViewport()) return
+
+    touchStartYRef.current = event.touches[0]?.clientY ?? null
+    touchStartedAtTopRef.current = (scrollRef.current?.scrollTop ?? 0) <= 0
+    touchCloseReadyRef.current = false
+  }
+
+  const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!touchStartedAtTopRef.current || touchStartYRef.current == null) return
+
+    const currentY = event.touches[0]?.clientY ?? touchStartYRef.current
+    const deltaY = currentY - touchStartYRef.current
+
+    if ((scrollRef.current?.scrollTop ?? 0) <= 0 && deltaY > 24) {
+      event.preventDefault()
+    }
+
+    touchCloseReadyRef.current = deltaY > 110
+  }
+
+  const handleTouchEnd = () => {
+    if (touchCloseReadyRef.current) onClose()
+
+    touchStartYRef.current = null
+    touchStartedAtTopRef.current = false
+    touchCloseReadyRef.current = false
+  }
+
   return (
     <AnimatePresence>
       {project && (
@@ -106,7 +145,13 @@ export default function ModalProject({ project, originRect, onClose }: Props) {
               className="fixed overflow-hidden bg-black shadow-[0_30px_100px_rgba(0,0,0,0.45)]"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="h-full overflow-y-auto">
+              <div
+                ref={scrollRef}
+                className="h-full overflow-y-auto"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
               {/* Close button */}
               <button
                 onClick={onClose}

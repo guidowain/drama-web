@@ -13,7 +13,14 @@ export default function CTAProyectos() {
 
   useEffect(() => { setMounted(true) }, [])
 
+  const shouldSkipInteraction = useCallback(() => (
+    typeof window !== 'undefined' &&
+    window.matchMedia('(hover: none), (pointer: coarse)').matches
+  ), [])
+
   const handleMouseEnter = useCallback(() => {
+    if (shouldSkipInteraction()) return
+
     if (btnRef.current) {
       const rect = btnRef.current.getBoundingClientRect()
       setOrigin({
@@ -29,12 +36,14 @@ export default function CTAProyectos() {
         setVisible(true)
       })
     })
-  }, [])
+  }, [shouldSkipInteraction])
 
   const handleMouseLeave = useCallback(() => {
+    if (shouldSkipInteraction()) return
+
     // Only fade opacity — don't collapse the circle (avoids the lag)
     setVisible(false)
-  }, [])
+  }, [shouldSkipInteraction])
 
   const isHovered = visible
 

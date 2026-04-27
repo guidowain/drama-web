@@ -131,6 +131,11 @@ button,
   animation: ticker 35s linear infinite;
 }
 
+.ticker-track-logos-alt {
+  animation-duration: 42s;
+  animation-direction: reverse;
+}
+
 /* 3D flip card */
 .flip-card {
   perspective: 1200px;
@@ -144,12 +149,20 @@ button,
   transform-style: preserve-3d;
 }
 
-.flip-card:hover .flip-card-inner {
+.flip-card.is-flipped .flip-card-inner {
   transform: rotateY(180deg);
 }
 
-.flip-card.is-flipped .flip-card-inner {
-  transform: rotateY(180deg);
+@media (hover: hover) and (pointer: fine) {
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .flip-card-inner {
+    transition-duration: 1s;
+  }
 }
 
 .flip-card.is-nudging .flip-card-inner {
@@ -238,6 +251,12 @@ button,
 /* Hero video — mobile 1:1 crop */
 .hero-video-wrap {
   aspect-ratio: 16 / 9;
+}
+
+@media (min-width: 1280px) {
+  .hero-video-wrap {
+    aspect-ratio: 16 / 8.35;
+  }
 }
 
 @media (max-width: 767px) {

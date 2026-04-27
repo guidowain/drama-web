@@ -83,11 +83,8 @@ function IconDesign() {
           <stop offset="1" stopColor="#FCC028" />
         </linearGradient>
       </defs>
-      <circle cx="13.5" cy="6.5" r=".5" fill="url(#designIconGradient)" stroke="none" />
-      <circle cx="17.5" cy="10.5" r=".5" fill="url(#designIconGradient)" stroke="none" />
-      <circle cx="8.5" cy="7.5" r=".5" fill="url(#designIconGradient)" stroke="none" />
-      <circle cx="6.5" cy="12.5" r=".5" fill="url(#designIconGradient)" stroke="none" />
-      <path d="M12 22C6.5 22 2 17.97 2 13c0-5.03 4.5-9 10-9s10 3.97 10 9c0 1.66-1.34 3-3 3h-1.77c-.85 0-1.23 1.06-.58 1.6.67.56 1.05 1.36 1.05 2.23 0 1.2-.98 2.17-2.18 2.17H12Z" />
+      <path d="m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08" />
+      <path d="M7.07 14.94c-1.66 0-3 1.35-3 3.01 0 1.66-1.34 3-3 3 0 0 1.33 1 4 1 2.49 0 4-1.5 4-4.01 0-1.66-1.34-3-3-3Z" />
     </svg>
   )
 }
