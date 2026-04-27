@@ -89,7 +89,7 @@
       "Retoque fotográfico"
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777059744/drama-web/uploads/crcu25parjraaitxido7.webp",
-    "coverImageAlt": "",
+    "coverImageAlt": "Gráfica oficial de Matilda el músical Argentina",
     "contentBlocks": [
       {
         "id": "mohi1fbh4qcnitnc9or",
@@ -104,6 +104,20 @@
         "image2Alt": "",
         "image2Scale": 100,
         "imageSide": "left"
+      },
+      {
+        "id": "mohikboe4vdxecc1k8r",
+        "type": "imageText",
+        "order": 1,
+        "title": "Lyric video",
+        "text": "Aprovechando la grabación oficial del corte promocional del musical, hicimos un video animado para que los niños aprendan la letra antes de ir a la función.",
+        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777313659/drama-web/uploads/f4ltosmyuxmrkr19dw0i.webm",
+        "imageAlt": "",
+        "imageScale": 100,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "imageSide": "right"
       }
     ],
     "seoTitle": "",
