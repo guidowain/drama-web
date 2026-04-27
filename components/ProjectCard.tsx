@@ -19,9 +19,9 @@ export default function ProjectCard({ project, onClick }: Props) {
       whileHover={{ scale: 1.02 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       onClick={(event) => onClick(project, event.currentTarget.getBoundingClientRect())}
-      className="h-full cursor-pointer rounded-2xl bg-white shadow-md transition-shadow hover:shadow-[0_0_28px_rgba(0,0,0,0.12)]"
+      className="cursor-pointer rounded-2xl bg-white shadow-md transition-shadow hover:shadow-[0_0_28px_rgba(0,0,0,0.12)]"
     >
-      <div className="flex h-full flex-col rounded-2xl bg-white p-3">
+      <div className="flex flex-col rounded-2xl bg-white p-3">
         {/* Cover image */}
         <div className="relative aspect-square overflow-hidden rounded-xl bg-zinc-950">
           {project.coverImage ? (
@@ -37,7 +37,7 @@ export default function ProjectCard({ project, onClick }: Props) {
         </div>
 
         {/* Info */}
-        <div className="mt-2 grid min-h-[3.15rem] grid-cols-[1fr_auto] items-start gap-2 px-1 pb-1 md:min-h-[3.35rem]">
+        <div className="mt-3 grid grid-cols-[1fr_auto] items-start gap-2 px-1 pb-0.5">
           <div className="flex flex-wrap content-start gap-1">
             {project.tags.map((tag) => (
               <span

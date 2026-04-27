@@ -53,7 +53,7 @@ export default function Header({ settings }: Props) {
           <IconWhatsApp />
         </a>
         <a
-          href="mailto:los@drama.com.ar"
+          href={`mailto:${settings.mail}`}
           aria-label="Mail"
           className="text-white opacity-80 hover:opacity-100 transition-opacity"
         >

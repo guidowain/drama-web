@@ -83,10 +83,11 @@ function IconDesign() {
           <stop offset="1" stopColor="#FCC028" />
         </linearGradient>
       </defs>
-      <path d="M18.5 3.5 9 13" />
-      <path d="m16.5 5.5 2 2" />
-      <path d="m8.5 13.5 2 2" />
-      <path d="M7.8 14.4c-2.3.4-3.8 2.1-3.8 4.8 1.9 0 4.1-.4 5.1-2 .5-.9.1-2.1-1.3-2.8Z" />
+      <circle cx="13.5" cy="6.5" r=".5" fill="url(#designIconGradient)" stroke="none" />
+      <circle cx="17.5" cy="10.5" r=".5" fill="url(#designIconGradient)" stroke="none" />
+      <circle cx="8.5" cy="7.5" r=".5" fill="url(#designIconGradient)" stroke="none" />
+      <circle cx="6.5" cy="12.5" r=".5" fill="url(#designIconGradient)" stroke="none" />
+      <path d="M12 22C6.5 22 2 17.97 2 13c0-5.03 4.5-9 10-9s10 3.97 10 9c0 1.66-1.34 3-3 3h-1.77c-.85 0-1.23 1.06-.58 1.6.67.56 1.05 1.36 1.05 2.23 0 1.2-.98 2.17-2.18 2.17H12Z" />
     </svg>
   )
 }
@@ -101,7 +102,7 @@ function IconComm() {
           <stop offset="1" stopColor="#FCC028" />
         </linearGradient>
       </defs>
-      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
     </svg>
   )
 }

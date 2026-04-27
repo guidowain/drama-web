@@ -39,7 +39,7 @@ export default function ContactStrip({ instagram, whatsapp, mail }: Props) {
         </a>
         <a
           href={`mailto:${mail}`}
-          aria-label="Email"
+          aria-label="Mail"
           className="text-black opacity-70 hover:opacity-100 transition-opacity hover:scale-110 transform duration-200"
         >
           <IconMail />
