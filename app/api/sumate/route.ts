@@ -201,8 +201,8 @@ async function getGoogleAccessToken() {
   }
 
   const serviceAccount = parseServiceAccountKey(process.env.GOOGLE_SERVICE_ACCOUNT_KEY)
-  const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || process.env.GOOGLE_CLIENT_EMAIL || serviceAccount?.clientEmail
-  const privateKey = normalizePrivateKey(process.env.GOOGLE_PRIVATE_KEY || serviceAccount?.privateKey)
+  const clientEmail = serviceAccount?.clientEmail || process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || process.env.GOOGLE_CLIENT_EMAIL
+  const privateKey = normalizePrivateKey(serviceAccount?.privateKey || process.env.GOOGLE_PRIVATE_KEY)
 
   if (!clientEmail || !privateKey) {
     throw new Error('Faltan GOOGLE_SERVICE_ACCOUNT_EMAIL y/o GOOGLE_PRIVATE_KEY.')
