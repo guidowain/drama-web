@@ -13,10 +13,10 @@ export default function SumatePage() {
         <div className="mx-auto grid w-full max-w-6xl gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-end">
           <div>
             <p className="mb-4 text-xs font-black uppercase tracking-[0.18em] text-black/55">
-              Sumate a Drama
+              Queremos conocerte
             </p>
             <h1 className="max-w-3xl text-5xl font-black uppercase leading-none md:text-7xl">
-              Queremos conocerte
+              Sumate a Drama
             </h1>
           </div>
           <p className="max-w-2xl text-base font-semibold leading-snug text-black/70 md:justify-self-end md:text-xl">
@@ -34,4 +34,3 @@ export default function SumatePage() {
     </main>
   )
 }
-

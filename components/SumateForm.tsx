@@ -196,11 +196,10 @@ export default function SumateForm() {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <TextInput
           label="Portfolio"
-          type="url"
           value={form.portfolio}
           onChange={(value) => updateField('portfolio', value)}
           required
-          placeholder="https://..."
+          placeholder="Link a tu portfolio, Behance, Drive, Instagram, sitio, etc."
         />
         <TextInput
           label="Contacto (email)"

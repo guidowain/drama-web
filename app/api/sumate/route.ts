@@ -106,7 +106,7 @@ function validatePayload(payload: SumatePayload) {
   const tools = requiredOptions(payload.tools, TOOL_OPTIONS, 'Herramientas', 10)
   const workExperience = requiredOptions(payload.workExperience, WORK_EXPERIENCE_OPTIONS, 'Experiencia laboral')
   const coverLetter = requiredString(payload.coverLetter, 'Carta de presentación')
-  const portfolio = requiredUrl(payload.portfolio, 'Portfolio')
+  const portfolio = requiredString(payload.portfolio, 'Portfolio')
   const salaryExpectation = optionalString(payload.salaryExpectation)
   const email = requiredEmail(payload.email, 'Contacto')
   const foundUs = requiredOptions(payload.foundUs, FOUND_US_OPTIONS, 'Cómo nos encontraste')
@@ -195,21 +195,6 @@ function requiredEmail(value: unknown, label: string) {
   return email
 }
 
-function requiredUrl(value: unknown, label: string) {
-  const url = requiredString(value, label)
-
-  try {
-    const parsed = new URL(url)
-    if (!['http:', 'https:'].includes(parsed.protocol)) {
-      throw new Error()
-    }
-  } catch {
-    throw new Error(`${label} debe ser una URL válida.`)
-  }
-
-  return url
-}
-
 async function getGoogleAccessToken() {
   if (tokenCache && tokenCache.expiresAt > Date.now() + 60_000) {
     return tokenCache.accessToken
@@ -284,4 +269,3 @@ function normalizePrivateKey(value?: string) {
   if (!value) return ''
   return value.replace(/\\n/g, '\n')
 }
-
