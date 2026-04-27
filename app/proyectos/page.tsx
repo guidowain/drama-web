@@ -95,7 +95,12 @@ function ProyectosContent() {
         mail={CONTACT.mail}
       />
 
-      <ModalProject project={selected} originRect={modalOrigin} onClose={handleClose} />
+      <ModalProject
+        project={selected}
+        originRect={modalOrigin}
+        contact={CONTACT}
+        onClose={handleClose}
+      />
     </>
   )
 }

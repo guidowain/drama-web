@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 
 const ACTIVE_TITLE = 'Drama - Agencia'
-const AWAY_TITLES = ['Drama - Agencia', 'Volvé a Drama']
+const AWAY_TITLES = ['¡Volvé a Drama!', '¡Te extrañamos!']
 
 export default function TabTitle() {
   useEffect(() => {
