@@ -129,7 +129,12 @@
     "year": 2024,
     "featured": false,
     "published": true,
-    "tags": [],
+    "tags": [
+      "Retoque fotográfico",
+      "diseño",
+      "identidad visual",
+      "creatividad"
+    ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777063293/drama-web/uploads/vcnbqv6nxis0pdlu5x0u.webp",
     "coverImageAlt": "",
     "contentBlocks": [],
