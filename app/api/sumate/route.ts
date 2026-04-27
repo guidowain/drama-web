@@ -200,8 +200,9 @@ async function getGoogleAccessToken() {
     return tokenCache.accessToken
   }
 
-  const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || process.env.GOOGLE_CLIENT_EMAIL
-  const privateKey = normalizePrivateKey(process.env.GOOGLE_PRIVATE_KEY)
+  const serviceAccount = parseServiceAccountKey(process.env.GOOGLE_SERVICE_ACCOUNT_KEY)
+  const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || process.env.GOOGLE_CLIENT_EMAIL || serviceAccount?.clientEmail
+  const privateKey = normalizePrivateKey(process.env.GOOGLE_PRIVATE_KEY || serviceAccount?.privateKey)
 
   if (!clientEmail || !privateKey) {
     throw new Error('Faltan GOOGLE_SERVICE_ACCOUNT_EMAIL y/o GOOGLE_PRIVATE_KEY.')
@@ -268,4 +269,23 @@ function base64Url(value: string | Buffer) {
 function normalizePrivateKey(value?: string) {
   if (!value) return ''
   return value.replace(/\\n/g, '\n')
+}
+
+function parseServiceAccountKey(value?: string) {
+  if (!value) return null
+
+  try {
+    const data = JSON.parse(value)
+
+    if (typeof data?.client_email !== 'string' || typeof data?.private_key !== 'string') {
+      return null
+    }
+
+    return {
+      clientEmail: data.client_email,
+      privateKey: data.private_key,
+    }
+  } catch {
+    return null
+  }
 }
