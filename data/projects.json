@@ -232,7 +232,8 @@
         "image2": "",
         "image2Alt": "",
         "image2Scale": 100,
-        "imageSide": "left"
+        "imageSide": "left",
+        "imageShowMuteButton": false
       },
       {
         "id": "mohj3g08kxi19d2hwc",
