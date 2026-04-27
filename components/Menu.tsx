@@ -15,6 +15,7 @@ const navItems = [
   { label: 'HOME', href: '/' },
   { label: 'PROYECTOS', href: '/proyectos' },
   { label: 'SOBRE NOSOTROS', href: '/sobre-nosotros' },
+  { label: 'SUMATE', href: '/sumate' },
 ]
 
 export default function Menu({ settings }: Props) {

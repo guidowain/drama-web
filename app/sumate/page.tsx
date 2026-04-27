@@ -16,7 +16,7 @@ export default function SumatePage() {
               Queremos conocerte
             </p>
             <h1 className="max-w-3xl text-5xl font-black uppercase leading-none md:text-7xl">
-              Sumate a Drama
+              Sumate
             </h1>
           </div>
           <p className="max-w-2xl text-base font-semibold leading-snug text-black/70 md:justify-self-end md:text-xl">

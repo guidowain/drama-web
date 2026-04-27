@@ -166,7 +166,7 @@ function ServiceCard({
     <div
       ref={ref}
       onPointerEnter={handlePointerEnter}
-      className={`flip-card h-72 md:h-80 rounded-2xl ${activeMobileIndex === index ? 'is-flipped' : ''} ${isNudging ? 'is-nudging' : ''}`}
+      className={`flip-card h-72 select-none md:h-80 rounded-2xl ${activeMobileIndex === index ? 'is-flipped' : ''} ${isNudging ? 'is-nudging' : ''}`}
     >
       <div className="flip-card-inner rounded-2xl">
         {/* Front */}

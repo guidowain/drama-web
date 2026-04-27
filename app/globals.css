@@ -77,6 +77,16 @@ body {
   font-family: 'Archivo', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+input,
+textarea,
+select,
+[contenteditable='true'] {
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 h1,
@@ -339,26 +349,26 @@ button,
 .cta-btn {
   display: inline-block;
   border-radius: 9999px;
-  padding: 14px 40px;
+  border: 2px solid transparent;
+  padding: 12px 38px;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-size: 0.875rem;
-  background: white;
+  background: linear-gradient(white, white) padding-box, var(--gradient) border-box;
   transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 .cta-btn:hover {
+  border-color: white;
+  background: white;
   box-shadow: 0 0 40px rgba(254, 120, 109, 0.5), 0 0 80px rgba(245, 4, 255, 0.3);
   transform: scale(1.05);
 }
 
 .cta-btn-label-default {
-  background: linear-gradient(135deg, #F504FF 0%, #FE8B97 28%, #FE796D 50%, #FCC028 75%, #FED791 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: black;
+  -webkit-text-fill-color: black;
 }
 
 .cta-btn-label-hover {

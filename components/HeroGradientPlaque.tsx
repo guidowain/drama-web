@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useCallback } from 'react'
+import { useRef, useCallback, useEffect, useMemo, useState } from 'react'
 
 type Props = {
   lines: [string, string]
@@ -9,6 +9,10 @@ type Props = {
 
 export default function HeroGradientPlaque({ lines, children }: Props) {
   const plaqueRef = useRef<HTMLDivElement>(null)
+  const claimRef = useRef<HTMLParagraphElement>(null)
+  const fullClaim = useMemo(() => lines.join('\n'), [lines])
+  const [typedLength, setTypedLength] = useState(0)
+  const [hasStartedTyping, setHasStartedTyping] = useState(false)
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const el = plaqueRef.current
@@ -27,6 +31,46 @@ export default function HeroGradientPlaque({ lines, children }: Props) {
     el.style.setProperty('--my', '50%')
   }, [])
 
+  useEffect(() => {
+    const el = claimRef.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasStartedTyping(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.45 }
+    )
+
+    observer.observe(el)
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!hasStartedTyping) return
+
+    setTypedLength(0)
+
+    const interval = window.setInterval(() => {
+      setTypedLength((current) => {
+        if (current >= fullClaim.length) {
+          window.clearInterval(interval)
+          return current
+        }
+
+        return current + 1
+      })
+    }, 38)
+
+    return () => window.clearInterval(interval)
+  }, [fullClaim, hasStartedTyping])
+
+  const typedLines = fullClaim.slice(0, typedLength).split('\n')
+
   return (
     <div
       ref={plaqueRef}
@@ -36,8 +80,21 @@ export default function HeroGradientPlaque({ lines, children }: Props) {
     >
       {/* Texto claim — padding arriba */}
       <div className="flex items-center justify-center pt-8 md:pt-10 pb-6 md:pb-8">
-        <p className="hero-claim text-black font-black uppercase leading-[1.05] text-center px-6 md:px-12">
-          {lines[0]}<br />{lines[1]}
+        <p
+          ref={claimRef}
+          aria-label={fullClaim.replace('\n', ' ')}
+          className="hero-claim relative text-black font-black uppercase leading-[1.05] text-center px-6 md:px-12"
+        >
+          <span aria-hidden className="invisible">
+            {lines[0]}<br />{lines[1]}
+          </span>
+          <span aria-hidden className="absolute inset-x-6 top-0 md:inset-x-12">
+            {typedLines.map((line, index) => (
+              <span key={index} className="block min-h-[1.05em]">
+                {line}
+              </span>
+            ))}
+          </span>
         </p>
       </div>
 

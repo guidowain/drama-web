@@ -1,6 +1,7 @@
 import { getSiteSettings } from '@/lib/api'
 import Ticker from '@/components/Ticker'
 import ContactStrip from '@/components/ContactStrip'
+import AboutReveal from '@/components/AboutReveal'
 
 export default async function SobreNosotrosPage() {
   const settings = await getSiteSettings()
@@ -19,7 +20,7 @@ export default async function SobreNosotrosPage() {
           </h1>
 
           {/* Left — image */}
-          <div className="order-2 md:order-1">
+          <AboutReveal className="order-2 md:order-1">
             {about.image ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -32,7 +33,7 @@ export default async function SobreNosotrosPage() {
                 <span className="text-black/40 text-sm">Imagen del equipo</span>
               </div>
             )}
-          </div>
+          </AboutReveal>
 
           {/* Right — content */}
           <div className="order-3 md:order-2 flex flex-col gap-6">
@@ -43,20 +44,22 @@ export default async function SobreNosotrosPage() {
             </h1>
 
             {/* Black content box */}
-            <div className="bg-black rounded-2xl p-6 md:p-8 space-y-6">
-              <ContentBlock
-                title={about.quienesSomosTitle}
-                text={about.quienesSomos}
-              />
-              <ContentBlock
-                title={about.comoTrabajamosTitle}
-                text={about.comoTrabajamos}
-              />
-              <ContentBlock
-                title={about.queDiferenciaTitle}
-                text={about.queDiferencia}
-              />
-            </div>
+            <AboutReveal delay={0.5}>
+              <div className="bg-black rounded-2xl p-6 md:p-8 space-y-6">
+                <ContentBlock
+                  title={about.quienesSomosTitle}
+                  text={about.quienesSomos}
+                />
+                <ContentBlock
+                  title={about.comoTrabajamosTitle}
+                  text={about.comoTrabajamos}
+                />
+                <ContentBlock
+                  title={about.queDiferenciaTitle}
+                  text={about.queDiferencia}
+                />
+              </div>
+            </AboutReveal>
 
           </div>
         </div>

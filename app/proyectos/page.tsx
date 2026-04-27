@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import ProjectCard from '@/components/ProjectCard'
@@ -29,8 +30,14 @@ function ProyectosContent() {
   const [projects, setProjects] = useState<Proyecto[]>([])
   const [selected, setSelected] = useState<Proyecto | null>(null)
   const [modalOrigin, setModalOrigin] = useState<ModalOriginRect | null>(null)
+  const [showAboutCta, setShowAboutCta] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setShowAboutCta(true), 3000)
+    return () => window.clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     fetch('/api/admin/proyectos')
@@ -87,6 +94,16 @@ function ProyectosContent() {
                   onClick={handleCardOpen}
                 />
               ))}
+            </div>
+            <div className={`mt-12 flex justify-center transition-all duration-700 md:mt-16 ${showAboutCta ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'}`}>
+              <Link
+                href="/sobre-nosotros"
+                aria-hidden={!showAboutCta}
+                tabIndex={showAboutCta ? undefined : -1}
+                className="inline-flex rounded-full border-2 border-black bg-white px-10 py-3.5 text-sm font-black uppercase tracking-[0.1em] text-black transition-colors duration-300 hover:bg-black hover:text-white"
+              >
+                SOBRE NOSOTROS
+              </Link>
             </div>
           </div>
         </div>
