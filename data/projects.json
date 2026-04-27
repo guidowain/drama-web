@@ -259,5 +259,23 @@
     "seoTitle": "",
     "seoDescription": "",
     "excerpt": ""
+  },
+  {
+    "id": "mogt15fo2mtl7ypvc5r",
+    "name": "Thrill Maker",
+    "slug": "thrill-maker",
+    "year": 2024,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "DISEÑO",
+      "IDENTIDAD VISUAL"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777270589/drama-web/uploads/xntd6j9kvbqt5uyh3yhr.webp",
+    "coverImageAlt": "Tapa de libro Thrill Maker de Stephen Dolginoff",
+    "contentBlocks": [],
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": ""
   }
 ]
