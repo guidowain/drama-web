@@ -113,6 +113,31 @@ button,
   background-clip: text;
 }
 
+.sumate-choice-selected {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.sumate-choice-selected::before,
+.sumate-choice-selected::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.sumate-choice-selected::before {
+  z-index: -1;
+  background: var(--gradient);
+}
+
+.sumate-choice-selected::after {
+  z-index: 0;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+}
+
 /* Glass card */
 .glass-card {
   background: rgba(255, 255, 255, 0.05);

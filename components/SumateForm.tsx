@@ -389,12 +389,11 @@ function SingleChoice({
             className={[
               'inline-flex rounded-full border-2 px-3 py-2 text-xs font-bold uppercase tracking-[0.08em] transition-all duration-200 hover:border-white/55',
               checked
-                ? 'border-white/80 text-black shadow-[0_0_18px_rgba(254,120,109,0.22)]'
+                ? 'sumate-choice-selected border-transparent text-black shadow-[0_0_18px_rgba(254,120,109,0.22)]'
                 : 'border-white/20 bg-white/5 text-white/65',
             ].join(' ')}
-            style={checked ? { background: 'var(--gradient)', backgroundClip: 'border-box' } : undefined}
           >
-            {option}
+            <span className={checked ? 'relative z-[1]' : undefined}>{option}</span>
           </span>
         </label>
         )
@@ -430,12 +429,11 @@ function MultiChoice({
               className={[
                 'inline-flex rounded-full border-2 px-3 py-2 text-xs font-bold uppercase tracking-[0.08em] transition-all duration-200 hover:border-white/55',
                 checked
-                  ? 'border-white/80 text-black shadow-[0_0_18px_rgba(254,120,109,0.22)]'
+                  ? 'sumate-choice-selected border-transparent text-black shadow-[0_0_18px_rgba(254,120,109,0.22)]'
                   : 'border-white/20 bg-white/5 text-white/65',
               ].join(' ')}
-              style={checked ? { background: 'var(--gradient)', backgroundClip: 'border-box' } : undefined}
             >
-              {option}
+              <span className={checked ? 'relative z-[1]' : undefined}>{option}</span>
             </span>
           </label>
         )

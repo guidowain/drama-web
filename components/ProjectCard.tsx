@@ -29,7 +29,9 @@ const revealVariants = {
 }
 
 export default function ProjectCard({ project, index, onClick }: Props) {
-  const [isDesktop, setIsDesktop] = useState<boolean | null>(null)
+  const [isDesktop, setIsDesktop] = useState(() => (
+    typeof window === 'undefined' ? true : window.matchMedia('(min-width: 768px)').matches
+  ))
   const hasManyTags = project.tags.length >= 5
   const tagClassName = hasManyTags
     ? 'text-[0.5rem] md:text-[0.54rem] px-2 py-[1px] tracking-[0.025em]'
@@ -49,8 +51,8 @@ export default function ProjectCard({ project, index, onClick }: Props) {
     <motion.article
       custom={index}
       variants={revealVariants}
-      initial="hidden"
-      animate={isDesktop === false || (isDesktop && index < 2) ? 'visible' : undefined}
+      initial={isDesktop ? 'hidden' : false}
+      animate={isDesktop && index < 2 ? 'visible' : undefined}
       whileInView={isDesktop && index >= 2 ? 'visible' : undefined}
       viewport={{ once: true, amount: 0.22, margin: '0px 0px -8% 0px' }}
       whileHover={{ scale: 1.02 }}
