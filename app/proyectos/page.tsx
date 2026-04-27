@@ -9,6 +9,8 @@ import ContactStrip from '@/components/ContactStrip'
 import Ticker from '@/components/Ticker'
 import type { Proyecto } from '@/lib/types'
 
+type ModalOriginRect = Pick<DOMRect, 'top' | 'left' | 'width' | 'height'>
+
 const CONTACT = {
   instagram: 'https://instagram.com/drama.com.ar',
   whatsapp: 'https://wa.me/5491163357223',
@@ -26,6 +28,7 @@ export default function ProyectosPage() {
 function ProyectosContent() {
   const [projects, setProjects] = useState<Proyecto[]>([])
   const [selected, setSelected] = useState<Proyecto | null>(null)
+  const [modalOrigin, setModalOrigin] = useState<ModalOriginRect | null>(null)
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -43,13 +46,20 @@ function ProyectosContent() {
       })
   }, [searchParams])
 
-  const handleOpen = useCallback((project: Proyecto) => {
+  const handleCardOpen = useCallback((project: Proyecto, originRect: DOMRect) => {
+    setModalOrigin({
+      top: originRect.top,
+      left: originRect.left,
+      width: originRect.width,
+      height: originRect.height,
+    })
     setSelected(project)
     router.push(`/proyectos?slug=${project.slug}`, { scroll: false })
   }, [router])
 
   const handleClose = useCallback(() => {
     setSelected(null)
+    setModalOrigin(null)
     router.push('/proyectos', { scroll: false })
   }, [router])
 
@@ -70,7 +80,7 @@ function ProyectosContent() {
           <div className="mx-auto w-full max-w-6xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               {projects.map((project) => (
-                <ProjectCard key={project.id} project={project} onClick={handleOpen} />
+                <ProjectCard key={project.id} project={project} onClick={handleCardOpen} />
               ))}
             </div>
           </div>
@@ -85,7 +95,7 @@ function ProyectosContent() {
         mail={CONTACT.mail}
       />
 
-      <ModalProject project={selected} onClose={handleClose} />
+      <ModalProject project={selected} originRect={modalOrigin} onClose={handleClose} />
     </>
   )
 }

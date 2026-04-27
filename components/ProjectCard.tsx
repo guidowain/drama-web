@@ -5,7 +5,7 @@ import type { Proyecto } from '@/lib/types'
 
 type Props = {
   project: Proyecto
-  onClick: (project: Proyecto) => void
+  onClick: (project: Proyecto, originRect: DOMRect) => void
 }
 
 export default function ProjectCard({ project, onClick }: Props) {
@@ -18,7 +18,7 @@ export default function ProjectCard({ project, onClick }: Props) {
     <motion.article
       whileHover={{ scale: 1.02 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      onClick={() => onClick(project)}
+      onClick={(event) => onClick(project, event.currentTarget.getBoundingClientRect())}
       className="h-full cursor-pointer rounded-2xl bg-white shadow-md transition-shadow hover:shadow-[0_0_28px_rgba(0,0,0,0.12)]"
     >
       <div className="flex h-full flex-col rounded-2xl bg-white p-3">

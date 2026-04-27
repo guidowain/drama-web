@@ -4,12 +4,21 @@ import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Proyecto, ContentBlock } from '@/lib/types'
 
+type ModalRect = {
+  top: number
+  left: number
+  width: number
+  height: number
+  borderRadius?: number
+}
+
 type Props = {
   project: Proyecto | null
+  originRect?: ModalRect | null
   onClose: () => void
 }
 
-export default function ModalProject({ project, onClose }: Props) {
+export default function ModalProject({ project, originRect, onClose }: Props) {
   useEffect(() => {
     if (!project) return
     document.body.style.overflow = 'hidden'
@@ -29,6 +38,46 @@ export default function ModalProject({ project, onClose }: Props) {
       transition: { delay: 0.16, duration: 0.42, ease: [0.22, 1, 0.36, 1] },
     },
   }
+  const modalFrame = getModalFrame()
+  const initialFrame = originRect && modalFrame
+    ? {
+        opacity: 0.98,
+        top: originRect.top,
+        left: originRect.left,
+        width: originRect.width,
+        height: originRect.height,
+        borderRadius: 16,
+      }
+    : modalFrame
+      ? {
+          opacity: 0,
+          top: modalFrame.top + 18,
+          left: modalFrame.left,
+          width: modalFrame.width,
+          height: modalFrame.height,
+          borderRadius: modalFrame.borderRadius,
+        }
+      : { opacity: 0 }
+  const animateFrame = modalFrame
+    ? {
+        opacity: 1,
+        top: modalFrame.top,
+        left: modalFrame.left,
+        width: modalFrame.width,
+        height: modalFrame.height,
+        borderRadius: modalFrame.borderRadius,
+      }
+    : { opacity: 1 }
+  const exitFrame = originRect && modalFrame
+    ? {
+        opacity: 0,
+        top: originRect.top,
+        left: originRect.left,
+        width: originRect.width,
+        height: originRect.height,
+        borderRadius: 16,
+      }
+    : { opacity: 0 }
 
   return (
     <AnimatePresence>
@@ -45,18 +94,19 @@ export default function ModalProject({ project, onClose }: Props) {
           />
 
           {/* Modal */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.97, y: 18 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.97, y: 18 }}
-            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+          <div
             className="fixed inset-0 z-[201] flex items-center justify-center p-0 md:p-6"
             onClick={onClose}
           >
-            <div
-              className="relative bg-black w-full h-full overflow-y-auto md:h-auto md:w-[86vw] md:max-w-[980px] md:max-h-[90vh] md:rounded-3xl"
+            <motion.div
+              initial={initialFrame}
+              animate={animateFrame}
+              exit={exitFrame}
+              transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed overflow-hidden bg-black shadow-[0_30px_100px_rgba(0,0,0,0.45)]"
               onClick={(e) => e.stopPropagation()}
             >
+              <div className="h-full overflow-y-auto">
               {/* Close button */}
               <button
                 onClick={onClose}
@@ -125,12 +175,39 @@ export default function ModalProject({ project, onClose }: Props) {
                   </a>
                 </p>
               </motion.div>
-            </div>
-          </motion.div>
+              </div>
+            </motion.div>
+          </div>
         </>
       )}
     </AnimatePresence>
   )
+}
+
+function getModalFrame(): ModalRect | null {
+  if (typeof window === 'undefined') return null
+
+  const isMobile = window.innerWidth < 768
+  if (isMobile) {
+    return {
+      top: 0,
+      left: 0,
+      width: window.innerWidth,
+      height: window.innerHeight,
+      borderRadius: 0,
+    }
+  }
+
+  const width = Math.min(window.innerWidth * 0.86, 980)
+  const height = Math.min(window.innerHeight * 0.9, 820)
+
+  return {
+    top: (window.innerHeight - height) / 2,
+    left: (window.innerWidth - width) / 2,
+    width,
+    height,
+    borderRadius: 24,
+  }
 }
 
 function ContentBlockRenderer({ block }: { block: ContentBlock }) {
