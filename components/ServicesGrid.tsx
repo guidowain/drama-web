@@ -73,6 +73,8 @@ function ServiceCard({
     const element = ref.current
     if (!element) return
 
+    if (isMobile) return
+
     function clearNudgeTimer() {
       if (nudgeTimerRef.current) {
         window.clearTimeout(nudgeTimerRef.current)
@@ -82,18 +84,6 @@ function ServiceCard({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (isMobile) {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.68) {
-            setActiveMobileIndex(index)
-            return
-          }
-
-          if (entry.intersectionRatio <= 0.18) {
-            setActiveMobileIndex((current) => current === index ? null : current)
-          }
-          return
-        }
-
         if (!shouldHint || sessionStorage.getItem(nudgeStorageKey) === '1') return
 
         if (entry.isIntersecting && entry.intersectionRatio >= 0.45) {
@@ -112,7 +102,7 @@ function ServiceCard({
 
         clearNudgeTimer()
       },
-      { threshold: [0, 0.18, 0.45, 0.68, 0.85] },
+      { threshold: [0, 0.35, 0.45, 0.7] },
     )
 
     observer.observe(element)
@@ -121,6 +111,47 @@ function ServiceCard({
       observer.disconnect()
     }
   }, [index, isMobile, setActiveMobileIndex, shouldHint])
+
+  useEffect(() => {
+    const element = ref.current
+    if (!isMobile || !element) return
+    const cardElement = element
+
+    let frameId: number | null = null
+
+    function updateActiveCard() {
+      frameId = null
+
+      const rect = cardElement.getBoundingClientRect()
+      const cardCenter = rect.top + rect.height / 2
+      const centerBandTop = window.innerHeight * 0.36
+      const centerBandBottom = window.innerHeight * 0.64
+      const isInCenterBand = cardCenter >= centerBandTop && cardCenter <= centerBandBottom
+
+      if (isInCenterBand) {
+        setActiveMobileIndex(index)
+        return
+      }
+
+      setActiveMobileIndex((current) => current === index ? null : current)
+    }
+
+    function requestUpdate() {
+      if (frameId != null) return
+      frameId = window.requestAnimationFrame(updateActiveCard)
+    }
+
+    requestUpdate()
+    window.addEventListener('scroll', requestUpdate, { passive: true })
+    window.addEventListener('resize', requestUpdate)
+
+    return () => {
+      if (frameId != null) window.cancelAnimationFrame(frameId)
+      window.removeEventListener('scroll', requestUpdate)
+      window.removeEventListener('resize', requestUpdate)
+      setActiveMobileIndex((current) => current === index ? null : current)
+    }
+  }, [index, isMobile, setActiveMobileIndex])
 
   function handlePointerEnter() {
     hasInteractedRef.current = true

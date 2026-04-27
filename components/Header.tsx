@@ -29,7 +29,7 @@ export default function Header({ settings }: Props) {
 
       <Link href="/" className="group shrink-0 relative h-7 w-[120px] hidden md:block" aria-label="Drama — Inicio">
         <Image
-          src="/logos/Logo ByN invertido.png"
+          src="/logos/Logo oficial.png"
           alt="Drama"
           fill
           className="object-contain object-left transition-opacity duration-300 group-hover:opacity-0"
