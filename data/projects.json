@@ -29,23 +29,9 @@
         "imageSide": "left"
       },
       {
-        "id": "mohhokdmaiq2sx3b26w",
-        "type": "imageText",
-        "order": 1,
-        "title": "Lanzamiento de audiciones",
-        "text": "Nos pidieron hacer un reel 100% animado en tiempo récord para anunciar las audiciones abiertas del proyecto.\n",
-        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777312031/drama-web/uploads/pesgoz8nbouacu8khiqz.webm",
-        "imageAlt": "Reel animado para el lanzamiento de audiciones de La Sirenita",
-        "imageScale": 100,
-        "image2": "",
-        "image2Alt": "",
-        "image2Scale": 100,
-        "imageSide": "right"
-      },
-      {
         "id": "mohkdw2cywekswwcw2g",
         "type": "imageImage",
-        "order": 2,
+        "order": 1,
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777316563/drama-web/uploads/x4sm8v6dh3hagpmahfnh.webp",
@@ -55,6 +41,20 @@
         "image2Alt": "",
         "image2Scale": 100,
         "imageSide": "left"
+      },
+      {
+        "id": "mohhokdmaiq2sx3b26w",
+        "type": "imageText",
+        "order": 2,
+        "title": "Lanzamiento de audiciones",
+        "text": "Nos pidieron hacer un reel 100% animado en tiempo récord para anunciar las audiciones abiertas del proyecto.\n",
+        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777312031/drama-web/uploads/pesgoz8nbouacu8khiqz.webm",
+        "imageAlt": "Reel animado para el lanzamiento de audiciones de La Sirenita",
+        "imageScale": 100,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "imageSide": "right"
       },
       {
         "id": "mohkfwpqz3ksqzizv2e",
