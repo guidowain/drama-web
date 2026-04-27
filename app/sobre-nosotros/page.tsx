@@ -11,8 +11,12 @@ export default async function SobreNosotrosPage() {
       {/* Main content */}
       <div className="px-5 md:px-10 py-12 md:py-20">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
+          <h1 className="order-1 text-black font-black uppercase text-5xl leading-none md:hidden">
+            SOMOS<br />DRAMA
+          </h1>
+
           {/* Left — image */}
-          <div className="order-1 md:order-1">
+          <div className="order-2 md:order-1">
             {about.image ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -28,8 +32,8 @@ export default async function SobreNosotrosPage() {
           </div>
 
           {/* Right — content */}
-          <div className="order-2 md:order-2 flex flex-col gap-6">
-            <h1 className="text-black font-black uppercase text-5xl md:text-6xl lg:text-7xl leading-none">
+          <div className="order-3 md:order-2 flex flex-col gap-6">
+            <h1 className="hidden text-black font-black uppercase leading-none md:block md:text-6xl lg:text-7xl">
               SOMOS<br />DRAMA
             </h1>
 
