@@ -23,7 +23,10 @@ export default function ProjectCard({ project, onClick }: Props) {
     >
       <div className="flex h-full flex-col rounded-2xl bg-white p-3">
         {/* Cover image */}
-        <div className="relative aspect-square rounded-xl overflow-hidden bg-zinc-950">
+        <motion.div
+          layoutId={`project-cover-${project.id}`}
+          className="relative aspect-square overflow-hidden rounded-xl bg-zinc-950"
+        >
           {project.coverImage ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -34,7 +37,7 @@ export default function ProjectCard({ project, onClick }: Props) {
           ) : (
             <div className="w-full h-full gradient-bg opacity-30" />
           )}
-        </div>
+        </motion.div>
 
         {/* Info */}
         <div className="mt-2 grid min-h-[3.15rem] grid-cols-[1fr_auto] items-start gap-2 px-1 pb-1 md:min-h-[3.35rem]">

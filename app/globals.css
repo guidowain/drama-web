@@ -176,6 +176,15 @@ button,
   transform: rotateY(180deg);
 }
 
+.service-card-icon {
+  display: flex;
+  color: white;
+}
+
+.service-card-icon svg {
+  filter: drop-shadow(0 0 18px rgba(245, 4, 255, 0.18));
+}
+
 .menu-nav-link {
   position: relative;
   transition: opacity 0.25s ease;

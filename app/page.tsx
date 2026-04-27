@@ -75,17 +75,31 @@ export default async function HomePage() {
 
 function IconDesign() {
   return (
-    <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="2" y="3" width="20" height="14" rx="2" />
-      <line x1="8" y1="21" x2="16" y2="21" />
-      <line x1="12" y1="17" x2="12" y2="21" />
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="url(#designIconGradient)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <defs>
+        <linearGradient id="designIconGradient" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#F504FF" />
+          <stop offset="0.45" stopColor="#FE796D" />
+          <stop offset="1" stopColor="#FCC028" />
+        </linearGradient>
+      </defs>
+      <path d="M12 20h9" />
+      <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+      <path d="m14 6 4 4" />
     </svg>
   )
 }
 
 function IconComm() {
   return (
-    <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="url(#commIconGradient)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <defs>
+        <linearGradient id="commIconGradient" x1="2" y1="3" x2="22" y2="21" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#F504FF" />
+          <stop offset="0.45" stopColor="#FE796D" />
+          <stop offset="1" stopColor="#FCC028" />
+        </linearGradient>
+      </defs>
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
     </svg>
   )

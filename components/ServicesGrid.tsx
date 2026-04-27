@@ -123,7 +123,7 @@ function ServiceCard({
       <div className="flip-card-inner rounded-2xl">
         {/* Front */}
         <div className="flip-card-front glass-card rounded-2xl flex flex-col items-center justify-center gap-4 p-6 overflow-hidden">
-          <div className="text-white opacity-80">{icon}</div>
+          <div className="service-card-icon">{icon}</div>
           <h3
             className="text-white font-black uppercase tracking-tight text-center leading-none w-full"
             style={{ fontSize: 'clamp(1.8rem, 4vw, 3.4rem)' }}
