@@ -256,7 +256,7 @@ button,
 @media (min-width: 1440px) {
   .hero-video-wrap {
     aspect-ratio: auto;
-    height: min(46vw, 760px);
+    height: min(44vw, 730px);
   }
 }
 
