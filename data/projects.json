@@ -304,18 +304,7 @@
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777055002/drama-web/uploads/pmjljwgmmqvq64ilkyly.webp",
     "coverImageAlt": "School of Rock",
-    "contentBlocks": [
-      {
-        "id": "b4",
-        "type": "imageText",
-        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777055035/drama-web/uploads/fahwumixbmjziq48hvr8.webp",
-        "imageAlt": "School of Rock - Promo",
-        "imageSide": "right",
-        "title": "Comunicación integral",
-        "text": "Estrategia de comunicación digital para School of Rock. Gestión de redes sociales, contenido creativo y coordinación de prensa para uno de los musicales más exitosos de la temporada.",
-        "order": 0
-      }
-    ]
+    "contentBlocks": []
   },
   {
     "id": "modaoixnfk4hht2h38w",
