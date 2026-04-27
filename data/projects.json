@@ -13,7 +13,22 @@
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777052154/drama-web/uploads/huros5cqtavrvnqr3pwa.webp",
     "coverImageAlt": "",
-    "contentBlocks": [],
+    "contentBlocks": [
+      {
+        "id": "mohhokdmaiq2sx3b26w",
+        "type": "imageText",
+        "order": 0,
+        "title": "Lanzamiento de audiciones",
+        "text": "Nos pidieron hacer un reel 100% animado en tiempo record para anunciar las audiciones abiertas del proyecto.\n",
+        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777312031/drama-web/uploads/pesgoz8nbouacu8khiqz.webm",
+        "imageAlt": "Reel animado para el lanzamiento de audiciones de La Sirenita",
+        "imageScale": 100,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "imageSide": "right"
+      }
+    ],
     "seoTitle": "La sirenita",
     "seoDescription": "",
     "excerpt": ""
