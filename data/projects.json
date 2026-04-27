@@ -90,7 +90,22 @@
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777059744/drama-web/uploads/crcu25parjraaitxido7.webp",
     "coverImageAlt": "",
-    "contentBlocks": [],
+    "contentBlocks": [
+      {
+        "id": "mohi1fbh4qcnitnc9or",
+        "type": "image",
+        "order": 0,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777312624/drama-web/uploads/yuvuibphedhnbwi3lopv.webm",
+        "imageAlt": "Logo animado de Matilda el musical",
+        "imageScale": 100,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "imageSide": "left"
+      }
+    ],
     "seoTitle": "",
     "seoDescription": "",
     "excerpt": ""
