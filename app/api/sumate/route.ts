@@ -205,7 +205,7 @@ async function getGoogleAccessToken() {
   const privateKey = normalizePrivateKey(serviceAccount?.privateKey || process.env.GOOGLE_PRIVATE_KEY)
 
   if (!clientEmail || !privateKey) {
-    throw new Error('Faltan GOOGLE_SERVICE_ACCOUNT_EMAIL y/o GOOGLE_PRIVATE_KEY.')
+    throw new Error('Falta configurar GOOGLE_SERVICE_ACCOUNT_KEY o las credenciales separadas de Google.')
   }
 
   const now = Math.floor(Date.now() / 1000)
@@ -275,7 +275,8 @@ function parseServiceAccountKey(value?: string) {
   if (!value) return null
 
   try {
-    const data = JSON.parse(value)
+    const parsed = JSON.parse(value)
+    const data = typeof parsed === 'string' ? JSON.parse(parsed) : parsed
 
     if (typeof data?.client_email !== 'string' || typeof data?.private_key !== 'string') {
       return null
