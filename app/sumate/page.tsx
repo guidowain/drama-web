@@ -10,7 +10,7 @@ export default function SumatePage() {
   return (
     <main className="min-h-screen bg-black pt-16 text-white md:pt-[72px]">
       <section className="gradient-bg px-5 py-12 text-black md:px-10 md:py-16">
-        <div className="mx-auto grid w-full max-w-6xl gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-end">
+        <div className="mx-auto grid w-full max-w-4xl gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-end">
           <div>
             <p className="mb-4 text-xs font-black uppercase tracking-[0.18em] text-black/55">
               Queremos conocerte
