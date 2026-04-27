@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import type { CSSProperties } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Proyecto, ContentBlock } from '@/lib/types'
 import PlayableMedia from './PlayableMedia'
@@ -29,6 +30,7 @@ export default function ModalProject({ project, originRect, contact, onClose }: 
   const touchStartYRef = useRef<number | null>(null)
   const touchStartedAtTopRef = useRef(false)
   const touchCloseReadyRef = useRef(false)
+  const [modalFrame, setModalFrame] = useState<ModalRect | null>(() => getModalFrame())
 
   useEffect(() => {
     if (!project) return
@@ -41,6 +43,23 @@ export default function ModalProject({ project, originRect, contact, onClose }: 
     }
   }, [project, onClose])
 
+  useEffect(() => {
+    if (!project) return
+
+    const syncFrame = () => setModalFrame(getModalFrame())
+
+    syncFrame()
+    window.addEventListener('resize', syncFrame)
+    window.addEventListener('orientationchange', syncFrame)
+    window.visualViewport?.addEventListener('resize', syncFrame)
+
+    return () => {
+      window.removeEventListener('resize', syncFrame)
+      window.removeEventListener('orientationchange', syncFrame)
+      window.visualViewport?.removeEventListener('resize', syncFrame)
+    }
+  }, [project])
+
   const contentVariants = {
     hidden: { opacity: 0, y: 18 },
     visible: {
@@ -49,7 +68,6 @@ export default function ModalProject({ project, originRect, contact, onClose }: 
       transition: { delay: 0.16, duration: 0.42, ease: [0.22, 1, 0.36, 1] },
     },
   }
-  const modalFrame = getModalFrame()
   const initialFrame = originRect && modalFrame
     ? {
         opacity: 0.98,
@@ -79,6 +97,9 @@ export default function ModalProject({ project, originRect, contact, onClose }: 
         borderRadius: modalFrame.borderRadius,
       }
     : { opacity: 1 }
+  const modalStyle = modalFrame
+    ? ({ '--modal-media-max-height': `${Math.max(220, modalFrame.height - 150)}px` } as CSSProperties)
+    : undefined
   const exitFrame = originRect && modalFrame
     ? {
         opacity: 0,
@@ -148,6 +169,7 @@ export default function ModalProject({ project, originRect, contact, onClose }: 
               animate={animateFrame}
               exit={exitFrame}
               transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
+              style={modalStyle}
               className="fixed flex flex-col overflow-hidden bg-black shadow-[0_30px_100px_rgba(0,0,0,0.45)]"
               onClick={(e) => e.stopPropagation()}
             >
@@ -402,6 +424,7 @@ function ScaledImage({ src, alt, scale }: { src: string; alt: string; scale?: nu
         alt={alt}
         className="w-full object-contain rounded-xl"
         videoClassName="w-full object-contain rounded-xl pointer-events-none"
+        style={{ maxHeight: 'var(--modal-media-max-height)', height: 'auto' }}
         width={width}
       />
     </div>
