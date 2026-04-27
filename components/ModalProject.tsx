@@ -350,6 +350,7 @@ function ContentBlockRenderer({ block }: { block: ContentBlock }) {
             src={block.image}
             alt={block.imageAlt || ''}
             scale={block.imageScale}
+            showMuteButton={block.imageShowMuteButton}
           />
         )}
         {block.title && (
@@ -368,6 +369,7 @@ function ContentBlockRenderer({ block }: { block: ContentBlock }) {
               src={block.image}
               alt={block.imageAlt || ''}
               scale={block.imageScale}
+              showMuteButton={block.imageShowMuteButton}
             />
           )}
         </div>
@@ -377,6 +379,7 @@ function ContentBlockRenderer({ block }: { block: ContentBlock }) {
               src={block.image2}
               alt={block.image2Alt || ''}
               scale={block.image2Scale}
+              showMuteButton={block.image2ShowMuteButton}
             />
           )}
         </div>
@@ -394,6 +397,7 @@ function ContentBlockRenderer({ block }: { block: ContentBlock }) {
               src={block.image}
               alt={block.imageAlt || ''}
               scale={block.imageScale}
+              showMuteButton={block.imageShowMuteButton}
             />
           )}
         </div>
@@ -414,7 +418,17 @@ function ContentBlockRenderer({ block }: { block: ContentBlock }) {
   return null
 }
 
-function ScaledImage({ src, alt, scale }: { src: string; alt: string; scale?: number }) {
+function ScaledImage({
+  src,
+  alt,
+  scale,
+  showMuteButton = true,
+}: {
+  src: string
+  alt: string
+  scale?: number
+  showMuteButton?: boolean
+}) {
   const width = `${clampScale(scale)}%`
 
   return (
@@ -426,6 +440,7 @@ function ScaledImage({ src, alt, scale }: { src: string; alt: string; scale?: nu
           className="w-full object-contain"
           videoClassName="w-full object-contain pointer-events-none"
           style={{ maxHeight: 'var(--modal-media-max-height)', height: 'auto' }}
+          showMuteButton={showMuteButton}
         />
       </div>
     </div>

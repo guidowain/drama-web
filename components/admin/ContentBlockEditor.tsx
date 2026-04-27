@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import type { ContentBlock } from '@/lib/types'
+import { isVideoUrl } from '@/lib/media'
 import { generateId } from '@/lib/utils'
 import ImageUploader from './ImageUploader'
 
@@ -21,9 +22,11 @@ export default function ContentBlockEditor({ blocks, onChange }: Props) {
       image: '',
       imageAlt: '',
       imageScale: 100,
+      imageShowMuteButton: true,
       image2: '',
       image2Alt: '',
       image2Scale: 100,
+      image2ShowMuteButton: true,
       imageSide: 'left',
     }
     onChange([...blocks, newBlock])
@@ -205,6 +208,11 @@ function ImageBlock({ block, onChange }: { block: ContentBlock; onChange: (c: Pa
         value={block.imageScale}
         onChange={(imageScale) => onChange({ imageScale })}
       />
+      <VideoSoundControl
+        src={block.image}
+        checked={block.imageShowMuteButton}
+        onChange={(imageShowMuteButton) => onChange({ imageShowMuteButton })}
+      />
     </div>
   )
 }
@@ -219,9 +227,11 @@ function ImageImageBlock({ block, onChange }: { block: ContentBlock; onChange: (
             image: block.image2 || '',
             imageAlt: block.image2Alt || '',
             imageScale: block.image2Scale,
+            imageShowMuteButton: block.image2ShowMuteButton,
             image2: block.image || '',
             image2Alt: block.imageAlt || '',
             image2Scale: block.imageScale,
+            image2ShowMuteButton: block.imageShowMuteButton,
           })}
           className="flex items-center gap-1.5 rounded-lg border border-white/8 bg-zinc-800 px-3 py-1.5 text-xs font-medium text-white/50 transition-colors hover:border-white/15 hover:text-white"
         >
@@ -235,18 +245,22 @@ function ImageImageBlock({ block, onChange }: { block: ContentBlock; onChange: (
           image={block.image}
           imageAlt={block.imageAlt}
           imageScale={block.imageScale}
+          showMuteButton={block.imageShowMuteButton}
           onImageChange={(image) => onChange({ image })}
           onAltChange={(imageAlt) => onChange({ imageAlt })}
           onScaleChange={(imageScale) => onChange({ imageScale })}
+          onShowMuteButtonChange={(imageShowMuteButton) => onChange({ imageShowMuteButton })}
         />
         <ImageEditor
           label="Imagen derecha"
           image={block.image2}
           imageAlt={block.image2Alt}
           imageScale={block.image2Scale}
+          showMuteButton={block.image2ShowMuteButton}
           onImageChange={(image2) => onChange({ image2 })}
           onAltChange={(image2Alt) => onChange({ image2Alt })}
           onScaleChange={(image2Scale) => onChange({ image2Scale })}
+          onShowMuteButtonChange={(image2ShowMuteButton) => onChange({ image2ShowMuteButton })}
         />
       </div>
     </div>
@@ -311,6 +325,11 @@ function ImageTextBlock({ block, onChange }: { block: ContentBlock; onChange: (c
                 value={block.imageScale}
                 onChange={(imageScale) => onChange({ imageScale })}
               />
+              <VideoSoundControl
+                src={block.image}
+                checked={block.imageShowMuteButton}
+                onChange={(imageShowMuteButton) => onChange({ imageShowMuteButton })}
+              />
             </div>
             <div>
               <label className="block text-white/30 text-xs uppercase tracking-wider mb-1.5">Texto</label>
@@ -369,6 +388,11 @@ function ImageTextBlock({ block, onChange }: { block: ContentBlock; onChange: (c
                 value={block.imageScale}
                 onChange={(imageScale) => onChange({ imageScale })}
               />
+              <VideoSoundControl
+                src={block.image}
+                checked={block.imageShowMuteButton}
+                onChange={(imageShowMuteButton) => onChange({ imageShowMuteButton })}
+              />
             </div>
           </>
         )}
@@ -397,17 +421,21 @@ function ImageEditor({
   image,
   imageAlt,
   imageScale,
+  showMuteButton,
   onImageChange,
   onAltChange,
   onScaleChange,
+  onShowMuteButtonChange,
 }: {
   label: string
   image?: string
   imageAlt?: string
   imageScale?: number
+  showMuteButton?: boolean
   onImageChange: (value: string) => void
   onAltChange: (value: string) => void
   onScaleChange: (value: number) => void
+  onShowMuteButtonChange: (value: boolean) => void
 }) {
   return (
     <div>
@@ -430,7 +458,36 @@ function ImageEditor({
         value={imageScale}
         onChange={onScaleChange}
       />
+      <VideoSoundControl
+        src={image}
+        checked={showMuteButton}
+        onChange={onShowMuteButtonChange}
+      />
     </div>
+  )
+}
+
+function VideoSoundControl({
+  src,
+  checked = true,
+  onChange,
+}: {
+  src?: string
+  checked?: boolean
+  onChange: (value: boolean) => void
+}) {
+  if (!isVideoUrl(src)) return null
+
+  return (
+    <label className="mt-2 flex items-center gap-2 rounded-xl border border-white/8 bg-zinc-800 px-3 py-2 text-xs text-white/50">
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(e) => onChange(e.target.checked)}
+        className="h-4 w-4 rounded accent-white"
+      />
+      Mostrar botón de sonido en el modal
+    </label>
   )
 }
 

@@ -6,9 +6,11 @@ export interface ContentBlock {
   image?: string
   imageAlt?: string
   imageScale?: number
+  imageShowMuteButton?: boolean
   image2?: string
   image2Alt?: string
   image2Scale?: number
+  image2ShowMuteButton?: boolean
   imageSide?: 'left' | 'right' | 'auto'
   order: number
 }

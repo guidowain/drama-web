@@ -35,7 +35,7 @@ export default function PlayableMedia({
   }
 
   return (
-    <div className="relative h-full w-full">
+    <div className="relative h-full w-full overflow-hidden rounded-xl">
       <video
         src={src}
         className={videoClassName || `${sharedClassName} pointer-events-none`}
