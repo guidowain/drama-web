@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import type { Proyecto } from '@/lib/types'
+import PlayableMedia from './PlayableMedia'
 
 type Props = {
   project: Proyecto
@@ -64,8 +65,7 @@ export default function ProjectCard({ project, index, onClick }: Props) {
         {/* Cover image */}
         <div className="relative aspect-square overflow-hidden rounded-xl bg-zinc-950">
           {project.coverImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <PlayableMedia
               src={project.coverImage}
               alt={project.coverImageAlt}
               className="w-full h-full object-cover"

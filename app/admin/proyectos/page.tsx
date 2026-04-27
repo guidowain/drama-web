@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import type { Proyecto } from '@/lib/types'
+import { isVideoUrl } from '@/lib/media'
 
 export default function AdminProyectosPage() {
   const [projects, setProjects] = useState<Proyecto[]>([])
@@ -97,8 +98,21 @@ export default function AdminProyectosPage() {
               {/* Cover thumbnail */}
               <div className="w-12 h-12 rounded-lg bg-zinc-800 overflow-hidden shrink-0">
                 {project.coverImage ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={project.coverImage} alt="" className="w-full h-full object-cover" />
+                  isVideoUrl(project.coverImage) ? (
+                    <video
+                      src={project.coverImage}
+                      className="w-full h-full object-cover"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      controls={false}
+                      preload="metadata"
+                    />
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={project.coverImage} alt="" className="w-full h-full object-cover" />
+                  )
                 ) : (
                   <div className="w-full h-full gradient-bg opacity-40" />
                 )}

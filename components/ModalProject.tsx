@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import type { Proyecto, ContentBlock } from '@/lib/types'
+import PlayableMedia from './PlayableMedia'
 
 type ModalRect = {
   top: number
@@ -396,12 +397,12 @@ function ScaledImage({ src, alt, scale }: { src: string; alt: string; scale?: nu
 
   return (
     <div className="w-full flex justify-center">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <PlayableMedia
         src={src}
         alt={alt}
         className="w-full object-contain rounded-xl"
-        style={{ width, maxWidth: '140%' }}
+        videoClassName="w-full object-contain rounded-xl pointer-events-none"
+        width={width}
       />
     </div>
   )

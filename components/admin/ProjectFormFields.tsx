@@ -139,12 +139,13 @@ export function ProjectFormFields({
 
       {/* Cover */}
       <div>
-        <label className="admin-label">Imagen de portada</label>
+        <label className="admin-label">Imagen o video de portada</label>
         <div className="w-full max-w-64 md:max-w-72">
           <ImageUploader
             value={form.coverImage}
             onChange={(url) => onChange({ coverImage: url })}
             aspect="1/1"
+            accept="media"
             placeholder="Arrastrá la portada del proyecto o hacé click para subir"
           />
         </div>
@@ -153,7 +154,7 @@ export function ProjectFormFields({
             type="text"
             value={form.coverImageAlt}
             onChange={(e) => onChange({ coverImageAlt: e.target.value })}
-            placeholder="Descripción de la imagen (alt)…"
+            placeholder="Descripción accesible de la portada…"
             className="admin-input mt-2"
           />
         )}

@@ -65,9 +65,9 @@ export default function ContentBlockEditor({ blocks, onChange }: Props) {
       {/* Add block buttons */}
       <div className="flex gap-2 flex-wrap pt-1">
         <AddBlockBtn icon={<TextIcon />} label="Texto" onClick={() => addBlock('text')} />
-        <AddBlockBtn icon={<ImageIcon />} label="Imagen" onClick={() => addBlock('image')} />
-        <AddBlockBtn icon={<DoubleImageIcon />} label="Imagen + Imagen" onClick={() => addBlock('imageImage')} />
-        <AddBlockBtn icon={<ImageTextIcon />} label="Imagen + Texto" onClick={() => addBlock('imageText')} />
+        <AddBlockBtn icon={<ImageIcon />} label="Media" onClick={() => addBlock('image')} />
+        <AddBlockBtn icon={<DoubleImageIcon />} label="Media + Media" onClick={() => addBlock('imageImage')} />
+        <AddBlockBtn icon={<ImageTextIcon />} label="Media + Texto" onClick={() => addBlock('imageText')} />
       </div>
     </div>
   )
@@ -94,9 +94,9 @@ function BlockCard({
 
   const typeLabel: Record<ContentBlock['type'], string> = {
     text: 'Texto',
-    image: 'Imagen',
-    imageImage: 'Imagen + Imagen',
-    imageText: 'Imagen + Texto',
+    image: 'Media',
+    imageImage: 'Media + Media',
+    imageText: 'Media + Texto',
   }
 
   return (
@@ -185,17 +185,18 @@ function ImageBlock({ block, onChange }: { block: ContentBlock; onChange: (c: Pa
         value={block.image || ''}
         onChange={(url) => onChange({ image: url })}
         aspect="16/9"
-        placeholder="Arrastrá una imagen o hacé click para subir"
+        accept="media"
+        placeholder="Arrastrá una imagen o video, o hacé click para subir"
       />
       <div>
         <label className="block text-white/30 text-xs uppercase tracking-wider mb-1.5">
-          Descripción <span className="normal-case text-white/15">(alt text)</span>
+          Descripción <span className="normal-case text-white/15">(accesibilidad)</span>
         </label>
         <input
           type="text"
           value={block.imageAlt || ''}
           onChange={(e) => onChange({ imageAlt: e.target.value })}
-          placeholder="Ej: Afiche de la obra"
+          placeholder="Ej: Afiche o video de la obra"
           className="w-full bg-zinc-800 border border-white/8 text-white text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-white/25 placeholder-white/15 transition-colors"
         />
       </div>
@@ -272,17 +273,18 @@ function ImageTextBlock({ block, onChange }: { block: ContentBlock; onChange: (c
         {side === 'left' ? (
           <>
             <div>
-              <label className="block text-white/30 text-xs uppercase tracking-wider mb-1.5">Imagen</label>
+              <label className="block text-white/30 text-xs uppercase tracking-wider mb-1.5">Media</label>
               <ImageUploader
                 value={block.image || ''}
                 onChange={(url) => onChange({ image: url })}
                 aspect="4/3"
+                accept="media"
               />
               <input
                 type="text"
                 value={block.imageAlt || ''}
                 onChange={(e) => onChange({ imageAlt: e.target.value })}
-                placeholder="Alt de imagen…"
+                placeholder="Descripción accesible…"
                 className="mt-2 w-full bg-zinc-800 border border-white/8 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-white/25 placeholder-white/15"
               />
               <ScaleControl
@@ -329,17 +331,18 @@ function ImageTextBlock({ block, onChange }: { block: ContentBlock; onChange: (c
               />
             </div>
             <div>
-              <label className="block text-white/30 text-xs uppercase tracking-wider mb-1.5">Imagen</label>
+              <label className="block text-white/30 text-xs uppercase tracking-wider mb-1.5">Media</label>
               <ImageUploader
                 value={block.image || ''}
                 onChange={(url) => onChange({ image: url })}
                 aspect="4/3"
+                accept="media"
               />
               <input
                 type="text"
                 value={block.imageAlt || ''}
                 onChange={(e) => onChange({ imageAlt: e.target.value })}
-                placeholder="Alt de imagen…"
+                placeholder="Descripción accesible…"
                 className="mt-2 w-full bg-zinc-800 border border-white/8 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-white/25 placeholder-white/15"
               />
               <ScaleControl
@@ -394,12 +397,13 @@ function ImageEditor({
         value={image || ''}
         onChange={onImageChange}
         aspect="4/3"
+        accept="media"
       />
       <input
         type="text"
         value={imageAlt || ''}
         onChange={(e) => onAltChange(e.target.value)}
-        placeholder="Alt de imagen…"
+        placeholder="Descripción accesible…"
         className="mt-2 w-full bg-zinc-800 border border-white/8 text-white text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-white/25 placeholder-white/15"
       />
       <ScaleControl

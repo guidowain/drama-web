@@ -10,12 +10,23 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 })
     }
 
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml']
+    const allowedTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+      'image/webp',
+      'image/svg+xml',
+      'video/mp4',
+      'video/webm',
+      'video/quicktime',
+      'video/x-m4v',
+    ]
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json({ error: 'Invalid file type' }, { status: 400 })
     }
 
-    const maxSize = 10 * 1024 * 1024
+    const isVideo = file.type.startsWith('video/')
+    const maxSize = isVideo ? 100 * 1024 * 1024 : 10 * 1024 * 1024
     if (file.size > maxSize) {
       return NextResponse.json({ error: 'File too large' }, { status: 400 })
     }
@@ -27,7 +38,7 @@ export async function POST(request: NextRequest) {
       const stream = cloudinary.uploader.upload_stream(
         {
           folder: 'drama-web/uploads',
-          resource_type: 'image',
+          resource_type: isVideo ? 'video' : 'image',
           overwrite: true,
         },
         (error, result) => {

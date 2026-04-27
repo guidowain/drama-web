@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react'
 import Image from 'next/image'
+import { isVideoUrl } from '@/lib/media'
 
 type Props = {
   value: string
@@ -10,6 +11,7 @@ type Props = {
   aspect?: string
   placeholder?: string
   fit?: 'cover' | 'contain'
+  accept?: 'image' | 'media'
 }
 
 declare global {
@@ -34,6 +36,7 @@ declare global {
             info?: {
               secure_url?: string
               url?: string
+              resource_type?: string
             }
           }
         ) => void
@@ -50,6 +53,7 @@ export default function ImageUploader({
   aspect = '16/9',
   placeholder,
   fit = 'cover',
+  accept = 'image',
 }: Props) {
   const [uploading, setUploading] = useState(false)
   const [dragOver, setDragOver] = useState(false)
@@ -57,6 +61,7 @@ export default function ImageUploader({
 
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+  const acceptsVideo = accept === 'media'
 
   const openCloudinaryWidget = useCallback(async () => {
     setError('')
@@ -101,13 +106,15 @@ export default function ImageUploader({
           sources: ['local', 'url'],
           multiple: false,
           maxFiles: 1,
-          resourceType: 'image',
-          clientAllowedFormats: ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'],
-          maxFileSize: 10 * 1024 * 1024,
+          resourceType: acceptsVideo ? 'auto' : 'image',
+          clientAllowedFormats: acceptsVideo
+            ? ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg', 'mp4', 'webm', 'mov', 'm4v']
+            : ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'],
+          maxFileSize: acceptsVideo ? 100 * 1024 * 1024 : 10 * 1024 * 1024,
         },
         (error, result) => {
           if (error) {
-            setError('Error al subir la imagen')
+            setError('Error al subir el archivo')
             setUploading(false)
             return
           }
@@ -116,7 +123,7 @@ export default function ImageUploader({
             const url = result.info?.secure_url || result.info?.url
 
             if (!url) {
-              setError('No se pudo obtener la URL de la imagen')
+              setError('No se pudo obtener la URL del archivo')
               setUploading(false)
               return
             }
@@ -136,7 +143,7 @@ export default function ImageUploader({
       setError(e instanceof Error ? e.message : 'Error al abrir Cloudinary')
       setUploading(false)
     }
-  }, [cloudName, onChange, uploadPreset])
+  }, [acceptsVideo, cloudName, onChange, uploadPreset])
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -147,21 +154,36 @@ export default function ImageUploader({
     [openCloudinaryWidget]
   )
 
-  /* ─── con imagen ─── */
+  /* ─── con archivo ─── */
   if (value) {
+    const isVideo = isVideoUrl(value)
+
     return (
       <div className="space-y-2">
         <div
           className="relative group rounded-xl overflow-hidden bg-zinc-900 border border-white/10"
           style={{ aspectRatio: aspect }}
         >
-          <Image
-            src={value}
-            alt="Preview"
-            fill
-            className={fit === 'contain' ? 'object-contain' : 'object-cover'}
-            unoptimized
-          />
+          {isVideo ? (
+            <video
+              src={value}
+              className={fit === 'contain' ? 'h-full w-full object-contain' : 'h-full w-full object-cover'}
+              autoPlay
+              loop
+              muted
+              playsInline
+              controls={false}
+              preload="metadata"
+            />
+          ) : (
+            <Image
+              src={value}
+              alt="Preview"
+              fill
+              className={fit === 'contain' ? 'object-contain' : 'object-cover'}
+              unoptimized
+            />
+          )}
           {/* overlay hover */}
           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
             <button
@@ -170,7 +192,7 @@ export default function ImageUploader({
               disabled={uploading}
               className="px-4 py-2 bg-white text-black text-sm font-bold rounded-lg hover:bg-white/90 transition-colors"
             >
-              {uploading ? 'Subiendo…' : 'Cambiar imagen'}
+              {uploading ? 'Subiendo…' : 'Cambiar archivo'}
             </button>
             <button
               type="button"
@@ -191,7 +213,7 @@ export default function ImageUploader({
     )
   }
 
-  /* ─── sin imagen — drop zone ─── */
+  /* ─── sin archivo — drop zone ─── */
   return (
     <div className="space-y-2">
       <button
@@ -219,9 +241,11 @@ export default function ImageUploader({
             <UploadIcon />
             <div className="text-center">
               <p className="text-white/50 text-sm font-medium">
-                {placeholder || 'Subí una imagen a Cloudinary'}
+                {placeholder || (acceptsVideo ? 'Subí una imagen o video a Cloudinary' : 'Subí una imagen a Cloudinary')}
               </p>
-              <p className="text-white/20 text-xs mt-0.5">JPG, PNG, WEBP, GIF — máx 10MB</p>
+              <p className="text-white/20 text-xs mt-0.5">
+                {acceptsVideo ? 'JPG, PNG, WEBP, GIF, MP4, WEBM — máx 100MB' : 'JPG, PNG, WEBP, GIF — máx 10MB'}
+              </p>
             </div>
           </>
         )}
