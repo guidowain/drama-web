@@ -118,6 +118,20 @@
         "image2Alt": "",
         "image2Scale": 100,
         "imageSide": "right"
+      },
+      {
+        "id": "mohj3g08kxi19d2hwc",
+        "type": "imageImage",
+        "order": 2,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777314398/drama-web/uploads/ncywhztpam9eknbqmku6.webp",
+        "imageAlt": "Matilda con sus padres",
+        "imageScale": 100,
+        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777314404/drama-web/uploads/kzv2rfymt7ahkbdisw1h.webp",
+        "image2Alt": "Niños revoltosos con miedo por la figura de Tronchatoro",
+        "image2Scale": 100,
+        "imageSide": "left"
       }
     ],
     "seoTitle": "",
