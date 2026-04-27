@@ -6,7 +6,18 @@ type Props = {
 }
 
 export default function Ticker({ text, bg = '#000', color = '#fff', speed = 25 }: Props) {
-  const repeated = Array(8).fill(`${text} • `).join('')
+  const repeated = Array.from({ length: 8 }, (_, index) => index)
+
+  const renderTickerGroup = (groupIndex: number) => (
+    <span className="flex shrink-0 items-center" aria-hidden={groupIndex > 0}>
+      {repeated.map((item) => (
+        <span key={`${groupIndex}-${item}`} className="flex items-center">
+          <span>{text}</span>
+          <span className="px-4 md:px-5">•</span>
+        </span>
+      ))}
+    </span>
+  )
 
   return (
     <div
@@ -20,8 +31,8 @@ export default function Ticker({ text, bg = '#000', color = '#fff', speed = 25 }
           animationDuration: `${speed}s`,
         }}
       >
-        <span>{repeated}</span>
-        <span aria-hidden>{repeated}</span>
+        {renderTickerGroup(0)}
+        {renderTickerGroup(1)}
       </div>
     </div>
   )
