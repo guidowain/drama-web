@@ -106,23 +106,9 @@
         "imageSide": "left"
       },
       {
-        "id": "mohikboe4vdxecc1k8r",
-        "type": "imageText",
-        "order": 1,
-        "title": "Lyric video",
-        "text": "Aprovechando la grabación oficial del corte promocional del musical para hacer un video animado y que los niños aprendan la letra antes de ir a la función.",
-        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777313659/drama-web/uploads/f4ltosmyuxmrkr19dw0i.webm",
-        "imageAlt": "",
-        "imageScale": 100,
-        "image2": "",
-        "image2Alt": "",
-        "image2Scale": 100,
-        "imageSide": "right"
-      },
-      {
         "id": "mohj3g08kxi19d2hwc",
         "type": "imageImage",
-        "order": 2,
+        "order": 1,
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777314398/drama-web/uploads/ncywhztpam9eknbqmku6.webp",
@@ -132,6 +118,20 @@
         "image2Alt": "Niños revoltosos con miedo por la figura de Tronchatoro",
         "image2Scale": 100,
         "imageSide": "left"
+      },
+      {
+        "id": "mohikboe4vdxecc1k8r",
+        "type": "imageText",
+        "order": 2,
+        "title": "Lyric video",
+        "text": "Aprovechando la grabación oficial del corte promocional del musical para hacer un video animado y que los niños aprendan la letra antes de ir a la función.",
+        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777313659/drama-web/uploads/f4ltosmyuxmrkr19dw0i.webm",
+        "imageAlt": "",
+        "imageScale": 100,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "imageSide": "right"
       }
     ],
     "seoTitle": "",
