@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import type { Proyecto } from '@/lib/types'
+import { hasProjectDetailMedia } from '@/lib/media'
 import PlayableMedia from './PlayableMedia'
 
 type Props = {
@@ -33,6 +34,7 @@ export default function ProjectCard({ project, index, onClick }: Props) {
   const [isDesktop, setIsDesktop] = useState(() => (
     typeof window === 'undefined' ? true : window.matchMedia('(min-width: 768px)').matches
   ))
+  const isClickable = hasProjectDetailMedia(project)
   const hasManyTags = project.tags.length >= 5
   const tagClassName = hasManyTags
     ? 'text-[0.5rem] md:text-[0.54rem] px-2 py-[1px] tracking-[0.025em]'
@@ -56,10 +58,16 @@ export default function ProjectCard({ project, index, onClick }: Props) {
       animate={isDesktop && index < 2 ? 'visible' : undefined}
       whileInView={isDesktop && index >= 2 ? 'visible' : undefined}
       viewport={{ once: true, amount: 0.22, margin: '0px 0px -8% 0px' }}
-      whileHover={{ scale: 1.02 }}
+      whileHover={isClickable ? { scale: 1.02 } : undefined}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      onClick={(event) => onClick(project, event.currentTarget.getBoundingClientRect())}
-      className="h-full cursor-pointer rounded-2xl bg-white shadow-md transition-shadow hover:shadow-[0_0_28px_rgba(0,0,0,0.12)]"
+      onClick={(event) => {
+        if (!isClickable) return
+        onClick(project, event.currentTarget.getBoundingClientRect())
+      }}
+      className={[
+        'h-full rounded-2xl bg-white shadow-md transition-shadow',
+        isClickable ? 'cursor-pointer hover:shadow-[0_0_28px_rgba(0,0,0,0.12)]' : 'cursor-default',
+      ].join(' ')}
     >
       <div className="flex h-full flex-col rounded-2xl bg-white p-3">
         {/* Cover image */}

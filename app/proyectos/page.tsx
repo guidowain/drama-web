@@ -9,6 +9,7 @@ import ModalProject from '@/components/ModalProject'
 import ContactStrip from '@/components/ContactStrip'
 import Ticker from '@/components/Ticker'
 import type { Proyecto } from '@/lib/types'
+import { hasProjectDetailMedia } from '@/lib/media'
 
 type ModalOriginRect = Pick<DOMRect, 'top' | 'left' | 'width' | 'height'>
 
@@ -48,12 +49,22 @@ function ProyectosContent() {
         const slug = searchParams.get('slug')
         if (slug) {
           const found = published.find((p) => p.slug === slug)
-          if (found) setSelected(found)
+          if (found && hasProjectDetailMedia(found)) {
+            setSelected(found)
+          } else {
+            setSelected(null)
+            setModalOrigin(null)
+          }
+        } else {
+          setSelected(null)
+          setModalOrigin(null)
         }
       })
   }, [searchParams])
 
   const handleCardOpen = useCallback((project: Proyecto, originRect: DOMRect) => {
+    if (!hasProjectDetailMedia(project)) return
+
     setModalOrigin({
       top: originRect.top,
       left: originRect.left,

@@ -211,25 +211,44 @@ function ImageBlock({ block, onChange }: { block: ContentBlock; onChange: (c: Pa
 
 function ImageImageBlock({ block, onChange }: { block: ContentBlock; onChange: (c: Partial<ContentBlock>) => void }) {
   return (
-    <div className="grid grid-cols-2 gap-3">
-      <ImageEditor
-        label="Imagen izquierda"
-        image={block.image}
-        imageAlt={block.imageAlt}
-        imageScale={block.imageScale}
-        onImageChange={(image) => onChange({ image })}
-        onAltChange={(imageAlt) => onChange({ imageAlt })}
-        onScaleChange={(imageScale) => onChange({ imageScale })}
-      />
-      <ImageEditor
-        label="Imagen derecha"
-        image={block.image2}
-        imageAlt={block.image2Alt}
-        imageScale={block.image2Scale}
-        onImageChange={(image2) => onChange({ image2 })}
-        onAltChange={(image2Alt) => onChange({ image2Alt })}
-        onScaleChange={(image2Scale) => onChange({ image2Scale })}
-      />
+    <div className="space-y-3">
+      <div className="flex justify-end">
+        <button
+          type="button"
+          onClick={() => onChange({
+            image: block.image2 || '',
+            imageAlt: block.image2Alt || '',
+            imageScale: block.image2Scale,
+            image2: block.image || '',
+            image2Alt: block.imageAlt || '',
+            image2Scale: block.imageScale,
+          })}
+          className="flex items-center gap-1.5 rounded-lg border border-white/8 bg-zinc-800 px-3 py-1.5 text-xs font-medium text-white/50 transition-colors hover:border-white/15 hover:text-white"
+        >
+          <SwapHorizontalIcon />
+          Invertir media
+        </button>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <ImageEditor
+          label="Imagen izquierda"
+          image={block.image}
+          imageAlt={block.imageAlt}
+          imageScale={block.imageScale}
+          onImageChange={(image) => onChange({ image })}
+          onAltChange={(imageAlt) => onChange({ imageAlt })}
+          onScaleChange={(imageScale) => onChange({ imageScale })}
+        />
+        <ImageEditor
+          label="Imagen derecha"
+          image={block.image2}
+          imageAlt={block.image2Alt}
+          imageScale={block.image2Scale}
+          onImageChange={(image2) => onChange({ image2 })}
+          onAltChange={(image2Alt) => onChange({ image2Alt })}
+          onScaleChange={(image2Scale) => onChange({ image2Scale })}
+        />
+      </div>
     </div>
   )
 }
@@ -471,6 +490,18 @@ function TrashIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+    </svg>
+  )
+}
+
+function SwapHorizontalIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M16 3h5v5" />
+      <path d="M4 20 21 3" />
+      <path d="M21 16v5h-5" />
+      <path d="M15 15 21 21" />
+      <path d="M4 4 9 9" />
     </svg>
   )
 }
