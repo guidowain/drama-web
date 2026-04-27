@@ -146,6 +146,20 @@
         "image2Alt": "",
         "image2Scale": 100,
         "imageSide": "left"
+      },
+      {
+        "id": "mohjhzzac0g8lhy1nn8",
+        "type": "imageImage",
+        "order": 4,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777315073/drama-web/uploads/ekxuhdltqyfrajirzl6t.webp",
+        "imageAlt": "",
+        "imageScale": 100,
+        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777315079/drama-web/uploads/kjtebgq3lck0pcvqa7gb.png",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "imageSide": "left"
       }
     ],
     "seoTitle": "",
