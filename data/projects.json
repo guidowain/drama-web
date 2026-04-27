@@ -170,6 +170,34 @@
         "image2Alt": "",
         "image2Scale": 100,
         "imageSide": "left"
+      },
+      {
+        "id": "mohpdzg60ua9skjisufk",
+        "type": "imageImage",
+        "order": 1,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777324968/drama-web/uploads/vnpobvad7blsy0bj0z03.webp",
+        "imageAlt": "",
+        "imageScale": 100,
+        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777324976/drama-web/uploads/sal3djeeos2ozz05ozg3.webp",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "imageSide": "left"
+      },
+      {
+        "id": "mohpek7mlu4yhou7ks",
+        "type": "imageImage",
+        "order": 2,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777324989/drama-web/uploads/qwgwqopxgjdwwfycbjya.webp",
+        "imageAlt": "",
+        "imageScale": 100,
+        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777324995/drama-web/uploads/yfwgu52ieq0mndevkylo.webp",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "imageSide": "left"
       }
     ],
     "seoTitle": "School of rock",
