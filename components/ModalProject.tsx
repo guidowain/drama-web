@@ -419,14 +419,15 @@ function ScaledImage({ src, alt, scale }: { src: string; alt: string; scale?: nu
 
   return (
     <div className="w-full flex justify-center">
-      <PlayableMedia
-        src={src}
-        alt={alt}
-        className="w-full object-contain rounded-xl"
-        videoClassName="w-full object-contain rounded-xl pointer-events-none"
-        style={{ maxHeight: 'var(--modal-media-max-height)', height: 'auto' }}
-        width={width}
-      />
+      <div className="overflow-hidden rounded-xl" style={{ width, maxWidth: '140%' }}>
+        <PlayableMedia
+          src={src}
+          alt={alt}
+          className="w-full object-contain"
+          videoClassName="w-full object-contain pointer-events-none"
+          style={{ maxHeight: 'var(--modal-media-max-height)', height: 'auto' }}
+        />
+      </div>
     </div>
   )
 }
