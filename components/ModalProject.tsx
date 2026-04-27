@@ -198,9 +198,9 @@ export default function ModalProject({ project, originRect, contact, onClose }: 
                 initial="hidden"
                 animate="visible"
                 exit="hidden"
-                className="relative gradient-bg px-6 pt-12 pb-8 md:rounded-t-3xl md:px-10"
+                className="relative gradient-bg px-6 pt-9 pb-6 md:rounded-t-3xl md:px-10 md:pt-10 md:pb-7"
               >
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 mb-3">
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
@@ -211,7 +211,7 @@ export default function ModalProject({ project, originRect, contact, onClose }: 
                   ))}
                 </div>
                 <div className="flex items-end justify-between gap-4">
-                  <h1 className="text-3xl md:text-5xl lg:text-6xl font-black uppercase text-black leading-none">
+                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-black uppercase text-black leading-none">
                     {project.name}
                   </h1>
                   <span className="text-black/60 font-bold text-xl shrink-0">{project.year}</span>
