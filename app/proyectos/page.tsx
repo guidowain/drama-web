@@ -8,15 +8,15 @@ import ProjectCard from '@/components/ProjectCard'
 import ModalProject from '@/components/ModalProject'
 import ContactStrip from '@/components/ContactStrip'
 import Ticker from '@/components/Ticker'
-import type { Proyecto } from '@/lib/types'
+import type { ContactSettings, Proyecto, SiteSettings } from '@/lib/types'
 import { hasProjectDetailMedia } from '@/lib/media'
 
 type ModalOriginRect = Pick<DOMRect, 'top' | 'left' | 'width' | 'height'>
 
-const CONTACT = {
-  instagram: 'https://instagram.com/drama.com.ar',
-  whatsapp: 'https://wa.me/5491163357223',
-  mail: 'los@drama.com.ar',
+const EMPTY_CONTACT: ContactSettings = {
+  instagram: '',
+  whatsapp: '',
+  mail: '',
 }
 
 export default function ProyectosPage() {
@@ -29,6 +29,7 @@ export default function ProyectosPage() {
 
 function ProyectosContent() {
   const [projects, setProjects] = useState<Proyecto[]>([])
+  const [contact, setContact] = useState<ContactSettings>(EMPTY_CONTACT)
   const [selected, setSelected] = useState<Proyecto | null>(null)
   const [modalOrigin, setModalOrigin] = useState<ModalOriginRect | null>(null)
   const [showAboutCta, setShowAboutCta] = useState(false)
@@ -61,6 +62,12 @@ function ProyectosContent() {
         }
       })
   }, [searchParams])
+
+  useEffect(() => {
+    fetch('/api/admin/site')
+      .then((r) => r.json())
+      .then((data: SiteSettings) => setContact(data.settings))
+  }, [])
 
   const handleCardOpen = useCallback((project: Proyecto, originRect: DOMRect) => {
     if (!hasProjectDetailMedia(project)) return
@@ -123,15 +130,15 @@ function ProyectosContent() {
       <Ticker text="DISEÑO Y COMUNICACIÓN PARA ENTRETENIMIENTO" bg="#000" speed={55} />
 
       <ContactStrip
-        instagram={CONTACT.instagram}
-        whatsapp={CONTACT.whatsapp}
-        mail={CONTACT.mail}
+        instagram={contact.instagram}
+        whatsapp={contact.whatsapp}
+        mail={contact.mail}
       />
 
       <ModalProject
         project={selected}
         originRect={modalOrigin}
-        contact={CONTACT}
+        contact={contact}
         onClose={handleClose}
       />
     </>

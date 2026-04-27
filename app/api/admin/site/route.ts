@@ -41,10 +41,6 @@ function mergeSiteSettings(current: SiteSettings, incoming: unknown): SiteSettin
         },
       },
       logos: mergeLogos(current.home.logos, next.home?.logos),
-      contact: {
-        ...current.home.contact,
-        ...next.home?.contact,
-      },
     },
     about: {
       ...current.about,

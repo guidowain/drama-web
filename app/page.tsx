@@ -8,7 +8,7 @@ import ServicesGrid from '@/components/ServicesGrid'
 
 export default async function HomePage() {
   const settings = await getSiteSettings()
-  const { home } = settings
+  const { home, settings: contact } = settings
 
   return (
     <main className="pt-16 md:pt-[72px]">
@@ -65,9 +65,9 @@ export default async function HomePage() {
 
       {/* ── CONTACTO ── */}
       <ContactStrip
-        instagram={home.contact.instagram}
-        whatsapp={home.contact.whatsapp}
-        mail={home.contact.mail}
+        instagram={contact.instagram}
+        whatsapp={contact.whatsapp}
+        mail={contact.mail}
       />
     </main>
   )

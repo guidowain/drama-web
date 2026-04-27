@@ -1,4 +1,4 @@
-import type { Proyecto, SiteSettings } from './types'
+import type { ContactSettings, Proyecto, SiteSettings } from './types'
 
 const GITHUB_OWNER = process.env.GITHUB_OWNER || 'guidowain'
 const GITHUB_REPO = process.env.GITHUB_REPO || 'drama-web'
@@ -43,11 +43,6 @@ const DEFAULT_SITE_SETTINGS: SiteSettings = {
       },
     },
     logos: [],
-    contact: {
-      mail: 'LOS@drama.com.ar',
-      whatsapp: '+5491163357223',
-      instagram: 'https://instagram.com/drama.com.ar',
-    },
   },
   about: {
     title: 'SOMOS\nDRAMA',
@@ -72,6 +67,8 @@ const DEFAULT_SITE_SETTINGS: SiteSettings = {
 
 function normalizeSiteSettings(raw: unknown): SiteSettings {
   const data = raw && typeof raw === 'object' ? (raw as Partial<SiteSettings>) : {}
+  const legacyHome = data.home as (Partial<SiteSettings['home']> & { contact?: Partial<ContactSettings> }) | undefined
+  const { contact: legacyContact, ...homeData } = legacyHome ?? {}
   const normalizedLogos = Array.isArray(data.home?.logos)
     ? data.home.logos.map((logo) => ({
         src: logo?.src ?? '',
@@ -83,7 +80,7 @@ function normalizeSiteSettings(raw: unknown): SiteSettings {
   return {
     home: {
       ...DEFAULT_SITE_SETTINGS.home,
-      ...data.home,
+      ...homeData,
       services: {
         design: {
           ...DEFAULT_SITE_SETTINGS.home.services.design,
@@ -97,19 +94,15 @@ function normalizeSiteSettings(raw: unknown): SiteSettings {
         },
       },
       logos: normalizedLogos,
-      contact: {
-        ...DEFAULT_SITE_SETTINGS.home.contact,
-        ...data.home?.contact,
-      },
     },
     about: {
       ...DEFAULT_SITE_SETTINGS.about,
       ...data.about,
     },
     settings: {
-      instagram: data.settings?.instagram ?? DEFAULT_SITE_SETTINGS.settings.instagram,
-      whatsapp: data.settings?.whatsapp ?? DEFAULT_SITE_SETTINGS.settings.whatsapp,
-      mail: data.settings?.mail ?? DEFAULT_SITE_SETTINGS.settings.mail,
+      instagram: data.settings?.instagram ?? legacyContact?.instagram ?? DEFAULT_SITE_SETTINGS.settings.instagram,
+      whatsapp: data.settings?.whatsapp ?? legacyContact?.whatsapp ?? DEFAULT_SITE_SETTINGS.settings.whatsapp,
+      mail: data.settings?.mail ?? legacyContact?.mail ?? DEFAULT_SITE_SETTINGS.settings.mail,
     },
   }
 }

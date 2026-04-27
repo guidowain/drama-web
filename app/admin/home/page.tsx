@@ -132,25 +132,6 @@ export default function AdminHomePage() {
           />
         </Section>
 
-        {/* Contact */}
-        <Section title="Contacto">
-          <AdminInput
-            label="Email"
-            value={settings.home.contact.mail}
-            onChange={(v) => updateHome({ contact: { ...settings.home.contact, mail: v } })}
-          />
-          <AdminInput
-            label="WhatsApp"
-            value={settings.home.contact.whatsapp}
-            onChange={(v) => updateHome({ contact: { ...settings.home.contact, whatsapp: v } })}
-          />
-          <AdminInput
-            label="Instagram"
-            value={settings.home.contact.instagram}
-            onChange={(v) => updateHome({ contact: { ...settings.home.contact, instagram: v } })}
-          />
-        </Section>
-
         {/* Services */}
         <Section title="Servicio: Diseño">
           <AdminInput

@@ -35,7 +35,15 @@ export default function ModalProject({ project, originRect, contact, onClose }: 
   useEffect(() => {
     if (!project) return
     document.body.style.overflow = 'hidden'
-    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+
+      const isProtectedShortcut = (e.metaKey || e.ctrlKey) && ['s', 'p'].includes(e.key.toLowerCase())
+      if (isProtectedShortcut) e.preventDefault()
+    }
     window.addEventListener('keydown', handler)
     return () => {
       document.body.style.overflow = ''
@@ -433,7 +441,10 @@ function ScaledImage({
 
   return (
     <div className="w-full flex justify-center">
-      <div className="overflow-hidden rounded-xl" style={{ width, maxWidth: '140%' }}>
+      <div
+        className="isolate overflow-hidden rounded-xl bg-black"
+        style={{ width, maxWidth: '140%', clipPath: 'inset(0 round 0.75rem)' }}
+      >
         <PlayableMedia
           src={src}
           alt={alt}
@@ -441,6 +452,7 @@ function ScaledImage({
           videoClassName="w-full object-contain pointer-events-none"
           style={{ maxHeight: 'var(--modal-media-max-height)', height: 'auto' }}
           showMuteButton={showMuteButton}
+          protectedMedia
         />
       </div>
     </div>

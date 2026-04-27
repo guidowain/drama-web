@@ -43,6 +43,12 @@ export interface Logo {
   scale?: number
 }
 
+export interface ContactSettings {
+  instagram: string
+  whatsapp: string
+  mail: string
+}
+
 export interface SiteSettings {
   home: {
     heroVideo: string
@@ -53,11 +59,6 @@ export interface SiteSettings {
       communication: ServiceInfo
     }
     logos: Logo[]
-    contact: {
-      mail: string
-      whatsapp: string
-      instagram: string
-    }
   }
   about: {
     title: string
@@ -70,9 +71,5 @@ export interface SiteSettings {
     queDiferenciaTitle: string
     queDiferencia: string
   }
-  settings: {
-    instagram: string
-    whatsapp: string
-    mail: string
-  }
+  settings: ContactSettings
 }

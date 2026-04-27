@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import type { CSSProperties } from 'react'
+import type { CSSProperties, DragEvent, MouseEvent } from 'react'
 import { isVideoUrl } from '@/lib/media'
 
 type Props = {
@@ -13,6 +13,7 @@ type Props = {
   style?: CSSProperties
   width?: string
   showMuteButton?: boolean
+  protectedMedia?: boolean
 }
 
 export default function PlayableMedia({
@@ -24,29 +25,68 @@ export default function PlayableMedia({
   style,
   width,
   showMuteButton = true,
+  protectedMedia = false,
 }: Props) {
   const [muted, setMuted] = useState(true)
   const mediaStyle = width ? { ...style, width, maxWidth: '140%' } : style
   const sharedClassName = className || 'w-full h-full object-cover'
+  const roundedMediaStyle = {
+    ...mediaStyle,
+    display: 'block',
+    borderRadius: 'inherit',
+  } as CSSProperties
+  const protectedStyle = protectedMedia
+    ? ({
+        ...roundedMediaStyle,
+        userSelect: 'none',
+        WebkitUserSelect: 'none',
+        WebkitUserDrag: 'none',
+      } as CSSProperties)
+    : roundedMediaStyle
+  const preventProtectedAction = (event: DragEvent | MouseEvent) => {
+    if (!protectedMedia) return
+    event.preventDefault()
+    event.stopPropagation()
+  }
 
   if (!isVideoUrl(src)) {
     // eslint-disable-next-line @next/next/no-img-element
-    return <img src={src} alt={alt} className={imageClassName || sharedClassName} style={mediaStyle} />
+    return (
+      <img
+        src={src}
+        alt={alt}
+        className={imageClassName || sharedClassName}
+        style={protectedStyle}
+        draggable={false}
+        onDragStart={preventProtectedAction}
+        onContextMenu={preventProtectedAction}
+      />
+    )
   }
 
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-xl">
+    <div
+      className="relative h-full w-full overflow-hidden rounded-xl"
+      style={{ clipPath: 'inset(0 round 0.75rem)' }}
+      onContextMenu={preventProtectedAction}
+      onDragStart={preventProtectedAction}
+    >
       <video
         src={src}
         className={videoClassName || `${sharedClassName} pointer-events-none`}
-        style={mediaStyle}
+        style={protectedStyle}
         autoPlay
         loop
         muted={muted}
         playsInline
         preload="metadata"
         controls={false}
+        controlsList="nodownload noremoteplayback noplaybackrate"
         disablePictureInPicture
+        disableRemotePlayback
+        draggable={false}
+        onDragStart={preventProtectedAction}
+        onContextMenu={preventProtectedAction}
         aria-label={alt || 'Video'}
       />
       {showMuteButton && (
