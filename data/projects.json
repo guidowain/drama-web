@@ -91,7 +91,22 @@
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777058035/drama-web/uploads/xmzvih90alloq6umkcun.webp",
     "coverImageAlt": "",
-    "contentBlocks": [],
+    "contentBlocks": [
+      {
+        "id": "mohlca0sp4k2sn0d3k",
+        "type": "imageText",
+        "order": 0,
+        "title": "Reel animado",
+        "text": "Generamos una pieza mezclado animación 2D, 3D y chroma para la salida a la venta de entradas para vacaciones de invierno.",
+        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777318169/drama-web/uploads/fwlydlauwdgf66kyfh2b.webm",
+        "imageAlt": "Reel animado de Charlie y la fábrica de chocolate",
+        "imageScale": 100,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "imageSide": "left"
+      }
+    ],
     "seoTitle": "",
     "seoDescription": "",
     "excerpt": ""
