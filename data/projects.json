@@ -30,23 +30,9 @@
         "imageSide": "left"
       },
       {
-        "id": "mohkdw2cywekswwcw2g",
-        "type": "imageImage",
-        "order": 1,
-        "title": "",
-        "text": "",
-        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777316563/drama-web/uploads/x4sm8v6dh3hagpmahfnh.webp",
-        "imageAlt": "",
-        "imageScale": 100,
-        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777316569/drama-web/uploads/dyzvekfu6etffjttc4p6.webp",
-        "image2Alt": "",
-        "image2Scale": 100,
-        "imageSide": "left"
-      },
-      {
         "id": "mohhokdmaiq2sx3b26w",
         "type": "imageText",
-        "order": 2,
+        "order": 1,
         "title": "Lanzamiento de audiciones",
         "text": "Nos pidieron hacer un reel 100% animado en tiempo récord para anunciar las audiciones abiertas del proyecto.\n",
         "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777312031/drama-web/uploads/pesgoz8nbouacu8khiqz.webm",
@@ -60,7 +46,7 @@
       {
         "id": "mohkfwpqz3ksqzizv2e",
         "type": "imageImage",
-        "order": 3,
+        "order": 2,
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777316653/drama-web/uploads/h60lfejzlo2bgttgxzzd.webp",
@@ -74,7 +60,7 @@
       {
         "id": "moj50pgig7xk5xnbwx",
         "type": "image",
-        "order": 4,
+        "order": 3,
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777411723/drama-web/uploads/pe54pc2ewdjzxqrdki5w.webp",
