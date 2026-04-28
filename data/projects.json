@@ -312,7 +312,40 @@
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777063293/drama-web/uploads/vcnbqv6nxis0pdlu5x0u.webp",
     "coverImageAlt": "",
-    "contentBlocks": [],
+    "contentBlocks": [
+      {
+        "id": "mohzfvhyaby06j8vqxj",
+        "type": "image",
+        "order": 0,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777341851/drama-web/uploads/sdby1dp6sibbbutbmzsv.webm",
+        "imageAlt": "",
+        "imageScale": 100,
+        "imageShowMuteButton": false,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "image2ShowMuteButton": true,
+        "imageSide": "left"
+      },
+      {
+        "id": "mohzgq2ecjp1dhflimi",
+        "type": "imageImage",
+        "order": 1,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777341886/drama-web/uploads/std2tuluypsj68nrv14t.webm",
+        "imageAlt": "",
+        "imageScale": 100,
+        "imageShowMuteButton": true,
+        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777341966/drama-web/uploads/iljxjvbujwz0w6b1rion.webp",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "image2ShowMuteButton": true,
+        "imageSide": "left"
+      }
+    ],
     "seoTitle": "",
     "seoDescription": "",
     "excerpt": ""
