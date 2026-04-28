@@ -16,9 +16,26 @@
     "coverImageAlt": "",
     "contentBlocks": [
       {
+        "id": "moj71384dagw1hy92wo",
+        "type": "text",
+        "alignment": "left",
+        "order": 0,
+        "title": "",
+        "text": "Con el logo de Broadway como único punto de partida, construimos desde cero el universo visual de la producción: animaciones y assets que generaban la experiencia de estar bajo el mar, que después sirvieron de base para más de 200 piezas entre digitales e impresas.",
+        "image": "",
+        "imageAlt": "",
+        "imageScale": 100,
+        "imageShowMuteButton": true,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "image2ShowMuteButton": true,
+        "imageSide": "left"
+      },
+      {
         "id": "moj6hitdh7tvlhgo7f",
         "type": "image",
-        "order": 0,
+        "order": 1,
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777414149/drama-web/uploads/mkbdxmjgr24gy9rpqyl1.webp",
@@ -34,7 +51,7 @@
       {
         "id": "moj6i185obp428pxyc",
         "type": "text",
-        "order": 1,
+        "order": 2,
         "title": "La marquesina más grande de Argentina",
         "text": "Los 265m² de las ventanas del Gran Rex fueron la pieza más visible del proyecto: una imagen construida íntegramente con AI y retoque digital, sobre la avenida más icónica de la ciudad.",
         "image": "",
@@ -51,7 +68,7 @@
       {
         "id": "mohkeq618eou4spron",
         "type": "image",
-        "order": 2,
+        "order": 3,
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777316597/drama-web/uploads/fgnmjknbtoaflwcpbnwt.png",
@@ -65,7 +82,7 @@
       {
         "id": "mohhokdmaiq2sx3b26w",
         "type": "imageText",
-        "order": 3,
+        "order": 4,
         "title": "El primer proyecto con Disney",
         "text": "La Sirenita nos puso frente a un nivel de rigurosidad en aprobaciones y lineamientos de marca que no habíamos enfrentado antes.",
         "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777312031/drama-web/uploads/pesgoz8nbouacu8khiqz.webm",
@@ -79,7 +96,7 @@
       {
         "id": "mohkfwpqz3ksqzizv2e",
         "type": "imageImage",
-        "order": 4,
+        "order": 5,
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777316653/drama-web/uploads/h60lfejzlo2bgttgxzzd.webp",
@@ -93,7 +110,7 @@
       {
         "id": "moj50pgig7xk5xnbwx",
         "type": "image",
-        "order": 5,
+        "order": 6,
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777411723/drama-web/uploads/pe54pc2ewdjzxqrdki5w.webp",
