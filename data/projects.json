@@ -523,23 +523,6 @@
     "excerpt": ""
   },
   {
-    "id": "mohkq6smauen13jxdxe",
-    "name": "Vivitos y Coleando 2",
-    "slug": "vivitos-y-coleando-2",
-    "year": 2026,
-    "featured": false,
-    "published": false,
-    "tags": [
-      "identidad visual"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777317110/drama-web/uploads/mclmulqsqrooyprwuwuk.webp",
-    "coverImageAlt": "Gráfica oficial de Vivitos y Coleando 2",
-    "contentBlocks": [],
-    "seoTitle": "",
-    "seoDescription": "",
-    "excerpt": ""
-  },
-  {
     "id": "moi4clsoy0w61xndric",
     "name": "Casi normales",
     "slug": "casi-normales",
@@ -553,6 +536,23 @@
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777350070/drama-web/uploads/mnlithxjx4twefdy78h8.webp",
     "coverImageAlt": "Gráfica oficial de Casi Normales Argentina",
+    "contentBlocks": [],
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": ""
+  },
+  {
+    "id": "mohkq6smauen13jxdxe",
+    "name": "Vivitos y Coleando 2",
+    "slug": "vivitos-y-coleando-2",
+    "year": 2026,
+    "featured": false,
+    "published": false,
+    "tags": [
+      "identidad visual"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777317110/drama-web/uploads/mclmulqsqrooyprwuwuk.webp",
+    "coverImageAlt": "Gráfica oficial de Vivitos y Coleando 2",
     "contentBlocks": [],
     "seoTitle": "",
     "seoDescription": "",
