@@ -268,6 +268,23 @@
         "image2Alt": "",
         "image2Scale": 100,
         "imageSide": "left"
+      },
+      {
+        "id": "moj7tdzi8iyqul89wmp",
+        "type": "text",
+        "alignment": "center",
+        "order": 3,
+        "title": "De Madrid a Buenos Aires",
+        "text": "School of Rock Argentina no fue el primer contacto de DRAMA con la obra. Antes hicimos la comunicación de la versión de Madrid, lo que nos dio algo poco común: la chance de hacer todo de nuevo con criterio propio.",
+        "image": "",
+        "imageAlt": "",
+        "imageScale": 100,
+        "imageShowMuteButton": true,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "image2ShowMuteButton": true,
+        "imageSide": "left"
       }
     ],
     "seoTitle": "School of rock",
