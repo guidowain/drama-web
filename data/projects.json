@@ -185,6 +185,23 @@
         "image2Alt": "",
         "image2Scale": 100,
         "imageSide": "left"
+      },
+      {
+        "id": "moj7ek4rrgdko18c7ef",
+        "type": "imageText",
+        "alignment": "left",
+        "order": 3,
+        "title": "El dorado correcto",
+        "text": "Algunos elementos no se inventan, se descubren. El golden ticket tenía que verse exactamente como todos lo recuerdan, aunque nadie lo haya visto igual dos veces. Llegamos a él después de muchas pruebas, buscando el color y la textura con el peso justo.",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777415689/drama-web/uploads/kg06fvjjuf8t0v6abwz7.webp",
+        "imageAlt": "",
+        "imageScale": 100,
+        "imageShowMuteButton": true,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "image2ShowMuteButton": true,
+        "imageSide": "right"
       }
     ],
     "seoTitle": "",
