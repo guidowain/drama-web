@@ -45,7 +45,8 @@
         "image2Alt": "",
         "image2Scale": 100,
         "image2ShowMuteButton": true,
-        "imageSide": "left"
+        "imageSide": "left",
+        "alignment": "center"
       },
       {
         "id": "mohkeq618eou4spron",
