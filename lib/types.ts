@@ -1,6 +1,7 @@
 export interface ContentBlock {
   id: string
   type: 'image' | 'imageImage' | 'imageText' | 'text'
+  alignment?: 'left' | 'center' | 'right'
   title?: string
   text?: string
   image?: string

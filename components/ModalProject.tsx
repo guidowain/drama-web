@@ -336,8 +336,9 @@ function getModalFrame(): ModalRect | null {
 
 function ContentBlockRenderer({ block }: { block: ContentBlock }) {
   if (block.type === 'text') {
+    const alignment = getBlockAlignment(block, 'left')
     return (
-      <div className="max-w-2xl">
+      <div className={['max-w-2xl', blockAlignmentClasses[alignment].container, blockAlignmentClasses[alignment].text].join(' ')}>
         {block.title && (
           <h2 className="text-xl md:text-2xl font-black uppercase text-white mb-3">
             {block.title}
@@ -351,6 +352,7 @@ function ContentBlockRenderer({ block }: { block: ContentBlock }) {
   }
 
   if (block.type === 'image') {
+    const alignment = getBlockAlignment(block, 'center')
     return (
       <div className="w-full">
         {block.image && (
@@ -358,11 +360,14 @@ function ContentBlockRenderer({ block }: { block: ContentBlock }) {
             src={block.image}
             alt={block.imageAlt || ''}
             scale={block.imageScale}
+            alignment={alignment}
             showMuteButton={block.imageShowMuteButton}
           />
         )}
         {block.title && (
-          <p className="text-white/40 text-sm mt-2 text-center">{block.title}</p>
+          <p className={['text-white/40 text-sm mt-2', blockAlignmentClasses[alignment].text].join(' ')}>
+            {block.title}
+          </p>
         )}
       </div>
     )
@@ -430,17 +435,19 @@ function ScaledImage({
   src,
   alt,
   scale,
+  alignment = 'center',
   showMuteButton = true,
 }: {
   src: string
   alt: string
   scale?: number
+  alignment?: NonNullable<ContentBlock['alignment']>
   showMuteButton?: boolean
 }) {
   const width = `${clampScale(scale)}%`
 
   return (
-    <div className="w-full flex justify-center">
+    <div className={['w-full flex', blockAlignmentClasses[alignment].justify].join(' ')}>
       <div
         className="isolate overflow-hidden rounded-xl bg-black"
         style={{ width, maxWidth: '140%', clipPath: 'inset(0 round 0.75rem)' }}
@@ -462,4 +469,36 @@ function ScaledImage({
 function clampScale(value?: number) {
   if (!Number.isFinite(value)) return 100
   return Math.min(140, Math.max(40, Math.round(Number(value))))
+}
+
+const blockAlignmentClasses: Record<NonNullable<ContentBlock['alignment']>, {
+  container: string
+  justify: string
+  text: string
+}> = {
+  left: {
+    container: 'mr-auto',
+    justify: 'justify-start',
+    text: 'text-left',
+  },
+  center: {
+    container: 'mx-auto',
+    justify: 'justify-center',
+    text: 'text-center',
+  },
+  right: {
+    container: 'ml-auto',
+    justify: 'justify-end',
+    text: 'text-right',
+  },
+}
+
+function getBlockAlignment(
+  block: ContentBlock,
+  fallback: NonNullable<ContentBlock['alignment']>,
+) {
+  if (block.alignment === 'left' || block.alignment === 'center' || block.alignment === 'right') {
+    return block.alignment
+  }
+  return fallback
 }

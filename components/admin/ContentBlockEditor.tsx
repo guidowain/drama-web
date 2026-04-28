@@ -6,6 +6,8 @@ import { isVideoUrl } from '@/lib/media'
 import { generateId } from '@/lib/utils'
 import ImageUploader from './ImageUploader'
 
+type BlockAlignment = NonNullable<ContentBlock['alignment']>
+
 type Props = {
   blocks: ContentBlock[]
   onChange: (blocks: ContentBlock[]) => void
@@ -16,6 +18,7 @@ export default function ContentBlockEditor({ blocks, onChange }: Props) {
     const newBlock: ContentBlock = {
       id: generateId(),
       type,
+      alignment: type === 'image' ? 'center' : 'left',
       order: blocks.length,
       title: '',
       text: '',
@@ -155,6 +158,10 @@ function BlockCard({
 function TextBlock({ block, onChange }: { block: ContentBlock; onChange: (c: Partial<ContentBlock>) => void }) {
   return (
     <div className="space-y-3">
+      <AlignmentControl
+        value={block.alignment || 'left'}
+        onChange={(alignment) => onChange({ alignment })}
+      />
       <div>
         <label className="block text-white/30 text-xs uppercase tracking-wider mb-1.5">
           Título <span className="normal-case text-white/15">(opcional)</span>
@@ -184,6 +191,10 @@ function TextBlock({ block, onChange }: { block: ContentBlock; onChange: (c: Par
 function ImageBlock({ block, onChange }: { block: ContentBlock; onChange: (c: Partial<ContentBlock>) => void }) {
   return (
     <div className="space-y-3">
+      <AlignmentControl
+        value={block.alignment || 'center'}
+        onChange={(alignment) => onChange({ alignment })}
+      />
       <ImageUploader
         value={block.image || ''}
         onChange={(url) => onChange({ image: url })}
@@ -513,6 +524,44 @@ function ScaleControl({ label, value, onChange }: { label: string; value?: numbe
   )
 }
 
+function AlignmentControl({
+  value,
+  onChange,
+}: {
+  value: BlockAlignment
+  onChange: (value: BlockAlignment) => void
+}) {
+  const options: { value: BlockAlignment; label: string; icon: React.ReactNode }[] = [
+    { value: 'left', label: 'Izquierda', icon: <AlignLeftIcon /> },
+    { value: 'center', label: 'Centro', icon: <AlignCenterIcon /> },
+    { value: 'right', label: 'Derecha', icon: <AlignRightIcon /> },
+  ]
+
+  return (
+    <div className="flex items-center gap-2">
+      <span className="text-white/30 text-xs uppercase tracking-wider">Alineación</span>
+      <div className="flex overflow-hidden rounded-lg border border-white/8">
+        {options.map((option, index) => (
+          <button
+            key={option.value}
+            type="button"
+            onClick={() => onChange(option.value)}
+            title={option.label}
+            aria-label={option.label}
+            className={[
+              'flex h-8 w-9 items-center justify-center text-xs font-medium transition-colors',
+              index > 0 ? 'border-l border-white/8' : '',
+              value === option.value ? 'bg-white text-black' : 'bg-zinc-800 text-white/40 hover:text-white/70',
+            ].join(' ')}
+          >
+            {option.icon}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function clampScale(value?: number) {
   if (!Number.isFinite(value)) return 100
   return Math.min(140, Math.max(40, Math.round(Number(value))))
@@ -567,6 +616,39 @@ function TextIcon({ size = 14 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/>
+    </svg>
+  )
+}
+
+function AlignLeftIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="4" y1="10" x2="15" y2="10" />
+      <line x1="4" y1="14" x2="20" y2="14" />
+      <line x1="4" y1="18" x2="13" y2="18" />
+    </svg>
+  )
+}
+
+function AlignCenterIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="7" y1="10" x2="17" y2="10" />
+      <line x1="4" y1="14" x2="20" y2="14" />
+      <line x1="8" y1="18" x2="16" y2="18" />
+    </svg>
+  )
+}
+
+function AlignRightIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="9" y1="10" x2="20" y2="10" />
+      <line x1="4" y1="14" x2="20" y2="14" />
+      <line x1="11" y1="18" x2="20" y2="18" />
     </svg>
   )
 }
