@@ -342,9 +342,26 @@
     "coverImageAlt": "Gráfica oficial de Matilda el músical Argentina",
     "contentBlocks": [
       {
+        "id": "moj8nmf0r8s5af5dnoq",
+        "type": "text",
+        "alignment": "center",
+        "order": 0,
+        "title": "La Pose Matilda",
+        "text": "La gráfica oficial tenía que mostrar al elenco protagónico, por contrato. Pero nosotros creímos en otra imagen: una niña sola contra el mundo. La propusimos, la aceptaron, y se convirtió en la pieza más icónica de la campaña. La llamamos La Pose Matilda. Y tiene un detalle único: mientras todas las versiones del mundo miran hacia la izquierda, la nuestra mira hacia la derecha. Nuestra Matilda mira al porvenir.",
+        "image": "",
+        "imageAlt": "",
+        "imageScale": 100,
+        "imageShowMuteButton": true,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "image2ShowMuteButton": true,
+        "imageSide": "left"
+      },
+      {
         "id": "mohi1fbh4qcnitnc9or",
         "type": "image",
-        "order": 0,
+        "order": 1,
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777312624/drama-web/uploads/yuvuibphedhnbwi3lopv.webm",
@@ -359,7 +376,7 @@
       {
         "id": "mohj3g08kxi19d2hwc",
         "type": "imageImage",
-        "order": 1,
+        "order": 2,
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777314398/drama-web/uploads/ncywhztpam9eknbqmku6.webp",
@@ -373,7 +390,7 @@
       {
         "id": "mohikboe4vdxecc1k8r",
         "type": "imageText",
-        "order": 2,
+        "order": 3,
         "title": "Lyric video",
         "text": "Aprovechando la grabación oficial del corte promocional del musical para hacer un video animado y que los niños aprendan la letra antes de ir a la función.",
         "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777313659/drama-web/uploads/f4ltosmyuxmrkr19dw0i.webm",
@@ -387,7 +404,7 @@
       {
         "id": "mohj637ixaa7i953bh",
         "type": "image",
-        "order": 3,
+        "order": 4,
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777314514/drama-web/uploads/w0ge8r8uzjqqmlcbtuuh.webp",
@@ -401,7 +418,7 @@
       {
         "id": "mohjhzzac0g8lhy1nn8",
         "type": "imageImage",
-        "order": 4,
+        "order": 5,
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777315073/drama-web/uploads/ekxuhdltqyfrajirzl6t.webp",
