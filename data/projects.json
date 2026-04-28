@@ -227,9 +227,26 @@
     "coverImageAlt": "",
     "contentBlocks": [
       {
+        "id": "moj7tdzi8iyqul89wmp",
+        "type": "text",
+        "alignment": "center",
+        "order": 0,
+        "title": "De Madrid a Buenos Aires",
+        "text": "School of Rock Argentina no fue el primer contacto de DRAMA con la obra. Antes hicimos la comunicación de la versión de Madrid, lo que nos dio algo poco común: la chance de hacer todo de nuevo con criterio propio.",
+        "image": "",
+        "imageAlt": "",
+        "imageScale": 100,
+        "imageShowMuteButton": true,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "image2ShowMuteButton": true,
+        "imageSide": "left"
+      },
+      {
         "id": "mohongr97yt245u9j8f",
         "type": "image",
-        "order": 0,
+        "order": 1,
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777323731/drama-web/uploads/fydmm18gq8ujzeg2h99o.webm",
@@ -244,7 +261,7 @@
       {
         "id": "mohpdzg60ua9skjisufk",
         "type": "imageImage",
-        "order": 1,
+        "order": 2,
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777324968/drama-web/uploads/vnpobvad7blsy0bj0z03.webp",
@@ -258,7 +275,7 @@
       {
         "id": "mohpek7mlu4yhou7ks",
         "type": "imageImage",
-        "order": 2,
+        "order": 3,
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777324989/drama-web/uploads/qwgwqopxgjdwwfycbjya.webp",
@@ -267,23 +284,6 @@
         "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777324995/drama-web/uploads/yfwgu52ieq0mndevkylo.webp",
         "image2Alt": "",
         "image2Scale": 100,
-        "imageSide": "left"
-      },
-      {
-        "id": "moj7tdzi8iyqul89wmp",
-        "type": "text",
-        "alignment": "center",
-        "order": 3,
-        "title": "De Madrid a Buenos Aires",
-        "text": "School of Rock Argentina no fue el primer contacto de DRAMA con la obra. Antes hicimos la comunicación de la versión de Madrid, lo que nos dio algo poco común: la chance de hacer todo de nuevo con criterio propio.",
-        "image": "",
-        "imageAlt": "",
-        "imageScale": 100,
-        "imageShowMuteButton": true,
-        "image2": "",
-        "image2Alt": "",
-        "image2Scale": 100,
-        "image2ShowMuteButton": true,
         "imageSide": "left"
       }
     ],
