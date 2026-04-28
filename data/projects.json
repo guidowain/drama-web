@@ -70,6 +70,22 @@
         "image2Alt": "",
         "image2Scale": 100,
         "imageSide": "left"
+      },
+      {
+        "id": "moj50pgig7xk5xnbwx",
+        "type": "image",
+        "order": 4,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777411723/drama-web/uploads/pe54pc2ewdjzxqrdki5w.webp",
+        "imageAlt": "Puertas del Gran Rex con La Sirenita",
+        "imageScale": 100,
+        "imageShowMuteButton": true,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "image2ShowMuteButton": true,
+        "imageSide": "left"
       }
     ],
     "seoTitle": "La sirenita",
