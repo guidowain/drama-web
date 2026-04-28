@@ -466,6 +466,25 @@
     "excerpt": ""
   },
   {
+    "id": "moi4clsoy0w61xndric",
+    "name": "Casi normales",
+    "slug": "casi-normales",
+    "year": 2024,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "diseño",
+      "identidad visual",
+      "creatividad"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777350070/drama-web/uploads/mnlithxjx4twefdy78h8.webp",
+    "coverImageAlt": "Gráfica oficial de Casi Normales Argentina",
+    "contentBlocks": [],
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": ""
+  },
+  {
     "id": "mogs82r6xj14x5i53b",
     "name": "Navidad en las películas",
     "slug": "navidad-en-las-peliculas",
@@ -480,25 +499,6 @@
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777269228/drama-web/uploads/lk0z9vlrwv1wnzssb2t8.webp",
     "coverImageAlt": "Gráfica oficial de Navidad en las películas con Raúl Lavié",
-    "contentBlocks": [],
-    "seoTitle": "",
-    "seoDescription": "",
-    "excerpt": ""
-  },
-  {
-    "id": "moi4clsoy0w61xndric",
-    "name": "Casi normales",
-    "slug": "casi-normales",
-    "year": 2024,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "diseño",
-      "identidad visual",
-      "creatividad"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777350070/drama-web/uploads/mnlithxjx4twefdy78h8.webp",
-    "coverImageAlt": "Gráfica oficial de Casi Normales Argentina",
     "contentBlocks": [],
     "seoTitle": "",
     "seoDescription": "",
