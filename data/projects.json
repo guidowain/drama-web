@@ -522,30 +522,10 @@
         "imageSide": "left"
       },
       {
-        "id": "modbxg1cb86ybuumez",
-        "type": "image",
-        "order": 1,
-        "title": "",
-        "text": "",
-        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777060719/drama-web/uploads/rk27txz9exxm4ttfxxhc.webp",
-        "imageAlt": "",
-        "imageSide": "left"
-      },
-      {
-        "id": "modchs171rxv8vt0oxhj",
-        "type": "imageText",
-        "order": 2,
-        "title": "Cuidado con darnos libertad",
-        "text": "Cuando Ozono Producciones se nos acercó para que tomemos la creatividad de \"Chanta\", nos dieron vía libre para jugar. Quisimos demostrar que el personaje representaba la mayor de las argentinidades y así nació el Julio Ballesteros de las redes.",
-        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777061438/drama-web/uploads/m3qaiijmt82k2sp27enl.webp",
-        "imageAlt": "",
-        "imageSide": "left"
-      },
-      {
         "id": "mokjnk5hdplskpk5mvr",
         "type": "text",
         "alignment": "center",
-        "order": 3,
+        "order": 1,
         "title": "Dentro de la obra",
         "text": "Nos basamos en la escenografía, los neones, los maquillajes que envejecían y rejuvenecían al personaje función a función. La comunicación no presentaba la obra, la continuaba. Incluso sumamos chistes propios al universo del personaje.",
         "image": "",
@@ -556,6 +536,26 @@
         "image2Alt": "",
         "image2Scale": 100,
         "image2ShowMuteButton": true,
+        "imageSide": "left"
+      },
+      {
+        "id": "modbxg1cb86ybuumez",
+        "type": "image",
+        "order": 2,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777060719/drama-web/uploads/rk27txz9exxm4ttfxxhc.webp",
+        "imageAlt": "",
+        "imageSide": "left"
+      },
+      {
+        "id": "modchs171rxv8vt0oxhj",
+        "type": "imageText",
+        "order": 3,
+        "title": "Cuidado con darnos libertad",
+        "text": "Cuando Ozono Producciones se nos acercó para que tomemos la creatividad de \"Chanta\", nos dieron vía libre para jugar. Quisimos demostrar que el personaje representaba la mayor de las argentinidades y así nació el Julio Ballesteros de las redes.",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777061438/drama-web/uploads/m3qaiijmt82k2sp27enl.webp",
+        "imageAlt": "",
         "imageSide": "left"
       }
     ],
