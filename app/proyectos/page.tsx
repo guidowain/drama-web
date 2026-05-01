@@ -50,7 +50,6 @@ function ProyectosContent() {
   const [selected, setSelected] = useState<Proyecto | null>(null)
   const [modalOrigin, setModalOrigin] = useState<ModalOriginRect | null>(null)
   const [showAboutCta, setShowAboutCta] = useState(false)
-  const [isLocalhost, setIsLocalhost] = useState(false)
   const [funMode, setFunMode] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -59,10 +58,6 @@ function ProyectosContent() {
   useEffect(() => {
     const timer = window.setTimeout(() => setShowAboutCta(true), 3000)
     return () => window.clearTimeout(timer)
-  }, [])
-
-  useEffect(() => {
-    setIsLocalhost(['localhost', '127.0.0.1', '::1'].includes(window.location.hostname))
   }, [])
 
   useEffect(() => {
@@ -124,22 +119,20 @@ function ProyectosContent() {
             <h1 className="text-black font-black uppercase text-5xl md:text-7xl leading-none">
               PROYECTOS
             </h1>
-            {isLocalhost && (
-              <button
-                type="button"
-                aria-pressed={funMode}
-                disabled={funMediaPool.length === 0}
-                onClick={() => setFunMode((value) => !value)}
-                className={[
-                  'mb-1 shrink-0 rounded-full border px-3 py-1.5 text-[0.62rem] font-black uppercase tracking-[0.16em] transition-all duration-300 md:mb-2 md:px-4',
-                  funMode
-                    ? 'border-black bg-black text-white shadow-[0_0_22px_rgba(0,0,0,0.18)]'
-                    : 'border-black/25 bg-white/20 text-black/55 hover:border-black/50 hover:bg-white/40 hover:text-black',
-                ].join(' ')}
-              >
-                FUN MODE
-              </button>
-            )}
+            <button
+              type="button"
+              aria-pressed={funMode}
+              disabled={funMediaPool.length === 0}
+              onClick={() => setFunMode((value) => !value)}
+              className={[
+                'mb-1 shrink-0 rounded-full border px-3 py-1.5 text-[0.62rem] font-black uppercase tracking-[0.16em] transition-all duration-300 md:mb-2 md:px-4',
+                funMode
+                  ? 'border-black bg-black text-white shadow-[0_0_22px_rgba(0,0,0,0.18)]'
+                  : 'border-black/25 bg-white/20 text-black/55 hover:border-black/50 hover:bg-white/40 hover:text-black',
+              ].join(' ')}
+            >
+              FUN MODE
+            </button>
           </div>
         </div>
 
@@ -186,7 +179,7 @@ function ProyectosContent() {
       />
 
       <FunModeGravityOverlay
-        active={isLocalhost && funMode}
+        active={funMode}
         media={funMediaPool}
         onClose={handleFunModeClose}
       />
