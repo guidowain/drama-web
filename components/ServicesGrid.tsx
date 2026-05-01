@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+const MOBILE_FLIP_EARLY_OFFSET_PX = 48
+
 type ServiceInfo = {
   name: string
   items: string[]
@@ -124,8 +126,8 @@ function ServiceCard({
 
       const rect = cardElement.getBoundingClientRect()
       const cardCenter = rect.top + rect.height / 2
-      const centerBandTop = window.innerHeight * 0.36
-      const centerBandBottom = window.innerHeight * 0.64
+      const centerBandTop = window.innerHeight * 0.36 - MOBILE_FLIP_EARLY_OFFSET_PX
+      const centerBandBottom = window.innerHeight * 0.64 + MOBILE_FLIP_EARLY_OFFSET_PX
       const isInCenterBand = cardCenter >= centerBandTop && cardCenter <= centerBandBottom
 
       if (isInCenterBand) {
