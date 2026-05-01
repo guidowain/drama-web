@@ -34,6 +34,7 @@ export default function ProjectCard({ project, index, onClick }: Props) {
   const [isDesktop, setIsDesktop] = useState(() => (
     typeof window === 'undefined' ? true : window.matchMedia('(min-width: 768px)').matches
   ))
+  const shouldRevealOnScroll = isDesktop && index >= 2
   const isClickable = hasProjectDetailMedia(project)
   const hasManyTags = project.tags.length >= 5
   const tagClassName = hasManyTags
@@ -54,9 +55,8 @@ export default function ProjectCard({ project, index, onClick }: Props) {
     <motion.article
       custom={index}
       variants={revealVariants}
-      initial={isDesktop ? 'hidden' : false}
-      animate={isDesktop && index < 2 ? 'visible' : undefined}
-      whileInView={isDesktop && index >= 2 ? 'visible' : undefined}
+      initial={shouldRevealOnScroll ? 'hidden' : false}
+      whileInView={shouldRevealOnScroll ? 'visible' : undefined}
       viewport={{ once: true, amount: 0.22, margin: '0px 0px -8% 0px' }}
       whileHover={isClickable ? { scale: 1.02 } : undefined}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
