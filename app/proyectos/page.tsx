@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
@@ -8,8 +8,9 @@ import ProjectCard from '@/components/ProjectCard'
 import ModalProject from '@/components/ModalProject'
 import ContactStrip from '@/components/ContactStrip'
 import Ticker from '@/components/Ticker'
+import FunModeGravityOverlay from '@/components/FunModeGravityOverlay'
 import type { ContactSettings, Proyecto, SiteSettings } from '@/lib/types'
-import { hasProjectDetailMedia } from '@/lib/media'
+import { hasProjectDetailMedia, isVideoUrl } from '@/lib/media'
 import { fetchProjects } from '@/lib/projects-client'
 
 type ModalOriginRect = Pick<DOMRect, 'top' | 'left' | 'width' | 'height'>
@@ -18,6 +19,21 @@ const EMPTY_CONTACT: ContactSettings = {
   instagram: '',
   whatsapp: '',
   mail: '',
+}
+
+function collectProjectMedia(projects: Proyecto[]) {
+  const media = new Set<string>()
+
+  projects.forEach((project) => {
+    if (project.coverImage && !isVideoUrl(project.coverImage)) media.add(project.coverImage)
+
+    project.contentBlocks.forEach((block) => {
+      if (block.image && !isVideoUrl(block.image)) media.add(block.image)
+      if (block.image2 && !isVideoUrl(block.image2)) media.add(block.image2)
+    })
+  })
+
+  return Array.from(media)
 }
 
 export default function ProyectosPage() {
@@ -34,12 +50,19 @@ function ProyectosContent() {
   const [selected, setSelected] = useState<Proyecto | null>(null)
   const [modalOrigin, setModalOrigin] = useState<ModalOriginRect | null>(null)
   const [showAboutCta, setShowAboutCta] = useState(false)
+  const [isLocalhost, setIsLocalhost] = useState(false)
+  const [funMode, setFunMode] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
+  const funMediaPool = useMemo(() => collectProjectMedia(projects), [projects])
 
   useEffect(() => {
     const timer = window.setTimeout(() => setShowAboutCta(true), 3000)
     return () => window.clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    setIsLocalhost(['localhost', '127.0.0.1', '::1'].includes(window.location.hostname))
   }, [])
 
   useEffect(() => {
@@ -88,15 +111,35 @@ function ProyectosContent() {
     router.push('/proyectos', { scroll: false })
   }, [router])
 
+  const handleFunModeClose = useCallback(() => {
+    setFunMode(false)
+  }, [])
+
   return (
     <>
-      <main className="min-h-screen gradient-bg pt-16 md:pt-[72px]">
+      <main className={`min-h-screen gradient-bg pt-16 transition-all duration-500 md:pt-[72px] ${funMode ? 'scale-[0.985] blur-[7px] opacity-45' : ''}`}>
         {/* Page header */}
         <div className="px-5 md:px-10 pt-10 md:pt-14 pb-6">
-          <div className="mx-auto w-full max-w-6xl" data-page="proyectos">
+          <div className="mx-auto flex w-full max-w-6xl items-end justify-between gap-4" data-page="proyectos">
             <h1 className="text-black font-black uppercase text-5xl md:text-7xl leading-none">
               PROYECTOS
             </h1>
+            {isLocalhost && (
+              <button
+                type="button"
+                aria-pressed={funMode}
+                disabled={funMediaPool.length === 0}
+                onClick={() => setFunMode((value) => !value)}
+                className={[
+                  'mb-1 shrink-0 rounded-full border px-3 py-1.5 text-[0.62rem] font-black uppercase tracking-[0.16em] transition-all duration-300 md:mb-2 md:px-4',
+                  funMode
+                    ? 'border-black bg-black text-white shadow-[0_0_22px_rgba(0,0,0,0.18)]'
+                    : 'border-black/25 bg-white/20 text-black/55 hover:border-black/50 hover:bg-white/40 hover:text-black',
+                ].join(' ')}
+              >
+                FUN MODE
+              </button>
+            )}
           </div>
         </div>
 
@@ -140,6 +183,12 @@ function ProyectosContent() {
         originRect={modalOrigin}
         contact={contact}
         onClose={handleClose}
+      />
+
+      <FunModeGravityOverlay
+        active={isLocalhost && funMode}
+        media={funMediaPool}
+        onClose={handleFunModeClose}
       />
     </>
   )
