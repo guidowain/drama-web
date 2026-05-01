@@ -55,19 +55,28 @@ function getBlockSize(ratio: number, viewportWidth: number) {
 
 function layoutBlocks(loaded: Array<{ src: string; ratio: number }>) {
   const viewportWidth = window.innerWidth
+  const viewportHeight = window.innerHeight
   const isMobile = viewportWidth < 768
-  const columns = isMobile ? 3 : 6
+  const columns = isMobile ? 4 : 8
   const gapX = isMobile ? 14 : 22
   const gapY = isMobile ? 14 : 20
-  const availableWidth = viewportWidth - (isMobile ? 32 : 96)
+  const availableWidth = viewportWidth - (isMobile ? 28 : 140)
   const columnWidth = availableWidth / columns
   const startX = (viewportWidth - availableWidth) / 2 + columnWidth / 2
   const startY = isMobile ? 118 : 128
+  const maxRows = Math.max(Math.ceil(loaded.length / columns), 1)
+  const maxBlockHeight = isMobile ? 76 : 116
+  const paddleSafeY = viewportHeight - (isMobile ? 170 : 210)
+  const availableHeight = Math.max(paddleSafeY - startY - maxBlockHeight, isMobile ? 180 : 260)
+  const rowStep = maxRows > 1
+    ? Math.min(isMobile ? 78 : 108, availableHeight / (maxRows - 1))
+    : 0
 
   return loaded.map((item, index) => {
     const { width, height } = getBlockSize(item.ratio, viewportWidth)
-    const column = index % columns
     const row = Math.floor(index / columns)
+    const isOddRow = row % 2 === 1
+    const column = isOddRow ? columns - 1 - (index % columns) : index % columns
     const jitterX = (Math.random() - 0.5) * Math.min(gapX, columnWidth * 0.12)
     const jitterY = (Math.random() - 0.5) * gapY
 
@@ -77,7 +86,7 @@ function layoutBlocks(loaded: Array<{ src: string; ratio: number }>) {
       width,
       height,
       x: startX + column * columnWidth + jitterX,
-      y: startY + row * (isMobile ? 86 : 126) + jitterY,
+      y: Math.min(startY + row * rowStep + jitterY, paddleSafeY - height / 2),
     }
   })
 }
@@ -223,7 +232,9 @@ export default function FunModeGravityOverlay({ active, media, onClose }: Props)
     window.addEventListener('keyup', handleKeyUp)
 
     const resetBall = () => {
-      Matter.Body.setPosition(ball, { x: targetPaddleXRef.current, y: paddleY - 44 })
+      targetPaddleXRef.current = width / 2
+      Matter.Body.setPosition(paddle, { x: targetPaddleXRef.current, y: paddleY })
+      Matter.Body.setPosition(ball, { x: width / 2, y: paddleY - 44 })
       Matter.Body.setVelocity(ball, {
         x: (Math.random() > 0.5 ? 1 : -1) * (isMobile ? 4.2 : 5.2),
         y: isMobile ? -6.4 : -7.2,

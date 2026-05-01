@@ -51,6 +51,7 @@ function ProyectosContent() {
   const [modalOrigin, setModalOrigin] = useState<ModalOriginRect | null>(null)
   const [showAboutCta, setShowAboutCta] = useState(false)
   const [funMode, setFunMode] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const funMediaPool = useMemo(() => collectProjectMedia(projects), [projects])
@@ -58,6 +59,19 @@ function ProyectosContent() {
   useEffect(() => {
     const timer = window.setTimeout(() => setShowAboutCta(true), 3000)
     return () => window.clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 768px)')
+    const syncMedia = () => {
+      setIsDesktop(media.matches)
+      if (!media.matches) setFunMode(false)
+    }
+
+    syncMedia()
+    media.addEventListener('change', syncMedia)
+
+    return () => media.removeEventListener('change', syncMedia)
   }, [])
 
   useEffect(() => {
@@ -119,20 +133,22 @@ function ProyectosContent() {
             <h1 className="text-black font-black uppercase text-5xl md:text-7xl leading-none">
               PROYECTOS
             </h1>
-            <button
-              type="button"
-              aria-pressed={funMode}
-              disabled={funMediaPool.length === 0}
-              onClick={() => setFunMode((value) => !value)}
-              className={[
-                'mb-1 shrink-0 rounded-full border px-3 py-1.5 text-[0.62rem] font-black uppercase tracking-[0.16em] transition-all duration-300 md:mb-2 md:px-4',
-                funMode
-                  ? 'border-black bg-black text-white shadow-[0_0_22px_rgba(0,0,0,0.18)]'
-                  : 'border-black/25 bg-white/20 text-black/55 hover:border-black/50 hover:bg-white/40 hover:text-black',
-              ].join(' ')}
-            >
-              FUN MODE
-            </button>
+            {isDesktop && (
+              <button
+                type="button"
+                aria-pressed={funMode}
+                disabled={funMediaPool.length === 0}
+                onClick={() => setFunMode((value) => !value)}
+                className={[
+                  'mb-2 shrink-0 rounded-full border px-4 py-1.5 text-[0.62rem] font-black uppercase tracking-[0.16em] transition-all duration-300',
+                  funMode
+                    ? 'border-black bg-black text-white shadow-[0_0_22px_rgba(0,0,0,0.18)]'
+                    : 'border-black/25 bg-white/20 text-black/55 hover:border-black/50 hover:bg-white/40 hover:text-black',
+                ].join(' ')}
+              >
+                FUN MODE
+              </button>
+            )}
           </div>
         </div>
 
@@ -179,7 +195,7 @@ function ProyectosContent() {
       />
 
       <FunModeGravityOverlay
-        active={funMode}
+        active={isDesktop && funMode}
         media={funMediaPool}
         onClose={handleFunModeClose}
       />
