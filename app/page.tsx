@@ -5,6 +5,7 @@ import HeroGradientPlaque from '@/components/HeroGradientPlaque'
 import CTAProyectos from '@/components/CTAProyectos'
 import ContactStrip from '@/components/ContactStrip'
 import ServicesGrid from '@/components/ServicesGrid'
+import ProyectosPrefetch from '@/components/ProyectosPrefetch'
 
 export default async function HomePage() {
   const settings = await getSiteSettings()
@@ -12,6 +13,8 @@ export default async function HomePage() {
 
   return (
     <main className="pt-16 md:pt-[72px]">
+      <ProyectosPrefetch />
+
       {/* ── HERO ── */}
       <section className="relative bg-black">
         {/* SEO H1 — in DOM for indexing, invisible visually */}

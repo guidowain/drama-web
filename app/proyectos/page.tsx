@@ -10,6 +10,7 @@ import ContactStrip from '@/components/ContactStrip'
 import Ticker from '@/components/Ticker'
 import type { ContactSettings, Proyecto, SiteSettings } from '@/lib/types'
 import { hasProjectDetailMedia } from '@/lib/media'
+import { fetchProjects } from '@/lib/projects-client'
 
 type ModalOriginRect = Pick<DOMRect, 'top' | 'left' | 'width' | 'height'>
 
@@ -42,8 +43,7 @@ function ProyectosContent() {
   }, [])
 
   useEffect(() => {
-    fetch('/api/admin/proyectos')
-      .then((r) => r.json())
+    fetchProjects()
       .then((data: Proyecto[]) => {
         const published = data.filter((p) => p.published)
         setProjects(published)
