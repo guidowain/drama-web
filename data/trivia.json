@@ -1,1 +1,29 @@
-[]
+[
+  {
+    "id": "trivia-1777672036959-042cd8",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777672093/drama-web/uploads/p0ztto2vd6trtnaoss9q.webp",
+    "question": "¿Cuál es el nombre del perro de Elle Woods?",
+    "options": [
+      {
+        "id": "option-1777672036959-r3xsvh",
+        "text": "Buster Woods",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777672036959-kt9g5p",
+        "text": "Bruiser Woods",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777672143945-h1sld6",
+        "text": "Lucky Woods",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777672148228-16pu3s",
+        "text": "Warren Woods",
+        "isCorrect": false
+      }
+    ]
+  }
+]
