@@ -1,4 +1,4 @@
-import type { ContactSettings, Proyecto, SiteSettings } from './types'
+import type { ContactSettings, Proyecto, SiteSettings, TriviaQuestion } from './types'
 
 const GITHUB_OWNER = process.env.GITHUB_OWNER || 'guidowain'
 const GITHUB_REPO = process.env.GITHUB_REPO || 'drama-web'
@@ -7,6 +7,7 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN || process.env.GITHUB_CONTENT_TOKE
 
 const PROJECTS_PATH = 'data/projects.json'
 const SITE_PATH = 'data/site.json'
+const TRIVIA_PATH = 'data/trivia.json'
 
 const DEFAULT_SITE_SETTINGS: SiteSettings = {
   home: {
@@ -205,6 +206,35 @@ export async function getProjectBySlug(slug: string): Promise<Proyecto | undefin
 
 export async function saveProjects(projects: Proyecto[]) {
   return await writeGithubJson(PROJECTS_PATH, projects, 'Update projects data')
+}
+
+function normalizeTriviaQuestions(raw: unknown): TriviaQuestion[] {
+  if (!Array.isArray(raw)) return []
+
+  return raw.map((item, index) => {
+    const question = item && typeof item === 'object' ? (item as Partial<TriviaQuestion>) : {}
+    const options = Array.isArray(question.options) ? question.options : []
+
+    return {
+      id: question.id || `trivia-${index}`,
+      image: question.image || '',
+      question: question.question || '',
+      options: options.map((option, optionIndex) => ({
+        id: option?.id || `option-${optionIndex}`,
+        text: option?.text || '',
+        isCorrect: Boolean(option?.isCorrect),
+      })),
+    }
+  })
+}
+
+export async function getTriviaQuestions(): Promise<TriviaQuestion[]> {
+  const { data } = await readGithubJson<TriviaQuestion[]>(TRIVIA_PATH, [])
+  return normalizeTriviaQuestions(data)
+}
+
+export async function saveTriviaQuestions(questions: TriviaQuestion[]) {
+  return await writeGithubJson(TRIVIA_PATH, normalizeTriviaQuestions(questions), 'Update trivia questions')
 }
 
 export async function getSiteSettings(): Promise<SiteSettings> {

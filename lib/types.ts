@@ -32,6 +32,19 @@ export interface Proyecto {
   contentBlocks: ContentBlock[]
 }
 
+export interface TriviaOption {
+  id: string
+  text: string
+  isCorrect: boolean
+}
+
+export interface TriviaQuestion {
+  id: string
+  image: string
+  question: string
+  options: TriviaOption[]
+}
+
 export interface ServiceInfo {
   name: string
   description: string

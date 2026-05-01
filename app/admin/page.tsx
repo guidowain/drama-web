@@ -25,6 +25,18 @@ const cards = [
     ),
   },
   {
+    label: 'Trivia',
+    href: '/admin/trivia',
+    desc: 'Preguntas, imágenes y respuestas',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M9.1 9a3 3 0 1 1 4.9 2.3c-.9.7-2 1.4-2 2.7" />
+        <line x1="12" y1="17" x2="12.01" y2="17" />
+      </svg>
+    ),
+  },
+  {
     label: 'Sobre Nosotros',
     href: '/admin/sobre-nosotros',
     desc: 'Quiénes somos, imagen y equipo',

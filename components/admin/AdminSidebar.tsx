@@ -47,6 +47,17 @@ const navItems = [
     ),
   },
   {
+    label: 'Trivia',
+    href: '/admin/trivia',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M9.1 9a3 3 0 1 1 5.8 1c-.8 1.2-2.4 1.6-2.9 3" />
+        <line x1="12" y1="17" x2="12.01" y2="17" />
+      </svg>
+    ),
+  },
+  {
     label: 'Ajustes',
     href: '/admin/ajustes',
     icon: (
