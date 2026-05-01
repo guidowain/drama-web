@@ -19,7 +19,7 @@ type BlockItem = {
   y: number
 }
 
-type CountdownValue = '3' | '2' | '1' | 'DRAMANOID!' | null
+type CountdownValue = '3' | '2' | '1' | 'DRAMANOID' | null
 
 function shuffle<T>(items: T[]) {
   return [...items].sort(() => Math.random() - 0.5)
@@ -36,9 +36,9 @@ function loadImage(src: string) {
 
 function getBlockSize(ratio: number, viewportWidth: number) {
   const isMobile = viewportWidth < 768
-  const maxWidth = isMobile ? 112 : 172
-  const maxHeight = isMobile ? 76 : 116
-  const baseWidth = isMobile ? 78 + Math.random() * 30 : 118 + Math.random() * 48
+  const maxWidth = isMobile ? 112 : 156
+  const maxHeight = isMobile ? 76 : 104
+  const baseWidth = isMobile ? 78 + Math.random() * 30 : 108 + Math.random() * 40
   let width = Math.min(baseWidth, maxWidth)
   let height = width / ratio
 
@@ -57,36 +57,52 @@ function layoutBlocks(loaded: Array<{ src: string; ratio: number }>) {
   const viewportWidth = window.innerWidth
   const viewportHeight = window.innerHeight
   const isMobile = viewportWidth < 768
-  const columns = isMobile ? 4 : 8
-  const gapX = isMobile ? 14 : 22
-  const gapY = isMobile ? 14 : 20
-  const availableWidth = viewportWidth - (isMobile ? 28 : 140)
+  const columns = isMobile ? 4 : 7
+  const rowGap = isMobile ? 18 : 28
+  const availableWidth = viewportWidth - (isMobile ? 28 : 128)
   const columnWidth = availableWidth / columns
   const startX = (viewportWidth - availableWidth) / 2 + columnWidth / 2
-  const startY = isMobile ? 118 : 128
-  const maxRows = Math.max(Math.ceil(loaded.length / columns), 1)
-  const maxBlockHeight = isMobile ? 76 : 116
-  const paddleSafeY = viewportHeight - (isMobile ? 170 : 210)
-  const availableHeight = Math.max(paddleSafeY - startY - maxBlockHeight, isMobile ? 180 : 260)
-  const rowStep = maxRows > 1
-    ? Math.min(isMobile ? 78 : 108, availableHeight / (maxRows - 1))
-    : 0
+  const startY = isMobile ? 118 : 112
+  const paddleSafeY = viewportHeight - (isMobile ? 178 : 230)
+  const sized = loaded.map((item, index) => ({
+    ...item,
+    index,
+    ...getBlockSize(item.ratio, viewportWidth),
+  }))
+  const rows: Array<typeof sized> = []
 
-  return loaded.map((item, index) => {
-    const { width, height } = getBlockSize(item.ratio, viewportWidth)
+  sized.forEach((item, index) => {
+    const row = Math.floor(index / columns)
+    if (!rows[row]) rows[row] = []
+    rows[row].push(item)
+  })
+
+  const rowHeights = rows.map((row) => Math.max(...row.map((item) => item.height)))
+  const naturalHeight = rowHeights.reduce((total, height) => total + height, 0) + rowGap * Math.max(rows.length - 1, 0)
+  const availableHeight = Math.max(paddleSafeY - startY, isMobile ? 220 : 320)
+  const scale = Math.min(1, availableHeight / naturalHeight)
+  const shouldScale = scale < 1
+
+  return sized.map((item, index) => {
+    const width = shouldScale ? item.width * scale : item.width
+    const height = shouldScale ? item.height * scale : item.height
     const row = Math.floor(index / columns)
     const isOddRow = row % 2 === 1
     const column = isOddRow ? columns - 1 - (index % columns) : index % columns
-    const jitterX = (Math.random() - 0.5) * Math.min(gapX, columnWidth * 0.12)
-    const jitterY = (Math.random() - 0.5) * gapY
+    const previousRowsHeight = rowHeights
+      .slice(0, row)
+      .reduce((total, rowHeight) => total + (shouldScale ? rowHeight * scale : rowHeight) + rowGap, 0)
+    const currentRowHeight = shouldScale ? rowHeights[row] * scale : rowHeights[row]
+    const jitterX = (Math.random() - 0.5) * Math.min(18, columnWidth * 0.1)
+    const jitterY = (Math.random() - 0.5) * Math.min(10, rowGap * 0.35)
 
     return {
-      id: `${item.src}-${index}`,
+      id: `${item.src}-${item.index}`,
       src: item.src,
       width,
       height,
       x: startX + column * columnWidth + jitterX,
-      y: Math.min(startY + row * rowStep + jitterY, paddleSafeY - height / 2),
+      y: startY + previousRowsHeight + currentRowHeight / 2 + jitterY,
     }
   })
 }
@@ -116,7 +132,7 @@ export default function FunModeGravityOverlay({ active, media, onClose }: Props)
     }
 
     let cancelled = false
-    const count = window.innerWidth < 768 ? 18 : 30
+    const count = window.innerWidth < 768 ? 18 : 21
 
     Promise.allSettled(shuffle(media).slice(0, count).map(loadImage))
       .then((results) => {
@@ -146,7 +162,7 @@ export default function FunModeGravityOverlay({ active, media, onClose }: Props)
     const timers = [
       window.setTimeout(() => setCountdown('2'), 800),
       window.setTimeout(() => setCountdown('1'), 1600),
-      window.setTimeout(() => setCountdown('DRAMANOID!'), 2400),
+      window.setTimeout(() => setCountdown('DRAMANOID'), 2400),
       window.setTimeout(() => {
         setCountdown(null)
         setHasGameStarted(true)
@@ -418,7 +434,7 @@ export default function FunModeGravityOverlay({ active, media, onClose }: Props)
                 animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                 exit={{ opacity: 0, scale: 1.28, filter: 'blur(10px)' }}
                 transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-                style={{ fontSize: countdown === 'DRAMANOID!' ? 'clamp(3rem, 11vw, 9rem)' : 'clamp(6rem, 18vw, 14rem)' }}
+                style={{ fontSize: countdown === 'DRAMANOID' ? 'clamp(3rem, 11vw, 9rem)' : 'clamp(6rem, 18vw, 14rem)' }}
               >
                 {countdown}
               </motion.div>

@@ -41,8 +41,8 @@ export default function Menu({ settings }: Props) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-[100] flex flex-col"
-          style={{ backgroundColor: '#000' }}
+          className="fixed inset-0 z-[100] flex flex-col overflow-y-auto"
+          style={{ backgroundColor: '#000', minHeight: '100dvh' }}
         >
           {/* Top gradient stripe */}
           <div className="h-[6px] gradient-bg shrink-0" />
@@ -62,7 +62,7 @@ export default function Menu({ settings }: Props) {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 flex flex-col justify-center px-5 md:px-8">
+          <nav className="flex flex-1 flex-col justify-center px-5 py-4 md:px-8 md:py-6">
             {navItems.map((item, i) => (
               <motion.div
                 key={item.href}
@@ -74,7 +74,7 @@ export default function Menu({ settings }: Props) {
                 <Link
                   href={item.href}
                   onClick={close}
-                  className="menu-nav-link block py-5 md:py-7 text-white font-bold italic text-5xl md:text-7xl lg:text-8xl leading-none"
+                  className="menu-nav-link block py-3 text-white font-bold italic text-[clamp(2.55rem,8.5vh,5.8rem)] leading-none md:py-4 md:text-[clamp(4rem,10vh,6rem)]"
                 >
                   {item.label}
                 </Link>
@@ -83,7 +83,7 @@ export default function Menu({ settings }: Props) {
           </nav>
 
           {/* Social icons */}
-          <div className="flex items-center justify-center gap-8 pb-6 shrink-0">
+          <div className="flex shrink-0 items-center justify-center gap-8 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-3">
             <a
               href={settings.instagram}
               target="_blank"
