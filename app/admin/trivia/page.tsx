@@ -117,6 +117,7 @@ export default function AdminTriviaPage() {
                   name: project.name,
                   coverImage: project.coverImage,
                 }))
+                .sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))
             : []
         )
       })
