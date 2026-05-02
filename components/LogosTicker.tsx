@@ -22,20 +22,20 @@ export default function LogosTicker({ logos }: Props) {
     return (
       <div
         key={`${group}-${i}`}
-        className="shrink-0 inline-flex h-[72px] items-center justify-center px-3 md:h-[124px] md:px-4"
+        className="inline-flex h-[72px] w-[150px] shrink-0 items-center justify-center md:h-[96px] md:w-[210px] lg:h-[124px] lg:w-[300px]"
       >
         {logo.src ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={logo.src}
             alt={logo.alt}
-            className="block w-auto h-auto max-h-full object-contain max-w-[160px] md:max-w-[320px]"
+            className="block h-auto w-auto max-h-full max-w-full object-contain"
             style={{
               height: `${scale}%`,
             }}
           />
         ) : (
-          <span className="max-w-full text-center text-white font-bold text-xl md:text-3xl uppercase tracking-[0.2em] leading-none">
+          <span className="max-w-full text-center text-white font-bold text-xl uppercase tracking-[0.2em] leading-none md:text-2xl lg:text-3xl">
             {logo.alt}
           </span>
         )}
@@ -50,10 +50,10 @@ export default function LogosTicker({ logos }: Props) {
   )
 
   return (
-    <div className="overflow-hidden py-8 md:py-14 bg-black border-y border-white/10">
+    <div className="overflow-hidden py-8 bg-black border-y border-white/10 md:py-10 lg:py-14">
       <div className="ticker-track-logos">
-        {renderLogoGroup(trackLogos, 'main', 'gap-12 px-6 md:gap-20 md:px-8')}
-        {renderLogoGroup(trackLogos, 'main-copy', 'gap-12 px-6 md:gap-20 md:px-8')}
+        {renderLogoGroup(trackLogos, 'main', 'gap-8 px-5 md:gap-10 md:px-6 lg:gap-16 lg:px-8')}
+        {renderLogoGroup(trackLogos, 'main-copy', 'gap-8 px-5 md:gap-10 md:px-6 lg:gap-16 lg:px-8')}
       </div>
       <div className="ticker-track-logos ticker-track-logos-alt mt-5 md:hidden">
         {renderLogoGroup(shifted, 'mobile-alt', 'gap-12 px-6')}
