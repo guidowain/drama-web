@@ -810,5 +810,89 @@
         "isCorrect": false
       }
     ]
+  },
+  {
+    "id": "trivia-1777693217083-puaqna",
+    "projectId": "mod95mm7bzd6bgvrl74",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777055815/drama-web/uploads/vl5yv9itzwv7zdd2vejq.webp",
+    "question": "¿Cómo se llama el protagonista?",
+    "options": [
+      {
+        "id": "option-1777693217083-x2xxsq",
+        "text": "Sergio Ballesteros",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693217083-as4y1t",
+        "text": "Andrés Ballesteros",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693217083-exfzu4",
+        "text": "Julio Ballesteros",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777693217083-pc83w4",
+        "text": "Carlos Ballesteros",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777693313259-dy8bzs",
+    "projectId": "mod95mm7bzd6bgvrl74",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777055815/drama-web/uploads/vl5yv9itzwv7zdd2vejq.webp",
+    "question": "¿De qué muere Julio?",
+    "options": [
+      {
+        "id": "option-1777693313259-pt06yl",
+        "text": "De cáncer de colon",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693313259-ahkkwh",
+        "text": "De COVID",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693313259-zhguzs",
+        "text": "De un ACV",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693313259-rz3yb8",
+        "text": "De un infarto",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777693357251-4jb6cf",
+    "projectId": "mod95mm7bzd6bgvrl74",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777055815/drama-web/uploads/vl5yv9itzwv7zdd2vejq.webp",
+    "question": "¿Dónde quería ser enterrado el protafgonista?",
+    "options": [
+      {
+        "id": "option-1777693357251-6uv9mw",
+        "text": "En el cementerio de la Recoleta",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693357251-xcts8b",
+        "text": "En el Jardín de la Paz de Pilar",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777693357251-kj028z",
+        "text": "En Mar del Plata",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693357251-wyp8pa",
+        "text": "En la cancha de River Plate",
+        "isCorrect": false
+      }
+    ]
   }
 ]
