@@ -7,7 +7,7 @@ type Props = {
 export default function ContactStrip({ instagram, whatsapp, mail }: Props) {
   return (
     <section
-      className="w-full py-14 md:py-20 px-6 md:px-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-10 md:gap-0"
+      className="flex w-full flex-1 flex-col items-start justify-between gap-10 px-6 py-14 md:flex-row md:items-center md:gap-0 md:px-16 md:py-20"
       style={{
         background: 'linear-gradient(135deg, #F504FF 0%, #FE8B97 28%, #FE796D 50%, #FCC028 75%, #FED791 100%)',
       }}

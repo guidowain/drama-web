@@ -12,7 +12,7 @@ export default async function HomePage() {
   const { home, settings: contact } = settings
 
   return (
-    <main className="pt-16 md:pt-[72px]">
+    <main className="flex min-h-screen flex-col pt-16 md:pt-[72px]">
       <ProyectosPrefetch />
 
       {/* ── HERO ── */}

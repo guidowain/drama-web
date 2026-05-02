@@ -209,13 +209,15 @@ function ProyectosContent() {
         </div>
       </main>
 
-      <Ticker text="DISEÑO Y COMUNICACIÓN PARA ENTRETENIMIENTO" bg="#000" speed={55} />
+      <div className="flex min-h-screen flex-col">
+        <Ticker text="DISEÑO Y COMUNICACIÓN PARA ENTRETENIMIENTO" bg="#000" speed={55} />
 
-      <ContactStrip
-        instagram={contact.instagram}
-        whatsapp={contact.whatsapp}
-        mail={contact.mail}
-      />
+        <ContactStrip
+          instagram={contact.instagram}
+          whatsapp={contact.whatsapp}
+          mail={contact.mail}
+        />
+      </div>
 
       <ModalProject
         project={selected}

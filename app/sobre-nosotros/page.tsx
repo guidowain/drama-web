@@ -9,7 +9,7 @@ export default async function SobreNosotrosPage() {
   const aboutTitle = about.title.split('\n').map((line) => line.trim()).filter(Boolean)
 
   return (
-    <main className="min-h-screen pt-16 md:pt-[72px]" style={{ background: 'linear-gradient(135deg, #FF3E9E 0%, #FFA24A 60%, #FF3E9E 100%)' }}>
+    <main className="flex min-h-screen flex-col pt-16 md:pt-[72px]" style={{ background: 'linear-gradient(135deg, #FF3E9E 0%, #FFA24A 60%, #FF3E9E 100%)' }}>
       {/* Main content */}
       <div className="px-5 md:px-10 py-12 md:py-20">
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
