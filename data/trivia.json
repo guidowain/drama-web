@@ -894,5 +894,89 @@
         "isCorrect": false
       }
     ]
+  },
+  {
+    "id": "trivia-1777693437286-3wj3gx",
+    "projectId": "modah3k8jvhnhvprpxk",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777058035/drama-web/uploads/xmzvih90alloq6umkcun.webp",
+    "question": "¿Cuántos tickets dorados escondió Willy Wonka?",
+    "options": [
+      {
+        "id": "option-1777693437286-3ooud1",
+        "text": "Tres",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693437286-fj41s6",
+        "text": "Cuatro",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693437286-3dl06b",
+        "text": "Cinco",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777693437286-itza77",
+        "text": "Seis",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777693522252-bdmkzy",
+    "projectId": "modah3k8jvhnhvprpxk",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777058035/drama-web/uploads/xmzvih90alloq6umkcun.webp",
+    "question": "¿Quién acompaña a Charlie a la fábrica?",
+    "options": [
+      {
+        "id": "option-1777693522253-78llrb",
+        "text": "Su mamá",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693522253-9u9c3y",
+        "text": "Su abuelo Joe",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777693522253-wkxig6",
+        "text": "Su abuela Josephine",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693522253-213at0",
+        "text": "Su papá",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777693569594-00v1o2",
+    "projectId": "modah3k8jvhnhvprpxk",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777058035/drama-web/uploads/xmzvih90alloq6umkcun.webp",
+    "question": "¿Qué le pasa a Augustus Gloop en la fábrica?",
+    "options": [
+      {
+        "id": "option-1777693569594-oxofeu",
+        "text": "Se come todas las flores de chupetines",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693569594-trq3rl",
+        "text": "Se pierde en la habitación de la mezcla",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693569594-5e1amp",
+        "text": "Se queda pegado al piso de caramelo",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693569594-dctkg2",
+        "text": "Cae en el río de chocolate",
+        "isCorrect": true
+      }
+    ]
   }
 ]
