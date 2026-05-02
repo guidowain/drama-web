@@ -82,5 +82,33 @@
         "isCorrect": false
       }
     ]
+  },
+  {
+    "id": "trivia-1777691083991-a1ui2k",
+    "projectId": "moddlsv13hfc84fky1o",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777063293/drama-web/uploads/vcnbqv6nxis0pdlu5x0u.webp",
+    "question": "¿A qué universidad entra Elle Woods a estudiar?",
+    "options": [
+      {
+        "id": "option-1777691083991-2xdv6z",
+        "text": "Yale",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691083991-ojwf8y",
+        "text": "Columbia",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691083991-01knrv",
+        "text": "Harvard",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777691083991-tbmk53",
+        "text": "Stanford",
+        "isCorrect": false
+      }
+    ]
   }
 ]
