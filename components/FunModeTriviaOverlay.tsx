@@ -355,13 +355,18 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                 <AnimatePresence>
                   {answerState && (
                     <motion.div
-                      className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-5 text-center text-5xl font-black uppercase leading-none text-white md:text-8xl"
+                      className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center px-5 text-center text-[clamp(2.7rem,12vw,5rem)] font-black uppercase leading-none md:text-8xl"
                       initial={{ opacity: 0, scale: 0.94 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 1.04 }}
                       transition={{ duration: 0.18 }}
                     >
-                      <span className="rounded-full border-2 border-white px-7 py-4 shadow-[0_0_42px_rgba(255,255,255,0.22)] md:px-12 md:py-6">
+                      <span
+                        className={[
+                          'rounded-full bg-white px-8 py-4 shadow-[0_18px_55px_rgba(0,0,0,0.24)] md:px-14 md:py-7',
+                          answerState === 'correct' ? 'text-[#00A650]' : 'text-[#E02424]',
+                        ].join(' ')}
+                      >
                         {answerState === 'correct' ? 'CORRECTA' : 'INCORRECTA'}
                       </span>
                     </motion.div>

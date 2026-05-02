@@ -159,10 +159,10 @@ function ProyectosContent() {
 
   return (
     <>
-      <main className={`min-h-screen gradient-bg pt-16 transition-all duration-500 md:pt-[72px] ${funMode ? 'scale-[0.985] blur-[7px] opacity-45' : ''}`}>
+      <main className={`min-h-screen overflow-x-hidden gradient-bg pt-16 transition-all duration-500 md:pt-[72px] ${funMode ? 'scale-[0.985] blur-[7px] opacity-45' : ''}`}>
         {/* Page header */}
         <div className="px-5 md:px-10 pt-10 md:pt-14 pb-6">
-          <div className="mx-auto flex w-full max-w-6xl items-end justify-between gap-4" data-page="proyectos">
+          <div className="mx-auto flex w-full max-w-6xl flex-wrap items-end justify-between gap-x-4 gap-y-3 md:flex-nowrap" data-page="proyectos">
             <h1 className="text-black font-black uppercase text-5xl md:text-7xl leading-none">
               PROYECTOS
             </h1>
@@ -171,7 +171,7 @@ function ProyectosContent() {
               aria-pressed={Boolean(funMode)}
               onClick={handleFunModeOpen}
               className={[
-                'mb-2 shrink-0 rounded-full border px-4 py-1.5 text-[0.62rem] font-black uppercase tracking-[0.16em] transition-all duration-300',
+                'ml-auto mb-1 shrink-0 rounded-full border px-4 py-1.5 text-[0.62rem] font-black uppercase tracking-[0.16em] transition-all duration-300 md:mb-2',
                 funMode
                   ? 'border-black bg-black text-white shadow-[0_0_22px_rgba(0,0,0,0.18)]'
                   : 'border-black/25 bg-white/20 text-black/55 hover:border-black/50 hover:bg-white/40 hover:text-black',
