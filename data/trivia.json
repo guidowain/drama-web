@@ -278,5 +278,173 @@
         "isCorrect": false
       }
     ]
+  },
+  {
+    "id": "trivia-1777691382549-yxmhc7",
+    "projectId": "2",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777055002/drama-web/uploads/pmjljwgmmqvq64ilkyly.webp",
+    "question": "¿Por qué Pablo no puede ir a la cena al principio de la obra?",
+    "options": [
+      {
+        "id": "option-1777691382549-mupwo5",
+        "text": "Se olvidó que era esa noche",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691382549-egatsd",
+        "text": "Tiene un tirón en la espalda",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777691382549-cb2uy5",
+        "text": "Su novia lo convenció de quedarse",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691382549-yhlfh0",
+        "text": "El médico canceló su turno",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777691430311-dzqvza",
+    "projectId": "2",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777055002/drama-web/uploads/pmjljwgmmqvq64ilkyly.webp",
+    "question": "¿A qué se dedica Francisco Piñón?",
+    "options": [
+      {
+        "id": "option-1777691430312-40073v",
+        "text": "Es médico",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691430312-4bo50v",
+        "text": "Es escritor",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691430312-pztkh2",
+        "text": "Es contador en la AFIP",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777691430312-zdo135",
+        "text": "Es productor de cine",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777691467866-mtlna6",
+    "projectId": "2",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777055002/drama-web/uploads/pmjljwgmmqvq64ilkyly.webp",
+    "question": "¿Qué hace Francisco Piñón en su tiempo libre?",
+    "options": [
+      {
+        "id": "option-1777691467866-jnjomd",
+        "text": "Hace windsurf",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691467866-wgdjg8",
+        "text": "Construye maquetas con fósforos",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777691467866-rnybha",
+        "text": "Toca la guitarra",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691467866-dx1gp1",
+        "text": "Colecciona sellos",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777691529162-r8a4j5",
+    "projectId": "2",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777055002/drama-web/uploads/pmjljwgmmqvq64ilkyly.webp",
+    "question": "¿Qué actor interpretó a Francisco Piñón en el estreno argentino del año 2000?",
+    "options": [
+      {
+        "id": "option-1777691529162-fc5yi2",
+        "text": "Adrián Suar",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691529162-dmzhmm",
+        "text": "Roberto Carnaghi",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691529162-xitsv1",
+        "text": "Guillermo Francella",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777691529162-87kljm",
+        "text": "Damián de Santo",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777691571803-f4j7xp",
+    "projectId": "mod9mw1kgsr4f2qknxc",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777056624/drama-web/uploads/z15hocfs9wsqmqyt5ssv.webp",
+    "question": "¿A qué se dedica Santi?",
+    "options": [
+      {
+        "id": "option-1777691571803-zz6hrd",
+        "text": "Músico",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691571803-ty4zp1",
+        "text": "Comediante de stand up",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777691571803-utr6d8",
+        "text": "Actor",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691571803-xg0zbv",
+        "text": "Locutor",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777691615745-ljmjna",
+    "projectId": "mod9mw1kgsr4f2qknxc",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777056624/drama-web/uploads/z15hocfs9wsqmqyt5ssv.webp",
+    "question": "¿Qué trae Paula de regalo cada vez que visita a Vale?",
+    "options": [
+      {
+        "id": "option-1777691615745-rk9r77",
+        "text": "Flores secas",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691615745-wlm889",
+        "text": "Vino picado",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691615745-b6k45o",
+        "text": "Pan duro",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777691615745-c2l3m0",
+        "text": "Sushi viejo",
+        "isCorrect": false
+      }
+    ]
   }
 ]
