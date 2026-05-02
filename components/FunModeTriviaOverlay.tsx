@@ -20,22 +20,15 @@ function getResultLabel(score: number) {
 }
 
 function getShareText(score: number, total: number) {
-  return `DRAMA TRIVIA - ${score}/${total} - ${getResultLabel(score)}`
+  return `DRAMA TRIVIA - ${score}/${total} - jugá vos también en drama.com.ar`
 }
 
-function renderQuestionText(text: string) {
-  return Array.from(text).map((character, index) => {
-    if (character !== '¿') return character
-
-    return (
-      <span
-        key={`inverted-question-${index}`}
-        className="inline-block origin-center rotate-180"
-        aria-hidden="true"
-      >
-        ?
-      </span>
-    )
+function loadCanvasImage(src: string) {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    const image = new window.Image()
+    image.onload = () => resolve(image)
+    image.onerror = reject
+    image.src = src
   })
 }
 
@@ -46,6 +39,10 @@ async function createResultFile(score: number, total: number) {
   const ctx = canvas.getContext('2d')
 
   if (!ctx) return null
+
+  await document.fonts?.load('900 120px Enriq')
+  await document.fonts?.load('900 72px Enriq')
+  const logo = await loadCanvasImage('/logos/Logo%20ByN.png')
 
   canvas.width = width
   canvas.height = height
@@ -63,29 +60,23 @@ async function createResultFile(score: number, total: number) {
   ctx.arc(820, 250, 360, 0, Math.PI * 2)
   ctx.fill()
 
+  const logoWidth = 520
+  const logoHeight = logoWidth * (logo.naturalHeight / logo.naturalWidth)
+  ctx.drawImage(logo, (width - logoWidth) / 2, 370, logoWidth, logoHeight)
+
   ctx.fillStyle = '#000'
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
-  ctx.font = '900 104px Arial, sans-serif'
-  ctx.fillText('DRAMA', width / 2, 520)
-  ctx.fillText('TRIVIA', width / 2, 640)
+  ctx.font = '900 118px Enriq, Archivo, Arial, sans-serif'
+  ctx.fillText('TRIVIA', width / 2, 650)
 
-  ctx.font = '900 220px Arial, sans-serif'
-  ctx.fillText(`${score}/${total}`, width / 2, 950)
+  ctx.font = '900 260px Enriq, Archivo, Arial, sans-serif'
+  ctx.fillText(`${score}/${total}`, width / 2, 990)
 
-  const label = getResultLabel(score)
-  ctx.font = '900 76px Arial, sans-serif'
-  const words = label.split(' ')
-  const lines = words.length > 3
-    ? [words.slice(0, 2).join(' '), words.slice(2).join(' ')]
-    : [label]
-
-  lines.forEach((line, index) => {
-    ctx.fillText(line, width / 2, 1210 + index * 92)
-  })
-
-  ctx.font = '900 34px Arial, sans-serif'
-  ctx.fillText('drama.com.ar', width / 2, 1700)
+  ctx.font = '900 48px Enriq, Archivo, Arial, sans-serif'
+  ctx.fillText('JUGÁ VOS TAMBIÉN EN', width / 2, 1600)
+  ctx.font = '900 70px Enriq, Archivo, Arial, sans-serif'
+  ctx.fillText('DRAMA.COM.AR', width / 2, 1682)
 
   return await new Promise<File | null>((resolve) => {
     canvas.toBlob((blob) => {
@@ -277,7 +268,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
             )}
           </AnimatePresence>
 
-          <div className="relative z-10 flex min-h-[100dvh] items-start justify-center px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[max(4.5rem,calc(env(safe-area-inset-top)+3.5rem))] md:items-center md:px-10 md:py-24">
+          <div className="relative z-10 flex min-h-[100dvh] items-start justify-center px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(4.25rem,calc(env(safe-area-inset-top)+3.25rem))] md:items-center md:px-10 md:py-24">
             {error && !countdown && (
               <div className="text-center">
                 <h2 className="text-5xl font-black uppercase leading-none md:text-7xl">{error}</h2>
@@ -294,18 +285,18 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
             {!loading && !error && hasStarted && currentQuestion && !isFinished && (
               <motion.div
                 key={currentQuestion.id}
-                className="w-full max-w-5xl"
+                className="w-full max-w-6xl"
                 initial={{ opacity: 0, y: 18, filter: 'blur(10px)' }}
                 animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                 transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
               >
-                <div className="mb-3 flex items-center justify-between gap-4 text-[0.66rem] font-black uppercase tracking-[0.18em] text-black/50 md:mb-5 md:text-xs">
+                <div className="mb-2 flex h-4 items-center justify-between gap-4 text-[0.66rem] font-black uppercase tracking-[0.18em] text-black/50 md:mb-6 md:text-xs">
                   <span>DRAMA TRIVIA</span>
                   <span>{currentIndex + 1}/{questions.length}</span>
                 </div>
 
-                <div className="grid items-start gap-4 md:grid-cols-[minmax(220px,360px)_1fr] md:items-center md:gap-10">
-                  <div className="relative mx-auto aspect-square w-full max-w-[min(52vw,210px)] overflow-hidden rounded-lg border-[7px] border-white bg-white shadow-[0_16px_34px_rgba(0,0,0,0.2)] md:max-w-none md:border-[10px] md:shadow-[0_20px_50px_rgba(0,0,0,0.22)]">
+                <div className="grid items-start gap-3 md:grid-cols-[360px_minmax(0,1fr)] md:items-center md:gap-12">
+                  <div className="relative mx-auto aspect-square w-[min(46vw,10.5rem)] shrink-0 overflow-hidden rounded-lg border-[7px] border-white bg-white shadow-[0_16px_34px_rgba(0,0,0,0.2)] md:w-[360px] md:border-[10px] md:shadow-[0_20px_50px_rgba(0,0,0,0.22)]">
                     <Image
                       src={currentQuestion.image}
                       alt=""
@@ -316,11 +307,14 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                     />
                   </div>
 
-                  <div>
-                    <h2 className="mb-4 flex min-h-[11.2rem] items-end text-[clamp(2.15rem,9.4vw,3rem)] font-black uppercase leading-[0.92] text-black md:mb-6 md:min-h-[15rem] md:text-6xl md:leading-none">
-                      {renderQuestionText(currentQuestion.question)}
-                    </h2>
-                    <div className="grid gap-2.5 md:gap-3">
+                  <div className="w-full">
+                    <div className="mb-3 flex h-[8.4rem] items-center overflow-hidden rounded-lg border-2 border-black/20 bg-white/18 px-4 py-3 md:mb-6 md:h-[13.5rem] md:px-7 md:py-5">
+                      <h2 className="line-clamp-3 text-[clamp(1.55rem,6.4vw,2rem)] font-black uppercase leading-[0.98] text-black md:text-[3.7rem] md:leading-[0.93]">
+                        {currentQuestion.question}
+                      </h2>
+                    </div>
+
+                    <div className="grid auto-rows-[3rem] gap-2.5 md:auto-rows-[4.35rem] md:gap-3">
                       {currentQuestion.options.map((option) => {
                         const isSelected = selectedOptionId === option.id
                         const shouldRevealCorrect = answerState && option.isCorrect
@@ -335,7 +329,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                             }}
                             disabled={Boolean(answerState)}
                             className={[
-                              'min-h-11 rounded-lg border-2 px-4 py-2.5 text-left text-[clamp(1rem,4.4vw,1.25rem)] font-black uppercase leading-tight tracking-normal transition-all focus:outline-none focus-visible:outline-none md:min-h-16 md:px-5 md:py-3 md:text-2xl',
+                              'h-full min-h-0 rounded-lg border-2 px-4 py-2 text-left text-[clamp(0.95rem,4vw,1.15rem)] font-black uppercase leading-tight tracking-normal transition-all focus:outline-none focus-visible:outline-none md:px-5 md:py-3 md:text-[1.7rem]',
                               shouldRevealCorrect
                                 ? 'border-black bg-black text-white'
                                 : isSelected && answerState === 'incorrect'
