@@ -54,22 +54,29 @@ function ServiceCard({
 }) {
   const ref = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const [isTapFlipEnabled, setIsTapFlipEnabled] = useState(false)
   const [isNudging, setIsNudging] = useState(false)
   const hasInteractedRef = useRef(false)
   const nudgeTimerRef = useRef<number | null>(null)
   const nudgeStorageKey = 'drama-service-design-nudge-seen'
 
   useEffect(() => {
-    const media = window.matchMedia('(max-width: 767px)')
+    const mobileMedia = window.matchMedia('(max-width: 767px)')
+    const tapMedia = window.matchMedia('(hover: none), (pointer: coarse)')
     const syncMedia = () => {
-      setIsMobile(media.matches)
-      if (!media.matches) setActiveMobileIndex(null)
+      setIsMobile(mobileMedia.matches)
+      setIsTapFlipEnabled(tapMedia.matches)
+      if (!mobileMedia.matches && !tapMedia.matches) setActiveMobileIndex(null)
     }
 
     syncMedia()
-    media.addEventListener('change', syncMedia)
-    return () => media.removeEventListener('change', syncMedia)
-  }, [])
+    mobileMedia.addEventListener('change', syncMedia)
+    tapMedia.addEventListener('change', syncMedia)
+    return () => {
+      mobileMedia.removeEventListener('change', syncMedia)
+      tapMedia.removeEventListener('change', syncMedia)
+    }
+  }, [setActiveMobileIndex])
 
   useEffect(() => {
     const element = ref.current
@@ -164,11 +171,36 @@ function ServiceCard({
     }
   }
 
+  function handleTapFlip() {
+    hasInteractedRef.current = true
+    if (!isTapFlipEnabled) return
+
+    if (shouldHint) sessionStorage.setItem(nudgeStorageKey, '1')
+    if (nudgeTimerRef.current) {
+      window.clearTimeout(nudgeTimerRef.current)
+      nudgeTimerRef.current = null
+    }
+
+    setActiveMobileIndex((current) => current === index ? null : index)
+  }
+
+  function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.key !== 'Enter' && event.key !== ' ') return
+
+    event.preventDefault()
+    setActiveMobileIndex((current) => current === index ? null : index)
+  }
+
   return (
     <div
       ref={ref}
       onPointerEnter={handlePointerEnter}
-      className={`flip-card h-72 select-none md:h-80 rounded-2xl ${activeMobileIndex === index ? 'is-flipped' : ''} ${isNudging ? 'is-nudging' : ''}`}
+      onClick={handleTapFlip}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+      aria-pressed={activeMobileIndex === index}
+      className={`flip-card h-72 touch-manipulation select-none md:h-80 rounded-2xl ${isTapFlipEnabled ? 'cursor-pointer' : ''} ${activeMobileIndex === index ? 'is-flipped' : ''} ${isNudging ? 'is-nudging' : ''}`}
     >
       <div className="flip-card-inner rounded-2xl">
         {/* Front */}
