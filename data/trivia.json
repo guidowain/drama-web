@@ -110,5 +110,173 @@
         "isCorrect": false
       }
     ]
+  },
+  {
+    "id": "trivia-1777691126103-avgkig",
+    "projectId": "mod7llya4r2rz5jhxk9",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777054319/drama-web/uploads/pzepxnnq2tlhrx3qmiku.webp",
+    "question": "¿Cómo se llama el personaje que se hace pasar por maestro en Horace Green?",
+    "options": [
+      {
+        "id": "option-1777691126103-s8ixqs",
+        "text": "Zack Mooneyham",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691126103-mg86j3",
+        "text": "Ned Schneebly",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691126103-ayb3a2",
+        "text": "Mr. Williams",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691126103-qxua3x",
+        "text": "Dewey Finn",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777691178445-hfn7n0",
+    "projectId": "mod7llya4r2rz5jhxk9",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777054319/drama-web/uploads/pzepxnnq2tlhrx3qmiku.webp",
+    "question": "¿Cuál es el nombre de la escuela donde transcurre la historia?",
+    "options": [
+      {
+        "id": "option-1777691178445-wwtjgf",
+        "text": "Lincoln Academy",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691178445-m21t3k",
+        "text": "Horace Green",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777691178445-oksapo",
+        "text": "Westside Prep",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691178445-9rz5q7",
+        "text": "Jefferson High",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777691240666-4hnbe5",
+    "projectId": "mod7llya4r2rz5jhxk9",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777054319/drama-web/uploads/pzepxnnq2tlhrx3qmiku.webp",
+    "question": "¿Cuál es el instrumento que toca Zack en la banda?",
+    "options": [
+      {
+        "id": "option-1777691240666-b8lyxs",
+        "text": "Guitarra",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777691240666-jjxsug",
+        "text": "Bajo",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691240666-9kpc9q",
+        "text": "Piano",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691240666-qsnbnc",
+        "text": "Batería",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777691271657-zsskyo",
+    "projectId": "mod6zy9css11lnhvi4o",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777052154/drama-web/uploads/huros5cqtavrvnqr3pwa.webp",
+    "question": "¿Qué objeto rescata Ariel del mar después de que pasa el barco de Eric?",
+    "options": [
+      {
+        "id": "option-1777691271657-da6e50",
+        "text": "Una corona",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691271657-31jw6z",
+        "text": "Un tenedor",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777691271657-fq4gn1",
+        "text": "Un espejo",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691271657-xtb509",
+        "text": "Una copa",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777691327579-qlxy07",
+    "projectId": "mod6zy9css11lnhvi4o",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777052154/drama-web/uploads/huros5cqtavrvnqr3pwa.webp",
+    "question": "¿Qué le pide Úrsula a Ariel a cambio de convertirla en humana?",
+    "options": [
+      {
+        "id": "option-1777691327579-gdccn1",
+        "text": "Su cola de sirena",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691327579-1jjiyb",
+        "text": "Su memoria",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691327579-5bbzd4",
+        "text": "Su voz",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777691327579-1u0tbb",
+        "text": "Una selfie",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777691357616-1lylcf",
+    "projectId": "mod6zy9css11lnhvi4o",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777052154/drama-web/uploads/huros5cqtavrvnqr3pwa.webp",
+    "question": "¿Cuántos días tiene Ariel para conseguir que Eric la bese?",
+    "options": [
+      {
+        "id": "option-1777691357616-5bn1r8",
+        "text": "Uno",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691357616-vcg1xl",
+        "text": "Dos",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777691357616-vajgvj",
+        "text": "Tres",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777691357616-08fcx2",
+        "text": "Siete",
+        "isCorrect": false
+      }
+    ]
   }
 ]
