@@ -502,5 +502,33 @@
         "isCorrect": false
       }
     ]
+  },
+  {
+    "id": "trivia-1777692294113-fz536n",
+    "projectId": "moi4clsoy0w61xndric",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777350070/drama-web/uploads/mnlithxjx4twefdy78h8.webp",
+    "question": "¿Quién interpretó a Natalie en el estreno argentino de Casi Normales en 2012?",
+    "options": [
+      {
+        "id": "option-1777692294113-oetwmp",
+        "text": "Manuela del Campo",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692294113-pleabg",
+        "text": "Ema Giménez Zapiola",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692294113-2iwz3k",
+        "text": "Flor Otero",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777692294113-l68440",
+        "text": "Natalia Cociuffo",
+        "isCorrect": false
+      }
+    ]
   }
 ]
