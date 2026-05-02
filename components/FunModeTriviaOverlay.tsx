@@ -121,7 +121,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
     countdownTimersRef.current = []
   }, [])
 
-  const startRound = useCallback(() => {
+  const startRound = useCallback((skipIntro = false) => {
     clearCountdownTimers()
     setLoading(true)
     setError('')
@@ -144,6 +144,11 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
 
         if (nextQuestions.length < 2) {
           setError('TRIVIA EN ENSAYO')
+          return
+        }
+
+        if (skipIntro) {
+          setHasStarted(true)
           return
         }
 
@@ -188,15 +193,10 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
     const selectedOption = currentQuestion.options.find((option) => option.id === optionId)
     const isCorrect = Boolean(selectedOption?.isCorrect)
 
-    setSelectedOptionId(optionId)
-    setAnswerState(isCorrect ? 'correct' : 'incorrect')
     if (isCorrect) setScore((value) => value + 1)
-
-    window.setTimeout(() => {
-      setAnswerState(null)
-      setSelectedOptionId(null)
-      setCurrentIndex((value) => value + 1)
-    }, 950)
+    setSelectedOptionId(null)
+    setAnswerState(null)
+    setCurrentIndex((value) => value + 1)
   }
 
   const shareResults = async () => {
@@ -278,10 +278,6 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
           </AnimatePresence>
 
           <div className="relative z-10 flex min-h-[100dvh] items-start justify-center px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[max(4.5rem,calc(env(safe-area-inset-top)+3.5rem))] md:items-center md:px-10 md:py-24">
-            {loading && !countdown && (
-              <p className="text-center text-3xl font-black uppercase text-black/65">Cargando...</p>
-            )}
-
             {error && !countdown && (
               <div className="text-center">
                 <h2 className="text-5xl font-black uppercase leading-none md:text-7xl">{error}</h2>
@@ -321,7 +317,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                   </div>
 
                   <div>
-                    <h2 className="mb-4 text-[clamp(2.15rem,9.4vw,3rem)] font-black uppercase leading-[0.92] text-black md:mb-6 md:text-6xl md:leading-none">
+                    <h2 className="mb-4 flex min-h-[11.2rem] items-end text-[clamp(2.15rem,9.4vw,3rem)] font-black uppercase leading-[0.92] text-black md:mb-6 md:min-h-[15rem] md:text-6xl md:leading-none">
                       {renderQuestionText(currentQuestion.question)}
                     </h2>
                     <div className="grid gap-2.5 md:gap-3">
@@ -333,15 +329,18 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                           <button
                             key={option.id}
                             type="button"
-                            onClick={() => answerQuestion(option.id)}
+                            onClick={(event) => {
+                              event.currentTarget.blur()
+                              answerQuestion(option.id)
+                            }}
                             disabled={Boolean(answerState)}
                             className={[
-                              'min-h-11 rounded-lg border-2 px-4 py-2.5 text-left text-[clamp(1rem,4.4vw,1.25rem)] font-black uppercase leading-tight tracking-normal transition-all md:min-h-16 md:px-5 md:py-3 md:text-2xl',
+                              'min-h-11 rounded-lg border-2 px-4 py-2.5 text-left text-[clamp(1rem,4.4vw,1.25rem)] font-black uppercase leading-tight tracking-normal transition-all focus:outline-none focus-visible:outline-none md:min-h-16 md:px-5 md:py-3 md:text-2xl',
                               shouldRevealCorrect
                                 ? 'border-black bg-black text-white'
                                 : isSelected && answerState === 'incorrect'
                                   ? 'border-black bg-white text-black opacity-45'
-                                  : 'border-black/30 bg-white/24 text-black hover:border-black hover:bg-white/50',
+                                  : 'border-black/30 bg-white/24 text-black md:hover:border-black md:hover:bg-white/50',
                             ].join(' ')}
                           >
                             {option.text}
@@ -403,7 +402,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                   <div className="mt-5 flex flex-wrap justify-center gap-3">
                     <button
                       type="button"
-                      onClick={startRound}
+                      onClick={() => startRound(true)}
                       className="rounded-full border-2 border-black bg-white/20 px-7 py-3 text-xs font-black uppercase tracking-[0.14em] text-black transition-colors hover:bg-white/45"
                     >
                       VOLVER A JUGAR
