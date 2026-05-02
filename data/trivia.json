@@ -698,5 +698,33 @@
         "isCorrect": false
       }
     ]
+  },
+  {
+    "id": "trivia-1777692961223-antb5r",
+    "projectId": "modbhpubocxnmlsff6",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777059744/drama-web/uploads/crcu25parjraaitxido7.webp",
+    "question": "¿Cuál es el nombre de pila de Tronchatoro?",
+    "options": [
+      {
+        "id": "option-1777692961223-8ogjem",
+        "text": "Úrsula",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692961223-pkg6hz",
+        "text": "Agatha",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777692961223-w68gsr",
+        "text": "Severa",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692961223-cxl0dn",
+        "text": "Agustina",
+        "isCorrect": false
+      }
+    ]
   }
 ]
