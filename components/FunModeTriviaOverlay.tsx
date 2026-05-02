@@ -16,7 +16,7 @@ type AnswerState = 'correct' | 'incorrect' | null
 function getResultLabel(score: number) {
   if (score < 5) return 'TE FALTA ENSAYO'
   if (score < 8) return 'NOSOTROS TE LLAMAMOS'
-  return 'QUEDASTE EN LA OBRA!'
+  return '¡QUEDASTE EN LA OBRA!'
 }
 
 function getShareText(score: number, total: number) {
