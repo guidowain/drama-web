@@ -304,8 +304,8 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                   </div>
 
                   <div className="w-full">
-                    <div className="mb-3 flex h-[8.4rem] items-center overflow-hidden rounded-lg border-2 border-black/20 bg-white/18 px-4 py-3 md:mb-6 md:h-[13.5rem] md:px-7 md:py-5">
-                      <h2 className="line-clamp-3 text-[clamp(1.35rem,5.5vw,1.72rem)] font-black uppercase leading-[1.04] text-black md:text-[2.9rem] md:leading-[1.02]">
+                    <div className="mb-3 flex h-[8.4rem] items-center overflow-hidden rounded-lg border-2 border-black/20 bg-white/18 px-4 py-4 md:mb-6 md:h-[13.5rem] md:px-7 md:py-6">
+                      <h2 className="text-[clamp(1.3rem,5.35vw,1.66rem)] font-black uppercase leading-[1.12] text-black md:text-[2.78rem] md:leading-[1.1]">
                         {currentQuestion.question}
                       </h2>
                     </div>
@@ -325,7 +325,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                             }}
                             disabled={Boolean(answerState)}
                             className={[
-                              'h-full min-h-0 rounded-lg border-2 px-4 py-2 text-left text-[clamp(0.95rem,4vw,1.15rem)] font-black uppercase leading-tight tracking-normal transition-all focus:outline-none focus-visible:outline-none md:px-5 md:py-3 md:text-[1.7rem]',
+                              'flex h-full min-h-0 items-center rounded-lg border-2 px-4 py-1 text-left text-[clamp(0.95rem,4vw,1.15rem)] font-black uppercase leading-tight tracking-normal transition-all focus:outline-none focus-visible:outline-none md:px-5 md:py-2 md:text-[1.7rem]',
                               shouldRevealCorrect
                                 ? 'border-black bg-black text-white'
                                 : isSelected && answerState === 'incorrect'
