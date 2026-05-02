@@ -9,11 +9,13 @@ import ModalProject from '@/components/ModalProject'
 import ContactStrip from '@/components/ContactStrip'
 import Ticker from '@/components/Ticker'
 import FunModeGravityOverlay from '@/components/FunModeGravityOverlay'
+import FunModeTriviaOverlay from '@/components/FunModeTriviaOverlay'
 import type { ContactSettings, Proyecto, SiteSettings } from '@/lib/types'
 import { hasProjectDetailMedia, isVideoUrl } from '@/lib/media'
 import { fetchProjects } from '@/lib/projects-client'
 
 type ModalOriginRect = Pick<DOMRect, 'top' | 'left' | 'width' | 'height'>
+type FunModeType = 'dramanoid' | 'trivia'
 
 const EMPTY_CONTACT: ContactSettings = {
   instagram: '',
@@ -50,7 +52,7 @@ function ProyectosContent() {
   const [selected, setSelected] = useState<Proyecto | null>(null)
   const [modalOrigin, setModalOrigin] = useState<ModalOriginRect | null>(null)
   const [showAboutCta, setShowAboutCta] = useState(false)
-  const [funMode, setFunMode] = useState(false)
+  const [funMode, setFunMode] = useState<FunModeType | null>(null)
   const [isDesktop, setIsDesktop] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -65,7 +67,9 @@ function ProyectosContent() {
     const media = window.matchMedia('(min-width: 768px)')
     const syncMedia = () => {
       setIsDesktop(media.matches)
-      if (!media.matches) setFunMode(false)
+      if (!media.matches) {
+        setFunMode((current) => (current === 'dramanoid' ? null : current))
+      }
     }
 
     syncMedia()
@@ -120,8 +124,37 @@ function ProyectosContent() {
     router.push('/proyectos', { scroll: false })
   }, [router])
 
+  const handleFunModeOpen = useCallback(() => {
+    if (funMode) {
+      setFunMode(null)
+      return
+    }
+
+    if (!isDesktop) {
+      setFunMode('trivia')
+      return
+    }
+
+    if (funMediaPool.length === 0) {
+      setFunMode('trivia')
+      return
+    }
+
+    const lastMode = window.sessionStorage.getItem('drama-fun-mode-last')
+    const nextMode: FunModeType = lastMode === 'dramanoid'
+      ? 'trivia'
+      : lastMode === 'trivia'
+        ? 'dramanoid'
+        : Math.random() > 0.5
+          ? 'dramanoid'
+          : 'trivia'
+
+    window.sessionStorage.setItem('drama-fun-mode-last', nextMode)
+    setFunMode(nextMode)
+  }, [funMediaPool.length, funMode, isDesktop])
+
   const handleFunModeClose = useCallback(() => {
-    setFunMode(false)
+    setFunMode(null)
   }, [])
 
   return (
@@ -133,22 +166,19 @@ function ProyectosContent() {
             <h1 className="text-black font-black uppercase text-5xl md:text-7xl leading-none">
               PROYECTOS
             </h1>
-            {isDesktop && (
-              <button
-                type="button"
-                aria-pressed={funMode}
-                disabled={funMediaPool.length === 0}
-                onClick={() => setFunMode((value) => !value)}
-                className={[
-                  'mb-2 shrink-0 rounded-full border px-4 py-1.5 text-[0.62rem] font-black uppercase tracking-[0.16em] transition-all duration-300',
-                  funMode
-                    ? 'border-black bg-black text-white shadow-[0_0_22px_rgba(0,0,0,0.18)]'
-                    : 'border-black/25 bg-white/20 text-black/55 hover:border-black/50 hover:bg-white/40 hover:text-black',
-                ].join(' ')}
-              >
-                FUN MODE
-              </button>
-            )}
+            <button
+              type="button"
+              aria-pressed={Boolean(funMode)}
+              onClick={handleFunModeOpen}
+              className={[
+                'mb-2 shrink-0 rounded-full border px-4 py-1.5 text-[0.62rem] font-black uppercase tracking-[0.16em] transition-all duration-300',
+                funMode
+                  ? 'border-black bg-black text-white shadow-[0_0_22px_rgba(0,0,0,0.18)]'
+                  : 'border-black/25 bg-white/20 text-black/55 hover:border-black/50 hover:bg-white/40 hover:text-black',
+              ].join(' ')}
+            >
+              FUN MODE
+            </button>
           </div>
         </div>
 
@@ -195,8 +225,13 @@ function ProyectosContent() {
       />
 
       <FunModeGravityOverlay
-        active={isDesktop && funMode}
+        active={isDesktop && funMode === 'dramanoid'}
         media={funMediaPool}
+        onClose={handleFunModeClose}
+      />
+
+      <FunModeTriviaOverlay
+        active={funMode === 'trivia'}
         onClose={handleFunModeClose}
       />
     </>

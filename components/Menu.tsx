@@ -41,7 +41,7 @@ export default function Menu({ settings }: Props) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-[100] flex flex-col overflow-y-auto"
+          className="fixed inset-0 z-[100] flex flex-col overflow-x-hidden overflow-y-auto"
           style={{ backgroundColor: '#000', minHeight: '100dvh' }}
         >
           {/* Top gradient stripe */}
@@ -62,7 +62,7 @@ export default function Menu({ settings }: Props) {
           </div>
 
           {/* Navigation */}
-          <nav className="flex flex-1 flex-col justify-center px-5 py-4 md:px-8 md:py-6">
+          <nav className="flex flex-1 flex-col justify-center overflow-hidden px-5 py-4 md:px-8 md:py-6">
             {navItems.map((item, i) => (
               <motion.div
                 key={item.href}
@@ -74,7 +74,7 @@ export default function Menu({ settings }: Props) {
                 <Link
                   href={item.href}
                   onClick={close}
-                  className="menu-nav-link block py-3 text-white font-bold italic text-[clamp(2.55rem,8.5vh,5.8rem)] leading-none md:py-4 md:text-[clamp(4rem,10vh,6rem)]"
+                  className="menu-nav-link block max-w-full py-3 text-white font-bold italic text-[clamp(2.65rem,13vw,4.4rem)] leading-none md:py-4 md:text-[clamp(4rem,10vh,6rem)]"
                 >
                   {item.label}
                 </Link>
