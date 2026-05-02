@@ -446,5 +446,33 @@
         "isCorrect": false
       }
     ]
+  },
+  {
+    "id": "trivia-1777692025820-qwcddb",
+    "projectId": "moi4clsoy0w61xndric",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777350070/drama-web/uploads/mnlithxjx4twefdy78h8.webp",
+    "question": "¿Qué le pasa a Diana, la madre?",
+    "options": [
+      {
+        "id": "option-1777692025820-cfetbj",
+        "text": "Tiene una enfermedad terminal",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692025820-xp4ars",
+        "text": "Sufre un trastorno bipolar",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777692025820-bv95gi",
+        "text": "Tiene amnesia",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692025820-u2797z",
+        "text": "Tiene tuberculosis",
+        "isCorrect": false
+      }
+    ]
   }
 ]
