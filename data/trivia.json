@@ -642,5 +642,33 @@
         "isCorrect": false
       }
     ]
+  },
+  {
+    "id": "trivia-1777692857356-4vy5s5",
+    "projectId": "mohkq6smauen13jxdxe",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777317110/drama-web/uploads/mclmulqsqrooyprwuwuk.webp",
+    "question": "¿Qué canción no pertenece a esta obra?",
+    "options": [
+      {
+        "id": "option-1777692857356-rj117x",
+        "text": "Piratas",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692857356-r11zbe",
+        "text": "Vivitos y Coleando",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692857356-nr21q5",
+        "text": "Cortitos",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692857356-gi8i86",
+        "text": "Te veo bien",
+        "isCorrect": true
+      }
+    ]
   }
 ]
