@@ -228,23 +228,13 @@ export default function AdminTriviaPage() {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-3">
-          <button
-            type="button"
-            onClick={addQuestion}
-            className="bg-white text-black font-black text-sm uppercase tracking-widest px-5 py-2.5 rounded-xl hover:bg-white/90 transition-colors"
-          >
-            Agregar pregunta
-          </button>
-          <button
-            type="button"
-            onClick={handleSave}
-            disabled={!canSave}
-            className="gradient-bg text-black font-black text-sm uppercase tracking-widest px-5 py-2.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
-          >
-            {saving ? 'Guardando...' : saved ? '¡Guardado!' : 'Guardar'}
-          </button>
-        </div>
+        <TriviaActions
+          canSave={canSave}
+          saving={saving}
+          saved={saved}
+          onAddQuestion={addQuestion}
+          onSave={handleSave}
+        />
       </div>
 
       {error && (
@@ -364,8 +354,52 @@ export default function AdminTriviaPage() {
               </div>
             </section>
           ))}
+
+          <div className="flex justify-end border-t border-white/5 pt-6">
+            <TriviaActions
+              canSave={canSave}
+              saving={saving}
+              saved={saved}
+              onAddQuestion={addQuestion}
+              onSave={handleSave}
+            />
+          </div>
         </div>
       )}
+    </div>
+  )
+}
+
+function TriviaActions({
+  canSave,
+  saving,
+  saved,
+  onAddQuestion,
+  onSave,
+}: {
+  canSave: boolean
+  saving: boolean
+  saved: boolean
+  onAddQuestion: () => void
+  onSave: () => void
+}) {
+  return (
+    <div className="flex flex-wrap gap-3">
+      <button
+        type="button"
+        onClick={onAddQuestion}
+        className="bg-white text-black font-black text-sm uppercase tracking-widest px-5 py-2.5 rounded-xl hover:bg-white/90 transition-colors"
+      >
+        Agregar pregunta
+      </button>
+      <button
+        type="button"
+        onClick={onSave}
+        disabled={!canSave}
+        className="gradient-bg text-black font-black text-sm uppercase tracking-widest px-5 py-2.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
+      >
+        {saving ? 'Guardando...' : saved ? '¡Guardado!' : 'Guardar'}
+      </button>
     </div>
   )
 }
