@@ -726,5 +726,89 @@
         "isCorrect": false
       }
     ]
+  },
+  {
+    "id": "trivia-1777693077508-bf9g2m",
+    "projectId": "modbhpubocxnmlsff6",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777059744/drama-web/uploads/crcu25parjraaitxido7.webp",
+    "question": "¿Cuál es la mejor amiga de Matilda en la escuela?",
+    "options": [
+      {
+        "id": "option-1777693077508-8rjc8l",
+        "text": "Amanda",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693077508-jrshiw",
+        "text": "Hortensia",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693077508-ou4j9v",
+        "text": "Lavanda",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777693077508-xo1tj3",
+        "text": "Alicia",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777693110436-2miq4i",
+    "projectId": "modbhpubocxnmlsff6",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777059744/drama-web/uploads/crcu25parjraaitxido7.webp",
+    "question": "¿Qué hace Matilda con el tónico de pelo de su padre?",
+    "options": [
+      {
+        "id": "option-1777693110436-9uv3pn",
+        "text": "Lo tira por el inodoro",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693110436-qvo4s3",
+        "text": "Lo llena de pegamento",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693110436-99ajxf",
+        "text": "Lo esconde debajo de la cama",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693110436-nequtx",
+        "text": "Lo reemplaza con decolorante",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777693155028-tlyg0w",
+    "projectId": "modbhpubocxnmlsff6",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777059744/drama-web/uploads/crcu25parjraaitxido7.webp",
+    "question": "¿Cómo le dice Tronchatoro a los niños?",
+    "options": [
+      {
+        "id": "option-1777693155028-z6ywi1",
+        "text": "Animales",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693155028-m7k51j",
+        "text": "Revoltosos",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777693155028-ehgw1k",
+        "text": "Asquerosos",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777693155028-3so6cl",
+        "text": "Cucarachas",
+        "isCorrect": false
+      }
+    ]
   }
 ]
