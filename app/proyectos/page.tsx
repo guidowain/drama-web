@@ -53,7 +53,7 @@ function ProyectosContent() {
   const [modalOrigin, setModalOrigin] = useState<ModalOriginRect | null>(null)
   const [showAboutCta, setShowAboutCta] = useState(false)
   const [funMode, setFunMode] = useState<FunModeType | null>(null)
-  const [isDesktop, setIsDesktop] = useState(false)
+  const [canUseDramanoid, setCanUseDramanoid] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const funMediaPool = useMemo(() => collectProjectMedia(projects), [projects])
@@ -64,9 +64,9 @@ function ProyectosContent() {
   }, [])
 
   useEffect(() => {
-    const media = window.matchMedia('(min-width: 768px)')
+    const media = window.matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)')
     const syncMedia = () => {
-      setIsDesktop(media.matches)
+      setCanUseDramanoid(media.matches)
       if (!media.matches) {
         setFunMode((current) => (current === 'dramanoid' ? null : current))
       }
@@ -130,7 +130,7 @@ function ProyectosContent() {
       return
     }
 
-    if (!isDesktop) {
+    if (!canUseDramanoid) {
       setFunMode('trivia')
       return
     }
@@ -151,7 +151,7 @@ function ProyectosContent() {
 
     window.sessionStorage.setItem('drama-fun-mode-last', nextMode)
     setFunMode(nextMode)
-  }, [funMediaPool.length, funMode, isDesktop])
+  }, [canUseDramanoid, funMediaPool.length, funMode])
 
   const handleFunModeClose = useCallback(() => {
     setFunMode(null)
@@ -225,7 +225,7 @@ function ProyectosContent() {
       />
 
       <FunModeGravityOverlay
-        active={isDesktop && funMode === 'dramanoid'}
+        active={canUseDramanoid && funMode === 'dramanoid'}
         media={funMediaPool}
         onClose={handleFunModeClose}
       />
