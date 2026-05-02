@@ -530,5 +530,117 @@
         "isCorrect": false
       }
     ]
+  },
+  {
+    "id": "trivia-1777692493521-6ts4oz",
+    "projectId": "mogrtbmlbdegoq7jpn5",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777268493/drama-web/uploads/cbp263qmerayjwysoxzu.webp",
+    "question": "¿Qué sueña Kate con abrir?",
+    "options": [
+      {
+        "id": "option-1777692493521-1dp0oe",
+        "text": "Una escuela para Monsters",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777692493521-r3jfkw",
+        "text": "Una peluquería para Monsters",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692493521-5eqodj",
+        "text": "Un bar para Monsters",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692493521-ogmoac",
+        "text": "Un barrio para Monsters",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777692527416-r6c6id",
+    "projectId": "mogrtbmlbdegoq7jpn5",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777268493/drama-web/uploads/cbp263qmerayjwysoxzu.webp",
+    "question": "¿De dónde dice Rod que es su novia?",
+    "options": [
+      {
+        "id": "option-1777692527416-0yieuy",
+        "text": "Brasil",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692527416-sgdfgi",
+        "text": "Uruguay",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692527416-wm9qui",
+        "text": "Bolivia",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692527416-g720xu",
+        "text": "Paraguay",
+        "isCorrect": true
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777692575209-lmh4i7",
+    "projectId": "mogrtbmlbdegoq7jpn5",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777268493/drama-web/uploads/cbp263qmerayjwysoxzu.webp",
+    "question": "¿De dónde es Kimchi?",
+    "options": [
+      {
+        "id": "option-1777692575209-e24595",
+        "text": "Japón",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692575209-xbixy4",
+        "text": "Corea",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777692575209-py5722",
+        "text": "China",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692575209-oornk5",
+        "text": "Lanús",
+        "isCorrect": false
+      }
+    ]
+  },
+  {
+    "id": "trivia-1777692646901-oq60iy",
+    "projectId": "mogrtbmlbdegoq7jpn5",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777268493/drama-web/uploads/cbp263qmerayjwysoxzu.webp",
+    "question": "¿Qué busca Princeton?",
+    "options": [
+      {
+        "id": "option-1777692646901-fxgiq9",
+        "text": "Una novia",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692646901-7z4wsr",
+        "text": "A su madre",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692646901-das8rf",
+        "text": "Su meta en la vida",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777692646901-en2qaj",
+        "text": "Sus llaves",
+        "isCorrect": false
+      }
+    ]
   }
 ]
