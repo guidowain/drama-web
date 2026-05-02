@@ -4,6 +4,12 @@ import { useEffect, useMemo, useState } from 'react'
 import ImageUploader from '@/components/admin/ImageUploader'
 import type { TriviaOption, TriviaQuestion } from '@/lib/types'
 
+type ProjectOption = {
+  id: string
+  name: string
+  coverImage: string
+}
+
 function createId(prefix: string) {
   return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
 }
@@ -19,16 +25,34 @@ function createOption(isCorrect = false): TriviaOption {
 function createQuestion(): TriviaQuestion {
   return {
     id: createId('trivia'),
+    projectId: '',
     image: '',
     question: '',
-    options: [createOption(true), createOption(false)],
+    options: [createOption(true), createOption(false), createOption(false), createOption(false)],
+  }
+}
+
+function ensureFourOptions(options: TriviaOption[]) {
+  const normalized = [...options]
+
+  while (normalized.length < 4) {
+    normalized.push(createOption(false))
+  }
+
+  return normalized.slice(0, 4)
+}
+
+function normalizeForAdmin(question: TriviaQuestion): TriviaQuestion {
+  return {
+    ...question,
+    projectId: question.projectId || '',
+    options: ensureFourOptions(question.options || []),
   }
 }
 
 function normalizeBeforeSave(questions: TriviaQuestion[]) {
   return questions.map((question) => {
     const options = question.options
-      .filter((option) => option.text.trim())
       .map((option) => ({
         ...option,
         text: option.text.trim(),
@@ -36,6 +60,7 @@ function normalizeBeforeSave(questions: TriviaQuestion[]) {
 
     return {
       ...question,
+      projectId: question.projectId || '',
       image: question.image.trim(),
       question: question.question.trim(),
       options,
@@ -48,11 +73,12 @@ function validateQuestions(questions: TriviaQuestion[]) {
     const number = index + 1
     const question = questions[index]
     const filledOptions = question.options.filter((option) => option.text.trim())
+    const correctOption = question.options.find((option) => option.isCorrect)
 
     if (!question.image.trim()) return `La pregunta ${number} necesita una imagen.`
     if (!question.question.trim()) return `La pregunta ${number} necesita el texto de la pregunta.`
     if (filledOptions.length < 2) return `La pregunta ${number} necesita al menos dos opciones.`
-    if (!filledOptions.some((option) => option.isCorrect)) return `La pregunta ${number} necesita una respuesta correcta.`
+    if (!correctOption?.text.trim()) return `La pregunta ${number} necesita una respuesta correcta con texto.`
   }
 
   return ''
@@ -60,6 +86,7 @@ function validateQuestions(questions: TriviaQuestion[]) {
 
 export default function AdminTriviaPage() {
   const [questions, setQuestions] = useState<TriviaQuestion[]>([])
+  const [projects, setProjects] = useState<ProjectOption[]>([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -69,13 +96,29 @@ export default function AdminTriviaPage() {
   const canSave = useMemo(() => !saving && !loading, [loading, saving])
 
   useEffect(() => {
-    fetch('/api/admin/trivia')
-      .then((response) => {
+    Promise.all([
+      fetch('/api/admin/trivia').then((response) => {
         if (!response.ok) throw new Error('No se pudo cargar la trivia')
         return response.json()
-      })
-      .then((data) => {
-        setQuestions(Array.isArray(data) ? data : [])
+      }),
+      fetch('/api/admin/proyectos').then((response) => {
+        if (!response.ok) throw new Error('No se pudieron cargar los proyectos')
+        return response.json()
+      }),
+    ])
+      .then(([triviaData, projectsData]) => {
+        setQuestions(Array.isArray(triviaData) ? triviaData.map(normalizeForAdmin) : [])
+        setProjects(
+          Array.isArray(projectsData)
+            ? projectsData
+                .filter((project) => project?.id && project?.name && project?.coverImage)
+                .map((project) => ({
+                  id: project.id,
+                  name: project.name,
+                  coverImage: project.coverImage,
+                }))
+            : []
+        )
       })
       .catch((err: unknown) => {
         setError(err instanceof Error ? err.message : 'No se pudo cargar la trivia')
@@ -122,42 +165,21 @@ export default function AdminTriviaPage() {
     )
   }
 
-  function addOption(questionId: string) {
-    setQuestions((current) =>
-      current.map((question) => {
-        if (question.id !== questionId || question.options.length >= 4) return question
-
-        return {
-          ...question,
-          options: [...question.options, createOption(false)],
-        }
-      })
-    )
-  }
-
-  function removeOption(questionId: string, optionId: string) {
-    setQuestions((current) =>
-      current.map((question) => {
-        if (question.id !== questionId || question.options.length <= 2) return question
-
-        const removedOption = question.options.find((option) => option.id === optionId)
-        const options = question.options.filter((option) => option.id !== optionId)
-
-        if (removedOption?.isCorrect && options.length > 0) {
-          options[0] = { ...options[0], isCorrect: true }
-        }
-
-        return { ...question, options }
-      })
-    )
-  }
-
   function addQuestion() {
     setQuestions((current) => [...current, createQuestion()])
   }
 
   function removeQuestion(questionId: string) {
     setQuestions((current) => current.filter((question) => question.id !== questionId))
+  }
+
+  function selectProject(questionId: string, projectId: string) {
+    const selectedProject = projects.find((project) => project.id === projectId)
+
+    updateQuestion(questionId, {
+      projectId,
+      image: selectedProject?.coverImage || '',
+    })
   }
 
   async function handleSave() {
@@ -184,7 +206,7 @@ export default function AdminTriviaPage() {
       }
 
       const savedQuestions = await response.json()
-      setQuestions(Array.isArray(savedQuestions) ? savedQuestions : [])
+      setQuestions(Array.isArray(savedQuestions) ? savedQuestions.map(normalizeForAdmin) : [])
       setSaved(true)
       setTimeout(() => setSaved(false), 2500)
     } catch (err: unknown) {
@@ -264,15 +286,30 @@ export default function AdminTriviaPage() {
 
               <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
                 <div>
+                  <Field label="Obra">
+                    <select
+                      value={question.projectId || ''}
+                      onChange={(event) => selectProject(question.id, event.target.value)}
+                      className="admin-input mb-4"
+                    >
+                      <option value="">Elegir proyecto...</option>
+                      {projects.map((project) => (
+                        <option key={project.id} value={project.id}>
+                          {project.name}
+                        </option>
+                      ))}
+                    </select>
+                  </Field>
+
                   <label className="text-white/40 text-xs uppercase tracking-wider block mb-1.5">
-                    Imagen obligatoria
+                    Imagen cuadrada
                   </label>
                   <ImageUploader
                     value={question.image}
                     onChange={(image) => updateQuestion(question.id, { image })}
-                    aspect="4/3"
+                    aspect="1/1"
                     fit="contain"
-                    placeholder="Subí la imagen de la pregunta"
+                    placeholder="Elegí una obra o subí una imagen"
                   />
                 </div>
 
@@ -291,18 +328,13 @@ export default function AdminTriviaPage() {
                       <label className="text-white/40 text-xs uppercase tracking-wider">
                         Opciones
                       </label>
-                      <button
-                        type="button"
-                        onClick={() => addOption(question.id)}
-                        disabled={question.options.length >= 4}
-                        className="text-white/50 hover:text-white disabled:text-white/15 text-xs font-black uppercase tracking-widest transition-colors"
-                      >
-                        Agregar opción
-                      </button>
+                      <span className="text-white/20 text-xs uppercase tracking-widest">
+                        Las vacías no cuentan
+                      </span>
                     </div>
 
                     <div className="space-y-2">
-                      {question.options.map((option, optionIndex) => (
+                      {ensureFourOptions(question.options).map((option, optionIndex) => (
                         <div key={option.id} className="flex items-center gap-3">
                           <button
                             type="button"
@@ -324,15 +356,6 @@ export default function AdminTriviaPage() {
                             className="admin-input"
                             placeholder={`Opción ${optionIndex + 1}`}
                           />
-                          <button
-                            type="button"
-                            onClick={() => removeOption(question.id, option.id)}
-                            disabled={question.options.length <= 2}
-                            className="h-10 w-10 shrink-0 rounded-full bg-white/5 text-white/35 hover:bg-red-500/20 hover:text-red-200 disabled:opacity-20 disabled:hover:bg-white/5 disabled:hover:text-white/35 transition-colors"
-                            aria-label={`Eliminar opción ${optionIndex + 1}`}
-                          >
-                            ×
-                          </button>
                         </div>
                       ))}
                     </div>

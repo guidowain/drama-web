@@ -217,6 +217,7 @@ function normalizeTriviaQuestions(raw: unknown): TriviaQuestion[] {
 
     return {
       id: question.id || `trivia-${index}`,
+      projectId: question.projectId || '',
       image: question.image || '',
       question: question.question || '',
       options: options.map((option, optionIndex) => ({

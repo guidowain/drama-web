@@ -40,6 +40,7 @@ export interface TriviaOption {
 
 export interface TriviaQuestion {
   id: string
+  projectId?: string
   image: string
   question: string
   options: TriviaOption[]

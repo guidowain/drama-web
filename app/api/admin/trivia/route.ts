@@ -10,6 +10,7 @@ function normalizeQuestion(item: Partial<TriviaQuestion>): TriviaQuestion {
 
   return {
     id: item.id || generateId(),
+    projectId: item.projectId || '',
     image: item.image || '',
     question: item.question || '',
     options: options.slice(0, 4).map((option) => ({
