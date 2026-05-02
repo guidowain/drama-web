@@ -60,7 +60,7 @@ async function createResultFile(score: number, total: number) {
   ctx.arc(820, 250, 360, 0, Math.PI * 2)
   ctx.fill()
 
-  const logoWidth = 520
+  const logoWidth = 416
   const logoHeight = logoWidth * (logo.naturalHeight / logo.naturalWidth)
   ctx.drawImage(logo, (width - logoWidth) / 2, 370, logoWidth, logoHeight)
 
@@ -283,13 +283,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
             )}
 
             {!loading && !error && hasStarted && currentQuestion && !isFinished && (
-              <motion.div
-                key={currentQuestion.id}
-                className="w-full max-w-6xl"
-                initial={{ opacity: 0, y: 18, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
-              >
+              <div className="w-full max-w-6xl">
                 <div className="mb-2 flex h-4 items-center justify-between gap-4 text-[0.66rem] font-black uppercase tracking-[0.18em] text-black/50 md:mb-6 md:text-xs">
                   <span>DRAMA TRIVIA</span>
                   <span>{currentIndex + 1}/{questions.length}</span>
@@ -309,7 +303,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
 
                   <div className="w-full">
                     <div className="mb-3 flex h-[8.4rem] items-center overflow-hidden rounded-lg border-2 border-black/20 bg-white/18 px-4 py-3 md:mb-6 md:h-[13.5rem] md:px-7 md:py-5">
-                      <h2 className="line-clamp-3 text-[clamp(1.55rem,6.4vw,2rem)] font-black uppercase leading-[0.98] text-black md:text-[3.7rem] md:leading-[0.93]">
+                      <h2 className="line-clamp-3 text-[clamp(1.35rem,5.5vw,1.72rem)] font-black uppercase leading-[1.04] text-black md:text-[2.9rem] md:leading-[1.02]">
                         {currentQuestion.question}
                       </h2>
                     </div>
@@ -365,7 +359,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </motion.div>
+              </div>
             )}
 
             {!loading && !error && isFinished && (
