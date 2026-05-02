@@ -474,5 +474,33 @@
         "isCorrect": false
       }
     ]
+  },
+  {
+    "id": "trivia-1777692077283-bnsedr",
+    "projectId": "moi4clsoy0w61xndric",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777350070/drama-web/uploads/mnlithxjx4twefdy78h8.webp",
+    "question": "¿Cuál es el nombre del chico del que se enamora Natalie?",
+    "options": [
+      {
+        "id": "option-1777692077283-yji2w6",
+        "text": "Henry",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777692077283-arveao",
+        "text": "Gabe",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692077283-7eqm0z",
+        "text": "Dan",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692077283-sjh17s",
+        "text": "Thomas",
+        "isCorrect": false
+      }
+    ]
   }
 ]
