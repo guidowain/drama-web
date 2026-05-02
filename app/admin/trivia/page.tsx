@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import ImageUploader from '@/components/admin/ImageUploader'
+import Image from 'next/image'
 import type { TriviaOption, TriviaQuestion } from '@/lib/types'
 
 type ProjectOption = {
@@ -294,13 +294,7 @@ export default function AdminTriviaPage() {
                   <label className="text-white/40 text-xs uppercase tracking-wider block mb-1.5">
                     Imagen cuadrada
                   </label>
-                  <ImageUploader
-                    value={question.image}
-                    onChange={(image) => updateQuestion(question.id, { image })}
-                    aspect="1/1"
-                    fit="contain"
-                    placeholder="Elegí una obra o subí una imagen"
-                  />
+                  <TriviaImagePreview image={question.image} />
                 </div>
 
                 <div className="space-y-5">
@@ -400,6 +394,26 @@ function TriviaActions({
       >
         {saving ? 'Guardando...' : saved ? '¡Guardado!' : 'Guardar'}
       </button>
+    </div>
+  )
+}
+
+function TriviaImagePreview({ image }: { image: string }) {
+  return (
+    <div className="relative aspect-square overflow-hidden rounded-xl border border-white/10 bg-black/20">
+      {image ? (
+        <Image
+          src={image}
+          alt="Portada seleccionada para la trivia"
+          fill
+          className="object-contain"
+          unoptimized
+        />
+      ) : (
+        <div className="flex h-full w-full items-center justify-center px-6 text-center text-sm font-medium text-white/25">
+          Elegí una obra para cargar su portada
+        </div>
+      )}
     </div>
   )
 }
