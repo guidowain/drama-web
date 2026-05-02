@@ -101,6 +101,14 @@ button,
   font-family: 'Enriq', 'Archivo', system-ui, sans-serif;
 }
 
+.inverted-punctuation {
+  display: inline-block;
+  font-family: 'Enriq', 'Archivo', system-ui, sans-serif;
+  line-height: 0.9;
+  transform: rotate(180deg) translateY(-0.02em);
+  transform-origin: 50% 50%;
+}
+
 /* Gradient utilities */
 .gradient-bg {
   background: var(--gradient);

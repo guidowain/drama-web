@@ -55,11 +55,6 @@ async function createResultFile(score: number, total: number) {
   ctx.fillStyle = gradient
   ctx.fillRect(0, 0, width, height)
 
-  ctx.fillStyle = 'rgba(255,255,255,0.18)'
-  ctx.beginPath()
-  ctx.arc(820, 250, 360, 0, Math.PI * 2)
-  ctx.fill()
-
   const logoWidth = 416
   const logoHeight = logoWidth * (logo.naturalHeight / logo.naturalWidth)
   ctx.drawImage(logo, (width - logoWidth) / 2, 370, logoWidth, logoHeight)
@@ -268,7 +263,14 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
             )}
           </AnimatePresence>
 
-          <div className="relative z-10 flex min-h-[100dvh] items-start justify-center px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(4.25rem,calc(env(safe-area-inset-top)+3.25rem))] md:items-center md:px-10 md:py-24">
+          <div
+            className={[
+              'relative z-10 flex min-h-[100dvh] justify-center px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] md:items-center md:px-10 md:py-24',
+              isFinished
+                ? 'items-center pt-[max(1.25rem,env(safe-area-inset-top))]'
+                : 'items-start pt-[max(4.25rem,calc(env(safe-area-inset-top)+3.25rem))]',
+            ].join(' ')}
+          >
             {error && !countdown && (
               <div className="text-center">
                 <h2 className="text-5xl font-black uppercase leading-none md:text-7xl">{error}</h2>
@@ -382,7 +384,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                     type="button"
                     onClick={shareResults}
                     disabled={sharing}
-                    className="rounded-full border-2 border-black bg-black px-8 py-3.5 text-sm font-black uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-85 disabled:opacity-50 md:px-10"
+                    className="rounded-full border-2 border-black bg-black px-8 py-3.5 text-sm font-black uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-85 disabled:opacity-50 md:hidden"
                   >
                     {sharing ? 'Compartiendo...' : 'COMPARTIR RESULTADOS'}
                   </button>

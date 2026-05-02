@@ -4,6 +4,7 @@ import { MenuProvider } from '@/lib/MenuContext'
 import Header from '@/components/Header'
 import Menu from '@/components/Menu'
 import TabTitle from '@/components/TabTitle'
+import InvertedPunctuation from '@/components/InvertedPunctuation'
 import { getSiteSettings } from '@/lib/api'
 import { headers } from 'next/headers'
 
@@ -66,6 +67,7 @@ export default async function RootLayout({
               mail: '',
             }} />
             <TabTitle />
+            <InvertedPunctuation />
             {children}
           </MenuProvider>
         )}
