@@ -670,5 +670,33 @@
         "isCorrect": true
       }
     ]
+  },
+  {
+    "id": "trivia-1777692928352-qkzn9t",
+    "projectId": "mohkq6smauen13jxdxe",
+    "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777317110/drama-web/uploads/mclmulqsqrooyprwuwuk.webp",
+    "question": "¿En qué año estrenó la obra?",
+    "options": [
+      {
+        "id": "option-1777692928352-zovqwi",
+        "text": "1995",
+        "isCorrect": true
+      },
+      {
+        "id": "option-1777692928352-070hp9",
+        "text": "1996",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692928352-dbciei",
+        "text": "1997",
+        "isCorrect": false
+      },
+      {
+        "id": "option-1777692928352-oier4o",
+        "text": "2000",
+        "isCorrect": false
+      }
+    ]
   }
 ]
