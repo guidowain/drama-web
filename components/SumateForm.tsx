@@ -1,6 +1,8 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import Link from 'next/link'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import {
   CURRENT_STATUS_OPTIONS,
   EXPERIENCE_LEVEL_OPTIONS,
@@ -45,12 +47,18 @@ const EMPTY_FORM: FormState = {
   foundUs: [],
 }
 
-export default function SumateForm() {
+export default function SumateForm({ instagramUrl }: { instagramUrl: string }) {
   const [form, setForm] = useState<FormState>(EMPTY_FORM)
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [error, setError] = useState('')
+  const [mounted, setMounted] = useState(false)
+  const [expanded, setExpanded] = useState(false)
+  const [origin, setOrigin] = useState({ x: 50, y: 50 })
+  const [shareFeedback, setShareFeedback] = useState('')
+  const submitRef = useRef<HTMLButtonElement>(null)
 
   const isSending = status === 'sending'
+  const canShowDevPreview = process.env.NODE_ENV !== 'production'
   const selectedCounts = useMemo(
     () => ({
       skills: form.skills.length,
@@ -58,6 +66,39 @@ export default function SumateForm() {
     }),
     [form.skills.length, form.tools.length]
   )
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const showSuccess = useCallback((source?: HTMLElement | null) => {
+    if (source && typeof window !== 'undefined') {
+      const rect = source.getBoundingClientRect()
+      setOrigin({
+        x: ((rect.left + rect.width / 2) / window.innerWidth) * 100,
+        y: ((rect.top + rect.height / 2) / window.innerHeight) * 100,
+      })
+    }
+
+    setExpanded(false)
+    setStatus('sent')
+    setForm(EMPTY_FORM)
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setExpanded(true)
+      })
+    })
+  }, [])
+
+  useEffect(() => {
+    if (!canShowDevPreview || typeof window === 'undefined') return
+
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('gracias') === '1') {
+      showSuccess()
+    }
+  }, [canShowDevPreview, showSuccess])
 
   function updateField<K extends keyof FormState>(field: K, value: FormState[K]) {
     setForm((current) => ({ ...current, [field]: value }))
@@ -97,12 +138,98 @@ export default function SumateForm() {
         throw new Error(data.error || 'No pudimos enviar el formulario.')
       }
 
-      setStatus('sent')
-      setForm(EMPTY_FORM)
+      showSuccess(submitRef.current)
     } catch (submitError) {
       setStatus('error')
       setError(submitError instanceof Error ? submitError.message : 'No pudimos enviar el formulario.')
     }
+  }
+
+  async function handleShare() {
+    if (typeof window === 'undefined') return
+
+    const url = `${window.location.origin}/sumate`
+    const title = 'Sumate a Drama'
+    const text = 'Compartir esta búsqueda.'
+
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, text, url })
+        return
+      }
+
+      await navigator.clipboard.writeText(url)
+      setShareFeedback('Link copiado')
+    } catch {
+      setShareFeedback('No pudimos compartirlo. Probá copiando la URL.')
+    }
+  }
+
+  if (status === 'sent') {
+    return (
+      <div className="fixed inset-0 z-[501] flex overflow-y-auto px-5 py-24 text-black md:px-10">
+        {mounted && createPortal(
+          <div
+            aria-hidden
+            className="fixed inset-0 z-[500] pointer-events-none"
+            style={{
+              background: 'linear-gradient(135deg, #F504FF 0%, #FE8B97 28%, #FE796D 50%, #FCC028 75%, #FED791 100%)',
+              backgroundSize: '250% 250%',
+              animation: 'gradient-live 6s ease infinite',
+              clipPath: `circle(${expanded ? '200%' : '0%'} at ${origin.x}% ${origin.y}%)`,
+              opacity: 1,
+              transition: 'clip-path 0.75s cubic-bezier(0.22, 1, 0.36, 1)',
+            }}
+          />,
+          document.body
+        )}
+
+        <div className="relative z-[1] mx-auto flex w-full max-w-4xl flex-col items-start justify-center gap-7 self-center">
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-black/55">
+            Solicitud enviada
+          </p>
+          <div className="space-y-5">
+            <h2 className="max-w-3xl text-5xl font-black uppercase leading-none md:text-7xl">
+              ¡Gracias por sumarte!
+            </h2>
+            <p className="max-w-2xl text-lg font-semibold leading-snug text-black/72 md:text-2xl">
+              Recibimos tu solicitud. La vamos a revisar y, si aparece una oportunidad que matchee con tu perfil, te escribimos.
+            </p>
+          </div>
+
+          <div className="grid w-full max-w-4xl grid-cols-1 gap-4 md:grid-cols-2">
+            <a
+              href={instagramUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="flex min-h-16 w-full items-center justify-center gap-3 rounded-lg bg-white px-6 py-4 text-center font-enriq text-xs font-black uppercase tracking-[0.14em] transition-opacity hover:opacity-90"
+            >
+              <span className="text-black">Seguinos en Instagram</span>
+              <IconInstagram />
+            </a>
+            <button
+              type="button"
+              onClick={handleShare}
+              className="flex min-h-16 w-full items-center justify-center gap-3 rounded-lg bg-white px-6 py-4 text-center font-enriq text-xs font-black uppercase tracking-[0.14em] text-black transition-opacity hover:opacity-90"
+            >
+              <span>Compartir esta búsqueda</span>
+              <IconShare />
+            </button>
+          </div>
+
+          {shareFeedback && (
+            <p className="text-sm font-bold text-black/60">{shareFeedback}</p>
+          )}
+
+          <Link
+            href="/home"
+            className="mx-auto mt-5 rounded-lg bg-black px-7 py-4 font-enriq text-xs font-black uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-85"
+          >
+            Volver a Drama
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -232,20 +359,77 @@ export default function SumateForm() {
         </p>
       )}
 
-      {status === 'sent' && (
-        <p className="rounded-lg border border-white/15 bg-white/10 px-4 py-3 text-sm text-white">
-          Recibimos tu formulario. Gracias por sumarte.
-        </p>
-      )}
-
       <button
+        ref={submitRef}
         type="submit"
         disabled={isSending}
         className="gradient-bg w-full rounded-lg px-6 py-4 text-sm font-black uppercase tracking-[0.14em] text-black transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 md:w-auto md:min-w-56"
       >
         {isSending ? 'Enviando...' : 'Enviar'}
       </button>
+
+      {canShowDevPreview && (
+        <button
+          type="button"
+          onClick={(event) => showSuccess(event.currentTarget)}
+          className="block text-left text-xs font-bold uppercase tracking-[0.14em] text-white/30 transition-colors hover:text-white/65"
+        >
+          Probar pantalla de gracias
+        </button>
+      )}
     </form>
+  )
+}
+
+function IconInstagram() {
+  return (
+    <svg
+      aria-hidden
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      className="shrink-0"
+    >
+      <defs>
+        <linearGradient id="sumateInstagramGradient" x1="3" y1="3" x2="21" y2="21" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#F504FF" />
+          <stop offset="0.45" stopColor="#FE796D" />
+          <stop offset="1" stopColor="#FCC028" />
+        </linearGradient>
+      </defs>
+      <rect x="3" y="3" width="18" height="18" rx="5" stroke="url(#sumateInstagramGradient)" strokeWidth="2" />
+      <circle cx="12" cy="12" r="4" stroke="url(#sumateInstagramGradient)" strokeWidth="2" />
+      <circle cx="17.5" cy="6.5" r="1.25" fill="#FE796D" />
+    </svg>
+  )
+}
+
+function IconShare() {
+  return (
+    <svg
+      aria-hidden
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      className="shrink-0"
+    >
+      <defs>
+        <linearGradient id="sumateShareGradient" x1="4" y1="4" x2="20" y2="20" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#F504FF" />
+          <stop offset="0.45" stopColor="#FE796D" />
+          <stop offset="1" stopColor="#FCC028" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 15V4M8 8l4-4 4 4"
+        stroke="url(#sumateShareGradient)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   )
 }
 

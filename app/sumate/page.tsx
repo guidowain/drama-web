@@ -1,12 +1,15 @@
 import type { Metadata } from 'next'
 import SumateForm from '@/components/SumateForm'
+import { getSiteSettings } from '@/lib/api'
 
 export const metadata: Metadata = {
   title: 'Sumate - Drama',
   description: 'Sumate a la red de talentos de Drama.',
 }
 
-export default function SumatePage() {
+export default async function SumatePage() {
+  const settings = await getSiteSettings()
+
   return (
     <main className="min-h-screen bg-black pt-16 text-white md:pt-[72px]">
       <section className="gradient-bg px-5 py-12 text-black md:px-10 md:py-16">
@@ -28,7 +31,7 @@ export default function SumatePage() {
 
       <section className="px-5 py-10 md:px-10 md:py-16">
         <div className="mx-auto w-full max-w-4xl">
-          <SumateForm />
+          <SumateForm instagramUrl={settings.settings.instagram} />
         </div>
       </section>
     </main>

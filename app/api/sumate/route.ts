@@ -268,7 +268,12 @@ function base64Url(value: string | Buffer) {
 
 function normalizePrivateKey(value?: string) {
   if (!value) return ''
-  return value.replace(/\\n/g, '\n')
+  return value
+    .replace(/\\\r?\n/g, '\n')
+    .replace(/\\n/g, '\n')
+    .replace(/\r/g, '')
+    .replace(/\\\s*$/, '')
+    .trim()
 }
 
 function parseServiceAccountKey(value?: string) {
