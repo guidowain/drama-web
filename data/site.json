@@ -144,8 +144,16 @@
         "answer": "Somos especialistas en entretenimiento, pero no nos quedamos ahí. Nos gusta crear identidades y expandir las existentes, en cualquier rubro."
       },
       {
+        "question": "¿Cómo es trabajar con ustedes?",
+        "answer": "Desde el momento en que nos contratás, nos ponemos la camiseta de tu proyecto y lo damos todo para que tenga éxito."
+      },
+      {
         "question": "¿Son muy caros?",
         "answer": "Baratos no somos."
+      },
+      {
+        "question": "¿Cómo los contacto?",
+        "answer": "Podés enviarnos un mail a los@drama.com.ar o escribirnos por WhatsApp a +5491163357223."
       }
     ]
   },
