@@ -128,8 +128,8 @@
     "queDiferencia": "Vivimos el teatro y el entretenimiento. Eso nos da una perspectiva única para crear piezas que hablan el mismo idioma que el público al que querés llegar.",
     "faqs": [
       {
-        "question": "¿Con qué tipo de proyectos trabajan?",
-        "answer": "Trabajamos con obras de teatro, musicales, experiencias, productoras, artistas y proyectos de entretenimiento que necesitan diseño, comunicación o ambas cosas."
+        "question": "¿Con qué proyectos trabajan?",
+        "answer": "Trabajamos con obras, musicales, experiencias, productoras, artistas y proyectos de entretenimiento que necesitan diseño, comunicación, o las dos cosas."
       },
       {
         "question": "¿Pueden sumarse a un proyecto que ya está en marcha?",
@@ -138,6 +138,14 @@
       {
         "question": "¿Hacen solo diseño o también estrategia de comunicación?",
         "answer": "Hacemos las dos cosas. Podemos desarrollar identidad visual, piezas gráficas, contenido, redes, pauta y estrategia según las necesidades del proyecto."
+      },
+      {
+        "question": "¿Sólo trabajan en entretenimiento?",
+        "answer": "Somos especialistas en entretenimiento, pero no nos quedamos ahí. Nos gusta crear identidades y expandir las existentes, en cualquier rubro."
+      },
+      {
+        "question": "¿Son muy caros?",
+        "answer": "Baratos no somos."
       }
     ]
   },
