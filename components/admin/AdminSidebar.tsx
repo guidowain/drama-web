@@ -69,6 +69,22 @@ const navItems = [
   },
 ]
 
+const toolItems = [
+  {
+    label: 'Presupuestador',
+    href: '/admin/presupuestador',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <path d="M14 2v6h6" />
+        <path d="M8 13h8" />
+        <path d="M8 17h5" />
+        <path d="M9 9h1" />
+      </svg>
+    ),
+  },
+]
+
 export default function AdminSidebar() {
   const pathname = usePathname()
   const router = useRouter()
@@ -117,6 +133,26 @@ export default function AdminSidebar() {
               }`}
             >
               <span className={isActive ? 'text-white' : 'text-white/40'}>{item.icon}</span>
+              {item.label}
+            </Link>
+          )
+        })}
+
+        <div className="my-3 h-px bg-white/5" />
+
+        {toolItems.map((item) => {
+          const isActive = pathname.startsWith(item.href)
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-black uppercase tracking-wide transition-all ${
+                isActive
+                  ? 'gradient-bg text-black'
+                  : 'border border-white/10 bg-white/[0.03] text-white/70 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <span>{item.icon}</span>
               {item.label}
             </Link>
           )

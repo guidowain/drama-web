@@ -164,7 +164,16 @@ export default function AdminSobreNosotrosPage() {
 
           <div className="space-y-4">
             {settings.about.faqs.map((faq, index) => (
-              <div key={index} className="min-w-0 rounded-xl bg-zinc-900/70 border border-white/10 p-4 space-y-3">
+              <div key={index} className="relative min-w-0 rounded-xl bg-zinc-900/70 border border-white/10 p-4 pr-12 space-y-3">
+                <button
+                  type="button"
+                  onClick={() => removeFaq(index)}
+                  className="danger-x absolute right-3 top-3"
+                  aria-label={`Borrar pregunta ${index + 1}`}
+                  title="Borrar"
+                >
+                  ×
+                </button>
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <span className="min-w-0 text-white/40 text-xs uppercase tracking-wider break-words">
                     Pregunta {index + 1}
@@ -174,24 +183,21 @@ export default function AdminSobreNosotrosPage() {
                       type="button"
                       onClick={() => moveFaq(index, index - 1)}
                       disabled={index === 0}
-                      className="text-white/70 text-xs font-bold uppercase px-2 py-1 rounded border border-white/10 disabled:opacity-30"
+                      className="icon-mini"
+                      aria-label={`Subir pregunta ${index + 1}`}
+                      title="Subir"
                     >
-                      Subir
+                      ↑
                     </button>
                     <button
                       type="button"
                       onClick={() => moveFaq(index, index + 1)}
                       disabled={index === settings.about.faqs.length - 1}
-                      className="text-white/70 text-xs font-bold uppercase px-2 py-1 rounded border border-white/10 disabled:opacity-30"
+                      className="icon-mini"
+                      aria-label={`Bajar pregunta ${index + 1}`}
+                      title="Bajar"
                     >
-                      Bajar
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => removeFaq(index)}
-                      className="text-red-300 text-xs font-bold uppercase px-2 py-1 rounded border border-red-300/20"
-                    >
-                      Borrar
+                      ↓
                     </button>
                   </div>
                 </div>

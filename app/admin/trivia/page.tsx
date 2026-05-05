@@ -260,19 +260,21 @@ export default function AdminTriviaPage() {
           {questions.map((question, index) => (
             <section
               key={question.id}
-              className="rounded-2xl border border-white/5 bg-zinc-900 p-5 md:p-6"
+              className="relative rounded-2xl border border-white/5 bg-zinc-900 p-5 pr-12 md:p-6 md:pr-14"
             >
+              <button
+                type="button"
+                onClick={() => removeQuestion(question.id)}
+                className="danger-x absolute right-4 top-4"
+                aria-label={`Eliminar pregunta ${index + 1}`}
+                title="Eliminar"
+              >
+                ×
+              </button>
               <div className="flex items-center justify-between gap-4 mb-5">
                 <h2 className="text-white/70 text-xs font-black uppercase tracking-[0.22em]">
                   Pregunta {index + 1}
                 </h2>
-                <button
-                  type="button"
-                  onClick={() => removeQuestion(question.id)}
-                  className="text-white/30 hover:text-red-300 text-xs font-black uppercase tracking-widest transition-colors"
-                >
-                  Eliminar
-                </button>
               </div>
 
               <div className="grid gap-6 lg:grid-cols-[260px_1fr]">

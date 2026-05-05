@@ -241,21 +241,21 @@ function LogosEditor({
                   type="button"
                   onClick={() => moveLogo(i, i - 1)}
                   disabled={i === 0}
-                  className="w-7 h-7 flex items-center justify-center rounded-md border border-white/10 bg-zinc-800 text-white/60 transition-colors hover:text-white hover:border-white/20 disabled:opacity-25 disabled:hover:text-white/60"
+                  className="icon-mini"
                   aria-label={`Mover logo ${i + 1} a la izquierda`}
                   title="Mover antes"
                 >
-                  ←
+                  ↑
                 </button>
                 <button
                   type="button"
                   onClick={() => moveLogo(i, i + 1)}
                   disabled={i === logos.length - 1}
-                  className="w-7 h-7 flex items-center justify-center rounded-md border border-white/10 bg-zinc-800 text-white/60 transition-colors hover:text-white hover:border-white/20 disabled:opacity-25 disabled:hover:text-white/60"
+                  className="icon-mini"
                   aria-label={`Mover logo ${i + 1} a la derecha`}
                   title="Mover después"
                 >
-                  →
+                  ↓
                 </button>
               </div>
             </div>
@@ -264,9 +264,11 @@ function LogosEditor({
             <button
               type="button"
               onClick={() => removeLogo(i)}
-              className="absolute top-2 right-2 w-5 h-5 flex items-center justify-center rounded-full bg-zinc-800 text-white/30 hover:text-red-400 hover:bg-red-400/10 transition-colors text-xs z-10"
+              className="danger-x absolute top-2 right-2 z-10"
+              aria-label={`Eliminar logo ${i + 1}`}
+              title="Eliminar"
             >
-              ✕
+              ×
             </button>
 
             {/* Image uploader — square crop, checkerboard bg to see transparency */}
@@ -431,9 +433,11 @@ function ItemListEditor({
             <button
               type="button"
               onClick={() => onChange(items.filter((_, j) => j !== i))}
-              className="text-white/30 hover:text-red-400 text-sm px-1"
+              className="danger-x"
+              aria-label={`Eliminar item ${i + 1}`}
+              title="Eliminar"
             >
-              ✕
+              ×
             </button>
           </li>
         ))}

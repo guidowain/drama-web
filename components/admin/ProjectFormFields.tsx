@@ -127,9 +127,11 @@ export function ProjectFormFields({
                 <button
                   type="button"
                   onClick={() => onRemoveTag(tag)}
-                  className="text-white/40 hover:text-red-400 ml-0.5"
+                  className="-mr-1 flex h-5 w-5 items-center justify-center rounded-full text-red-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
+                  aria-label={`Eliminar etiqueta ${tag}`}
+                  title="Eliminar"
                 >
-                  ✕
+                  ×
                 </button>
               </span>
             ))}

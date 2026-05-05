@@ -73,7 +73,7 @@ export default function AdminProyectosPage() {
           {projects.map((project, index) => (
             <div
               key={project.id}
-              className="flex items-center gap-4 bg-zinc-900 border border-white/5 rounded-xl px-5 py-4"
+              className="relative flex items-center gap-4 bg-zinc-900 border border-white/5 rounded-xl px-5 py-4 pr-12"
             >
               {/* Order controls */}
               <div className="flex flex-col gap-1 shrink-0">
@@ -81,17 +81,21 @@ export default function AdminProyectosPage() {
                   type="button"
                   onClick={() => handleMoveProject(index, -1)}
                   disabled={index === 0}
-                  className="text-[10px] px-2 py-1 rounded-md bg-zinc-800 text-white/60 hover:text-white hover:bg-zinc-700 transition-colors disabled:opacity-25 disabled:pointer-events-none"
+                  className="icon-mini"
+                  aria-label={`Subir ${project.name}`}
+                  title="Subir"
                 >
-                  Subir
+                  ↑
                 </button>
                 <button
                   type="button"
                   onClick={() => handleMoveProject(index, 1)}
                   disabled={index === projects.length - 1}
-                  className="text-[10px] px-2 py-1 rounded-md bg-zinc-800 text-white/60 hover:text-white hover:bg-zinc-700 transition-colors disabled:opacity-25 disabled:pointer-events-none"
+                  className="icon-mini"
+                  aria-label={`Bajar ${project.name}`}
+                  title="Bajar"
                 >
-                  Bajar
+                  ↓
                 </button>
               </div>
 
@@ -154,13 +158,16 @@ export default function AdminProyectosPage() {
                 >
                   Editar
                 </Link>
-                <button
-                  onClick={() => handleDelete(project.id)}
-                  className="text-xs px-3 py-1.5 rounded-lg text-red-400/50 hover:text-red-400 hover:bg-red-400/10 transition-colors"
-                >
-                  Eliminar
-                </button>
               </div>
+              <button
+                type="button"
+                onClick={() => handleDelete(project.id)}
+                className="danger-x absolute right-3 top-3"
+                aria-label={`Eliminar ${project.name}`}
+                title="Eliminar"
+              >
+                ×
+              </button>
             </div>
           ))}
         </div>

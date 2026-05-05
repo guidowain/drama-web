@@ -106,9 +106,18 @@ function BlockCard({
   }
 
   return (
-    <div className="rounded-2xl border border-white/8 bg-zinc-900 overflow-hidden">
+    <div className="relative rounded-2xl border border-white/8 bg-zinc-900 overflow-hidden">
+      <button
+        type="button"
+        onClick={onRemove}
+        className="danger-x absolute right-3 top-2.5 z-10"
+        aria-label={`Borrar bloque ${index + 1}`}
+        title="Borrar"
+      >
+        ×
+      </button>
       {/* ── Top bar ── */}
-      <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/5">
+      <div className="flex items-center gap-2 px-4 py-2.5 pr-12 border-b border-white/5">
         {/* type pill */}
         <span className="flex items-center gap-1.5 text-white/30 text-xs uppercase tracking-widest">
           {block.type === 'text' && <TextIcon size={12} />}
@@ -129,13 +138,6 @@ function BlockCard({
             title={collapsed ? 'Expandir' : 'Colapsar'}
           >
             <CollapseIcon collapsed={collapsed} />
-          </button>
-          <button
-            type="button"
-            onClick={onRemove}
-            className="p-1.5 text-white/20 hover:text-red-400 transition-colors rounded-lg hover:bg-red-400/10"
-          >
-            <TrashIcon />
           </button>
         </div>
       </div>
@@ -573,13 +575,11 @@ function MoveBtn({ onClick, disabled, direction }: { onClick: () => void; disabl
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="p-1.5 text-white/20 hover:text-white/60 disabled:opacity-20 disabled:cursor-not-allowed transition-colors rounded-lg hover:bg-white/5"
+      className="icon-mini"
+      aria-label={direction === 'up' ? 'Subir' : 'Bajar'}
+      title={direction === 'up' ? 'Subir' : 'Bajar'}
     >
-      {direction === 'up' ? (
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-      ) : (
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-      )}
+      {direction === 'up' ? '↑' : '↓'}
     </button>
   )
 }
@@ -589,14 +589,6 @@ function CollapseIcon({ collapsed }: { collapsed: boolean }) {
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
   ) : (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-  )
-}
-
-function TrashIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
-    </svg>
   )
 }
 
