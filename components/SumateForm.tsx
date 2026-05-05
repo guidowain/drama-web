@@ -150,7 +150,7 @@ export default function SumateForm({ instagramUrl }: { instagramUrl: string }) {
 
     const url = `${window.location.origin}/sumate`
     const title = 'Sumate a Drama'
-    const text = 'Compartir esta búsqueda.'
+    const text = 'Creo que esto podría interesarte.'
 
     try {
       if (navigator.share) {
