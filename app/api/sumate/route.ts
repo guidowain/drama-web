@@ -31,11 +31,12 @@ type SumatePayload = {
 
 const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token'
 const GOOGLE_SHEETS_SCOPE = 'https://www.googleapis.com/auth/spreadsheets'
+const GOOGLE_GMAIL_SEND_SCOPE = 'https://www.googleapis.com/auth/gmail.send'
 
-let tokenCache: {
+const tokenCache = new Map<string, {
   accessToken: string
   expiresAt: number
-} | null = null
+}>()
 
 export async function POST(request: Request) {
   try {
@@ -49,7 +50,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Falta configurar GOOGLE_SHEETS_SPREADSHEET_ID.' }, { status: 500 })
     }
 
-    const accessToken = await getGoogleAccessToken()
+    const accessToken = await getGoogleAccessToken(GOOGLE_SHEETS_SCOPE)
     const range = encodeURIComponent(`'${sheetName}'!A:O`)
     const appendUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`
 
@@ -88,7 +89,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: message }, { status: 502 })
     }
 
-    return NextResponse.json({ ok: true })
+    const confirmationEmailSent = await sendConfirmationEmail(form)
+
+    return NextResponse.json({ ok: true, confirmationEmailSent })
   } catch (error) {
     const message = error instanceof Error ? error.message : 'No pudimos procesar el formulario.'
     return NextResponse.json({ error: message }, { status: 400 })
@@ -195,9 +198,12 @@ function requiredEmail(value: unknown, label: string) {
   return email
 }
 
-async function getGoogleAccessToken() {
-  if (tokenCache && tokenCache.expiresAt > Date.now() + 60_000) {
-    return tokenCache.accessToken
+async function getGoogleAccessToken(scope: string, subject?: string) {
+  const cacheKey = `${scope}:${subject ?? ''}`
+  const cachedToken = tokenCache.get(cacheKey)
+
+  if (cachedToken && cachedToken.expiresAt > Date.now() + 60_000) {
+    return cachedToken.accessToken
   }
 
   const serviceAccount = parseServiceAccountKey(process.env.GOOGLE_SERVICE_ACCOUNT_KEY)
@@ -216,10 +222,11 @@ async function getGoogleAccessToken() {
     },
     {
       iss: clientEmail,
-      scope: GOOGLE_SHEETS_SCOPE,
+      scope,
       aud: GOOGLE_TOKEN_URL,
       exp: now + 3600,
       iat: now,
+      ...(subject ? { sub: subject } : {}),
     },
     privateKey
   )
@@ -241,12 +248,121 @@ async function getGoogleAccessToken() {
     throw new Error(data?.error_description || 'No pudimos autenticar con Google.')
   }
 
-  tokenCache = {
+  tokenCache.set(cacheKey, {
     accessToken: data.access_token,
     expiresAt: Date.now() + Number(data.expires_in ?? 3600) * 1000,
+  })
+
+  return data.access_token
+}
+
+async function sendConfirmationEmail(form: ReturnType<typeof validatePayload>) {
+  const gmailUser = process.env.GOOGLE_GMAIL_USER
+  const gmailFrom = process.env.GOOGLE_GMAIL_FROM || gmailUser
+
+  if (!gmailUser || !gmailFrom) {
+    return false
   }
 
-  return tokenCache.accessToken
+  try {
+    const accessToken = await getGoogleAccessToken(GOOGLE_GMAIL_SEND_SCOPE, gmailUser)
+    const message = createConfirmationEmail({
+      to: form.email,
+      from: gmailFrom,
+      fullName: form.fullName,
+    })
+
+    const response = await fetch(`https://gmail.googleapis.com/gmail/v1/users/${encodeURIComponent(gmailUser)}/messages/send`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        raw: base64Url(message),
+      }),
+    })
+
+    if (!response.ok) {
+      const data = await response.json().catch(() => null)
+      console.error('Gmail confirmation email failed', data?.error?.message || response.statusText)
+      return false
+    }
+
+    return true
+  } catch (error) {
+    console.error('Gmail confirmation email failed', error)
+    return false
+  }
+}
+
+function createConfirmationEmail({
+  to,
+  from,
+  fullName,
+}: {
+  to: string
+  from: string
+  fullName: string
+}) {
+  const subject = 'Recibimos tu solicitud para sumarte a Drama'
+  const textBody = [
+    `Hola ${firstName(fullName)},`,
+    '',
+    'Recibimos tu solicitud. La vamos a revisar y, si aparece una oportunidad que matchee con tu perfil, te escribimos.',
+    '',
+    'Gracias por sumarte.',
+    '',
+    'DRAMA',
+  ].join('\n')
+  const htmlBody = [
+    '<div style="font-family:Arial,sans-serif;font-size:16px;line-height:1.5;color:#111">',
+    `<p>Hola ${escapeHtml(firstName(fullName))},</p>`,
+    '<p>Recibimos tu solicitud. La vamos a revisar y, si aparece una oportunidad que matchee con tu perfil, te escribimos.</p>',
+    '<p>Gracias por sumarte.</p>',
+    '<p><strong>DRAMA</strong></p>',
+    '</div>',
+  ].join('')
+  const boundary = `drama-${Date.now()}`
+
+  return [
+    `From: ${from}`,
+    `To: ${to}`,
+    `Subject: ${encodeMimeHeader(subject)}`,
+    'MIME-Version: 1.0',
+    `Content-Type: multipart/alternative; boundary="${boundary}"`,
+    '',
+    `--${boundary}`,
+    'Content-Type: text/plain; charset="UTF-8"',
+    'Content-Transfer-Encoding: 8bit',
+    '',
+    textBody,
+    '',
+    `--${boundary}`,
+    'Content-Type: text/html; charset="UTF-8"',
+    'Content-Transfer-Encoding: 8bit',
+    '',
+    htmlBody,
+    '',
+    `--${boundary}--`,
+  ].join('\r\n')
+}
+
+function firstName(fullName: string) {
+  return fullName.trim().split(/\s+/)[0] || fullName
+}
+
+function encodeMimeHeader(value: string) {
+  return `=?UTF-8?B?${Buffer.from(value).toString('base64')}?=`
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
 }
 
 function signJwt(header: Record<string, unknown>, payload: Record<string, unknown>, privateKey: string) {
