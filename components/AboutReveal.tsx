@@ -28,9 +28,7 @@ const revealVariants = {
 }
 
 export default function AboutReveal({ children, delay = 0, className }: Props) {
-  const [isDesktop, setIsDesktop] = useState(() => (
-    typeof window === 'undefined' ? true : window.matchMedia('(min-width: 768px)').matches
-  ))
+  const [isDesktop, setIsDesktop] = useState(false)
 
   useEffect(() => {
     const media = window.matchMedia('(min-width: 768px)')

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import type { SiteSettings } from '@/lib/types'
+import type { FaqItem, SiteSettings } from '@/lib/types'
 
 export default function AdminSobreNosotrosPage() {
   const [settings, setSettings] = useState<SiteSettings | null>(null)
@@ -28,6 +28,35 @@ export default function AdminSobreNosotrosPage() {
   function update(changes: Partial<SiteSettings['about']>) {
     if (!settings) return
     setSettings({ ...settings, about: { ...settings.about, ...changes } })
+  }
+
+  function updateFaq(index: number, changes: Partial<FaqItem>) {
+    if (!settings) return
+
+    update({
+      faqs: settings.about.faqs.map((faq, i) => (
+        i === index ? { ...faq, ...changes } : faq
+      )),
+    })
+  }
+
+  function addFaq() {
+    if (!settings) return
+    update({ faqs: [...settings.about.faqs, { question: '', answer: '' }] })
+  }
+
+  function removeFaq(index: number) {
+    if (!settings) return
+    update({ faqs: settings.about.faqs.filter((_, i) => i !== index) })
+  }
+
+  function moveFaq(from: number, to: number) {
+    if (!settings || to < 0 || to >= settings.about.faqs.length || from === to) return
+
+    const next = [...settings.about.faqs]
+    const [moved] = next.splice(from, 1)
+    next.splice(to, 0, moved)
+    update({ faqs: next })
   }
 
   if (!settings) return <div className="p-10 text-white/30">Cargando...</div>
@@ -120,6 +149,73 @@ export default function AdminSobreNosotrosPage() {
             className="admin-textarea"
           />
         </Field>
+
+        <div className="pt-5 border-t border-white/10">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+            <h2 className="text-white font-black text-xl uppercase">Preguntas frecuentes</h2>
+            <button
+              type="button"
+              onClick={addFaq}
+              className="bg-white text-black font-black text-xs uppercase tracking-widest px-4 py-2 rounded-lg hover:bg-white/90 transition-colors"
+            >
+              Agregar
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            {settings.about.faqs.map((faq, index) => (
+              <div key={index} className="min-w-0 rounded-xl bg-zinc-900/70 border border-white/10 p-4 space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <span className="min-w-0 text-white/40 text-xs uppercase tracking-wider break-words">
+                    Pregunta {index + 1}
+                  </span>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => moveFaq(index, index - 1)}
+                      disabled={index === 0}
+                      className="text-white/70 text-xs font-bold uppercase px-2 py-1 rounded border border-white/10 disabled:opacity-30"
+                    >
+                      Subir
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => moveFaq(index, index + 1)}
+                      disabled={index === settings.about.faqs.length - 1}
+                      className="text-white/70 text-xs font-bold uppercase px-2 py-1 rounded border border-white/10 disabled:opacity-30"
+                    >
+                      Bajar
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => removeFaq(index)}
+                      className="text-red-300 text-xs font-bold uppercase px-2 py-1 rounded border border-red-300/20"
+                    >
+                      Borrar
+                    </button>
+                  </div>
+                </div>
+
+                <Field label="Pregunta">
+                  <input
+                    type="text"
+                    value={faq.question}
+                    onChange={(e) => updateFaq(index, { question: e.target.value })}
+                    className="admin-input"
+                  />
+                </Field>
+                <Field label="Respuesta">
+                  <textarea
+                    value={faq.answer}
+                    onChange={(e) => updateFaq(index, { answer: e.target.value })}
+                    rows={4}
+                    className="admin-textarea"
+                  />
+                </Field>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )

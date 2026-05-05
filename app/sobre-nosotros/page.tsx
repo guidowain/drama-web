@@ -2,6 +2,7 @@ import { getSiteSettings } from '@/lib/api'
 import Ticker from '@/components/Ticker'
 import ContactStrip from '@/components/ContactStrip'
 import AboutReveal from '@/components/AboutReveal'
+import AboutFaqAccordion from '@/components/AboutFaqAccordion'
 
 export default async function SobreNosotrosPage() {
   const settings = await getSiteSettings()
@@ -63,6 +64,9 @@ export default async function SobreNosotrosPage() {
 
           </div>
         </div>
+        <AboutReveal delay={0.7}>
+          <AboutFaqAccordion faqs={about.faqs} />
+        </AboutReveal>
       </div>
 
       {/* Ticker */}

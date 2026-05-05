@@ -58,6 +58,23 @@ const DEFAULT_SITE_SETTINGS: SiteSettings = {
     queDiferenciaTitle: 'QUÉ NOS DIFERENCIA',
     queDiferencia:
       'Vivimos el teatro y el entretenimiento. Eso nos da una perspectiva única para crear piezas que hablan el mismo idioma que el público al que querés llegar.',
+    faqs: [
+      {
+        question: '¿Con qué tipo de proyectos trabajan?',
+        answer:
+          'Trabajamos con obras de teatro, musicales, experiencias, productoras, artistas y proyectos de entretenimiento que necesitan diseño, comunicación o ambas cosas.',
+      },
+      {
+        question: '¿Pueden sumarse a un proyecto que ya está en marcha?',
+        answer:
+          'Sí. Podemos entrar desde el inicio o sumarnos cuando el proyecto ya tiene identidad, piezas o campañas activas para ordenar, potenciar y acompañar lo que haga falta.',
+      },
+      {
+        question: '¿Hacen solo diseño o también estrategia de comunicación?',
+        answer:
+          'Hacemos las dos cosas. Podemos desarrollar identidad visual, piezas gráficas, contenido, redes, pauta y estrategia según las necesidades del proyecto.',
+      },
+    ],
   },
   settings: {
     instagram: 'https://instagram.com/drama.com.ar',
@@ -99,6 +116,12 @@ function normalizeSiteSettings(raw: unknown): SiteSettings {
     about: {
       ...DEFAULT_SITE_SETTINGS.about,
       ...data.about,
+      faqs: Array.isArray(data.about?.faqs)
+        ? data.about.faqs.map((faq) => ({
+            question: faq?.question ?? '',
+            answer: faq?.answer ?? '',
+          }))
+        : DEFAULT_SITE_SETTINGS.about.faqs,
     },
     settings: {
       instagram: data.settings?.instagram ?? legacyContact?.instagram ?? DEFAULT_SITE_SETTINGS.settings.instagram,

@@ -64,6 +64,11 @@ export interface ContactSettings {
   mail: string
 }
 
+export interface FaqItem {
+  question: string
+  answer: string
+}
+
 export interface SiteSettings {
   home: {
     heroVideo: string
@@ -85,6 +90,7 @@ export interface SiteSettings {
     comoTrabajamos: string
     queDiferenciaTitle: string
     queDiferencia: string
+    faqs: FaqItem[]
   }
   settings: ContactSettings
 }

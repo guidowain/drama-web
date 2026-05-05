@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSiteSettings, saveSiteSettings } from '@/lib/api'
-import type { Logo, SiteSettings } from '@/lib/types'
+import type { FaqItem, Logo, SiteSettings } from '@/lib/types'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,6 +15,20 @@ function mergeLogos(current: Logo[], incoming: unknown): Logo[] {
       src: nextLogo.src ?? currentLogo?.src ?? '',
       alt: nextLogo.alt ?? currentLogo?.alt ?? '',
       scale: typeof nextLogo.scale === 'number' ? nextLogo.scale : currentLogo?.scale ?? 1,
+    }
+  })
+}
+
+function mergeFaqs(current: FaqItem[], incoming: unknown): FaqItem[] {
+  if (!Array.isArray(incoming)) return current
+
+  return incoming.map((item, index) => {
+    const currentFaq = current[index]
+    const nextFaq = item && typeof item === 'object' ? (item as Partial<FaqItem>) : {}
+
+    return {
+      question: nextFaq.question ?? currentFaq?.question ?? '',
+      answer: nextFaq.answer ?? currentFaq?.answer ?? '',
     }
   })
 }
@@ -45,6 +59,7 @@ function mergeSiteSettings(current: SiteSettings, incoming: unknown): SiteSettin
     about: {
       ...current.about,
       ...next.about,
+      faqs: mergeFaqs(current.about.faqs, next.about?.faqs),
     },
     settings: {
       instagram: next.settings?.instagram ?? current.settings.instagram,
