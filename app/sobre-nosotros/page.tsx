@@ -64,9 +64,7 @@ export default async function SobreNosotrosPage() {
 
           </div>
         </div>
-        <AboutReveal delay={0.7}>
-          <AboutFaqAccordion faqs={about.faqs} />
-        </AboutReveal>
+        <AboutFaqAccordion faqs={about.faqs} />
       </div>
 
       {/* Ticker */}
