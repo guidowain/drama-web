@@ -1,4 +1,5 @@
 import type { ContactSettings, Proyecto, SiteSettings, TriviaQuestion } from './types'
+import { isDynamicServerError } from 'next/dist/client/components/hooks-server-context'
 
 const GITHUB_OWNER = process.env.GITHUB_OWNER || 'guidowain'
 const GITHUB_REPO = process.env.GITHUB_REPO || 'drama-web'
@@ -171,6 +172,10 @@ async function readGithubJson<T>(path: string, fallback: T): Promise<{ data: T; 
       sha: payload.sha,
     }
   } catch (error) {
+    if (isDynamicServerError(error)) {
+      throw error
+    }
+
     console.error('GitHub read error:', error)
     return { data: fallback }
   }

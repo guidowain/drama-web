@@ -7,6 +7,7 @@ import TabTitle from '@/components/TabTitle'
 import InvertedPunctuation from '@/components/InvertedPunctuation'
 import { getSiteSettings } from '@/lib/api'
 import { headers } from 'next/headers'
+import { isDynamicServerError } from 'next/dist/client/components/hooks-server-context'
 
 export const metadata: Metadata = {
   title: 'Drama - Agencia',
@@ -38,14 +39,22 @@ export default async function RootLayout({
     const headersList = headers()
     const pathname = headersList.get('x-pathname') ?? ''
     isAdmin = pathname.startsWith('/admin')
-  } catch {
+  } catch (error) {
+    if (isDynamicServerError(error)) {
+      throw error
+    }
+
     isAdmin = false
   }
 
   let settings: Awaited<ReturnType<typeof getSiteSettings>> | null = null
   try {
     settings = await getSiteSettings()
-  } catch {
+  } catch (error) {
+    if (isDynamicServerError(error)) {
+      throw error
+    }
+
     settings = null
   }
 
