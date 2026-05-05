@@ -12,67 +12,71 @@ export default async function HomePage() {
   const { home, settings: contact } = settings
 
   return (
-    <main className="flex min-h-screen flex-col pt-16 md:pt-[72px]">
-      <ProyectosPrefetch />
+    <>
+      <link rel="preload" href={home.heroVideo} as="video" type="video/mp4" />
+      <main className="flex min-h-screen flex-col pt-16 md:pt-[72px]">
+        <ProyectosPrefetch />
 
-      {/* ── HERO ── */}
-      <section className="relative bg-black">
-        {/* SEO H1 — in DOM for indexing, invisible visually */}
-        <h1 className="sr-only-seo">
-          Agencia de diseño y comunicación para entretenimiento en Buenos Aires
-        </h1>
+        {/* ── HERO ── */}
+        <section className="relative bg-black">
+          {/* SEO H1 — in DOM for indexing, invisible visually */}
+          <h1 className="sr-only-seo">
+            Agencia de diseño y comunicación para entretenimiento en Buenos Aires
+          </h1>
 
-        {/* Video */}
-        <div className="hero-video-wrap w-full overflow-hidden">
-          <video
-            src={home.heroVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover object-center"
+          {/* Video */}
+          <div className="hero-video-wrap w-full overflow-hidden">
+            <video
+              src={home.heroVideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+
+          {/* Gradient plaque: texto + ticker adentro */}
+          <HeroGradientPlaque lines={[home.heroLine1, home.heroLine2]}>
+            <Ticker text="DISEÑO Y COMUNICACIÓN PARA ENTRETENIMIENTO" speed={55} bg="#000" color="#fff" />
+          </HeroGradientPlaque>
+        </section>
+
+        {/* ── SERVICES ── */}
+        <section className="bg-black py-12 md:py-20 px-5 md:px-8">
+          <ServicesGrid
+            services={[
+              {
+                name: home.services.design.name,
+                items: home.services.design.items,
+                icon: <IconDesign />,
+              },
+              {
+                name: home.services.communication.name,
+                items: home.services.communication.items,
+                icon: <IconComm />,
+              },
+            ]}
           />
-        </div>
+        </section>
 
-        {/* Gradient plaque: texto + ticker adentro */}
-        <HeroGradientPlaque lines={[home.heroLine1, home.heroLine2]}>
-          <Ticker text="DISEÑO Y COMUNICACIÓN PARA ENTRETENIMIENTO" speed={55} bg="#000" color="#fff" />
-        </HeroGradientPlaque>
-      </section>
+        {/* ── LOGOS TICKER ── */}
+        <LogosTicker logos={home.logos} />
 
-      {/* ── SERVICES ── */}
-      <section className="bg-black py-12 md:py-20 px-5 md:px-8">
-        <ServicesGrid
-          services={[
-            {
-              name: home.services.design.name,
-              items: home.services.design.items,
-              icon: <IconDesign />,
-            },
-            {
-              name: home.services.communication.name,
-              items: home.services.communication.items,
-              icon: <IconComm />,
-            },
-          ]}
+        {/* ── CTA PROYECTOS ── */}
+        <section className="bg-black py-12 md:py-16 px-5">
+          <CTAProyectos />
+        </section>
+
+        {/* ── CONTACTO ── */}
+        <ContactStrip
+          instagram={contact.instagram}
+          whatsapp={contact.whatsapp}
+          mail={contact.mail}
         />
-      </section>
-
-      {/* ── LOGOS TICKER ── */}
-      <LogosTicker logos={home.logos} />
-
-      {/* ── CTA PROYECTOS ── */}
-      <section className="bg-black py-12 md:py-16 px-5">
-        <CTAProyectos />
-      </section>
-
-      {/* ── CONTACTO ── */}
-      <ContactStrip
-        instagram={contact.instagram}
-        whatsapp={contact.whatsapp}
-        mail={contact.mail}
-      />
-    </main>
+      </main>
+    </>
   )
 }
 
