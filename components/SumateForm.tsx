@@ -161,7 +161,7 @@ export default function SumateForm({ instagramUrl }: { instagramUrl: string }) {
       await navigator.clipboard.writeText(url)
       setShareFeedback('Link copiado')
     } catch {
-      setShareFeedback('No pudimos compartirlo. Probá copiando la URL.')
+      setShareFeedback('')
     }
   }
 
