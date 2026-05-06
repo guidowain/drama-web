@@ -225,7 +225,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
     <AnimatePresence>
       {active && (
         <motion.div
-          className="fixed inset-0 z-[80] overflow-y-auto overflow-x-hidden bg-black text-black lg:overflow-hidden"
+          className="fixed inset-0 z-[80] overflow-y-auto overflow-x-hidden overscroll-contain bg-black text-black"
           initial={{ opacity: 0, filter: 'blur(18px)' }}
           animate={{ opacity: 1, filter: 'blur(0px)' }}
           exit={{ opacity: 0, filter: 'blur(12px)' }}
@@ -242,7 +242,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
             type="button"
             aria-pressed="true"
             onClick={onClose}
-            className="absolute right-5 top-[max(1rem,env(safe-area-inset-top))] z-30 rounded-full border border-black bg-black px-4 py-1.5 text-[0.62rem] font-black uppercase tracking-[0.16em] text-white shadow-[0_0_22px_rgba(0,0,0,0.18)] transition-colors md:right-8 md:top-20 lg:right-10 lg:top-24"
+            className="absolute right-5 top-[max(1rem,env(safe-area-inset-top))] z-30 rounded-full border border-black bg-black px-4 py-1.5 text-[0.62rem] font-black uppercase tracking-[0.16em] text-white shadow-[0_0_22px_rgba(0,0,0,0.18)] transition-colors md:right-8 md:top-[clamp(1.25rem,6vh,5rem)] lg:right-10 lg:top-[clamp(1.5rem,7vh,6rem)]"
           >
             FUN MODE
           </button>
@@ -265,7 +265,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
 
           <div
             className={[
-              'relative z-10 flex min-h-[100dvh] justify-center px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] md:items-center md:px-8 md:py-20 lg:px-10 lg:py-24',
+              'relative z-10 flex min-h-[100dvh] justify-center px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] md:items-center md:px-8 md:py-[clamp(2rem,7vh,5rem)] lg:px-10 lg:py-[clamp(2rem,8vh,6rem)]',
               isFinished
                 ? 'items-center pt-[max(1.25rem,env(safe-area-inset-top))]'
                 : 'items-start pt-[max(4.25rem,calc(env(safe-area-inset-top)+3.25rem))]',
@@ -286,13 +286,13 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
 
             {!loading && !error && hasStarted && currentQuestion && !isFinished && (
               <div className="w-full max-w-6xl">
-                <div className="mb-2 flex h-4 items-center justify-between gap-4 text-[0.66rem] font-black uppercase tracking-[0.18em] text-black/50 md:mb-4 md:text-[0.68rem] lg:mb-6 lg:text-xs">
+                <div className="mb-2 flex h-4 items-center justify-between gap-4 text-[0.66rem] font-black uppercase tracking-[0.18em] text-black/50 md:mb-4 md:text-[0.68rem] lg:mb-[clamp(0.75rem,2vh,1.5rem)] lg:text-xs">
                   <span>DRAMA TRIVIA</span>
                   <span>{currentIndex + 1}/{questions.length}</span>
                 </div>
 
-                <div className="grid items-start gap-3 md:grid-cols-[minmax(180px,30vw)_minmax(0,1fr)] md:items-center md:gap-6 lg:grid-cols-[360px_minmax(0,1fr)] lg:gap-12">
-                  <div className="relative mx-auto aspect-square w-[min(46vw,10.5rem)] shrink-0 overflow-hidden rounded-lg border-[7px] border-white bg-white shadow-[0_16px_34px_rgba(0,0,0,0.2)] md:w-[min(30vw,14rem)] md:border-[8px] md:shadow-[0_18px_42px_rgba(0,0,0,0.2)] lg:w-[360px] lg:border-[10px] lg:shadow-[0_20px_50px_rgba(0,0,0,0.22)]">
+                <div className="grid items-start gap-3 md:grid-cols-[minmax(180px,30vw)_minmax(0,1fr)] md:items-center md:gap-6 lg:grid-cols-[minmax(250px,34vh)_minmax(0,1fr)] lg:gap-[clamp(1.5rem,4vw,3rem)]">
+                  <div className="relative mx-auto aspect-square w-[min(46vw,10.5rem)] shrink-0 overflow-hidden rounded-lg border-[7px] border-white bg-white shadow-[0_16px_34px_rgba(0,0,0,0.2)] md:w-[min(30vw,14rem)] md:border-[8px] md:shadow-[0_18px_42px_rgba(0,0,0,0.2)] lg:w-[min(360px,34vh)] lg:border-[10px] lg:shadow-[0_20px_50px_rgba(0,0,0,0.22)]">
                     <Image
                       src={currentQuestion.image}
                       alt=""
@@ -304,13 +304,13 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                   </div>
 
                   <div className="w-full">
-                    <div className="mb-3 flex h-[8.4rem] items-center overflow-hidden rounded-lg border-2 border-black/20 bg-white/18 px-4 py-4 md:mb-4 md:h-[clamp(8.8rem,16vh,10rem)] md:px-5 md:py-4 lg:mb-6 lg:h-[13.5rem] lg:px-7 lg:py-6">
-                      <h2 className="text-[clamp(1.3rem,5.35vw,1.66rem)] font-black uppercase leading-[1.12] text-black md:text-[clamp(1.45rem,3vw,2rem)] md:leading-[1.08] lg:text-[2.78rem] lg:leading-[1.1]">
+                    <div className="mb-3 flex h-[8.4rem] items-center overflow-hidden rounded-lg border-2 border-black/20 bg-white/18 px-4 py-4 md:mb-4 md:h-[clamp(8.8rem,16vh,10rem)] md:px-5 md:py-4 lg:mb-[clamp(0.75rem,2vh,1.5rem)] lg:h-[clamp(7rem,22vh,13.5rem)] lg:px-[clamp(1rem,2vw,1.75rem)] lg:py-[clamp(1rem,2vh,1.5rem)]">
+                      <h2 className="text-[clamp(1.3rem,5.35vw,1.66rem)] font-black uppercase leading-[1.12] text-black md:text-[clamp(1.45rem,3vw,2rem)] md:leading-[1.08] lg:text-[clamp(2rem,5.2vh,2.78rem)] lg:leading-[1.1]">
                         {currentQuestion.question}
                       </h2>
                     </div>
 
-                    <div className="grid auto-rows-[3rem] gap-2.5 md:auto-rows-[clamp(3.1rem,6.4vh,3.75rem)] md:gap-2.5 lg:auto-rows-[4.35rem] lg:gap-3">
+                    <div className="grid auto-rows-[3rem] gap-2.5 md:auto-rows-[clamp(3.1rem,6.4vh,3.75rem)] md:gap-2.5 lg:auto-rows-[clamp(3.05rem,7.4vh,4.35rem)] lg:gap-[clamp(0.5rem,1.4vh,0.75rem)]">
                       {currentQuestion.options.map((option) => {
                         const isSelected = selectedOptionId === option.id
                         const shouldRevealCorrect = answerState && option.isCorrect
@@ -325,7 +325,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                             }}
                             disabled={Boolean(answerState)}
                             className={[
-                              'flex h-full min-h-0 items-center rounded-lg border-2 px-4 py-1 text-left text-[clamp(0.95rem,4vw,1.15rem)] font-black uppercase leading-tight tracking-normal transition-all focus:outline-none focus-visible:outline-none md:px-4 md:py-2 md:text-[clamp(1.02rem,2.35vw,1.28rem)] lg:px-5 lg:text-[1.7rem]',
+                              'flex h-full min-h-0 items-center rounded-lg border-2 px-4 py-1 text-left text-[clamp(0.95rem,4vw,1.15rem)] font-black uppercase leading-tight tracking-normal transition-all focus:outline-none focus-visible:outline-none md:px-4 md:py-2 md:text-[clamp(1.02rem,2.35vw,1.28rem)] lg:px-5 lg:text-[clamp(1.18rem,3.1vh,1.7rem)]',
                               shouldRevealCorrect
                                 ? 'border-black bg-black text-white'
                                 : isSelected && answerState === 'incorrect'
