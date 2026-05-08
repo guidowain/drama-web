@@ -1,66 +1,5 @@
-import Link from 'next/link'
 import { getProjects } from '@/lib/api'
 import { getAnalyticsSummary } from '@/lib/google-analytics'
-
-const cards = [
-  {
-    label: 'Home',
-    href: '/admin/home',
-    desc: 'Hero, servicios y logos',
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-        <polyline points="9 22 9 12 15 12 15 22" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Proyectos',
-    href: '/admin/proyectos',
-    desc: 'Crear, editar y publicar proyectos',
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="3" width="20" height="14" rx="2" />
-        <line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Trivia',
-    href: '/admin/trivia',
-    desc: 'Preguntas, imágenes y respuestas',
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" />
-        <path d="M9.1 9a3 3 0 1 1 4.9 2.3c-.9.7-2 1.4-2 2.7" />
-        <line x1="12" y1="17" x2="12.01" y2="17" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Sobre Nosotros',
-    href: '/admin/sobre-nosotros',
-    desc: 'Quiénes somos, imagen y equipo',
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Ajustes',
-    href: '/admin/ajustes',
-    desc: 'Redes sociales y contacto',
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="3" />
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
-      </svg>
-    ),
-  },
-]
 
 export default async function AdminDashboard() {
   const projects = await getProjects()
@@ -90,11 +29,11 @@ export default async function AdminDashboard() {
         </div>
       </div>
 
-      <section className="mb-10 max-w-5xl rounded-2xl border border-white/5 bg-zinc-900 p-6">
+      <section className="max-w-6xl rounded-2xl border border-white/5 bg-zinc-900 p-6">
         <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
           <div>
             <h2 className="text-white font-black text-xl uppercase tracking-tight">Analytics</h2>
-            <p className="text-white/30 text-sm">{analytics.rangeLabel}</p>
+            <p className="text-white/30 text-sm">Tráfico e interacciones del sitio.</p>
           </div>
           {analytics.configured ? (
             <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-emerald-300">
@@ -123,32 +62,50 @@ export default async function AdminDashboard() {
               <AnalyticsStat label="Sesiones" value={formatNumber(analytics.metrics.sessions)} />
               <AnalyticsStat label="Vistas" value={formatNumber(analytics.metrics.screenPageViews)} />
               <AnalyticsStat label="Tiempo prom." value={formatDuration(analytics.metrics.averageSessionDuration)} />
-              <AnalyticsStat label="Eventos" value={formatNumber(analytics.metrics.eventCount)} />
+              <AnalyticsStat label="Interacciones" value={formatNumber(analytics.metrics.eventCount)} />
             </div>
 
-            <div className="mt-6 grid gap-5 lg:grid-cols-3">
+            <div className="mt-6 grid gap-5 md:grid-cols-3">
+              <VisitPeriodCard
+                label="Vistas del día"
+                value={analytics.visits.today}
+                maxValue={Math.max(analytics.visits.today, analytics.visits.week, analytics.visits.month, 1)}
+              />
+              <VisitPeriodCard
+                label="Vistas de la semana"
+                value={analytics.visits.week}
+                maxValue={Math.max(analytics.visits.today, analytics.visits.week, analytics.visits.month, 1)}
+              />
+              <VisitPeriodCard
+                label="Vistas del mes"
+                value={analytics.visits.month}
+                maxValue={Math.max(analytics.visits.today, analytics.visits.week, analytics.visits.month, 1)}
+              />
+            </div>
+
+            <div className="mt-5 grid gap-5 lg:grid-cols-3">
               <AnalyticsList
-                title="Páginas"
+                title="Páginas más visitadas"
                 empty="Todavía no hay páginas para mostrar."
                 items={analytics.topPages.map((page) => ({
-                  label: page.path,
-                  detail: page.title,
+                  label: pageLabel(page.path),
+                  detail: page.path,
                   value: formatNumber(page.views),
                 }))}
               />
               <AnalyticsList
-                title="Eventos"
-                empty="Todavía no hay eventos para mostrar."
+                title="Interacciones"
+                empty="Todavía no hay interacciones para mostrar."
                 items={analytics.events.map((event) => ({
-                  label: event.name,
+                  label: interactionLabel(event.name),
                   value: formatNumber(event.count),
                 }))}
               />
               <AnalyticsList
-                title="Proyectos"
+                title="Proyectos abiertos"
                 empty="Registrá project_slug como dimensión personalizada en GA4 para ver este ranking."
                 items={analytics.projects.map((project) => ({
-                  label: project.name,
+                  label: projectLabel(project.name),
                   value: formatNumber(project.opens),
                 }))}
               />
@@ -156,24 +113,6 @@ export default async function AdminDashboard() {
           </>
         )}
       </section>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
-        {cards.map((card) => (
-          <Link
-            key={card.href}
-            href={card.href}
-            className="group block bg-zinc-900 hover:bg-zinc-800/80 border border-white/5 hover:border-white/10 rounded-2xl p-6 transition-all duration-200"
-          >
-            <div className="text-white/50 group-hover:text-white transition-colors mb-4">
-              {card.icon}
-            </div>
-            <h2 className="text-white font-black text-lg uppercase tracking-tight mb-1">
-              {card.label}
-            </h2>
-            <p className="text-white/30 text-sm leading-relaxed">{card.desc}</p>
-          </Link>
-        ))}
-      </div>
     </div>
   )
 }
@@ -183,6 +122,21 @@ function AnalyticsStat({ label, value }: { label: string; value: string }) {
     <div className="rounded-xl border border-white/5 bg-black/20 px-4 py-3">
       <p className="text-white font-black text-2xl">{value}</p>
       <p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-white/30">{label}</p>
+    </div>
+  )
+}
+
+function VisitPeriodCard({ label, value, maxValue }: { label: string; value: number; maxValue: number }) {
+  return (
+    <div className="rounded-xl border border-white/5 bg-black/20 p-5">
+      <p className="text-[11px] font-black uppercase tracking-widest text-white/35">{label}</p>
+      <p className="mt-3 text-4xl font-black leading-none text-white">{formatNumber(value)}</p>
+      <div className="mt-5 h-3 overflow-hidden rounded-full bg-white/[0.06]">
+        <div
+          className="h-full rounded-full bg-gradient-to-r from-[#F504FF] via-[#FE796D] to-[#FCC028]"
+          style={{ width: `${Math.max(value ? 8 : 0, (value / maxValue) * 100)}%` }}
+        />
+      </div>
     </div>
   )
 }
@@ -229,4 +183,30 @@ function formatDuration(seconds: number) {
 
   if (!minutes) return `${remainingSeconds}s`
   return `${minutes}m ${remainingSeconds}s`
+}
+
+function pageLabel(path: string) {
+  const labels: Record<string, string> = {
+    '/': 'Home',
+    '/home': 'Home',
+    '/proyectos': 'Proyectos',
+    '/sobre-nosotros': 'Sobre nosotros',
+    '/sumate': 'Sumate',
+    '/calculadora': 'Calculadora',
+  }
+
+  return labels[path] ?? (path.replace(/^\//, '').replace(/-/g, ' ') || 'Home')
+}
+
+function interactionLabel(name: string) {
+  const labels: Record<string, string> = {
+    fan_mode_open: 'Aperturas de Fun Mode',
+    project_modal_open: 'Aperturas de proyectos',
+  }
+
+  return labels[name] ?? name
+}
+
+function projectLabel(slug: string) {
+  return slug.replace(/-/g, ' ')
 }

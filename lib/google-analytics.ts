@@ -25,6 +25,11 @@ export type AnalyticsSummary = {
     averageSessionDuration: number
     eventCount: number
   }
+  visits: {
+    today: number
+    week: number
+    month: number
+  }
   topPages: Array<{
     path: string
     title: string
@@ -63,6 +68,11 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
     propertyId,
     rangeLabel: 'Últimos 30 días',
     metrics: EMPTY_METRICS,
+    visits: {
+      today: 0,
+      week: 0,
+      month: 0,
+    },
     topPages: [],
     events: [],
     projects: [],
@@ -83,7 +93,7 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
   }
 
   try {
-    const [summary, topPages, events, projects] = await Promise.all([
+    const [summary, topPages, events, todayVisits, weekVisits, monthVisits, projects] = await Promise.all([
       runReport(propertyId, {
         dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
         metrics: [
@@ -115,6 +125,9 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
         },
         orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
       }),
+      getViews(propertyId, 'today'),
+      getViews(propertyId, '7daysAgo'),
+      getViews(propertyId, '30daysAgo'),
       getProjectEvents(propertyId),
     ])
 
@@ -129,6 +142,11 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
         screenPageViews: numberValue(metricValues[2]?.value),
         averageSessionDuration: numberValue(metricValues[3]?.value),
         eventCount: numberValue(metricValues[4]?.value),
+      },
+      visits: {
+        today: todayVisits,
+        week: weekVisits,
+        month: monthVisits,
       },
       topPages: (topPages.rows ?? []).map((row) => ({
         path: row.dimensionValues?.[0]?.value || '/',
@@ -149,10 +167,20 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
   }
 }
 
+async function getViews(propertyId: string, startDate: string) {
+  const report = await runReport(propertyId, {
+    dateRanges: [{ startDate, endDate: 'today' }],
+    metrics: [{ name: 'screenPageViews' }],
+  })
+
+  const metricValues = report.totals?.[0]?.metricValues ?? report.rows?.[0]?.metricValues ?? []
+  return numberValue(metricValues[0]?.value)
+}
+
 async function getProjectEvents(propertyId: string) {
   try {
     const report = await runReport(propertyId, {
-      dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
+      dateRanges: [{ startDate: '2026-01-01', endDate: 'today' }],
       dimensions: [{ name: 'customEvent:project_slug' }],
       metrics: [{ name: 'eventCount' }],
       dimensionFilter: {
