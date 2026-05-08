@@ -3,6 +3,18 @@ import { getGoogleAccessToken, getGoogleOAuthAccessToken, getGoogleServiceAccoun
 const GA_SCOPE = 'https://www.googleapis.com/auth/analytics.readonly'
 const GA_API_BASE = 'https://analyticsdata.googleapis.com/v1beta'
 
+const NON_ADMIN_FILTER = {
+  notExpression: {
+    filter: {
+      fieldName: 'pagePath',
+      stringFilter: {
+        matchType: 'BEGINS_WITH',
+        value: '/admin',
+      },
+    },
+  },
+}
+
 type RunReportResponse = {
   rows?: Array<{
     dimensionValues?: Array<{ value?: string }>
@@ -113,11 +125,13 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
           { name: 'averageSessionDuration' },
           { name: 'eventCount' },
         ],
+        dimensionFilter: NON_ADMIN_FILTER,
       }),
       runReport(propertyId, {
         dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
         dimensions: [{ name: 'pagePath' }, { name: 'pageTitle' }],
         metrics: [{ name: 'screenPageViews' }],
+        dimensionFilter: NON_ADMIN_FILTER,
         orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
         limit: 5,
       }),
@@ -126,11 +140,18 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
         dimensions: [{ name: 'eventName' }],
         metrics: [{ name: 'eventCount' }],
         dimensionFilter: {
-          filter: {
-            fieldName: 'eventName',
-            inListFilter: {
-              values: ['fan_mode_open'],
-            },
+          andGroup: {
+            expressions: [
+              NON_ADMIN_FILTER,
+              {
+                filter: {
+                  fieldName: 'eventName',
+                  inListFilter: {
+                    values: ['fan_mode_open'],
+                  },
+                },
+              },
+            ],
           },
         },
         orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
@@ -139,12 +160,14 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
         dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
         dimensions: [{ name: 'deviceCategory' }],
         metrics: [{ name: 'sessions' }],
+        dimensionFilter: NON_ADMIN_FILTER,
         orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
       }),
       runReport(propertyId, {
         dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
         dimensions: [{ name: 'sessionDefaultChannelGroup' }],
         metrics: [{ name: 'sessions' }],
+        dimensionFilter: NON_ADMIN_FILTER,
         orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
         limit: 6,
       }),
@@ -198,6 +221,7 @@ async function getViews(propertyId: string, startDate: string) {
   const report = await runReport(propertyId, {
     dateRanges: [{ startDate, endDate: 'today' }],
     metrics: [{ name: 'screenPageViews' }],
+    dimensionFilter: NON_ADMIN_FILTER,
   })
 
   const metricValues = report.totals?.[0]?.metricValues ?? report.rows?.[0]?.metricValues ?? []
@@ -211,12 +235,19 @@ async function getProjectEvents(propertyId: string) {
       dimensions: [{ name: 'customEvent:project_slug' }],
       metrics: [{ name: 'eventCount' }],
       dimensionFilter: {
-        filter: {
-          fieldName: 'eventName',
-          stringFilter: {
-            matchType: 'EXACT',
-            value: 'project_modal_open',
-          },
+        andGroup: {
+          expressions: [
+            NON_ADMIN_FILTER,
+            {
+              filter: {
+                fieldName: 'eventName',
+                stringFilter: {
+                  matchType: 'EXACT',
+                  value: 'project_modal_open',
+                },
+              },
+            },
+          ],
         },
       },
       orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
@@ -246,12 +277,19 @@ async function getProjectEventsFromUrls(propertyId: string) {
       dimensions: [{ name: 'pagePathPlusQueryString' }],
       metrics: [{ name: 'screenPageViews' }],
       dimensionFilter: {
-        filter: {
-          fieldName: 'pagePathPlusQueryString',
-          stringFilter: {
-            matchType: 'CONTAINS',
-            value: '/proyectos?slug=',
-          },
+        andGroup: {
+          expressions: [
+            NON_ADMIN_FILTER,
+            {
+              filter: {
+                fieldName: 'pagePathPlusQueryString',
+                stringFilter: {
+                  matchType: 'CONTAINS',
+                  value: '/proyectos?slug=',
+                },
+              },
+            },
+          ],
         },
       },
       orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
