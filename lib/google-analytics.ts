@@ -1,4 +1,4 @@
-import { getGoogleAccessToken, getGoogleServiceAccountEmail } from './google-auth'
+import { getGoogleAccessToken, getGoogleOAuthAccessToken, getGoogleServiceAccountEmail } from './google-auth'
 
 const GA_SCOPE = 'https://www.googleapis.com/auth/analytics.readonly'
 const GA_API_BASE = 'https://analyticsdata.googleapis.com/v1beta'
@@ -51,9 +51,14 @@ const EMPTY_METRICS: AnalyticsSummary['metrics'] = {
 
 export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
   const propertyId = process.env.GOOGLE_ANALYTICS_PROPERTY_ID || ''
+  const hasOAuthCredentials = Boolean(
+    process.env.GOOGLE_ANALYTICS_CLIENT_ID &&
+    process.env.GOOGLE_ANALYTICS_CLIENT_SECRET &&
+    process.env.GOOGLE_ANALYTICS_REFRESH_TOKEN
+  )
   const serviceAccountEmail = getGoogleServiceAccountEmail()
   const base: AnalyticsSummary = {
-    configured: Boolean(propertyId && serviceAccountEmail),
+    configured: Boolean(propertyId && (hasOAuthCredentials || serviceAccountEmail)),
     serviceAccountEmail,
     propertyId,
     rangeLabel: 'Últimos 30 días',
@@ -70,10 +75,10 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
     }
   }
 
-  if (!serviceAccountEmail) {
+  if (!hasOAuthCredentials && !serviceAccountEmail) {
     return {
       ...base,
-      error: 'Falta configurar el service account de Google.',
+      error: 'Falta configurar OAuth de Google Analytics o un service account de Google.',
     }
   }
 
@@ -173,7 +178,7 @@ async function getProjectEvents(propertyId: string) {
 }
 
 async function runReport(propertyId: string, body: Record<string, unknown>): Promise<RunReportResponse> {
-  const accessToken = await getGoogleAccessToken(GA_SCOPE)
+  const accessToken = await getAnalyticsAccessToken()
   const response = await fetch(`${GA_API_BASE}/properties/${propertyId}:runReport`, {
     method: 'POST',
     headers: {
@@ -191,6 +196,23 @@ async function runReport(propertyId: string, body: Record<string, unknown>): Pro
   }
 
   return data
+}
+
+async function getAnalyticsAccessToken() {
+  const clientId = process.env.GOOGLE_ANALYTICS_CLIENT_ID
+  const clientSecret = process.env.GOOGLE_ANALYTICS_CLIENT_SECRET
+  const refreshToken = process.env.GOOGLE_ANALYTICS_REFRESH_TOKEN
+
+  if (clientId && clientSecret && refreshToken) {
+    return getGoogleOAuthAccessToken({
+      clientId,
+      clientSecret,
+      refreshToken,
+      cacheKey: 'google-analytics',
+    })
+  }
+
+  return getGoogleAccessToken(GA_SCOPE)
 }
 
 function numberValue(value?: string) {
