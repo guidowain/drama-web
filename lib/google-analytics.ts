@@ -192,10 +192,42 @@ async function getProjectEvents(propertyId: string) {
       limit: 5,
     })
 
-    return (report.rows ?? []).map((row) => ({
+    const projects = (report.rows ?? []).map((row) => ({
       name: row.dimensionValues?.[0]?.value || 'Sin nombre',
       opens: numberValue(row.metricValues?.[0]?.value),
     }))
+
+    if (projects.length) {
+      return projects
+    }
+  } catch {
+    // Custom event parameters only become queryable after GA4 registers them
+    // as custom dimensions. Fall back to the modal URL while that warms up.
+  }
+
+  return getProjectEventsFromUrls(propertyId)
+}
+
+async function getProjectEventsFromUrls(propertyId: string) {
+  try {
+    const report = await runReport(propertyId, {
+      dateRanges: [{ startDate: '2026-01-01', endDate: 'today' }],
+      dimensions: [{ name: 'pagePathPlusQueryString' }],
+      metrics: [{ name: 'screenPageViews' }],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'pagePathPlusQueryString',
+          stringFilter: {
+            matchType: 'CONTAINS',
+            value: '/proyectos?slug=',
+          },
+        },
+      },
+      orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
+      limit: 20,
+    })
+
+    return mergeProjectUrls(report.rows ?? [])
   } catch {
     return []
   }
@@ -273,4 +305,29 @@ function normalizePagePath(path: string) {
   const cleanPath = path.split('?')[0].replace(/\/$/, '') || '/'
   if (cleanPath === '/home') return '/'
   return cleanPath
+}
+
+function mergeProjectUrls(rows: NonNullable<RunReportResponse['rows']>) {
+  const projects = new Map<string, number>()
+
+  rows.forEach((row) => {
+    const path = row.dimensionValues?.[0]?.value || ''
+    const slug = projectSlugFromPath(path)
+
+    if (!slug) return
+
+    projects.set(slug, (projects.get(slug) ?? 0) + numberValue(row.metricValues?.[0]?.value))
+  })
+
+  return Array.from(projects.entries())
+    .map(([name, opens]) => ({ name, opens }))
+    .sort((a, b) => b.opens - a.opens)
+    .slice(0, 5)
+}
+
+function projectSlugFromPath(path: string) {
+  const queryString = path.split('?')[1]
+  if (!queryString) return ''
+
+  return (new URLSearchParams(queryString).get('slug') || '').split('?')[0]
 }
