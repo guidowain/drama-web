@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Menu from '@/components/Menu'
 import TabTitle from '@/components/TabTitle'
 import InvertedPunctuation from '@/components/InvertedPunctuation'
+import Analytics from '@/components/Analytics'
 import { getSiteSettings } from '@/lib/api'
 import { headers } from 'next/headers'
 import { isDynamicServerError } from 'next/dist/client/components/hooks-server-context'
@@ -78,6 +79,7 @@ export default async function RootLayout({
             <TabTitle />
             <InvertedPunctuation />
             {children}
+            <Analytics />
           </MenuProvider>
         )}
       </body>

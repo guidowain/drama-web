@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
@@ -13,6 +13,7 @@ import FunModeTriviaOverlay from '@/components/FunModeTriviaOverlay'
 import type { ContactSettings, Proyecto, SiteSettings } from '@/lib/types'
 import { hasProjectDetailMedia, isVideoUrl } from '@/lib/media'
 import { fetchProjects } from '@/lib/projects-client'
+import { trackEvent } from '@/lib/analytics'
 
 type ModalOriginRect = Pick<DOMRect, 'top' | 'left' | 'width' | 'height'>
 type FunModeType = 'dramanoid' | 'trivia'
@@ -56,6 +57,7 @@ function ProyectosContent() {
   const [canUseDramanoid, setCanUseDramanoid] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
+  const lastTrackedProjectSlugRef = useRef<string | null>(null)
   const funMediaPool = useMemo(() => collectProjectMedia(projects), [projects])
 
   useEffect(() => {
@@ -105,6 +107,22 @@ function ProyectosContent() {
       .then((data: SiteSettings) => setContact(data.settings))
   }, [])
 
+  useEffect(() => {
+    if (!selected) {
+      lastTrackedProjectSlugRef.current = null
+      return
+    }
+
+    if (lastTrackedProjectSlugRef.current === selected.slug) {
+      return
+    }
+
+    lastTrackedProjectSlugRef.current = selected.slug
+    trackEvent('project_modal_open', {
+      project_name: selected.name,
+    })
+  }, [selected])
+
   const handleCardOpen = useCallback((project: Proyecto, originRect: DOMRect) => {
     if (!hasProjectDetailMedia(project)) return
 
@@ -131,11 +149,13 @@ function ProyectosContent() {
     }
 
     if (!canUseDramanoid) {
+      trackEvent('fan_mode_open')
       setFunMode('trivia')
       return
     }
 
     if (funMediaPool.length === 0) {
+      trackEvent('fan_mode_open')
       setFunMode('trivia')
       return
     }
@@ -150,6 +170,7 @@ function ProyectosContent() {
           : 'trivia'
 
     window.sessionStorage.setItem('drama-fun-mode-last', nextMode)
+    trackEvent('fan_mode_open')
     setFunMode(nextMode)
   }, [canUseDramanoid, funMediaPool.length, funMode])
 
