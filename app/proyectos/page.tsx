@@ -119,7 +119,7 @@ function ProyectosContent() {
 
     lastTrackedProjectSlugRef.current = selected.slug
     trackEvent('project_modal_open', {
-      project_name: selected.name,
+      project_slug: selected.slug,
     })
   }, [selected])
 
