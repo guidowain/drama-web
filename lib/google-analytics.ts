@@ -39,6 +39,14 @@ export type AnalyticsSummary = {
     name: string
     count: number
   }>
+  devices: Array<{
+    name: string
+    count: number
+  }>
+  sources: Array<{
+    name: string
+    count: number
+  }>
   projects: Array<{
     name: string
     opens: number
@@ -75,6 +83,8 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
     },
     topPages: [],
     events: [],
+    devices: [],
+    sources: [],
     projects: [],
   }
 
@@ -93,7 +103,7 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
   }
 
   try {
-    const [summary, topPages, events, todayVisits, weekVisits, monthVisits, projects] = await Promise.all([
+    const [summary, topPages, events, devices, sources, todayVisits, weekVisits, monthVisits, projects] = await Promise.all([
       runReport(propertyId, {
         dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
         metrics: [
@@ -119,11 +129,24 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
           filter: {
             fieldName: 'eventName',
             inListFilter: {
-              values: ['fan_mode_open', 'project_modal_open'],
+              values: ['fan_mode_open'],
             },
           },
         },
         orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+      }),
+      runReport(propertyId, {
+        dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
+        dimensions: [{ name: 'deviceCategory' }],
+        metrics: [{ name: 'sessions' }],
+        orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+      }),
+      runReport(propertyId, {
+        dateRanges: [{ startDate: '30daysAgo', endDate: 'today' }],
+        dimensions: [{ name: 'sessionDefaultChannelGroup' }],
+        metrics: [{ name: 'sessions' }],
+        orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
+        limit: 6,
       }),
       getViews(propertyId, 'today'),
       getViews(propertyId, '7daysAgo'),
@@ -151,6 +174,14 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
       topPages: mergePages(topPages.rows ?? []),
       events: (events.rows ?? []).map((row) => ({
         name: row.dimensionValues?.[0]?.value || 'Evento',
+        count: numberValue(row.metricValues?.[0]?.value),
+      })),
+      devices: (devices.rows ?? []).map((row) => ({
+        name: row.dimensionValues?.[0]?.value || 'unknown',
+        count: numberValue(row.metricValues?.[0]?.value),
+      })),
+      sources: (sources.rows ?? []).map((row) => ({
+        name: row.dimensionValues?.[0]?.value || 'Unassigned',
         count: numberValue(row.metricValues?.[0]?.value),
       })),
       projects,

@@ -93,7 +93,7 @@ export default async function AdminDashboard() {
               />
               <AnalyticsList
                 title="Interacciones"
-                empty="Todavía no hay interacciones para mostrar."
+                empty="Todavía no hay aperturas de Fun Mode."
                 items={analytics.events.map((event) => ({
                   label: interactionLabel(event.name),
                   value: formatNumber(event.count),
@@ -105,6 +105,25 @@ export default async function AdminDashboard() {
                 items={analytics.projects.map((project) => ({
                   label: projectLabel(project.name),
                   value: formatNumber(project.opens),
+                }))}
+              />
+            </div>
+
+            <div className="mt-5 grid gap-5 lg:grid-cols-2">
+              <AnalyticsList
+                title="Dispositivos"
+                empty="Todavía no hay dispositivos para mostrar."
+                items={analytics.devices.map((device) => ({
+                  label: deviceLabel(device.name),
+                  value: formatNumber(device.count),
+                }))}
+              />
+              <AnalyticsList
+                title="Origen del tráfico"
+                empty="Todavía no hay orígenes para mostrar."
+                items={analytics.sources.map((source) => ({
+                  label: sourceLabel(source.name),
+                  value: formatNumber(source.count),
                 }))}
               />
             </div>
@@ -194,7 +213,31 @@ function pageLabel(path: string) {
 function interactionLabel(name: string) {
   const labels: Record<string, string> = {
     fan_mode_open: 'Aperturas de Fun Mode',
-    project_modal_open: 'Aperturas de proyectos',
+  }
+
+  return labels[name] ?? name
+}
+
+function deviceLabel(name: string) {
+  const labels: Record<string, string> = {
+    desktop: 'Desktop',
+    mobile: 'Mobile',
+    tablet: 'Tablet',
+    smarttv: 'TV',
+  }
+
+  return labels[name.toLowerCase()] ?? name
+}
+
+function sourceLabel(name: string) {
+  const labels: Record<string, string> = {
+    Direct: 'Directo',
+    'Organic Search': 'Google / búsqueda',
+    'Organic Social': 'Redes sociales',
+    'Paid Social': 'Redes pagas',
+    Referral: 'Referidos',
+    Email: 'Email',
+    Unassigned: 'Sin asignar',
   }
 
   return labels[name] ?? name
