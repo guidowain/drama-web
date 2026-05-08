@@ -148,11 +148,7 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
         week: weekVisits,
         month: monthVisits,
       },
-      topPages: (topPages.rows ?? []).map((row) => ({
-        path: row.dimensionValues?.[0]?.value || '/',
-        title: row.dimensionValues?.[1]?.value || 'Sin título',
-        views: numberValue(row.metricValues?.[0]?.value),
-      })),
+      topPages: mergePages(topPages.rows ?? []),
       events: (events.rows ?? []).map((row) => ({
         name: row.dimensionValues?.[0]?.value || 'Evento',
         count: numberValue(row.metricValues?.[0]?.value),
@@ -246,4 +242,35 @@ async function getAnalyticsAccessToken() {
 function numberValue(value?: string) {
   const parsed = Number(value ?? 0)
   return Number.isFinite(parsed) ? parsed : 0
+}
+
+function mergePages(rows: NonNullable<RunReportResponse['rows']>) {
+  const pages = new Map<string, {
+    path: string
+    title: string
+    views: number
+  }>()
+
+  rows.forEach((row) => {
+    const rawPath = row.dimensionValues?.[0]?.value || '/'
+    const normalizedPath = normalizePagePath(rawPath)
+    const current = pages.get(normalizedPath)
+    const views = numberValue(row.metricValues?.[0]?.value)
+
+    pages.set(normalizedPath, {
+      path: normalizedPath,
+      title: current?.title || row.dimensionValues?.[1]?.value || 'Sin título',
+      views: (current?.views ?? 0) + views,
+    })
+  })
+
+  return Array.from(pages.values())
+    .sort((a, b) => b.views - a.views)
+    .slice(0, 5)
+}
+
+function normalizePagePath(path: string) {
+  const cleanPath = path.split('?')[0].replace(/\/$/, '') || '/'
+  if (cleanPath === '/home') return '/'
+  return cleanPath
 }

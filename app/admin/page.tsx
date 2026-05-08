@@ -29,7 +29,9 @@ export default async function AdminDashboard() {
         </div>
       </div>
 
-      <section className="max-w-6xl rounded-2xl border border-white/5 bg-zinc-900 p-6">
+      <section className="max-w-6xl overflow-hidden rounded-2xl border border-white/5 bg-zinc-900">
+        <div className="h-1 bg-gradient-to-r from-[#F504FF] via-[#FE796D] to-[#FCC028]" />
+        <div className="p-6">
         <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
           <div>
             <h2 className="text-white font-black text-xl uppercase tracking-tight">Analytics</h2>
@@ -69,17 +71,14 @@ export default async function AdminDashboard() {
               <VisitPeriodCard
                 label="Vistas del día"
                 value={analytics.visits.today}
-                maxValue={Math.max(analytics.visits.today, analytics.visits.week, analytics.visits.month, 1)}
               />
               <VisitPeriodCard
                 label="Vistas de la semana"
                 value={analytics.visits.week}
-                maxValue={Math.max(analytics.visits.today, analytics.visits.week, analytics.visits.month, 1)}
               />
               <VisitPeriodCard
                 label="Vistas del mes"
                 value={analytics.visits.month}
-                maxValue={Math.max(analytics.visits.today, analytics.visits.week, analytics.visits.month, 1)}
               />
             </div>
 
@@ -89,7 +88,6 @@ export default async function AdminDashboard() {
                 empty="Todavía no hay páginas para mostrar."
                 items={analytics.topPages.map((page) => ({
                   label: pageLabel(page.path),
-                  detail: page.path,
                   value: formatNumber(page.views),
                 }))}
               />
@@ -112,6 +110,7 @@ export default async function AdminDashboard() {
             </div>
           </>
         )}
+        </div>
       </section>
     </div>
   )
@@ -126,17 +125,11 @@ function AnalyticsStat({ label, value }: { label: string; value: string }) {
   )
 }
 
-function VisitPeriodCard({ label, value, maxValue }: { label: string; value: number; maxValue: number }) {
+function VisitPeriodCard({ label, value }: { label: string; value: number }) {
   return (
     <div className="rounded-xl border border-white/5 bg-black/20 p-5">
       <p className="text-[11px] font-black uppercase tracking-widest text-white/35">{label}</p>
       <p className="mt-3 text-4xl font-black leading-none text-white">{formatNumber(value)}</p>
-      <div className="mt-5 h-3 overflow-hidden rounded-full bg-white/[0.06]">
-        <div
-          className="h-full rounded-full bg-gradient-to-r from-[#F504FF] via-[#FE796D] to-[#FCC028]"
-          style={{ width: `${Math.max(value ? 8 : 0, (value / maxValue) * 100)}%` }}
-        />
-      </div>
     </div>
   )
 }
