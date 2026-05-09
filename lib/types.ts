@@ -16,6 +16,16 @@ export interface ContentBlock {
   order: number
 }
 
+export type LocaleCode = 'es' | 'en' | 'pt'
+export type TranslationLocale = Exclude<LocaleCode, 'es'>
+
+export interface ContentBlockTranslation {
+  title?: string
+  text?: string
+  imageAlt?: string
+  image2Alt?: string
+}
+
 export interface Proyecto {
   id: string
   name: string
@@ -30,6 +40,17 @@ export interface Proyecto {
   seoDescription: string
   excerpt: string
   contentBlocks: ContentBlock[]
+  translations?: Partial<Record<TranslationLocale, ProyectoTranslation>>
+}
+
+export interface ProyectoTranslation {
+  name?: string
+  tags?: string[]
+  coverImageAlt?: string
+  seoTitle?: string
+  seoDescription?: string
+  excerpt?: string
+  contentBlocks?: ContentBlockTranslation[]
 }
 
 export interface TriviaOption {
@@ -79,6 +100,7 @@ export interface SiteSettings {
       communication: ServiceInfo
     }
     logos: Logo[]
+    wheelText?: string
   }
   about: {
     title: string
@@ -93,4 +115,28 @@ export interface SiteSettings {
     faqs: FaqItem[]
   }
   settings: ContactSettings
+  translations?: Partial<Record<TranslationLocale, SiteSettingsTranslation>>
+}
+
+export interface SiteSettingsTranslation {
+  home?: {
+    heroLine1?: string
+    heroLine2?: string
+    services?: {
+      design?: Partial<ServiceInfo>
+      communication?: Partial<ServiceInfo>
+    }
+    wheelText?: string
+  }
+  about?: {
+    title?: string
+    imageAlt?: string
+    quienesSomosTitle?: string
+    quienesSomos?: string
+    comoTrabajamosTitle?: string
+    comoTrabajamos?: string
+    queDiferenciaTitle?: string
+    queDiferencia?: string
+    faqs?: Partial<FaqItem>[]
+  }
 }

@@ -202,7 +202,7 @@ function pageLabel(path: string) {
     '/': 'Home',
     '/home': 'Home',
     '/proyectos': 'Proyectos',
-    '/sobre-nosotros': 'Sobre nosotros',
+    '/nosotros': 'Nosotros',
     '/sumate': 'Sumate',
     '/calculadora': 'Calculadora',
   }

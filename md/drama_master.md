@@ -15,7 +15,7 @@ Rutas principales:
 - /
 - /proyectos
 - /proyectos/[slug]
-- /sobre-nosotros
+- /nosotros
 - /contacto
 
 Regla clave:

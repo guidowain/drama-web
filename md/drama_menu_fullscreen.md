@@ -139,7 +139,7 @@
 En este orden exacto:
 1. HOME
 2. PROYECTOS
-3. SOBRE NOSOTROS
+3. NOSOTROS
 4. CONTACTO
 
 ### Alineación
@@ -177,7 +177,7 @@ En este orden exacto:
 - línea
 - PROYECTOS
 - línea
-- SOBRE NOSOTROS
+- NOSOTROS
 - línea
 - CONTACTO
 
@@ -196,8 +196,8 @@ En este orden exacto:
   - lleva al home
 - PROYECTOS:
   - lleva a la vista de Proyectos Destacados
-- SOBRE NOSOTROS:
-  - lleva a la página/vista Sobre Nosotros
+- NOSOTROS:
+  - lleva a la página/vista Nosotros
 - CONTACTO:
   - lleva a `/contacto`
 

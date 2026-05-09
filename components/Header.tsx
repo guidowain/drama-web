@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useMenu } from '@/lib/MenuContext'
 import type { SiteSettings } from '@/lib/types'
+import { useSiteCopy } from '@/lib/LocaleContext'
 
 type Props = {
   settings: SiteSettings['settings']
@@ -11,13 +12,14 @@ type Props = {
 
 export default function Header({ settings }: Props) {
   const { toggle } = useMenu()
+  const copy = useSiteCopy()
 
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50 h-16 md:h-[72px] flex items-center justify-between px-5 md:px-8"
       style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)' }}
     >
-      <Link href="/" className="shrink-0 relative h-7 w-[120px] block md:hidden" aria-label="Drama — Inicio">
+      <Link href="/" className="shrink-0 relative h-7 w-[120px] block md:hidden" aria-label={copy.nav.homeAria}>
         <Image
           src="/logos/Logo oficial.png"
           alt="Drama"
@@ -27,7 +29,7 @@ export default function Header({ settings }: Props) {
         />
       </Link>
 
-      <Link href="/" className="group shrink-0 relative h-7 w-[120px] hidden md:block" aria-label="Drama — Inicio">
+      <Link href="/" className="group shrink-0 relative h-7 w-[120px] hidden md:block" aria-label={copy.nav.homeAria}>
         <Image
           src="/logos/Logo oficial.png"
           alt="Drama"
@@ -71,7 +73,7 @@ export default function Header({ settings }: Props) {
         </a>
         <button
           onClick={toggle}
-          aria-label="Abrir menú"
+          aria-label={copy.nav.openMenu}
           className="text-white opacity-80 hover:opacity-100 transition-opacity"
         >
           <IconMenu />

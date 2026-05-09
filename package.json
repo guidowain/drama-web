@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "translate:en": "node scripts/translate-content.mjs en"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

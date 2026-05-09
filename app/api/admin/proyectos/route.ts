@@ -26,6 +26,7 @@ export async function POST(request: NextRequest) {
     seoTitle: body.seoTitle || '',
     seoDescription: body.seoDescription || '',
     excerpt: body.excerpt || '',
+    translations: body.translations || {},
   }
 
   projects.push(newProject)

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Matter from 'matter-js'
+import { useSiteCopy } from '@/lib/LocaleContext'
 
 type Props = {
   active: boolean
@@ -108,6 +109,7 @@ function layoutBlocks(loaded: Array<{ src: string; ratio: number }>) {
 }
 
 export default function FunModeGravityOverlay({ active, media, onClose }: Props) {
+  const copy = useSiteCopy()
   const sceneRef = useRef<HTMLDivElement>(null)
   const paddleRef = useRef<HTMLDivElement>(null)
   const ballRef = useRef<HTMLDivElement>(null)
@@ -422,7 +424,7 @@ export default function FunModeGravityOverlay({ active, media, onClose }: Props)
             onClick={onClose}
             className={`absolute right-5 top-20 z-30 rounded-full border px-4 py-1.5 text-[0.62rem] font-black uppercase tracking-[0.16em] shadow-[0_0_22px_rgba(0,0,0,0.18)] transition-colors md:right-10 md:top-24 ${isHardMode ? 'border-white bg-white text-black' : 'border-black bg-black text-white'}`}
           >
-            FUN MODE
+            {copy.common.funMode}
           </button>
 
           <AnimatePresence mode="wait">
@@ -451,7 +453,7 @@ export default function FunModeGravityOverlay({ active, media, onClose }: Props)
                 transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
                 style={{ fontSize: 'clamp(3.5rem, 12vw, 10rem)' }}
               >
-                ¡GANASTE!
+                {copy.dramanoid.win}
               </motion.div>
             )}
           </AnimatePresence>

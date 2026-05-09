@@ -1,18 +1,21 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { MenuProvider } from '@/lib/MenuContext'
+import { LocaleProvider } from '@/lib/LocaleContext'
 import Header from '@/components/Header'
 import Menu from '@/components/Menu'
 import TabTitle from '@/components/TabTitle'
 import InvertedPunctuation from '@/components/InvertedPunctuation'
 import Analytics from '@/components/Analytics'
 import { getSiteSettings } from '@/lib/api'
+import { fixedSiteCopy } from '@/lib/site-copy'
+import { getRequestLocale } from '@/lib/server-locale'
 import { headers } from 'next/headers'
 import { isDynamicServerError } from 'next/dist/client/components/hooks-server-context'
 
 export const metadata: Metadata = {
-  title: 'Drama - Agencia',
-  description: 'La historia debajo del escenario.',
+  title: fixedSiteCopy.metadata.title,
+  description: fixedSiteCopy.metadata.description,
   icons: {
     icon: [
       {
@@ -35,6 +38,8 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   let isAdmin = false
+  const requestLocale = getRequestLocale()
+  const { locale, lockLocale } = requestLocale
 
   try {
     const headersList = headers()
@@ -60,27 +65,29 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="es">
+    <html lang={locale}>
       <body>
         {isAdmin ? (
           children
         ) : (
-          <MenuProvider>
-            <Header settings={settings?.settings ?? {
-              instagram: '',
-              whatsapp: '',
-              mail: '',
-            }} />
-            <Menu settings={settings?.settings ?? {
-              instagram: '',
-              whatsapp: '',
-              mail: '',
-            }} />
-            <TabTitle />
-            <InvertedPunctuation />
-            {children}
-            <Analytics />
-          </MenuProvider>
+          <LocaleProvider initialLocale={locale} lockLocale={lockLocale}>
+            <MenuProvider>
+              <Header settings={settings?.settings ?? {
+                instagram: '',
+                whatsapp: '',
+                mail: '',
+              }} />
+              <Menu settings={settings?.settings ?? {
+                instagram: '',
+                whatsapp: '',
+                mail: '',
+              }} />
+              <TabTitle />
+              <InvertedPunctuation />
+              {children}
+              <Analytics />
+            </MenuProvider>
+          </LocaleProvider>
         )}
       </body>
     </html>

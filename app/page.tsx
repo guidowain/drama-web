@@ -6,9 +6,14 @@ import CTAProyectos from '@/components/CTAProyectos'
 import ContactStrip from '@/components/ContactStrip'
 import ServicesGrid from '@/components/ServicesGrid'
 import ProyectosPrefetch from '@/components/ProyectosPrefetch'
+import { getFixedSiteCopy } from '@/lib/site-copy'
+import { getRequestLocale } from '@/lib/server-locale'
+import { localizeSiteSettings } from '@/lib/i18n-content'
 
 export default async function HomePage() {
-  const settings = await getSiteSettings()
+  const { locale } = getRequestLocale()
+  const settings = localizeSiteSettings(await getSiteSettings(), locale)
+  const copy = getFixedSiteCopy(locale)
   const { home, settings: contact } = settings
 
   return (
@@ -21,7 +26,7 @@ export default async function HomePage() {
         <section className="relative bg-black">
           {/* SEO H1 — in DOM for indexing, invisible visually */}
           <h1 className="sr-only-seo">
-            Agencia de diseño y comunicación para entretenimiento en Buenos Aires
+            {copy.home.seoTitle}
           </h1>
 
           {/* Video */}

@@ -129,6 +129,7 @@ function normalizeSiteSettings(raw: unknown): SiteSettings {
       whatsapp: data.settings?.whatsapp ?? legacyContact?.whatsapp ?? DEFAULT_SITE_SETTINGS.settings.whatsapp,
       mail: data.settings?.mail ?? legacyContact?.mail ?? DEFAULT_SITE_SETTINGS.settings.mail,
     },
+    translations: data.translations ?? {},
   }
 }
 

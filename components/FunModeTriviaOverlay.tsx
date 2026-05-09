@@ -4,13 +4,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { TriviaQuestion } from '@/lib/types'
+import { useSiteCopy } from '@/lib/LocaleContext'
 
 type Props = {
   active: boolean
   onClose: () => void
 }
 
-type CountdownValue = '3' | '2' | '1' | 'DRAMA TRIVIA' | null
+type CountdownValue = string | null
 type AnswerState = 'correct' | 'incorrect' | null
 
 function getResultLabel(score: number) {
@@ -19,8 +20,8 @@ function getResultLabel(score: number) {
   return '¡QUEDASTE EN LA OBRA!'
 }
 
-function getShareText(score: number, total: number) {
-  return `DRAMA TRIVIA - ${score}/${total} - jugá vos también en drama.com.ar`
+function getShareText(score: number, total: number, copy: ReturnType<typeof useSiteCopy>) {
+  return `${copy.trivia.title} - ${score}/${total} - ${copy.trivia.shareTextSuffix}`
 }
 
 function loadCanvasImage(src: string) {
@@ -86,6 +87,7 @@ async function createResultFile(score: number, total: number) {
 }
 
 export default function FunModeTriviaOverlay({ active, onClose }: Props) {
+  const copy = useSiteCopy()
   const countdownTimersRef = useRef<number[]>([])
   const [questions, setQuestions] = useState<TriviaQuestion[]>([])
   const [loading, setLoading] = useState(false)
@@ -121,7 +123,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
 
     fetch('/api/trivia')
       .then((response) => {
-        if (!response.ok) throw new Error('No se pudo cargar la trivia')
+        if (!response.ok) throw new Error(copy.trivia.loadError)
         return response.json()
       })
       .then((data) => {
@@ -129,7 +131,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
         setQuestions(nextQuestions)
 
         if (nextQuestions.length < 2) {
-          setError('TRIVIA EN ENSAYO')
+          setError(copy.trivia.fallbackError)
           return
         }
 
@@ -142,7 +144,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
         countdownTimersRef.current = [
           window.setTimeout(() => setCountdown('2'), 780),
           window.setTimeout(() => setCountdown('1'), 1560),
-          window.setTimeout(() => setCountdown('DRAMA TRIVIA'), 2340),
+          window.setTimeout(() => setCountdown(copy.trivia.title), 2340),
           window.setTimeout(() => {
             setCountdown(null)
             setHasStarted(true)
@@ -150,10 +152,10 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
         ]
       })
       .catch((err: unknown) => {
-        setError(err instanceof Error ? err.message : 'No se pudo cargar la trivia')
+        setError(err instanceof Error ? err.message : copy.trivia.loadError)
       })
       .finally(() => setLoading(false))
-  }, [clearCountdownTimers])
+  }, [clearCountdownTimers, copy.trivia.fallbackError, copy.trivia.loadError, copy.trivia.title])
 
   useEffect(() => {
     if (!active) {
@@ -189,7 +191,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
     if (questions.length === 0) return
 
     setSharing(true)
-    const text = getShareText(score, questions.length)
+    const text = getShareText(score, questions.length, copy)
 
     try {
       const file = await createResultFile(score, questions.length)
@@ -199,13 +201,13 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
 
       if (file && navigator.share && (!nav.canShare || nav.canShare({ files: [file] }))) {
         await navigator.share({
-          title: 'DRAMA TRIVIA',
+          title: copy.trivia.title,
           text,
           files: [file],
         })
       } else if (navigator.share) {
         await navigator.share({
-          title: 'DRAMA TRIVIA',
+          title: copy.trivia.title,
           text,
         })
       } else if (file) {
@@ -244,7 +246,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
             onClick={onClose}
             className="absolute right-5 top-[max(1rem,env(safe-area-inset-top))] z-30 rounded-full border border-black bg-black px-4 py-1.5 text-[0.62rem] font-black uppercase tracking-[0.16em] text-white shadow-[0_0_22px_rgba(0,0,0,0.18)] transition-colors md:right-8 md:top-[clamp(1.25rem,6vh,5rem)] lg:right-10 lg:top-[clamp(1.5rem,7vh,6rem)]"
           >
-            FUN MODE
+            {copy.common.funMode}
           </button>
 
           <AnimatePresence mode="wait">
@@ -256,7 +258,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                 animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                 exit={{ opacity: 0, scale: 1.28, filter: 'blur(10px)' }}
                 transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-                style={{ fontSize: countdown === 'DRAMA TRIVIA' ? 'clamp(3.2rem, 12vw, 9rem)' : 'clamp(6rem, 20vw, 14rem)' }}
+                style={{ fontSize: countdown === copy.trivia.title ? 'clamp(3.2rem, 12vw, 9rem)' : 'clamp(6rem, 20vw, 14rem)' }}
               >
                 {countdown}
               </motion.div>
@@ -279,7 +281,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                   onClick={onClose}
                   className="mt-8 rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-black uppercase tracking-[0.14em] text-white"
                 >
-                  VER PROYECTOS
+                  {copy.trivia.viewProjects}
                 </button>
               </div>
             )}
@@ -287,7 +289,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
             {!loading && !error && hasStarted && currentQuestion && !isFinished && (
               <div className="w-full max-w-6xl">
                 <div className="mb-2 flex h-4 items-center justify-between gap-4 text-[0.66rem] font-black uppercase tracking-[0.18em] text-black/50 md:mb-4 md:text-[0.68rem] lg:mb-[clamp(0.75rem,2vh,1.5rem)] lg:text-xs">
-                  <span>DRAMA TRIVIA</span>
+                  <span>{copy.trivia.title}</span>
                   <span>{currentIndex + 1}/{questions.length}</span>
                 </div>
 
@@ -356,7 +358,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                           answerState === 'correct' ? 'text-[#00A650]' : 'text-[#E02424]',
                         ].join(' ')}
                       >
-                        {answerState === 'correct' ? 'CORRECTA' : 'INCORRECTA'}
+                        {answerState === 'correct' ? copy.trivia.correct : copy.trivia.incorrect}
                       </span>
                     </motion.div>
                   )}
@@ -371,7 +373,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                 animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                 transition={{ duration: 0.46, ease: [0.22, 1, 0.36, 1] }}
               >
-                <p className="mb-3 text-xs font-black uppercase tracking-[0.2em] text-black/50">Resultado</p>
+                <p className="mb-3 text-xs font-black uppercase tracking-[0.2em] text-black/50">{copy.trivia.result}</p>
                 <h2 className="text-7xl font-black uppercase leading-none md:text-8xl lg:text-9xl">
                   {score}/{questions.length}
                 </h2>
@@ -386,7 +388,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                     disabled={sharing}
                     className="rounded-full border-2 border-black bg-black px-8 py-3.5 text-sm font-black uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-85 disabled:opacity-50 md:hidden"
                   >
-                    {sharing ? 'Compartiendo...' : 'COMPARTIR RESULTADOS'}
+                    {sharing ? copy.trivia.sharing : copy.trivia.shareResults}
                   </button>
 
                   <div className="mt-5 flex flex-wrap justify-center gap-3">
@@ -395,14 +397,14 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                       onClick={() => startRound(true)}
                       className="rounded-full border-2 border-black bg-white/20 px-7 py-3 text-xs font-black uppercase tracking-[0.14em] text-black transition-colors hover:bg-white/45"
                     >
-                      VOLVER A JUGAR
+                      {copy.trivia.playAgain}
                     </button>
                     <button
                       type="button"
                       onClick={onClose}
                       className="rounded-full border-2 border-black bg-white/20 px-7 py-3 text-xs font-black uppercase tracking-[0.14em] text-black transition-colors hover:bg-white/45"
                     >
-                      VER PROYECTOS
+                      {copy.trivia.viewProjects}
                     </button>
                   </div>
                 </div>

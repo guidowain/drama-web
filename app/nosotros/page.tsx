@@ -3,9 +3,12 @@ import Ticker from '@/components/Ticker'
 import ContactStrip from '@/components/ContactStrip'
 import AboutReveal from '@/components/AboutReveal'
 import AboutFaqAccordion from '@/components/AboutFaqAccordion'
+import { localizeSiteSettings } from '@/lib/i18n-content'
+import { getRequestLocale } from '@/lib/server-locale'
 
-export default async function SobreNosotrosPage() {
-  const settings = await getSiteSettings()
+export default async function NosotrosPage() {
+  const { locale } = getRequestLocale()
+  const settings = localizeSiteSettings(await getSiteSettings(), locale)
   const { about, settings: siteSettings } = settings
   const aboutTitle = about.title.split('\n').map((line) => line.trim()).filter(Boolean)
 

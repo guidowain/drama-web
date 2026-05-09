@@ -1,11 +1,13 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import type { SiteSettings, Logo } from '@/lib/types'
+import type { LocaleCode, SiteSettings, Logo, SiteSettingsTranslation } from '@/lib/types'
 import ImageUploader from '@/components/admin/ImageUploader'
+import LanguageTabs from '@/components/admin/LanguageTabs'
 
 export default function AdminHomePage() {
   const [settings, setSettings] = useState<SiteSettings | null>(null)
+  const [activeLocale, setActiveLocale] = useState<LocaleCode>('es')
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const lastSavedLogosRef = useRef('')
@@ -97,38 +99,92 @@ export default function AdminHomePage() {
     })
   }
 
+  function updateHomeTranslation(changes: NonNullable<SiteSettingsTranslation['home']>) {
+    if (!settings || activeLocale === 'es') return
+    const locale = activeLocale
+    const currentTranslation = settings.translations?.[locale] ?? {}
+
+    setSettings({
+      ...settings,
+      translations: {
+        ...settings.translations,
+        [locale]: {
+          ...currentTranslation,
+          home: {
+            ...currentTranslation.home,
+            ...changes,
+          },
+        },
+      },
+    })
+  }
+
+  function updateTranslatedService(
+    service: keyof SiteSettings['home']['services'],
+    changes: Partial<SiteSettings['home']['services']['design']>
+  ) {
+    if (!settings || activeLocale === 'es') return
+    const locale = activeLocale
+    const currentTranslation = settings.translations?.[locale] ?? {}
+    const currentHome = currentTranslation.home ?? {}
+    const currentServices = currentHome.services ?? {}
+
+    updateHomeTranslation({
+      services: {
+        ...currentServices,
+        [service]: {
+          ...currentServices[service],
+          ...changes,
+        },
+      },
+    })
+  }
+
   if (!settings) return <div className="p-10 text-white/30">Cargando...</div>
+
+  const activeTranslation = activeLocale === 'es' ? null : settings.translations?.[activeLocale]
+  const home = activeTranslation?.home
+  const design = home?.services?.design
+  const communication = home?.services?.communication
+  const isBaseLocale = activeLocale === 'es'
 
   return (
     <div className="p-8 md:p-10 max-w-2xl">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <h1 className="text-white font-black text-3xl uppercase">Home</h1>
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          className="gradient-bg text-black font-black text-sm uppercase tracking-widest px-5 py-2.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
-        >
-          {saving ? 'Guardando...' : saved ? '¡Guardado!' : 'Guardar'}
-        </button>
+        <div className="flex items-center gap-3">
+          <LanguageTabs value={activeLocale} onChange={setActiveLocale} />
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="gradient-bg text-black font-black text-sm uppercase tracking-widest px-5 py-2.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
+          >
+            {saving ? 'Guardando...' : saved ? '¡Guardado!' : 'Guardar'}
+          </button>
+        </div>
       </div>
 
       <div className="space-y-8">
         {/* Hero */}
         <Section title="Hero">
-          <AdminInput
-            label="Video (URL)"
-            value={settings.home.heroVideo}
-            onChange={(v) => updateHome({ heroVideo: v })}
-          />
+          {isBaseLocale && (
+            <AdminInput
+              label="Video (URL)"
+              value={settings.home.heroVideo}
+              onChange={(v) => updateHome({ heroVideo: v })}
+            />
+          )}
           <AdminInput
             label="Línea 1 del claim"
-            value={settings.home.heroLine1}
-            onChange={(v) => updateHome({ heroLine1: v })}
+            value={isBaseLocale ? settings.home.heroLine1 : home?.heroLine1 ?? ''}
+            placeholder={isBaseLocale ? undefined : settings.home.heroLine1}
+            onChange={(v) => isBaseLocale ? updateHome({ heroLine1: v }) : updateHomeTranslation({ heroLine1: v })}
           />
           <AdminInput
             label="Línea 2 del claim"
-            value={settings.home.heroLine2}
-            onChange={(v) => updateHome({ heroLine2: v })}
+            value={isBaseLocale ? settings.home.heroLine2 : home?.heroLine2 ?? ''}
+            placeholder={isBaseLocale ? undefined : settings.home.heroLine2}
+            onChange={(v) => isBaseLocale ? updateHome({ heroLine2: v }) : updateHomeTranslation({ heroLine2: v })}
           />
         </Section>
 
@@ -136,41 +192,47 @@ export default function AdminHomePage() {
         <Section title="Servicio: Diseño">
           <AdminInput
             label="Nombre"
-            value={settings.home.services.design.name}
-            onChange={(v) => updateDesign({ name: v })}
+            value={isBaseLocale ? settings.home.services.design.name : design?.name ?? ''}
+            placeholder={isBaseLocale ? undefined : settings.home.services.design.name}
+            onChange={(v) => isBaseLocale ? updateDesign({ name: v }) : updateTranslatedService('design', { name: v })}
           />
           <AdminTextarea
             label="Descripción"
-            value={settings.home.services.design.description}
-            onChange={(v) => updateDesign({ description: v })}
+            value={isBaseLocale ? settings.home.services.design.description : design?.description ?? ''}
+            placeholder={isBaseLocale ? undefined : settings.home.services.design.description}
+            onChange={(v) => isBaseLocale ? updateDesign({ description: v }) : updateTranslatedService('design', { description: v })}
           />
           <ItemListEditor
             label="Items"
-            items={settings.home.services.design.items}
-            onChange={(items) => updateDesign({ items })}
+            items={isBaseLocale ? settings.home.services.design.items : design?.items ?? []}
+            placeholders={isBaseLocale ? undefined : settings.home.services.design.items}
+            onChange={(items) => isBaseLocale ? updateDesign({ items }) : updateTranslatedService('design', { items })}
           />
         </Section>
 
         <Section title="Servicio: Comunicación">
           <AdminInput
             label="Nombre"
-            value={settings.home.services.communication.name}
-            onChange={(v) => updateComm({ name: v })}
+            value={isBaseLocale ? settings.home.services.communication.name : communication?.name ?? ''}
+            placeholder={isBaseLocale ? undefined : settings.home.services.communication.name}
+            onChange={(v) => isBaseLocale ? updateComm({ name: v }) : updateTranslatedService('communication', { name: v })}
           />
           <AdminTextarea
             label="Descripción"
-            value={settings.home.services.communication.description}
-            onChange={(v) => updateComm({ description: v })}
+            value={isBaseLocale ? settings.home.services.communication.description : communication?.description ?? ''}
+            placeholder={isBaseLocale ? undefined : settings.home.services.communication.description}
+            onChange={(v) => isBaseLocale ? updateComm({ description: v }) : updateTranslatedService('communication', { description: v })}
           />
           <ItemListEditor
             label="Items"
-            items={settings.home.services.communication.items}
-            onChange={(items) => updateComm({ items })}
+            items={isBaseLocale ? settings.home.services.communication.items : communication?.items ?? []}
+            placeholders={isBaseLocale ? undefined : settings.home.services.communication.items}
+            onChange={(items) => isBaseLocale ? updateComm({ items }) : updateTranslatedService('communication', { items })}
           />
         </Section>
 
         {/* Logos ticker */}
-        <Section title="Logos de clientes (ticker)">
+        {isBaseLocale && <Section title="Logos de clientes (ticker)">
           <div className="rounded-xl bg-zinc-900/50 border border-white/5 p-4 text-white/30 text-xs leading-relaxed mb-2">
             <span className="text-white/50 font-semibold">Tamaño recomendado:</span> PNG con fondo transparente,{' '}
             <span className="text-white/50">altura 120 px</span> y sin demasiado aire alrededor.
@@ -181,7 +243,7 @@ export default function AdminHomePage() {
             logos={settings.home.logos}
             onChange={(logos) => updateHome({ logos })}
           />
-        </Section>
+        </Section>}
       </div>
     </div>
   )
@@ -357,10 +419,12 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function AdminInput({
   label,
   value,
+  placeholder,
   onChange,
 }: {
   label: string
   value: string
+  placeholder?: string
   onChange: (v: string) => void
 }) {
   return (
@@ -369,8 +433,9 @@ function AdminInput({
       <input
         type="text"
         value={value}
+        placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full bg-zinc-900 border border-white/10 text-white text-sm rounded-lg px-3 py-2.5 focus:outline-none focus:border-white/30"
+        className="w-full bg-zinc-900 border border-white/10 text-white text-sm rounded-lg px-3 py-2.5 focus:outline-none focus:border-white/30 placeholder-white/20"
       />
     </div>
   )
@@ -379,10 +444,12 @@ function AdminInput({
 function AdminTextarea({
   label,
   value,
+  placeholder,
   onChange,
 }: {
   label: string
   value: string
+  placeholder?: string
   onChange: (v: string) => void
 }) {
   return (
@@ -390,6 +457,7 @@ function AdminTextarea({
       <label className="text-white/40 text-xs uppercase tracking-wider block mb-1.5">{label}</label>
       <textarea
         value={value}
+        placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
         rows={2}
         className="w-full bg-zinc-900 border border-white/10 text-white text-sm rounded-lg px-3 py-2.5 focus:outline-none focus:border-white/30 resize-none"
@@ -401,10 +469,12 @@ function AdminTextarea({
 function ItemListEditor({
   label,
   items,
+  placeholders = [],
   onChange,
 }: {
   label: string
   items: string[]
+  placeholders?: string[]
   onChange: (items: string[]) => void
 }) {
   const [input, setInput] = useState('')
@@ -418,11 +488,12 @@ function ItemListEditor({
     <div>
       <label className="text-white/40 text-xs uppercase tracking-wider block mb-1.5">{label}</label>
       <ul className="space-y-1.5 mb-2">
-        {items.map((item, i) => (
+        {(items.length ? items : placeholders.map(() => '')).map((item, i) => (
           <li key={i} className="flex items-center gap-2">
             <input
               type="text"
               value={item}
+              placeholder={placeholders[i]}
               onChange={(e) => {
                 const next = [...items]
                 next[i] = e.target.value

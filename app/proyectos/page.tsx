@@ -14,6 +14,8 @@ import type { ContactSettings, Proyecto, SiteSettings } from '@/lib/types'
 import { hasProjectDetailMedia, isVideoUrl } from '@/lib/media'
 import { fetchProjects } from '@/lib/projects-client'
 import { trackEvent } from '@/lib/analytics'
+import { useLocale, useSiteCopy } from '@/lib/LocaleContext'
+import { localizeProjects } from '@/lib/i18n-content'
 
 type ModalOriginRect = Pick<DOMRect, 'top' | 'left' | 'width' | 'height'>
 type FunModeType = 'dramanoid' | 'trivia'
@@ -48,6 +50,8 @@ export default function ProyectosPage() {
 }
 
 function ProyectosContent() {
+  const copy = useSiteCopy()
+  const locale = useLocale()
   const [projects, setProjects] = useState<Proyecto[]>([])
   const [contact, setContact] = useState<ContactSettings>(EMPTY_CONTACT)
   const [selected, setSelected] = useState<Proyecto | null>(null)
@@ -83,7 +87,7 @@ function ProyectosContent() {
   useEffect(() => {
     fetchProjects()
       .then((data: Proyecto[]) => {
-        const published = data.filter((p) => p.published)
+        const published = localizeProjects(data.filter((p) => p.published), locale)
         setProjects(published)
         const slug = searchParams.get('slug')
         if (slug) {
@@ -99,7 +103,7 @@ function ProyectosContent() {
           setModalOrigin(null)
         }
       })
-  }, [searchParams])
+  }, [locale, searchParams])
 
   useEffect(() => {
     fetch('/api/admin/site')
@@ -148,6 +152,17 @@ function ProyectosContent() {
       return
     }
 
+    const canUseTrivia = locale === 'es'
+    const canOpenDramanoid = canUseDramanoid && funMediaPool.length > 0
+
+    if (!canUseTrivia) {
+      if (!canOpenDramanoid) return
+
+      trackEvent('fan_mode_open')
+      setFunMode('dramanoid')
+      return
+    }
+
     if (!canUseDramanoid) {
       trackEvent('fan_mode_open')
       setFunMode('trivia')
@@ -172,7 +187,7 @@ function ProyectosContent() {
     window.sessionStorage.setItem('drama-fun-mode-last', nextMode)
     trackEvent('fan_mode_open')
     setFunMode(nextMode)
-  }, [canUseDramanoid, funMediaPool.length, funMode])
+  }, [canUseDramanoid, funMediaPool.length, funMode, locale])
 
   const handleFunModeClose = useCallback(() => {
     setFunMode(null)
@@ -185,7 +200,7 @@ function ProyectosContent() {
         <div className="px-5 md:px-10 pt-10 md:pt-14 pb-6">
           <div className="mx-auto flex w-full max-w-6xl flex-wrap items-end justify-between gap-x-4 gap-y-3 md:flex-nowrap" data-page="proyectos">
             <h1 className="text-black font-black uppercase text-5xl md:text-7xl leading-none">
-              PROYECTOS
+              {copy.common.projects}
             </h1>
             <button
               type="button"
@@ -198,7 +213,7 @@ function ProyectosContent() {
                   : 'border-black/25 bg-white/20 text-black/55 hover:border-black/50 hover:bg-white/40 hover:text-black',
               ].join(' ')}
             >
-              FUN MODE
+              {copy.common.funMode}
             </button>
           </div>
         </div>
@@ -218,12 +233,12 @@ function ProyectosContent() {
             </div>
             <div className={`mt-12 flex justify-center transition-all duration-700 md:mt-16 ${showAboutCta ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'}`}>
               <Link
-                href="/sobre-nosotros"
+                href="/nosotros"
                 aria-hidden={!showAboutCta}
                 tabIndex={showAboutCta ? undefined : -1}
                 className="inline-flex rounded-full border-2 border-black bg-white px-10 py-3.5 text-sm font-black uppercase tracking-[0.1em] text-black transition-colors duration-300 hover:bg-black hover:text-white"
               >
-                SOBRE NOSOTROS
+                {copy.nav.about}
               </Link>
             </div>
           </div>

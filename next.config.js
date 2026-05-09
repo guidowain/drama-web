@@ -33,6 +33,16 @@ const nextConfig = {
         destination: 'https://programademano.com.ar/alejandra',
         permanent: true,
       },
+      {
+        source: '/sobre-nosotros',
+        destination: '/nosotros',
+        permanent: true,
+      },
+      {
+        source: '/admin/sobre-nosotros',
+        destination: '/admin/nosotros',
+        permanent: true,
+      },
     ]
   },
 }

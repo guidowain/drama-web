@@ -66,6 +66,7 @@ function mergeSiteSettings(current: SiteSettings, incoming: unknown): SiteSettin
       whatsapp: next.settings?.whatsapp ?? current.settings.whatsapp,
       mail: next.settings?.mail ?? current.settings.mail,
     },
+    translations: next.translations ?? current.translations ?? {},
   }
 }
 

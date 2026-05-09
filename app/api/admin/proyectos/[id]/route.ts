@@ -27,6 +27,10 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     contentBlocks: Array.isArray(body.contentBlocks)
       ? body.contentBlocks
       : projects[index].contentBlocks,
+    seoTitle: body.seoTitle ?? projects[index].seoTitle,
+    seoDescription: body.seoDescription ?? projects[index].seoDescription,
+    excerpt: body.excerpt ?? projects[index].excerpt,
+    translations: body.translations ?? projects[index].translations ?? {},
   }
 
   await saveProjects(projects)

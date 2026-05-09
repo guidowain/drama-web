@@ -1,7 +1,7 @@
-# DRAMA — SOBRE NOSOTROS (v1.0)
+# DRAMA — NOSOTROS (v1.0)
 
 ## GLOBAL
-- Página: Sobre Nosotros
+- Página: Nosotros
 - Fondo base:
   - usar versión calmada del gradiente definido en `drama_master.md`
   - no redefinir colores en este archivo

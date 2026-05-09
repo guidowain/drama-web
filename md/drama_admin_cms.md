@@ -36,7 +36,7 @@
 - Proyectos
 - Media
 - Home
-- Sobre Nosotros
+- Nosotros
 - Ajustes
 
 ---
@@ -179,7 +179,7 @@ Tipos:
 
 ---
 
-## 7. SOBRE NOSOTROS
+## 7. NOSOTROS
 
 ### Campos
 - Imagen

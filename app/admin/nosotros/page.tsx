@@ -1,10 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import type { FaqItem, SiteSettings } from '@/lib/types'
+import type { FaqItem, LocaleCode, SiteSettings, SiteSettingsTranslation } from '@/lib/types'
+import LanguageTabs from '@/components/admin/LanguageTabs'
 
-export default function AdminSobreNosotrosPage() {
+export default function AdminNosotrosPage() {
   const [settings, setSettings] = useState<SiteSettings | null>(null)
+  const [activeLocale, setActiveLocale] = useState<LocaleCode>('es')
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
 
@@ -30,6 +32,26 @@ export default function AdminSobreNosotrosPage() {
     setSettings({ ...settings, about: { ...settings.about, ...changes } })
   }
 
+  function updateTranslation(changes: NonNullable<SiteSettingsTranslation['about']>) {
+    if (!settings || activeLocale === 'es') return
+    const locale = activeLocale
+    const currentTranslation = settings.translations?.[locale] ?? {}
+
+    setSettings({
+      ...settings,
+      translations: {
+        ...settings.translations,
+        [locale]: {
+          ...currentTranslation,
+          about: {
+            ...currentTranslation.about,
+            ...changes,
+          },
+        },
+      },
+    })
+  }
+
   function updateFaq(index: number, changes: Partial<FaqItem>) {
     if (!settings) return
 
@@ -38,6 +60,16 @@ export default function AdminSobreNosotrosPage() {
         i === index ? { ...faq, ...changes } : faq
       )),
     })
+  }
+
+  function updateTranslatedFaq(index: number, changes: Partial<FaqItem>) {
+    if (!settings || activeLocale === 'es') return
+    const translatedFaqs = [...(settings.translations?.[activeLocale]?.about?.faqs ?? [])]
+    translatedFaqs[index] = {
+      ...translatedFaqs[index],
+      ...changes,
+    }
+    updateTranslation({ faqs: translatedFaqs })
   }
 
   function addFaq() {
@@ -61,30 +93,36 @@ export default function AdminSobreNosotrosPage() {
 
   if (!settings) return <div className="p-10 text-white/30">Cargando...</div>
 
+  const isBaseLocale = activeLocale === 'es'
+  const translatedAbout = isBaseLocale ? null : settings.translations?.[activeLocale]?.about
+
   return (
     <div className="p-8 md:p-10 max-w-2xl">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-white font-black text-3xl uppercase">Sobre Nosotros</h1>
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          className="gradient-bg text-black font-black text-sm uppercase tracking-widest px-5 py-2.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
-        >
-          {saving ? 'Guardando...' : saved ? '¡Guardado!' : 'Guardar'}
-        </button>
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+        <h1 className="text-white font-black text-3xl uppercase">Nosotros</h1>
+        <div className="flex items-center gap-3">
+          <LanguageTabs value={activeLocale} onChange={setActiveLocale} />
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="gradient-bg text-black font-black text-sm uppercase tracking-widest px-5 py-2.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
+          >
+            {saving ? 'Guardando...' : saved ? '¡Guardado!' : 'Guardar'}
+          </button>
+        </div>
       </div>
 
       <div className="space-y-5">
         <Field label="Título principal">
           <textarea
-            value={settings.about.title}
-            onChange={(e) => update({ title: e.target.value })}
+            value={isBaseLocale ? settings.about.title : translatedAbout?.title ?? ''}
+            onChange={(e) => isBaseLocale ? update({ title: e.target.value }) : updateTranslation({ title: e.target.value })}
             rows={2}
-            placeholder={'SOMOS\nDRAMA'}
+            placeholder={isBaseLocale ? 'SOMOS\nDRAMA' : settings.about.title}
             className="admin-textarea"
           />
         </Field>
-        <Field label="Imagen (URL)">
+        {isBaseLocale && <Field label="Imagen (URL)">
           <input
             type="text"
             value={settings.about.image}
@@ -92,27 +130,30 @@ export default function AdminSobreNosotrosPage() {
             placeholder="/uploads/equipo.jpg"
             className="admin-input"
           />
-        </Field>
+        </Field>}
         <Field label="Alt de la imagen">
           <input
             type="text"
-            value={settings.about.imageAlt}
-            onChange={(e) => update({ imageAlt: e.target.value })}
+            value={isBaseLocale ? settings.about.imageAlt : translatedAbout?.imageAlt ?? ''}
+            onChange={(e) => isBaseLocale ? update({ imageAlt: e.target.value }) : updateTranslation({ imageAlt: e.target.value })}
+            placeholder={isBaseLocale ? undefined : settings.about.imageAlt}
             className="admin-input"
           />
         </Field>
         <Field label="Título sección 1">
           <input
             type="text"
-            value={settings.about.quienesSomosTitle}
-            onChange={(e) => update({ quienesSomosTitle: e.target.value })}
+            value={isBaseLocale ? settings.about.quienesSomosTitle : translatedAbout?.quienesSomosTitle ?? ''}
+            onChange={(e) => isBaseLocale ? update({ quienesSomosTitle: e.target.value }) : updateTranslation({ quienesSomosTitle: e.target.value })}
+            placeholder={isBaseLocale ? undefined : settings.about.quienesSomosTitle}
             className="admin-input"
           />
         </Field>
         <Field label="Texto sección 1">
           <textarea
-            value={settings.about.quienesSomos}
-            onChange={(e) => update({ quienesSomos: e.target.value })}
+            value={isBaseLocale ? settings.about.quienesSomos : translatedAbout?.quienesSomos ?? ''}
+            onChange={(e) => isBaseLocale ? update({ quienesSomos: e.target.value }) : updateTranslation({ quienesSomos: e.target.value })}
+            placeholder={isBaseLocale ? undefined : settings.about.quienesSomos}
             rows={4}
             className="admin-textarea"
           />
@@ -120,15 +161,17 @@ export default function AdminSobreNosotrosPage() {
         <Field label="Título sección 2">
           <input
             type="text"
-            value={settings.about.comoTrabajamosTitle}
-            onChange={(e) => update({ comoTrabajamosTitle: e.target.value })}
+            value={isBaseLocale ? settings.about.comoTrabajamosTitle : translatedAbout?.comoTrabajamosTitle ?? ''}
+            onChange={(e) => isBaseLocale ? update({ comoTrabajamosTitle: e.target.value }) : updateTranslation({ comoTrabajamosTitle: e.target.value })}
+            placeholder={isBaseLocale ? undefined : settings.about.comoTrabajamosTitle}
             className="admin-input"
           />
         </Field>
         <Field label="Texto sección 2">
           <textarea
-            value={settings.about.comoTrabajamos}
-            onChange={(e) => update({ comoTrabajamos: e.target.value })}
+            value={isBaseLocale ? settings.about.comoTrabajamos : translatedAbout?.comoTrabajamos ?? ''}
+            onChange={(e) => isBaseLocale ? update({ comoTrabajamos: e.target.value }) : updateTranslation({ comoTrabajamos: e.target.value })}
+            placeholder={isBaseLocale ? undefined : settings.about.comoTrabajamos}
             rows={4}
             className="admin-textarea"
           />
@@ -136,15 +179,17 @@ export default function AdminSobreNosotrosPage() {
         <Field label="Título sección 3">
           <input
             type="text"
-            value={settings.about.queDiferenciaTitle}
-            onChange={(e) => update({ queDiferenciaTitle: e.target.value })}
+            value={isBaseLocale ? settings.about.queDiferenciaTitle : translatedAbout?.queDiferenciaTitle ?? ''}
+            onChange={(e) => isBaseLocale ? update({ queDiferenciaTitle: e.target.value }) : updateTranslation({ queDiferenciaTitle: e.target.value })}
+            placeholder={isBaseLocale ? undefined : settings.about.queDiferenciaTitle}
             className="admin-input"
           />
         </Field>
         <Field label="Texto sección 3">
           <textarea
-            value={settings.about.queDiferencia}
-            onChange={(e) => update({ queDiferencia: e.target.value })}
+            value={isBaseLocale ? settings.about.queDiferencia : translatedAbout?.queDiferencia ?? ''}
+            onChange={(e) => isBaseLocale ? update({ queDiferencia: e.target.value }) : updateTranslation({ queDiferencia: e.target.value })}
+            placeholder={isBaseLocale ? undefined : settings.about.queDiferencia}
             rows={4}
             className="admin-textarea"
           />
@@ -153,19 +198,19 @@ export default function AdminSobreNosotrosPage() {
         <div className="pt-5 border-t border-white/10">
           <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
             <h2 className="text-white font-black text-xl uppercase">Preguntas frecuentes</h2>
-            <button
+            {isBaseLocale && <button
               type="button"
               onClick={addFaq}
               className="bg-white text-black font-black text-xs uppercase tracking-widest px-4 py-2 rounded-lg hover:bg-white/90 transition-colors"
             >
               Agregar
-            </button>
+            </button>}
           </div>
 
           <div className="space-y-4">
             {settings.about.faqs.map((faq, index) => (
               <div key={index} className="relative min-w-0 rounded-xl bg-zinc-900/70 border border-white/10 p-4 pr-12 space-y-3">
-                <button
+                {isBaseLocale && <button
                   type="button"
                   onClick={() => removeFaq(index)}
                   className="danger-x absolute right-3 top-3"
@@ -173,12 +218,12 @@ export default function AdminSobreNosotrosPage() {
                   title="Borrar"
                 >
                   ×
-                </button>
+                </button>}
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <span className="min-w-0 text-white/40 text-xs uppercase tracking-wider break-words">
                     Pregunta {index + 1}
                   </span>
-                  <div className="flex flex-wrap items-center gap-2">
+                  {isBaseLocale && <div className="flex flex-wrap items-center gap-2">
                     <button
                       type="button"
                       onClick={() => moveFaq(index, index - 1)}
@@ -199,21 +244,23 @@ export default function AdminSobreNosotrosPage() {
                     >
                       ↓
                     </button>
-                  </div>
+                  </div>}
                 </div>
 
                 <Field label="Pregunta">
                   <input
                     type="text"
-                    value={faq.question}
-                    onChange={(e) => updateFaq(index, { question: e.target.value })}
+                    value={isBaseLocale ? faq.question : translatedAbout?.faqs?.[index]?.question ?? ''}
+                    onChange={(e) => isBaseLocale ? updateFaq(index, { question: e.target.value }) : updateTranslatedFaq(index, { question: e.target.value })}
+                    placeholder={isBaseLocale ? undefined : faq.question}
                     className="admin-input"
                   />
                 </Field>
                 <Field label="Respuesta">
                   <textarea
-                    value={faq.answer}
-                    onChange={(e) => updateFaq(index, { answer: e.target.value })}
+                    value={isBaseLocale ? faq.answer : translatedAbout?.faqs?.[index]?.answer ?? ''}
+                    onChange={(e) => isBaseLocale ? updateFaq(index, { answer: e.target.value }) : updateTranslatedFaq(index, { answer: e.target.value })}
+                    placeholder={isBaseLocale ? undefined : faq.answer}
                     rows={4}
                     className="admin-textarea"
                   />

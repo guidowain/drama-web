@@ -1,3 +1,5 @@
+import { useSiteCopy } from '@/lib/LocaleContext'
+
 type Props = {
   instagram: string
   whatsapp: string
@@ -5,6 +7,8 @@ type Props = {
 }
 
 export default function ContactStrip({ instagram, whatsapp, mail }: Props) {
+  const copy = useSiteCopy()
+
   return (
     <section
       className="flex w-full flex-1 flex-col items-start justify-between gap-10 px-6 py-14 md:flex-row md:items-center md:gap-0 md:px-16 md:py-20"
@@ -14,11 +18,13 @@ export default function ContactStrip({ instagram, whatsapp, mail }: Props) {
     >
       {/* Left */}
       <p className="text-black font-black uppercase leading-[1.05] text-4xl md:text-6xl lg:text-7xl">
-        ESCRIBINOS,<br />NO HAY DRAMA.
+        {copy.contact.headline.map((line) => (
+          <span key={line} className="block">{line}</span>
+        ))}
       </p>
 
       {/* Right — contact icons */}
-      <nav aria-label="Contacto" className="flex w-full items-center justify-end gap-8 md:w-auto md:justify-start md:gap-10">
+      <nav aria-label={copy.common.contact} className="flex w-full items-center justify-end gap-8 md:w-auto md:justify-start md:gap-10">
         <a
           href={instagram}
           target="_blank"

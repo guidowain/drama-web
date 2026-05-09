@@ -3,8 +3,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { createPortal } from 'react-dom'
+import { useSiteCopy } from '@/lib/LocaleContext'
 
 export default function CTAProyectos() {
+  const copy = useSiteCopy()
   const [visible, setVisible] = useState(false)   // controls opacity
   const [expanded, setExpanded] = useState(false) // controls clip-path
   const [origin, setOrigin] = useState({ x: 50, y: 50 })
@@ -90,7 +92,7 @@ export default function CTAProyectos() {
         }}
       >
         <span className={isHovered ? 'cta-btn-label-hover' : 'cta-btn-label-default'}>
-          PROYECTOS
+          {copy.common.projects}
         </span>
       </Link>
     </div>
