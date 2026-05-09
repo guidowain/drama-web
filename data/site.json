@@ -153,5 +153,143 @@
     "instagram": "https://instagram.com/drama.com.ar",
     "whatsapp": "https://wa.me/5491163357223",
     "mail": "los@drama.com.ar"
+  },
+  "translations": {
+    "en": {
+      "home": {
+        "heroLine1": "THE STORY BENEATH",
+        "heroLine2": "THE STAGE.",
+        "services": {
+          "design": {
+            "name": "DESIGN",
+            "description": "",
+            "items": [
+              "Graphic design",
+              "Video editing",
+              "Animation",
+              "Websites",
+              "Photography",
+              "Photo retouching",
+              "Branding",
+              "AI",
+              "3D"
+            ]
+          },
+          "communication": {
+            "name": "COMMUNICATION",
+            "description": "",
+            "items": [
+              "Social media",
+              "Strategy",
+              "Creativity",
+              "Paid media",
+              "SEO",
+              "Email marketing"
+            ]
+          }
+        },
+        "wheelText": "DESIGN AND COMMUNICATION FOR ENTERTAINMENT"
+      },
+      "about": {
+        "title": "WE ARE\nDRAMA",
+        "imageAlt": "Mati Gordon and Guido Wain. The Drama team.",
+        "quienesSomosTitle": "WHO WE ARE",
+        "quienesSomos": "A design and communications agency specializing in entertainment. We work with producers, theaters, and artists to tell stories that connect.",
+        "comoTrabajamosTitle": "HOW WE WORK",
+        "comoTrabajamos": "We get involved in every project from the start, understanding the essence of the show and translating it into design and communication that resonates with audiences.",
+        "queDiferenciaTitle": "WHAT SETS US APART",
+        "queDiferencia": "We live theater and entertainment from the inside. That gives us a unique perspective to create pieces that speak the same language as the audience you want to reach.",
+        "faqs": [
+          {
+            "question": "What services do you offer?",
+            "answer": "Graphic design, branding, visual identity, animation, video editing, photography, retouching, websites, 3D, and AI content.\nIn communications: social media, strategy, creativity, paid media, email marketing, and SEO."
+          },
+          {
+            "question": "Can you join a project that is already underway?",
+            "answer": "Yes. We can come in from the very beginning or join once the project already has an identity, assets, or active campaigns, to organize, strengthen, and support whatever is needed."
+          },
+          {
+            "question": "Do you only work in entertainment?",
+            "answer": "We specialize in entertainment, but we do not stop there. We like creating identities and expanding existing ones, in any field."
+          },
+          {
+            "question": "What is it like to work with you?",
+            "answer": "From the moment you hire us, we put on your project’s jersey and give everything we have to help it succeed.\nFair warning: we are intense."
+          },
+          {
+            "question": "Are you expensive?",
+            "answer": "We are not cheap."
+          }
+        ]
+      }
+    },
+    "pt": {
+      "home": {
+        "heroLine1": "A HISTÓRIA POR TRÁS",
+        "heroLine2": "DO PALCO.",
+        "services": {
+          "design": {
+            "name": "DESIGN",
+            "description": "",
+            "items": [
+              "Design gráfico",
+              "Edição de vídeo",
+              "Animações",
+              "Sites",
+              "Fotografia",
+              "Retoque fotográfico",
+              "Branding",
+              "IA",
+              "3D"
+            ]
+          },
+          "communication": {
+            "name": "COMUNICAÇÃO",
+            "description": "",
+            "items": [
+              "Redes sociais",
+              "Estratégia",
+              "Criatividade",
+              "Mídia paga",
+              "SEO",
+              "Email marketing"
+            ]
+          }
+        },
+        "wheelText": "DESIGN E COMUNICAÇÃO PARA ENTRETENIMENTO"
+      },
+      "about": {
+        "title": "SOMOS\nDRAMA",
+        "imageAlt": "Mati Gordon e Guido Wain. Os Drama.",
+        "quienesSomosTitle": "QUEM SOMOS",
+        "quienesSomos": "Uma agência de design e comunicação especializada em entretenimento. Trabalhamos com produtoras, teatros e artistas para contar histórias que conectam.",
+        "comoTrabajamosTitle": "COMO TRABALHAMOS",
+        "comoTrabajamos": "Entramos em cada projeto desde o início, entendendo a essência do espetáculo e traduzindo isso em design e comunicação que ressoam com o público.",
+        "queDiferenciaTitle": "O QUE NOS DIFERENCIA",
+        "queDiferencia": "Vivemos teatro e entretenimento por dentro. Isso nos dá uma perspectiva única para criar peças que falam a mesma língua do público que você quer alcançar.",
+        "faqs": [
+          {
+            "question": "Quais serviços vocês oferecem?",
+            "answer": "Design gráfico, branding, identidade visual, animações, edição de vídeo, fotografia, retoque, sites, 3D e conteúdo com IA.\nEm comunicação: redes sociais, estratégia, criatividade, mídia paga, email marketing e SEO."
+          },
+          {
+            "question": "Vocês podem entrar em um projeto que já está em andamento?",
+            "answer": "Sim. Podemos entrar desde o início ou nos somar quando o projeto já tem identidade, peças ou campanhas ativas, para organizar, potencializar e acompanhar o que for necessário."
+          },
+          {
+            "question": "Vocês trabalham só com entretenimento?",
+            "answer": "Somos especialistas em entretenimento, mas não paramos por aí. Gostamos de criar identidades e expandir as existentes, em qualquer área."
+          },
+          {
+            "question": "Como é trabalhar com vocês?",
+            "answer": "A partir do momento em que você nos contrata, vestimos a camisa do seu projeto e damos tudo para que ele tenha sucesso.\nAviso: somos intensos."
+          },
+          {
+            "question": "Vocês são muito caros?",
+            "answer": "Baratos nós não somos."
+          }
+        ]
+      }
+    }
   }
 }
