@@ -1,3 +1,5 @@
+'use client'
+
 import { useSiteCopy } from '@/lib/LocaleContext'
 
 type Props = {
