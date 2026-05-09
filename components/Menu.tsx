@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useMenu } from '@/lib/MenuContext'
 import type { SiteSettings } from '@/lib/types'
-import { useSiteCopy } from '@/lib/LocaleContext'
+import { useLocale, useSiteCopy } from '@/lib/LocaleContext'
 
 type Props = {
   settings: SiteSettings['settings']
@@ -15,12 +15,13 @@ type Props = {
 export default function Menu({ settings }: Props) {
   const { isOpen, close } = useMenu()
   const copy = useSiteCopy()
+  const locale = useLocale()
   const pathname = usePathname()
   const navItems = [
     { label: copy.nav.home, href: '/' },
     { label: copy.nav.projects, href: '/proyectos' },
     { label: copy.nav.about, href: '/nosotros' },
-    { label: copy.nav.join, href: '/sumate' },
+    ...(locale === 'es' ? [{ label: copy.nav.join, href: '/sumate' }] : []),
   ]
 
   useEffect(() => {

@@ -3,6 +3,7 @@ import SumateForm from '@/components/SumateForm'
 import { getSiteSettings } from '@/lib/api'
 import { fixedSiteCopy, getFixedSiteCopy } from '@/lib/site-copy'
 import { getRequestLocale } from '@/lib/server-locale'
+import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: fixedSiteCopy.sumate.metadataTitle,
@@ -11,7 +12,12 @@ export const metadata: Metadata = {
 
 export default async function SumatePage() {
   const settings = await getSiteSettings()
-  const { locale } = getRequestLocale()
+  const { locale, country } = getRequestLocale()
+
+  if (country !== 'AR') {
+    redirect('/')
+  }
+
   const copy = getFixedSiteCopy(locale)
 
   return (
