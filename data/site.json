@@ -6,7 +6,7 @@
     "services": {
       "design": {
         "name": "DISEÑO",
-        "description": "",
+        "description": "Identidad visual, animaciones, branding, fotografía, retoque fotográfico, edición de video, webs, 3D e inteligencia artificial para proyectos de entretenimiento.",
         "items": [
           "Diseño gráfico",
           "Edición de video",
@@ -21,7 +21,7 @@
       },
       "communication": {
         "name": "COMUNICACIÓN",
-        "description": "",
+        "description": "Estrategia, creatividad, redes sociales, pauta publicitaria, email marketing y SEO para productoras, teatros y artistas.",
         "items": [
           "Redes sociales",
           "Estrategia",
@@ -40,7 +40,7 @@
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777047892/drama-web/uploads/bplavxfa46d3y9wy4nqn.webp",
-        "alt": "",
+        "alt": "Logo producción teatral",
         "scale": 1
       },
       {
@@ -80,7 +80,7 @@
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777062759/drama-web/uploads/apji0mtxfpa1btxaglvn.webp",
-        "alt": "",
+        "alt": "Logo producción de entretenimiento",
         "scale": 1
       },
       {
@@ -90,12 +90,12 @@
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777048586/drama-web/uploads/qia2tqexopa39em718cp.webp",
-        "alt": "",
+        "alt": "Logo cliente Drama",
         "scale": 0.75
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777049433/drama-web/uploads/kzcmto87tnvuonrvpbtf.webp",
-        "alt": "",
+        "alt": "Logo cliente Drama",
         "scale": 1
       },
       {
@@ -105,12 +105,12 @@
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777049856/drama-web/uploads/ayuetsdeqyb3uxbfkp9n.webp",
-        "alt": "",
+        "alt": "Logo cliente Drama",
         "scale": 0.7
       },
       {
         "src": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777058451/drama-web/uploads/gkredmlfafpmb81frnzq.webp",
-        "alt": "",
+        "alt": "Logo cliente Drama",
         "scale": 1.15
       }
     ],
@@ -121,11 +121,11 @@
     "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777240121/Socios_pezw24.webp",
     "imageAlt": "Mati Gordon y Guido Wain. Los Drama.",
     "quienesSomosTitle": "QUIÉNES SOMOS",
-    "quienesSomos": "Una agencia de diseño y comunicación especializada en entretenimiento. Trabajamos con productoras, teatros y artistas para contar historias que conectan.",
+    "quienesSomos": "Una agencia de diseño y comunicación especializada en entretenimiento con sede en Buenos Aires, Argentina. Trabajamos con productoras, teatros y artistas para crear identidades visuales, campañas y universos de comunicación que conectan con el público. Nuestros proyectos incluyen musicales de Broadway en Argentina, producciones televisivas y espectáculos en vivo.",
     "comoTrabajamosTitle": "CÓMO TRABAJAMOS",
-    "comoTrabajamos": "Nos involucramos en cada proyecto desde el inicio, entendiendo la esencia del espectáculo para traducirla en diseño y comunicación que resuena con el público.",
+    "comoTrabajamos": "Nos involucramos en cada proyecto desde el inicio, entendiendo la esencia del espectáculo para traducirla en diseño y comunicación que resuena con el público. Desde la identidad visual hasta las piezas de campaña, acompañamos cada etapa de la producción con criterio creativo y estratégico.",
     "queDiferenciaTitle": "QUÉ NOS DIFERENCIA",
-    "queDiferencia": "Vivimos el teatro y el entretenimiento. Eso nos da una perspectiva única para crear piezas que hablan el mismo idioma que el público al que querés llegar.",
+    "queDiferencia": "Vivimos el teatro y el entretenimiento desde adentro. Eso nos da una perspectiva única para crear piezas que hablan el mismo idioma que el público al que querés llegar. No somos una agencia genérica: somos especialistas en entretenimiento, con un portfolio que incluye producciones de Disney, Ozono y los teatros más importantes de Buenos Aires.",
     "faqs": [
       {
         "question": "¿Qué servicios ofrecen?",
@@ -162,7 +162,7 @@
         "services": {
           "design": {
             "name": "DESIGN",
-            "description": "",
+            "description": "Visual identity, animation, branding, photography, photo retouching, video editing, websites, 3D, and artificial intelligence for entertainment projects.",
             "items": [
               "Graphic design",
               "Video editing",
@@ -177,7 +177,7 @@
           },
           "communication": {
             "name": "COMMUNICATION",
-            "description": "",
+            "description": "Strategy, creativity, social media, paid media, email marketing, and SEO for producers, theaters, and artists.",
             "items": [
               "Social media",
               "Strategy",
@@ -194,11 +194,11 @@
         "title": "WE ARE\nDRAMA",
         "imageAlt": "Mati Gordon and Guido Wain. The Drama team.",
         "quienesSomosTitle": "WHO WE ARE",
-        "quienesSomos": "A design and communications agency specializing in entertainment. We work with producers, theaters, and artists to tell stories that connect.",
+        "quienesSomos": "A design and communications agency specializing in entertainment, based in Buenos Aires, Argentina. We work with producers, theaters, and artists to create visual identities, campaigns, and communication universes that connect with audiences. Our projects include Broadway musicals in Argentina, television productions, and live entertainment.",
         "comoTrabajamosTitle": "HOW WE WORK",
-        "comoTrabajamos": "We get involved in every project from the start, understanding the essence of the show and translating it into design and communication that resonates with audiences.",
+        "comoTrabajamos": "We get involved in every project from the start, understanding the essence of the show and translating it into design and communication that resonates with audiences. From visual identity to campaign pieces, we accompany every stage of a production with creative and strategic direction.",
         "queDiferenciaTitle": "WHAT SETS US APART",
-        "queDiferencia": "We live theater and entertainment from the inside. That gives us a unique perspective to create pieces that speak the same language as the audience you want to reach.",
+        "queDiferencia": "We live theater and entertainment from the inside. That gives us a unique perspective to create pieces that speak the same language as the audience you want to reach. We are not a generic agency — we are entertainment specialists, with a portfolio that includes productions by Disney, Ozono, and the most important theaters in Buenos Aires.",
         "faqs": [
           {
             "question": "What services do you offer?",
@@ -230,7 +230,7 @@
         "services": {
           "design": {
             "name": "DESIGN",
-            "description": "",
+            "description": "Identidade visual, animações, branding, fotografia, retoque fotográfico, edição de vídeo, sites, 3D e inteligência artificial para projetos de entretenimento.",
             "items": [
               "Design gráfico",
               "Edição de vídeo",
@@ -245,7 +245,7 @@
           },
           "communication": {
             "name": "COMUNICAÇÃO",
-            "description": "",
+            "description": "Estratégia, criatividade, redes sociais, mídia paga, email marketing e SEO para produtoras, teatros e artistas.",
             "items": [
               "Redes sociais",
               "Estratégia",
@@ -262,11 +262,11 @@
         "title": "SOMOS\nDRAMA",
         "imageAlt": "Mati Gordon e Guido Wain. Os Drama.",
         "quienesSomosTitle": "QUEM SOMOS",
-        "quienesSomos": "Uma agência de design e comunicação especializada em entretenimento. Trabalhamos com produtoras, teatros e artistas para contar histórias que conectam.",
+        "quienesSomos": "Uma agência de design e comunicação especializada em entretenimento, com sede em Buenos Aires, Argentina. Trabalhamos com produtoras, teatros e artistas para criar identidades visuais, campanhas e universos de comunicação que conectam com o público. Nossos projetos incluem musicais da Broadway na Argentina, produções televisivas e espetáculos ao vivo.",
         "comoTrabajamosTitle": "COMO TRABALHAMOS",
-        "comoTrabajamos": "Entramos em cada projeto desde o início, entendendo a essência do espetáculo e traduzindo isso em design e comunicação que ressoam com o público.",
+        "comoTrabajamos": "Entramos em cada projeto desde o início, entendendo a essência do espetáculo e traduzindo isso em design e comunicação que ressoam com o público. Da identidade visual às peças de campanha, acompanhamos cada etapa da produção com critério criativo e estratégico.",
         "queDiferenciaTitle": "O QUE NOS DIFERENCIA",
-        "queDiferencia": "Vivemos teatro e entretenimento por dentro. Isso nos dá uma perspectiva única para criar peças que falam a mesma língua do público que você quer alcançar.",
+        "queDiferencia": "Vivemos teatro e entretenimento por dentro. Isso nos dá uma perspectiva única para criar peças que falam a mesma língua do público que você quer alcançar. Não somos uma agência genérica: somos especialistas em entretenimento, com um portfólio que inclui produções da Disney, da Ozono e dos teatros mais importantes de Buenos Aires.",
         "faqs": [
           {
             "question": "Quais serviços vocês oferecem?",
