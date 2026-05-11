@@ -1,12 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import { useSiteCopy } from '@/lib/LocaleContext'
 
 type Props = {
   whatsapp: string
 }
 
 export default function ContactFormClient({ whatsapp }: Props) {
+  const copy = useSiteCopy()
   const [form, setForm] = useState({ nombre: '', apellido: '', email: '', mensaje: '' })
   const [sent, setSent] = useState(false)
 
@@ -16,7 +18,7 @@ export default function ContactFormClient({ whatsapp }: Props) {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    const msg = `Hola Drama! Soy ${form.nombre} ${form.apellido} (${form.email}).\n\n${form.mensaje}`
+    const msg = `${copy.contactForm.whatsappIntro} ${form.nombre} ${form.apellido} (${form.email}).\n\n${form.mensaje}`
     const clean = whatsapp.replace(/\D/g, '')
     window.open(`https://wa.me/${clean}?text=${encodeURIComponent(msg)}`, '_blank')
     setSent(true)
@@ -28,7 +30,7 @@ export default function ContactFormClient({ whatsapp }: Props) {
       <div className="grid grid-cols-2 gap-3">
         <input
           name="nombre"
-          placeholder="Nombre"
+          placeholder={copy.contactForm.firstName}
           required
           value={form.nombre}
           onChange={handleChange}
@@ -36,7 +38,7 @@ export default function ContactFormClient({ whatsapp }: Props) {
         />
         <input
           name="apellido"
-          placeholder="Apellido"
+          placeholder={copy.contactForm.lastName}
           value={form.apellido}
           onChange={handleChange}
           className="bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm placeholder-white/30 focus:outline-none focus:border-white/30"
@@ -53,7 +55,7 @@ export default function ContactFormClient({ whatsapp }: Props) {
       />
       <textarea
         name="mensaje"
-        placeholder="Mensaje"
+        placeholder={copy.contactForm.message}
         required
         rows={3}
         value={form.mensaje}
@@ -64,7 +66,7 @@ export default function ContactFormClient({ whatsapp }: Props) {
         type="submit"
         className="gradient-bg text-black font-black text-sm uppercase tracking-wider py-3 rounded-lg hover:opacity-90 transition-opacity"
       >
-        {sent ? '¡Enviado! 🎉' : 'Enviar'}
+        {sent ? copy.contactForm.sent : copy.contactForm.send}
       </button>
     </form>
   )

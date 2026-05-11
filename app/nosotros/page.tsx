@@ -5,10 +5,12 @@ import AboutReveal from '@/components/AboutReveal'
 import AboutFaqAccordion from '@/components/AboutFaqAccordion'
 import { localizeSiteSettings } from '@/lib/i18n-content'
 import { getRequestLocale } from '@/lib/server-locale'
+import { getFixedSiteCopy } from '@/lib/site-copy'
 
 export default async function NosotrosPage() {
   const { locale } = getRequestLocale()
   const settings = localizeSiteSettings(await getSiteSettings(), locale)
+  const copy = getFixedSiteCopy(locale)
   const { about, settings: siteSettings } = settings
   const aboutTitle = about.title.split('\n').map((line) => line.trim()).filter(Boolean)
 
@@ -34,7 +36,7 @@ export default async function NosotrosPage() {
               />
             ) : (
               <div className="aspect-square rounded-2xl bg-black/20 flex items-center justify-center">
-                <span className="text-black/40 text-sm">Imagen del equipo</span>
+                <span className="text-black/40 text-sm">{copy.about.teamImageFallback}</span>
               </div>
             )}
           </AboutReveal>
@@ -71,7 +73,7 @@ export default async function NosotrosPage() {
       </div>
 
       {/* Ticker */}
-      <Ticker text="DISEÑO Y COMUNICACIÓN PARA ENTRETENIMIENTO" bg="#000" />
+      <Ticker text={settings.home.wheelText ?? copy.home.wheelText} bg="#000" />
 
       {/* Contacto */}
       <ContactStrip

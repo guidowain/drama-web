@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useMenu } from '@/lib/MenuContext'
 import type { SiteSettings } from '@/lib/types'
@@ -17,6 +17,7 @@ export default function Menu({ settings }: Props) {
   const copy = useSiteCopy()
   const { locale, setLocale } = useLocaleControls()
   const pathname = usePathname()
+  const router = useRouter()
   const navItems = [
     { label: copy.nav.home, href: '/' },
     { label: copy.nav.projects, href: '/proyectos' },
@@ -34,6 +35,12 @@ export default function Menu({ settings }: Props) {
   }, [isOpen])
 
   useEffect(() => { close() }, [pathname])
+
+  function handleLocaleChange(language: typeof locale) {
+    setLocale(language)
+    close()
+    router.refresh()
+  }
 
   return (
     <AnimatePresence>
@@ -53,7 +60,7 @@ export default function Menu({ settings }: Props) {
           <div className="flex items-center justify-end px-5 md:px-8 h-16 md:h-[72px] shrink-0">
             <button
               onClick={close}
-              aria-label="Cerrar menú"
+              aria-label={copy.common.close}
               className="text-white opacity-80 hover:opacity-100 transition-opacity"
             >
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
@@ -75,6 +82,7 @@ export default function Menu({ settings }: Props) {
                 {i > 0 && <div className="h-[1px] bg-white/20" />}
                 <Link
                   href={item.href}
+                  prefetch={false}
                   onClick={close}
                   className="menu-nav-link block max-w-full py-3 text-white font-bold italic text-[clamp(2.65rem,13vw,4.4rem)] leading-none md:py-4 md:text-[clamp(4rem,10vh,6rem)]"
                 >
@@ -91,7 +99,7 @@ export default function Menu({ settings }: Props) {
                 <button
                   key={language}
                   type="button"
-                  onClick={() => setLocale(language)}
+                  onClick={() => handleLocaleChange(language)}
                   className={[
                     'min-w-10 rounded-full px-3 py-1.5 text-xs font-black uppercase tracking-[0.14em] transition-colors',
                     locale === language

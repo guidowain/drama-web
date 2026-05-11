@@ -1,11 +1,11 @@
 'use client'
 
 import { useEffect } from 'react'
-
-const ACTIVE_TITLE = 'Drama - Agencia'
-const AWAY_TITLES = ['¡Volvé a Drama!', '¡Te extrañamos!']
+import { useSiteCopy } from '@/lib/LocaleContext'
 
 export default function TabTitle() {
+  const copy = useSiteCopy()
+
   useEffect(() => {
     let intervalId: number | null = null
     let index = 0
@@ -18,16 +18,16 @@ export default function TabTitle() {
 
     function setActiveTitle() {
       clearTitleInterval()
-      document.title = ACTIVE_TITLE
+      document.title = copy.metadata.title
     }
 
     function startAwayTitle() {
       clearTitleInterval()
-      document.title = AWAY_TITLES[0]
+      document.title = copy.tab.awayTitles[0]
 
       intervalId = window.setInterval(() => {
-        index = (index + 1) % AWAY_TITLES.length
-        document.title = AWAY_TITLES[index]
+        index = (index + 1) % copy.tab.awayTitles.length
+        document.title = copy.tab.awayTitles[index]
       }, 1400)
     }
 
@@ -48,7 +48,7 @@ export default function TabTitle() {
       clearTitleInterval()
       document.removeEventListener('visibilitychange', handleVisibilityChange)
     }
-  }, [])
+  }, [copy.metadata.title, copy.tab.awayTitles])
 
   return null
 }

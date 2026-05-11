@@ -136,27 +136,31 @@
           "photo retouching"
         ],
         "name": "The Little Mermaid",
-        "seoTitle": "The Little Mermaid",
+        "seoTitle": "The Little Mermaid Argentina",
         "contentBlocks": [
           {
-            "title": "A visual world under the sea",
-            "text": "Using the Broadway logo as a starting point, we built the production’s visual universe from scratch: animations and assets that created the feeling of being under the sea, later becoming the foundation for more than 200 digital and printed pieces."
+            "title": "A (visual) world under the sea",
+            "text": "Using the Broadway logo as a starting point, we built the production’s visual universe from scratch: animations and assets that created the feeling of being under the sea, later becoming the base for more than 200 digital and print pieces."
           },
           {},
           {
             "title": "Argentina’s largest marquee",
-            "text": "The 265 square meters of windows at the Gran Rex became the project’s most visible piece: an image built entirely with AI and digital retouching, placed on the city’s most iconic avenue."
+            "text": "The 265 m² of windows at the Gran Rex became the project’s most visible piece: an image built entirely with AI and digital retouching, placed on the city’s most iconic avenue."
           },
           {},
           {
-            "title": "Our first project for Disney",
-            "text": "Under Ozono’s direction, The Little Mermaid put us in front of a level of rigor in approvals and brand guidelines we had never faced before.",
-            "imageAlt": "Animated reel for the launch of The Little Mermaid auditions"
+            "title": "Our first Disney project",
+            "text": "Under Ozono’s direction, The Little Mermaid brought us into a level of rigor in approvals and brand guidelines we had never faced before.",
+            "imageAlt": "Animated reel for The Little Mermaid audition launch"
           },
           {
-            "imageAlt": "Gran Rex doors featuring The Little Mermaid"
-          }
-        ]
+            "imageAlt": "Gran Rex doors with The Little Mermaid artwork"
+          },
+          {}
+        ],
+        "coverImageAlt": "Official artwork for The Little Mermaid Argentina",
+        "seoDescription": "Design, animation, AI, and visual assets for The Little Mermaid in Argentina.",
+        "excerpt": "A full visual universe built from the Broadway logo, with animation, AI, retouching, and more than 200 digital and print pieces."
       },
       "pt": {
         "tags": [
@@ -280,15 +284,21 @@
         "name": "Charlie and the Chocolate Factory",
         "contentBlocks": [
           {
-            "title": "The right kind of gold",
-            "text": "Some elements are not invented; they are discovered. The golden ticket had to look exactly the way everyone remembers it, even if no one has ever seen it the same way twice. We arrived at it after many tests, searching for the color and texture with just the right weight."
+            "title": "The right gold",
+            "text": "Some elements are not invented; they are discovered. The golden ticket had to look exactly the way everyone remembers it, even if no one has ever seen it the same way twice. We arrived there after many tests, searching for the color and texture with exactly the right weight."
           },
           {
             "title": "A universe in motion",
             "text": "We created a piece combining 2D animation, 3D, and chroma key for the winter-break ticket sales launch.",
             "imageAlt": "Animated reel for Charlie and the Chocolate Factory"
-          }
-        ]
+          },
+          {},
+          {}
+        ],
+        "coverImageAlt": "Official artwork for Charlie and the Chocolate Factory Argentina",
+        "seoTitle": "Charlie and the Chocolate Factory Argentina",
+        "seoDescription": "Design, animation, and visual assets for Charlie and the Chocolate Factory in Argentina.",
+        "excerpt": "From the golden ticket to animated launch pieces, we shaped a visual world with the right color, texture, and movement."
       },
       "pt": {
         "tags": [
@@ -436,24 +446,29 @@
           "visual identity",
           "creativity",
           "photo retouching",
-          "Animation"
+          "animation"
         ],
         "name": "School of Rock",
-        "seoTitle": "School of Rock",
+        "seoTitle": "School of Rock Argentina",
         "contentBlocks": [
           {
             "title": "From Madrid to Buenos Aires",
-            "text": "School of Rock Argentina was not DRAMA’s first contact with the show. Before that, we handled communications for the Madrid version, which gave us something rare: the chance to do it all over again with our own point of view."
+            "text": "School of Rock Argentina was not DRAMA’s first contact with the show. Before that, we handled communications for the Madrid version, which gave us something uncommon: the chance to do it all again with our own point of view."
           },
           {},
           {
-            "title": "Putting the kids up front",
+            "title": "The kids up front",
             "text": "Adults already knew School of Rock. The challenge was making kids feel it was for them too. The pieces placed them at the center, and we got the whole cast communicating in the same direction, without reducing the show to “live rock.”"
           },
           {
             "imageAlt": "Animated School of Rock Argentina logo"
-          }
-        ]
+          },
+          {},
+          {}
+        ],
+        "coverImageAlt": "Official artwork for School of Rock Argentina",
+        "seoDescription": "Communications, design, visual identity, and animation for School of Rock Argentina.",
+        "excerpt": "A campaign that put the kids at the center and gave the whole cast one clear direction."
       },
       "pt": {
         "tags": [
@@ -597,26 +612,32 @@
           "design",
           "creativity",
           "visual identity",
-          "Photo retouching"
+          "photo retouching"
         ],
         "name": "Matilda",
         "contentBlocks": [
           {
             "title": "The Matilda Pose",
-            "text": "The official artwork had to show the lead cast, by contract. But we believed in another image: one girl alone against the world. We proposed it, they accepted it, and it became the campaign’s most iconic piece. We called it The Matilda Pose. And it has one unique detail: while every version in the world looks left, ours looks right. Our Matilda looks toward the future."
+            "text": "The official artwork had to show the leading cast, by contract. But we believed in another image: one girl alone against the world. We proposed it, it was accepted, and it became the campaign’s most iconic piece. We called it The Matilda Pose. And it has one unique detail: while every version around the world looks to the left, ours looks to the right. Our Matilda looks toward the future."
           },
           {
             "imageAlt": "Animated logo for Matilda the Musical"
           },
           {
             "imageAlt": "Matilda with her parents",
-            "image2Alt": "Revolting children frightened by the figure of Miss Trunchbull"
+            "image2Alt": "Revolting children frightened by Miss Trunchbull"
           },
           {
             "title": "Lyric video",
             "text": "Using the official recording of the musical’s promotional cut, we created an animated video so children could learn the lyrics before going to the show."
-          }
-        ]
+          },
+          {},
+          {}
+        ],
+        "coverImageAlt": "Official artwork for Matilda the Musical Argentina",
+        "seoTitle": "Matilda the Musical Argentina",
+        "seoDescription": "Design, visual identity, and animation for Matilda the Musical in Argentina.",
+        "excerpt": "A campaign built around a single, powerful image: one girl against the world."
       },
       "pt": {
         "tags": [
@@ -701,12 +722,20 @@
     "translations": {
       "en": {
         "tags": [
-          "Photo retouching",
+          "photo retouching",
           "design",
           "visual identity",
           "creativity"
         ],
-        "name": "Legalmente rubia"
+        "name": "Legally Blonde",
+        "coverImageAlt": "Official artwork for Legally Blonde Argentina",
+        "seoTitle": "Legally Blonde Argentina",
+        "seoDescription": "Design, visual identity, creativity, and photo retouching for Legally Blonde Argentina.",
+        "excerpt": "A bright, precise visual identity for the Argentine production of Legally Blonde.",
+        "contentBlocks": [
+          {},
+          {}
+        ]
       },
       "pt": {
         "tags": [
@@ -843,15 +872,19 @@
           {},
           {
             "title": "Inside the show",
-            "text": "We built from the set design, the neon lights, and the makeup that aged and rejuvenated the character performance after performance. The communication did not introduce the show; it continued it. We even added our own jokes to the character’s universe."
+            "text": "We based the campaign on the set design, the neon lights, and the makeup that aged and rejuvenated the character performance after performance. The communication did not present the show; it continued it. We even added our own jokes to the character’s universe."
           },
           {},
           {},
           {
             "title": "Careful what happens when you give us freedom",
-            "text": "When Ozono Producciones approached us to take on the creative work for “Chanta,” they gave us free rein to play. We wanted to show that the character represented the most Argentine side of Argentina, and that is how the Julio Ballesteros of social media was born."
-          }
-        ]
+            "text": "When Ozono Producciones came to us to take on the creative work for “Chanta,” they gave us free rein to play. We wanted to prove that the character represented the most Argentine of Argentine traits, and that is how Julio Ballesteros on social media was born."
+          },
+          {}
+        ],
+        "coverImageAlt": "Official artwork for Chanta",
+        "seoDescription": "Visual identity, creativity, animation, and social content for Chanta.",
+        "excerpt": "A campaign that extended the world of the show and turned Julio Ballesteros into a character for social media too."
       },
       "pt": {
         "tags": [
@@ -906,7 +939,12 @@
           "creativity",
           "design"
         ],
-        "name": "Mi amiga y yo"
+        "name": "Mi amiga y yo",
+        "coverImageAlt": "Official artwork for Mi amiga y yo",
+        "seoTitle": "Mi amiga y yo",
+        "seoDescription": "Visual identity, creativity, design, and photo retouching for Mi amiga y yo.",
+        "excerpt": "Visual identity and campaign pieces for Mi amiga y yo.",
+        "contentBlocks": []
       },
       "pt": {
         "tags": [
@@ -937,11 +975,16 @@
     "translations": {
       "en": {
         "tags": [
-          "CREATIVITY",
-          "COMUNICACIÓN",
-          "ANIMACIÓN"
+          "creativity",
+          "communications",
+          "animation"
         ],
-        "name": "La cena de los tontos"
+        "name": "La cena de los tontos",
+        "coverImageAlt": "Artwork for La cena de los tontos",
+        "seoTitle": "La cena de los tontos",
+        "seoDescription": "Creativity, communications, and animation for La cena de los tontos.",
+        "excerpt": "Creative and communications work for La cena de los tontos.",
+        "contentBlocks": []
       },
       "pt": {
         "tags": [
@@ -974,7 +1017,12 @@
         "tags": [
           "visual identity"
         ],
-        "name": "Aquí no podemos hacerlo"
+        "name": "Aquí no podemos hacerlo",
+        "coverImageAlt": "Official artwork for Aquí no podemos hacerlo",
+        "seoTitle": "Aquí no podemos hacerlo",
+        "seoDescription": "Visual identity for Aquí no podemos hacerlo.",
+        "excerpt": "Visual identity work for Aquí no podemos hacerlo.",
+        "contentBlocks": []
       },
       "pt": {
         "tags": [
@@ -1006,12 +1054,17 @@
     "translations": {
       "en": {
         "tags": [
-          "CREATIVITY",
-          "PHOTO RETOUCHING",
-          "DESIGN",
-          "VISUAL IDENTITY"
+          "creativity",
+          "photo retouching",
+          "design",
+          "visual identity"
         ],
-        "name": "Avenida Q"
+        "name": "Avenue Q",
+        "coverImageAlt": "Official artwork for Avenue Q Argentina",
+        "seoTitle": "Avenue Q Argentina",
+        "seoDescription": "Creativity, design, visual identity, and photo retouching for Avenue Q Argentina.",
+        "excerpt": "Visual identity and campaign pieces for Avenue Q Argentina.",
+        "contentBlocks": []
       },
       "pt": {
         "tags": [
@@ -1049,7 +1102,12 @@
           "visual identity",
           "creativity"
         ],
-        "name": "Casi normales"
+        "name": "Next to Normal",
+        "coverImageAlt": "Official artwork for Next to Normal Argentina",
+        "seoTitle": "Next to Normal Argentina",
+        "seoDescription": "Design, visual identity, and creativity for Next to Normal Argentina.",
+        "excerpt": "Design and visual identity work for Next to Normal Argentina.",
+        "contentBlocks": []
       },
       "pt": {
         "tags": [
@@ -1083,12 +1141,17 @@
     "translations": {
       "en": {
         "tags": [
-          "VISUAL IDENTITY",
-          "DESIGN",
-          "PHOTO RETOUCHING",
-          "CREATIVITY"
+          "visual identity",
+          "design",
+          "photo retouching",
+          "creativity"
         ],
-        "name": "Navidad en las películas"
+        "name": "Navidad en las películas",
+        "coverImageAlt": "Official artwork for Navidad en las películas with Raúl Lavié",
+        "seoTitle": "Navidad en las películas",
+        "seoDescription": "Visual identity, design, creativity, and photo retouching for Navidad en las películas.",
+        "excerpt": "Visual identity and campaign pieces for Navidad en las películas.",
+        "contentBlocks": []
       },
       "pt": {
         "tags": [
@@ -1122,11 +1185,16 @@
     "translations": {
       "en": {
         "tags": [
-          "CREATIVITY",
-          "MARKETING",
-          "DESIGN"
+          "creativity",
+          "marketing",
+          "design"
         ],
-        "name": "Lucky Hank"
+        "name": "Lucky Hank",
+        "coverImageAlt": "Official artwork for Lucky Hank with Bob Odenkirk",
+        "seoTitle": "Lucky Hank",
+        "seoDescription": "Creativity, marketing, and design for Lucky Hank.",
+        "excerpt": "Creative and marketing design work for Lucky Hank.",
+        "contentBlocks": []
       },
       "pt": {
         "tags": [
@@ -1158,10 +1226,15 @@
     "translations": {
       "en": {
         "tags": [
-          "DESIGN",
-          "VISUAL IDENTITY"
+          "design",
+          "visual identity"
         ],
-        "name": "Thrill Maker"
+        "name": "Thrill Maker",
+        "coverImageAlt": "Book cover for Thrill Maker by Stephen Dolginoff",
+        "seoTitle": "Thrill Maker",
+        "seoDescription": "Design and visual identity for Thrill Maker.",
+        "excerpt": "Design and visual identity work for Thrill Maker.",
+        "contentBlocks": []
       },
       "pt": {
         "tags": [
@@ -1193,7 +1266,12 @@
         "tags": [
           "visual identity"
         ],
-        "name": "Vivitos y Coleando 2"
+        "name": "Vivitos y Coleando 2",
+        "coverImageAlt": "Official artwork for Vivitos y Coleando 2",
+        "seoTitle": "Vivitos y Coleando 2",
+        "seoDescription": "Visual identity for Vivitos y Coleando 2.",
+        "excerpt": "Visual identity work for Vivitos y Coleando 2.",
+        "contentBlocks": []
       },
       "pt": {
         "tags": [

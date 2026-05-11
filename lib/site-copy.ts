@@ -7,6 +7,13 @@ type SiteCopy = {
   }
   home: {
     seoTitle: string
+    wheelText: string
+  }
+  tab: {
+    awayTitles: string[]
+  }
+  about: {
+    teamImageFallback: string
   }
   nav: {
     home: string
@@ -42,6 +49,15 @@ type SiteCopy = {
   contact: {
     headline: string[]
   }
+  contactForm: {
+    firstName: string
+    lastName: string
+    email: string
+    message: string
+    sent: string
+    send: string
+    whatsappIntro: string
+  }
   sumate: {
     metadataTitle: string
     metadataDescription: string
@@ -58,6 +74,13 @@ const es: SiteCopy = {
   },
   home: {
     seoTitle: 'Agencia de diseño y comunicación para entretenimiento en Buenos Aires',
+    wheelText: 'DISEÑO Y COMUNICACIÓN PARA ENTRETENIMIENTO',
+  },
+  tab: {
+    awayTitles: ['¡Volvé a Drama!', '¡Te extrañamos!'],
+  },
+  about: {
+    teamImageFallback: 'Imagen del equipo',
   },
   nav: {
     home: 'HOME',
@@ -93,6 +116,15 @@ const es: SiteCopy = {
   contact: {
     headline: ['ESCRIBINOS,', 'NO HAY DRAMA.'],
   },
+  contactForm: {
+    firstName: 'Nombre',
+    lastName: 'Apellido',
+    email: 'Email',
+    message: 'Mensaje',
+    sent: 'Enviado',
+    send: 'Enviar',
+    whatsappIntro: 'Hola Drama! Soy',
+  },
   sumate: {
     metadataTitle: 'Sumate - Drama',
     metadataDescription: 'Sumate a la red de talentos de Drama.',
@@ -109,6 +141,13 @@ const en: SiteCopy = {
   },
   home: {
     seoTitle: 'Design and communications agency for entertainment in Buenos Aires',
+    wheelText: 'DESIGN AND COMMUNICATIONS FOR ENTERTAINMENT',
+  },
+  tab: {
+    awayTitles: ['Come back to Drama!', 'We miss you!'],
+  },
+  about: {
+    teamImageFallback: 'Team image',
   },
   nav: {
     home: 'HOME',
@@ -143,6 +182,15 @@ const en: SiteCopy = {
   },
   contact: {
     headline: ['CONTACT US,', 'NO DRAMA.'],
+  },
+  contactForm: {
+    firstName: 'First name',
+    lastName: 'Last name',
+    email: 'Email',
+    message: 'Message',
+    sent: 'Sent',
+    send: 'Send',
+    whatsappIntro: 'Hi Drama! I am',
   },
   sumate: {
     metadataTitle: 'Join Us - Drama',

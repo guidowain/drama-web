@@ -15,7 +15,7 @@ import { hasProjectDetailMedia, isVideoUrl } from '@/lib/media'
 import { fetchProjects } from '@/lib/projects-client'
 import { trackEvent } from '@/lib/analytics'
 import { useLocale, useSiteCopy } from '@/lib/LocaleContext'
-import { localizeProjects } from '@/lib/i18n-content'
+import { localizeProjects, localizeSiteSettings } from '@/lib/i18n-content'
 
 type ModalOriginRect = Pick<DOMRect, 'top' | 'left' | 'width' | 'height'>
 type FunModeType = 'dramanoid' | 'trivia'
@@ -54,6 +54,7 @@ function ProyectosContent() {
   const locale = useLocale()
   const [projects, setProjects] = useState<Proyecto[]>([])
   const [contact, setContact] = useState<ContactSettings>(EMPTY_CONTACT)
+  const [tickerText, setTickerText] = useState(copy.home.wheelText)
   const [selected, setSelected] = useState<Proyecto | null>(null)
   const [modalOrigin, setModalOrigin] = useState<ModalOriginRect | null>(null)
   const [showAboutCta, setShowAboutCta] = useState(false)
@@ -108,8 +109,12 @@ function ProyectosContent() {
   useEffect(() => {
     fetch('/api/admin/site')
       .then((r) => r.json())
-      .then((data: SiteSettings) => setContact(data.settings))
-  }, [])
+      .then((data: SiteSettings) => {
+        const localized = localizeSiteSettings(data, locale)
+        setContact(localized.settings)
+        setTickerText(localized.home.wheelText || copy.home.wheelText)
+      })
+  }, [copy.home.wheelText, locale])
 
   useEffect(() => {
     if (!selected) {
@@ -246,7 +251,7 @@ function ProyectosContent() {
       </main>
 
       <div className="flex min-h-screen flex-col">
-        <Ticker text="DISEÑO Y COMUNICACIÓN PARA ENTRETENIMIENTO" bg="#000" speed={55} />
+        <Ticker text={tickerText} bg="#000" speed={55} />
 
         <ContactStrip
           instagram={contact.instagram}
