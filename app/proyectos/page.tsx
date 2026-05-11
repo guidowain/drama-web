@@ -112,7 +112,7 @@ function ProyectosContent() {
       .then((data: SiteSettings) => {
         const localized = localizeSiteSettings(data, locale)
         setContact(localized.settings)
-        setTickerText(localized.home.wheelText || copy.home.wheelText)
+        setTickerText(copy.home.wheelText)
       })
   }, [copy.home.wheelText, locale])
 

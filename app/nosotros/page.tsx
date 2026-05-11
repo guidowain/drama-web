@@ -73,7 +73,7 @@ export default async function NosotrosPage() {
       </div>
 
       {/* Ticker */}
-      <Ticker text={settings.home.wheelText ?? copy.home.wheelText} bg="#000" />
+      <Ticker text={copy.home.wheelText} bg="#000" />
 
       {/* Contacto */}
       <ContactStrip
