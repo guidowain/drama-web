@@ -170,15 +170,15 @@
           "retoque fotográfico"
         ],
         "name": "A Pequena Sereia",
-        "seoTitle": "A Pequena Sereia",
+        "seoTitle": "A Pequena Sereia Argentina",
         "contentBlocks": [
           {
-            "title": "Um mundo visual debaixo do mar",
+            "title": "Um mundo (visual) debaixo do mar",
             "text": "Com o logo da Broadway como ponto de partida, construímos do zero o universo visual da produção: animações e assets que criavam a experiência de estar debaixo do mar e que depois serviram de base para mais de 200 peças digitais e impressas."
           },
           {},
           {
-            "title": "A maior fachada da Argentina",
+            "title": "A maior marquise da Argentina",
             "text": "Os 265 m² das janelas do Gran Rex foram a peça mais visível do projeto: uma imagem construída integralmente com IA e retoque digital, sobre a avenida mais icônica da cidade."
           },
           {},
@@ -189,8 +189,12 @@
           },
           {
             "imageAlt": "Portas do Gran Rex com A Pequena Sereia"
-          }
-        ]
+          },
+          {}
+        ],
+        "coverImageAlt": "Arte oficial de A Pequena Sereia Argentina",
+        "seoDescription": "Design, animação, IA e universo visual para A Pequena Sereia na Argentina.",
+        "excerpt": "Um universo visual completo criado a partir do logo da Broadway, com animação, IA, retoque e mais de 200 peças digitais e impressas."
       }
     }
   },
@@ -317,8 +321,14 @@
             "title": "O universo em movimento",
             "text": "Criamos uma peça combinando animação 2D, 3D e chroma para o lançamento da venda de ingressos das férias de inverno.",
             "imageAlt": "Reel animado de A Fantástica Fábrica de Chocolate"
-          }
-        ]
+          },
+          {},
+          {}
+        ],
+        "coverImageAlt": "Arte oficial de A Fantástica Fábrica de Chocolate Argentina",
+        "seoTitle": "A Fantástica Fábrica de Chocolate Argentina",
+        "seoDescription": "Design, animação e universo visual para A Fantástica Fábrica de Chocolate na Argentina.",
+        "excerpt": "Do golden ticket às peças animadas de lançamento, construímos um universo visual com a cor, a textura e o movimento certos."
       }
     }
   },
@@ -477,10 +487,10 @@
           "identidade visual",
           "criatividade",
           "retoque fotográfico",
-          "Animação"
+          "animação"
         ],
         "name": "School of Rock",
-        "seoTitle": "School of Rock",
+        "seoTitle": "School of Rock Argentina",
         "contentBlocks": [
           {
             "title": "De Madri a Buenos Aires",
@@ -493,8 +503,13 @@
           },
           {
             "imageAlt": "Logo animado de School of Rock Argentina"
-          }
-        ]
+          },
+          {},
+          {}
+        ],
+        "coverImageAlt": "Arte oficial de School of Rock Argentina",
+        "seoDescription": "Comunicação, design, identidade visual e animação para School of Rock Argentina.",
+        "excerpt": "Uma campanha que colocou as crianças no centro e deu a todo o elenco uma direção clara de comunicação."
       }
     }
   },
@@ -644,26 +659,32 @@
           "design",
           "criatividade",
           "identidade visual",
-          "Retoque fotográfico"
+          "retoque fotográfico"
         ],
         "name": "Matilda",
         "contentBlocks": [
           {
             "title": "A Pose Matilda",
-            "text": "A arte oficial precisava mostrar o elenco protagonista, por contrato. Mas nós acreditávamos em outra imagem: uma menina sozinha contra o mundo. Propusemos, aceitaram, e ela se tornou a peça mais icônica da campanha. Chamamos de A Pose Matilda. E tem um detalhe único: enquanto todas as versões do mundo olham para a esquerda, a nossa olha para a direita. A nossa Matilda olha para o futuro."
+            "text": "A arte oficial precisava mostrar o elenco protagonista, por contrato. Mas nós acreditávamos em outra imagem: uma menina sozinha contra o mundo. Propusemos, aceitaram, e ela se tornou a peça mais icônica da campanha. Chamamos de A Pose Matilda. E ela tem um detalhe único: enquanto todas as versões do mundo olham para a esquerda, a nossa olha para a direita. Nossa Matilda olha para o futuro."
           },
           {
             "imageAlt": "Logo animado de Matilda, o Musical"
           },
           {
             "imageAlt": "Matilda com seus pais",
-            "image2Alt": "Crianças revoltadas com medo da figura da Srta. Trunchbull"
+            "image2Alt": "Crianças revoltadas com medo da Senhorita Trunchbull"
           },
           {
             "title": "Lyric video",
-            "text": "Aproveitando a gravação oficial do corte promocional do musical, realizamos um vídeo animado para que as crianças aprendessem a letra antes de ir à sessão."
-          }
-        ]
+            "text": "Aproveitando a gravação oficial do corte promocional do musical, criamos um vídeo animado para que as crianças aprendessem a letra antes de ir à sessão."
+          },
+          {},
+          {}
+        ],
+        "coverImageAlt": "Arte oficial de Matilda, o Musical Argentina",
+        "seoTitle": "Matilda, o Musical Argentina",
+        "seoDescription": "Design, identidade visual e animação para Matilda, o Musical na Argentina.",
+        "excerpt": "Uma campanha construída ao redor de uma imagem poderosa: uma menina sozinha contra o mundo."
       }
     }
   },
@@ -739,12 +760,20 @@
       },
       "pt": {
         "tags": [
-          "Retoque fotográfico",
+          "retoque fotográfico",
           "design",
           "identidade visual",
           "criatividade"
         ],
-        "name": "Legalmente rubia"
+        "name": "Legalmente Loira",
+        "coverImageAlt": "Arte oficial de Legalmente Loira Argentina",
+        "seoTitle": "Legalmente Loira Argentina",
+        "seoDescription": "Design, identidade visual, criatividade e retoque fotográfico para Legalmente Loira Argentina.",
+        "excerpt": "Uma identidade visual luminosa e precisa para a produção argentina de Legalmente Loira.",
+        "contentBlocks": [
+          {},
+          {}
+        ]
       }
     }
   },
@@ -900,15 +929,19 @@
           {},
           {
             "title": "Dentro da obra",
-            "text": "Partimos da cenografia, dos neons e das maquiagens que envelheciam e rejuvenescem o personagem a cada função. A comunicação não apresentava a obra; ela continuava a obra. Até somamos piadas próprias ao universo do personagem."
+            "text": "Nós nos baseamos na cenografia, nos neons e nas maquiagens que envelheciam e rejuveneciam o personagem a cada apresentação. A comunicação não apresentava a obra: ela continuava a obra. Até somamos piadas próprias ao universo do personagem."
           },
           {},
           {},
           {
             "title": "Cuidado ao nos dar liberdade",
-            "text": "Quando a Ozono Producciones nos chamou para assumir a criatividade de “Chanta”, nos deu carta branca para brincar. Quisemos demonstrar que o personagem representava o mais argentino dos argentinos, e assim nasceu o Julio Ballesteros das redes."
-          }
-        ]
+            "text": "Quando a Ozono Producciones nos procurou para assumir a criatividade de “Chanta”, nos deram liberdade total para brincar. Queríamos demonstrar que o personagem representava a maior das argentinidades, e assim nasceu o Julio Ballesteros das redes."
+          },
+          {}
+        ],
+        "coverImageAlt": "Arte oficial de Chanta",
+        "seoDescription": "Identidade visual, criatividade, animação e conteúdo para redes sociais de Chanta.",
+        "excerpt": "Uma campanha que expandiu o universo da obra e transformou Julio Ballesteros também em personagem das redes."
       }
     }
   },
@@ -953,7 +986,12 @@
           "criatividade",
           "design"
         ],
-        "name": "Mi amiga y yo"
+        "name": "Mi amiga y yo",
+        "coverImageAlt": "Arte oficial de Mi amiga y yo",
+        "seoTitle": "Mi amiga y yo",
+        "seoDescription": "Identidade visual, criatividade, design e retoque fotográfico para Mi amiga y yo.",
+        "excerpt": "Identidade visual e peças de campanha para Mi amiga y yo.",
+        "contentBlocks": []
       }
     }
   },
@@ -988,11 +1026,16 @@
       },
       "pt": {
         "tags": [
-          "CRIATIVIDADE",
-          "COMUNICACIÓN",
-          "ANIMACIÓN"
+          "criatividade",
+          "comunicação",
+          "animação"
         ],
-        "name": "La cena de los tontos"
+        "name": "La cena de los tontos",
+        "coverImageAlt": "Arte de La cena de los tontos",
+        "seoTitle": "La cena de los tontos",
+        "seoDescription": "Criatividade, comunicação e animação para La cena de los tontos.",
+        "excerpt": "Trabalho de criatividade e comunicação para La cena de los tontos.",
+        "contentBlocks": []
       }
     }
   },
@@ -1028,7 +1071,12 @@
         "tags": [
           "identidade visual"
         ],
-        "name": "Aquí no podemos hacerlo"
+        "name": "Aquí no podemos hacerlo",
+        "coverImageAlt": "Arte oficial de Aquí no podemos hacerlo",
+        "seoTitle": "Aquí no podemos hacerlo",
+        "seoDescription": "Identidade visual para Aquí no podemos hacerlo.",
+        "excerpt": "Trabalho de identidade visual para Aquí no podemos hacerlo.",
+        "contentBlocks": []
       }
     }
   },
@@ -1068,12 +1116,17 @@
       },
       "pt": {
         "tags": [
-          "CRIATIVIDADE",
-          "RETOQUE FOTOGRÁFICO",
-          "DESIGN",
-          "IDENTIDADE VISUAL"
+          "criatividade",
+          "retoque fotográfico",
+          "design",
+          "identidade visual"
         ],
-        "name": "Avenida Q"
+        "name": "Avenida Q",
+        "coverImageAlt": "Arte oficial de Avenida Q Argentina",
+        "seoTitle": "Avenida Q Argentina",
+        "seoDescription": "Criatividade, design, identidade visual e retoque fotográfico para Avenida Q Argentina.",
+        "excerpt": "Identidade visual e peças de campanha para Avenida Q Argentina.",
+        "contentBlocks": []
       }
     }
   },
@@ -1115,7 +1168,12 @@
           "identidade visual",
           "criatividade"
         ],
-        "name": "Casi normales"
+        "name": "Quase Normais",
+        "coverImageAlt": "Arte oficial de Quase Normais Argentina",
+        "seoTitle": "Quase Normais Argentina",
+        "seoDescription": "Design, identidade visual e criatividade para Quase Normais Argentina.",
+        "excerpt": "Trabalho de design e identidade visual para Quase Normais Argentina.",
+        "contentBlocks": []
       }
     }
   },
@@ -1155,12 +1213,17 @@
       },
       "pt": {
         "tags": [
-          "IDENTIDADE VISUAL",
-          "DESIGN",
-          "RETOQUE FOTOGRÁFICO",
-          "CRIATIVIDADE"
+          "identidade visual",
+          "design",
+          "retoque fotográfico",
+          "criatividade"
         ],
-        "name": "Navidad en las películas"
+        "name": "Navidad en las películas",
+        "coverImageAlt": "Arte oficial de Navidad en las películas com Raúl Lavié",
+        "seoTitle": "Navidad en las películas",
+        "seoDescription": "Identidade visual, design, criatividade e retoque fotográfico para Navidad en las películas.",
+        "excerpt": "Identidade visual e peças de campanha para Navidad en las películas.",
+        "contentBlocks": []
       }
     }
   },
@@ -1198,11 +1261,16 @@
       },
       "pt": {
         "tags": [
-          "CRIATIVIDADE",
-          "MARKETING",
-          "DESIGN"
+          "criatividade",
+          "marketing",
+          "design"
         ],
-        "name": "Lucky Hank"
+        "name": "Lucky Hank",
+        "coverImageAlt": "Arte oficial de Lucky Hank com Bob Odenkirk",
+        "seoTitle": "Lucky Hank",
+        "seoDescription": "Criatividade, marketing e design para Lucky Hank.",
+        "excerpt": "Trabalho de criatividade e design de marketing para Lucky Hank.",
+        "contentBlocks": []
       }
     }
   },
@@ -1238,10 +1306,15 @@
       },
       "pt": {
         "tags": [
-          "DESIGN",
-          "IDENTIDADE VISUAL"
+          "design",
+          "identidade visual"
         ],
-        "name": "Thrill Maker"
+        "name": "Thrill Maker",
+        "coverImageAlt": "Capa do livro Thrill Maker, de Stephen Dolginoff",
+        "seoTitle": "Thrill Maker",
+        "seoDescription": "Design e identidade visual para Thrill Maker.",
+        "excerpt": "Trabalho de design e identidade visual para Thrill Maker.",
+        "contentBlocks": []
       }
     }
   },
@@ -1277,7 +1350,12 @@
         "tags": [
           "identidade visual"
         ],
-        "name": "Vivitos y Coleando 2"
+        "name": "Vivitos y Coleando 2",
+        "coverImageAlt": "Arte oficial de Vivitos y Coleando 2",
+        "seoTitle": "Vivitos y Coleando 2",
+        "seoDescription": "Identidade visual para Vivitos y Coleando 2.",
+        "excerpt": "Trabalho de identidade visual para Vivitos y Coleando 2.",
+        "contentBlocks": []
       }
     }
   }

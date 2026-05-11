@@ -2,12 +2,14 @@
 
 import { useState } from 'react'
 import type { FaqItem } from '@/lib/types'
+import { useSiteCopy } from '@/lib/LocaleContext'
 
 type Props = {
   faqs: FaqItem[]
 }
 
 export default function AboutFaqAccordion({ faqs }: Props) {
+  const copy = useSiteCopy()
   const visibleFaqs = faqs.filter((faq) => faq.question.trim() && faq.answer.trim())
   const [openIndex, setOpenIndex] = useState<number | null>(visibleFaqs.length > 0 ? 0 : null)
 
@@ -17,7 +19,7 @@ export default function AboutFaqAccordion({ faqs }: Props) {
     <section className="mt-10 md:mt-14">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-black font-black uppercase text-3xl md:text-5xl leading-none mb-5 md:mb-7">
-          PREGUNTAS FRECUENTES
+          {copy.about.faqTitle}
         </h2>
         <div className="border-y border-black/30">
           {visibleFaqs.map((faq, index) => {

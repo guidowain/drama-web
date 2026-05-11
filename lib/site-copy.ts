@@ -14,6 +14,7 @@ type SiteCopy = {
   }
   about: {
     teamImageFallback: string
+    faqTitle: string
   }
   nav: {
     home: string
@@ -81,6 +82,7 @@ const es: SiteCopy = {
   },
   about: {
     teamImageFallback: 'Imagen del equipo',
+    faqTitle: 'PREGUNTAS FRECUENTES',
   },
   nav: {
     home: 'HOME',
@@ -148,6 +150,7 @@ const en: SiteCopy = {
   },
   about: {
     teamImageFallback: 'Team image',
+    faqTitle: 'FREQUENTLY ASKED QUESTIONS',
   },
   nav: {
     home: 'HOME',
@@ -201,7 +204,73 @@ const en: SiteCopy = {
   },
 }
 
-const pt: SiteCopy = es
+const pt: SiteCopy = {
+  metadata: {
+    title: 'Drama - Agência',
+    description: 'A história por trás do palco.',
+  },
+  home: {
+    seoTitle: 'Agência de design e comunicação para entretenimento em Buenos Aires',
+    wheelText: 'DESIGN E COMUNICAÇÃO PARA ENTRETENIMENTO',
+  },
+  tab: {
+    awayTitles: ['Volte para a Drama!', 'Sentimos sua falta!'],
+  },
+  about: {
+    teamImageFallback: 'Imagem da equipe',
+    faqTitle: 'PERGUNTAS FREQUENTES',
+  },
+  nav: {
+    home: 'HOME',
+    projects: 'PROJETOS',
+    about: 'SOBRE NÓS',
+    join: 'JUNTE-SE A NÓS',
+    homeAria: 'Drama - Início',
+    openMenu: 'Abrir menu',
+  },
+  common: {
+    projects: 'PROJETOS',
+    funMode: 'FUN MODE',
+    contact: 'Contato',
+    close: 'Fechar',
+  },
+  trivia: {
+    title: 'DRAMA TRIVIA',
+    shareTextSuffix: 'jogue também em drama.com.ar',
+    fallbackError: 'TRIVIA EM ENSAIO',
+    loadError: 'Não foi possível carregar a trivia',
+    viewProjects: 'VER PROJETOS',
+    result: 'Resultado',
+    correct: 'CORRETA',
+    incorrect: 'INCORRETA',
+    sharing: 'Compartilhando...',
+    shareResults: 'COMPARTILHAR RESULTADOS',
+    playAgain: 'JOGAR DE NOVO',
+  },
+  dramanoid: {
+    title: 'DRAMANOID',
+    win: 'VOCÊ GANHOU!',
+  },
+  contact: {
+    headline: ['FALE COM A GENTE,', 'NO DRAMA.'],
+  },
+  contactForm: {
+    firstName: 'Nome',
+    lastName: 'Sobrenome',
+    email: 'Email',
+    message: 'Mensagem',
+    sent: 'Enviado',
+    send: 'Enviar',
+    whatsappIntro: 'Olá Drama! Eu sou',
+  },
+  sumate: {
+    metadataTitle: 'Junte-se a nós - Drama',
+    metadataDescription: 'Faça parte da rede de talentos da Drama.',
+    eyebrow: 'Queremos conhecer você',
+    title: 'Junte-se a nós',
+    intro: 'Se você trabalha com design, comunicação, conteúdo, produção ou estratégia para entretenimento, preencha o formulário e envie seus links.',
+  },
+}
 
 export const siteCopies = {
   es,
