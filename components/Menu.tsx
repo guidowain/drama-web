@@ -12,6 +12,8 @@ type Props = {
   settings: SiteSettings['settings']
 }
 
+const SHOW_LANGUAGE_SELECTOR = false
+
 export default function Menu({ settings }: Props) {
   const { isOpen, close } = useMenu()
   const copy = useSiteCopy()
@@ -94,23 +96,27 @@ export default function Menu({ settings }: Props) {
 
           {/* Social icons */}
           <div className="flex shrink-0 flex-col items-center justify-center gap-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-3">
-            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] p-1">
-              {(['es', 'en', 'pt'] as const).map((language) => (
-                <button
-                  key={language}
-                  type="button"
-                  onClick={() => handleLocaleChange(language)}
-                  className={[
-                    'min-w-10 rounded-full px-3 py-1.5 text-xs font-black uppercase tracking-[0.14em] transition-colors',
-                    locale === language
-                      ? 'bg-white text-black'
-                      : 'text-white/35 hover:bg-white/5 hover:text-white/80',
-                  ].join(' ')}
-                >
-                  {language}
-                </button>
-              ))}
-            </div>
+            {SHOW_LANGUAGE_SELECTOR && (
+              // Hidden for launch: language is auto-detected by country/browser.
+              // Keep this switch for future manual QA or if Drama decides to expose language selection.
+              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] p-1">
+                {(['es', 'en', 'pt'] as const).map((language) => (
+                  <button
+                    key={language}
+                    type="button"
+                    onClick={() => handleLocaleChange(language)}
+                    className={[
+                      'min-w-10 rounded-full px-3 py-1.5 text-xs font-black uppercase tracking-[0.14em] transition-colors',
+                      locale === language
+                        ? 'bg-white text-black'
+                        : 'text-white/35 hover:bg-white/5 hover:text-white/80',
+                    ].join(' ')}
+                  >
+                    {language}
+                  </button>
+                ))}
+              </div>
+            )}
 
             <div className="flex items-center justify-center gap-8">
               <a
