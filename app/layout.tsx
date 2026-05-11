@@ -14,7 +14,7 @@ import { headers } from 'next/headers'
 import { isDynamicServerError } from 'next/dist/client/components/hooks-server-context'
 
 const SITE_URL = 'https://drama.com.ar'
-const OG_IMAGE = 'https://res.cloudinary.com/dsqre3rmd/image/upload/v1777240121/Socios_pezw24.webp'
+const OG_IMAGE = `${SITE_URL}/favicon/apple-touch-icon.png`
 
 const organizationSchema = {
   '@context': 'https://schema.org',
