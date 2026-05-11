@@ -82,7 +82,7 @@ const es: SiteCopy = {
   },
   about: {
     teamImageFallback: 'Imagen del equipo',
-    faqTitle: "FAQ's",
+    faqTitle: 'PREGUNTAS FRECUENTES',
   },
   nav: {
     home: 'HOME',
@@ -218,7 +218,7 @@ const pt: SiteCopy = {
   },
   about: {
     teamImageFallback: 'Imagem da equipe',
-    faqTitle: "FAQ's",
+    faqTitle: 'PERGUNTAS FREQUENTES',
   },
   nav: {
     home: 'HOME',
