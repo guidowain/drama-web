@@ -70,8 +70,8 @@ type SiteCopy = {
 
 const es: SiteCopy = {
   metadata: {
-    title: 'Drama | Diseño y Comunicación para Entretenimiento',
-    description: 'Agencia de diseño y comunicación especializada en entretenimiento. Trabajamos con productoras, teatros y artistas en Buenos Aires, Argentina.',
+    title: 'Drama - Agencia',
+    description: 'La historia debajo del escenario.',
   },
   home: {
     seoTitle: 'Agencia de diseño y comunicación para entretenimiento en Buenos Aires',
@@ -138,8 +138,8 @@ const es: SiteCopy = {
 
 const en: SiteCopy = {
   metadata: {
-    title: 'Drama | Design and Communications for Entertainment',
-    description: 'Design and communications agency specializing in entertainment. We work with producers, theaters, and artists in Buenos Aires, Argentina.',
+    title: 'Drama - Agency',
+    description: 'The story beneath the stage.',
   },
   home: {
     seoTitle: 'Design and communications agency for entertainment in Buenos Aires',
@@ -206,8 +206,8 @@ const en: SiteCopy = {
 
 const pt: SiteCopy = {
   metadata: {
-    title: 'Drama | Design e Comunicação para Entretenimento',
-    description: 'Agência de design e comunicação especializada em entretenimento. Trabalhamos com produtoras, teatros e artistas em Buenos Aires, Argentina.',
+    title: 'Drama - Agência',
+    description: 'A história por trás do palco.',
   },
   home: {
     seoTitle: 'Agência de design e comunicação para entretenimento em Buenos Aires',

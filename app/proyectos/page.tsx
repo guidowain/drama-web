@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import Link from 'next/link'
-import { useRouter, useSearchParams, usePathname } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Suspense } from 'react'
 import ProjectCard from '@/components/ProjectCard'
 import ModalProject from '@/components/ModalProject'
@@ -62,7 +62,6 @@ function ProyectosContent() {
   const [canUseDramanoid, setCanUseDramanoid] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
-  const pathname = usePathname()
   const lastTrackedProjectSlugRef = useRef<string | null>(null)
   const funMediaPool = useMemo(() => collectProjectMedia(projects), [projects])
 
@@ -91,8 +90,7 @@ function ProyectosContent() {
       .then((data: Proyecto[]) => {
         const published = localizeProjects(data.filter((p) => p.published), locale)
         setProjects(published)
-        const pathSlug = pathname.startsWith('/proyectos/') ? pathname.slice('/proyectos/'.length) : null
-        const slug = searchParams.get('slug') ?? pathSlug
+        const slug = searchParams.get('slug')
         if (slug) {
           const found = published.find((p) => p.slug === slug)
           if (found && hasProjectDetailMedia(found)) {
@@ -144,7 +142,7 @@ function ProyectosContent() {
       height: originRect.height,
     })
     setSelected(project)
-    router.push(`/proyectos/${project.slug}`, { scroll: false })
+    router.push(`/proyectos?slug=${project.slug}`, { scroll: false })
   }, [router])
 
   const handleClose = useCallback(() => {

@@ -13,7 +13,7 @@
       "retoque fotográfico"
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777052154/drama-web/uploads/huros5cqtavrvnqr3pwa.webp",
-    "coverImageAlt": "Gráfica oficial de La Sirenita el Musical Argentina",
+    "coverImageAlt": "",
     "contentBlocks": [
       {
         "id": "moj71384dagw1hy92wo",
@@ -39,7 +39,7 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777414149/drama-web/uploads/mkbdxmjgr24gy9rpqyl1.webp",
-        "imageAlt": "Piezas visuales del universo de La Sirenita Argentina",
+        "imageAlt": "",
         "imageScale": 100,
         "imageShowMuteButton": true,
         "image2": "",
@@ -72,7 +72,7 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777316597/drama-web/uploads/fgnmjknbtoaflwcpbnwt.png",
-        "imageAlt": "Marquesina de 265m² de La Sirenita en el Teatro Gran Rex, Buenos Aires",
+        "imageAlt": "",
         "imageScale": 100,
         "image2": "",
         "image2Alt": "",
@@ -116,17 +116,17 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777316653/drama-web/uploads/h60lfejzlo2bgttgxzzd.webp",
-        "imageAlt": "Piezas gráficas digitales de La Sirenita Argentina",
+        "imageAlt": "",
         "imageScale": 100,
         "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777316659/drama-web/uploads/geewjnjxdjqo7y228gyp.webp",
-        "image2Alt": "Material impreso de La Sirenita el Musical Argentina",
+        "image2Alt": "",
         "image2Scale": 100,
         "imageSide": "left"
       }
     ],
-    "seoTitle": "La Sirenita el Musical Argentina | Drama",
-    "seoDescription": "Diseño, animación con IA y universo visual para La Sirenita Broadway en Argentina. Más de 200 piezas digitales e impresas para el Teatro Gran Rex.",
-    "excerpt": "Un universo visual construido desde el logo de Broadway: animaciones, IA, retoque fotográfico y más de 200 piezas para la producción de La Sirenita en Argentina.",
+    "seoTitle": "La sirenita",
+    "seoDescription": "",
+    "excerpt": "",
     "translations": {
       "en": {
         "tags": [
@@ -136,38 +136,31 @@
           "photo retouching"
         ],
         "name": "The Little Mermaid",
-        "seoTitle": "The Little Mermaid Musical Argentina | Drama",
+        "seoTitle": "The Little Mermaid Argentina",
         "contentBlocks": [
           {
             "title": "A (visual) world under the sea",
-            "text": "Using the Broadway logo as a starting point, we built the production's visual universe from scratch: animations and assets that created the feeling of being under the sea, later becoming the base for more than 200 digital and print pieces."
+            "text": "Using the Broadway logo as a starting point, we built the production’s visual universe from scratch: animations and assets that created the feeling of being under the sea, later becoming the base for more than 200 digital and print pieces."
           },
+          {},
           {
-            "imageAlt": "Visual pieces from The Little Mermaid Argentina universe"
+            "title": "Argentina’s largest marquee",
+            "text": "The 265 m² of windows at the Gran Rex became the project’s most visible piece: an image built entirely with AI and digital retouching, placed on the city’s most iconic avenue."
           },
-          {
-            "title": "Argentina's largest marquee",
-            "text": "The 265 m² of windows at the Gran Rex became the project's most visible piece: an image built entirely with AI and digital retouching, placed on the city's most iconic avenue."
-          },
-          {
-            "imageAlt": "265m² marquee of The Little Mermaid at Gran Rex Theatre, Buenos Aires"
-          },
+          {},
           {
             "title": "Our first Disney project",
-            "text": "Under Ozono's direction, The Little Mermaid brought us into a level of rigor in approvals and brand guidelines we had never faced before.",
+            "text": "Under Ozono’s direction, The Little Mermaid brought us into a level of rigor in approvals and brand guidelines we had never faced before.",
             "imageAlt": "Animated reel for The Little Mermaid audition launch"
           },
           {
             "imageAlt": "Gran Rex doors with The Little Mermaid artwork"
           },
-          {
-            "imageAlt": "Digital graphic pieces for The Little Mermaid Argentina",
-            "image2Alt": "Print material for The Little Mermaid Musical Argentina"
-          }
+          {}
         ],
-        "coverImageAlt": "Official artwork for The Little Mermaid Musical Argentina",
-        "seoDescription": "Design, animation, AI, and visual assets for The Little Mermaid in Argentina. Over 200 digital and print pieces for the Gran Rex Theatre.",
-        "excerpt": "A full visual universe built from the Broadway logo, with animation, AI, retouching, and more than 200 digital and print pieces for the Argentine production."
+        "coverImageAlt": "Official artwork for The Little Mermaid Argentina",
+        "seoDescription": "Design, animation, AI, and visual assets for The Little Mermaid in Argentina.",
+        "excerpt": "A full visual universe built from the Broadway logo, with animation, AI, retouching, and more than 200 digital and print pieces."
       },
       "pt": {
         "tags": [
@@ -177,22 +170,18 @@
           "retoque fotográfico"
         ],
         "name": "A Pequena Sereia",
-        "seoTitle": "A Pequena Sereia Musical Argentina | Drama",
+        "seoTitle": "A Pequena Sereia Argentina",
         "contentBlocks": [
           {
             "title": "Um mundo (visual) debaixo do mar",
             "text": "Com o logo da Broadway como ponto de partida, construímos do zero o universo visual da produção: animações e assets que criavam a experiência de estar debaixo do mar e que depois serviram de base para mais de 200 peças digitais e impressas."
           },
-          {
-            "imageAlt": "Peças visuais do universo de A Pequena Sereia Argentina"
-          },
+          {},
           {
             "title": "A maior marquise da Argentina",
             "text": "Os 265 m² das janelas do Gran Rex foram a peça mais visível do projeto: uma imagem construída integralmente com IA e retoque digital, sobre a avenida mais icônica da cidade."
           },
-          {
-            "imageAlt": "Marquise de 265m² de A Pequena Sereia no Teatro Gran Rex, Buenos Aires"
-          },
+          {},
           {
             "title": "O primeiro projeto para a Disney",
             "text": "Sob a direção da Ozono, A Pequena Sereia nos colocou diante de um nível de rigor em aprovações e diretrizes de marca que ainda não tínhamos enfrentado.",
@@ -201,14 +190,11 @@
           {
             "imageAlt": "Portas do Gran Rex com A Pequena Sereia"
           },
-          {
-            "imageAlt": "Peças gráficas digitais de A Pequena Sereia Argentina",
-            "image2Alt": "Material impresso de A Pequena Sereia Musical Argentina"
-          }
+          {}
         ],
-        "coverImageAlt": "Arte oficial de A Pequena Sereia Musical Argentina",
-        "seoDescription": "Design, animação, IA e universo visual para A Pequena Sereia na Argentina. Mais de 200 peças digitais e impressas para o Teatro Gran Rex.",
-        "excerpt": "Um universo visual completo criado a partir do logo da Broadway, com animação, IA, retoque e mais de 200 peças digitais e impressas para a produção argentina."
+        "coverImageAlt": "Arte oficial de A Pequena Sereia Argentina",
+        "seoDescription": "Design, animação, IA e universo visual para A Pequena Sereia na Argentina.",
+        "excerpt": "Um universo visual completo criado a partir do logo da Broadway, com animação, IA, retoque e mais de 200 peças digitais e impressas."
       }
     }
   },
@@ -226,7 +212,7 @@
       "ai"
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777058035/drama-web/uploads/xmzvih90alloq6umkcun.webp",
-    "coverImageAlt": "Gráfica oficial de Charlie y la Fábrica de Chocolate Argentina",
+    "coverImageAlt": "",
     "contentBlocks": [
       {
         "id": "moj7ek4rrgdko18c7ef",
@@ -236,7 +222,7 @@
         "title": "El dorado correcto",
         "text": "Algunos elementos no se inventan, se descubren. El golden ticket tenía que verse exactamente como todos lo recuerdan, aunque nadie lo haya visto igual dos veces. Llegamos a él después de muchas pruebas, buscando el color y la textura con el peso justo.",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777415689/drama-web/uploads/kg06fvjjuf8t0v6abwz7.webp",
-        "imageAlt": "Diseño del golden ticket de Charlie y la Fábrica de Chocolate Argentina",
+        "imageAlt": "",
         "imageScale": 100,
         "imageShowMuteButton": true,
         "image2": "",
@@ -266,10 +252,10 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777318791/drama-web/uploads/lewcsyrvubwocnkwc1co.webp",
-        "imageAlt": "Piezas gráficas de Charlie y la Fábrica de Chocolate Argentina",
+        "imageAlt": "",
         "imageScale": 100,
         "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777318799/drama-web/uploads/emnqpjrdxra2bs7iq8k8.webp",
-        "image2Alt": "Material de campaña de Charlie y la Fábrica de Chocolate Argentina",
+        "image2Alt": "",
         "image2Scale": 100,
         "imageSide": "left"
       },
@@ -280,17 +266,17 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777318772/drama-web/uploads/qnhaebbdnirookhiufgs.webp",
-        "imageAlt": "Diseño digital de Charlie y la Fábrica de Chocolate Argentina",
+        "imageAlt": "",
         "imageScale": 100,
-        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777318779/drama-web/uploads/u9we9ep6txeridgny.webp",
-        "image2Alt": "Identidad visual de Charlie y la Fábrica de Chocolate Argentina",
+        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777318779/drama-web/uploads/u9we9ep6xd6txeridgny.webp",
+        "image2Alt": "",
         "image2Scale": 100,
         "imageSide": "left"
       }
     ],
-    "seoTitle": "Charlie y la Fábrica de Chocolate Argentina | Drama",
-    "seoDescription": "Diseño, animación 2D/3D y universo visual para Charlie y la Fábrica de Chocolate en Argentina. Del golden ticket a las piezas animadas de lanzamiento.",
-    "excerpt": "Del golden ticket con el dorado exacto a piezas animadas en 2D, 3D y chroma: un universo visual construido para el lanzamiento de la producción argentina.",
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": "",
     "translations": {
       "en": {
         "tags": [
@@ -303,27 +289,20 @@
         "contentBlocks": [
           {
             "title": "The right gold",
-            "text": "Some elements are not invented; they are discovered. The golden ticket had to look exactly the way everyone remembers it, even if no one has ever seen it the same way twice. We arrived there after many tests, searching for the color and texture with exactly the right weight.",
-            "imageAlt": "Golden ticket design for Charlie and the Chocolate Factory Argentina"
+            "text": "Some elements are not invented; they are discovered. The golden ticket had to look exactly the way everyone remembers it, even if no one has ever seen it the same way twice. We arrived there after many tests, searching for the color and texture with exactly the right weight."
           },
           {
             "title": "A universe in motion",
             "text": "We created a piece combining 2D animation, 3D, and chroma key for the winter-break ticket sales launch.",
             "imageAlt": "Animated reel for Charlie and the Chocolate Factory"
           },
-          {
-            "imageAlt": "Graphic pieces for Charlie and the Chocolate Factory Argentina",
-            "image2Alt": "Campaign material for Charlie and the Chocolate Factory Argentina"
-          },
-          {
-            "imageAlt": "Digital design for Charlie and the Chocolate Factory Argentina",
-            "image2Alt": "Visual identity for Charlie and the Chocolate Factory Argentina"
-          }
+          {},
+          {}
         ],
         "coverImageAlt": "Official artwork for Charlie and the Chocolate Factory Argentina",
-        "seoTitle": "Charlie and the Chocolate Factory Argentina | Drama",
-        "seoDescription": "Design, 2D/3D animation, and visual assets for Charlie and the Chocolate Factory in Argentina. From the golden ticket to animated launch pieces.",
-        "excerpt": "From the golden ticket to animated launch pieces, we shaped a visual world with the right color, texture, and movement for the Argentine production."
+        "seoTitle": "Charlie and the Chocolate Factory Argentina",
+        "seoDescription": "Design, animation, and visual assets for Charlie and the Chocolate Factory in Argentina.",
+        "excerpt": "From the golden ticket to animated launch pieces, we shaped a visual world with the right color, texture, and movement."
       },
       "pt": {
         "tags": [
@@ -336,27 +315,20 @@
         "contentBlocks": [
           {
             "title": "O dourado certo",
-            "text": "Alguns elementos não se inventam, se descobrem. O golden ticket precisava parecer exatamente como todo mundo se lembra, mesmo que ninguém o tenha visto igual duas vezes. Chegamos a ele depois de muitos testes, buscando a cor e a textura com o peso certo.",
-            "imageAlt": "Design do golden ticket de A Fantástica Fábrica de Chocolate Argentina"
+            "text": "Alguns elementos não se inventam, se descobrem. O golden ticket precisava parecer exatamente como todo mundo se lembra, mesmo que ninguém o tenha visto igual duas vezes. Chegamos a ele depois de muitos testes, buscando a cor e a textura com o peso certo."
           },
           {
             "title": "O universo em movimento",
             "text": "Criamos uma peça combinando animação 2D, 3D e chroma para o lançamento da venda de ingressos das férias de inverno.",
             "imageAlt": "Reel animado de A Fantástica Fábrica de Chocolate"
           },
-          {
-            "imageAlt": "Peças gráficas de A Fantástica Fábrica de Chocolate Argentina",
-            "image2Alt": "Material de campanha de A Fantástica Fábrica de Chocolate Argentina"
-          },
-          {
-            "imageAlt": "Design digital de A Fantástica Fábrica de Chocolate Argentina",
-            "image2Alt": "Identidade visual de A Fantástica Fábrica de Chocolate Argentina"
-          }
+          {},
+          {}
         ],
         "coverImageAlt": "Arte oficial de A Fantástica Fábrica de Chocolate Argentina",
-        "seoTitle": "A Fantástica Fábrica de Chocolate Argentina | Drama",
-        "seoDescription": "Design, animação 2D/3D e universo visual para A Fantástica Fábrica de Chocolate na Argentina. Do golden ticket às peças animadas de lançamento.",
-        "excerpt": "Do golden ticket às peças animadas de lançamento, construímos um universo visual com a cor, a textura e o movimento certos para a produção argentina."
+        "seoTitle": "A Fantástica Fábrica de Chocolate Argentina",
+        "seoDescription": "Design, animação e universo visual para A Fantástica Fábrica de Chocolate na Argentina.",
+        "excerpt": "Do golden ticket às peças animadas de lançamento, construímos um universo visual com a cor, a textura e o movimento certos."
       }
     }
   },
@@ -373,10 +345,10 @@
       "identidad visual",
       "creatividad",
       "retoque fotográfico",
-      "animación"
+      "Animación"
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777054319/drama-web/uploads/pzepxnnq2tlhrx3qmiku.webp",
-    "coverImageAlt": "Gráfica oficial de School of Rock Argentina",
+    "coverImageAlt": "",
     "contentBlocks": [
       {
         "id": "moj7tdzi8iyqul89wmp",
@@ -403,7 +375,7 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777416619/drama-web/uploads/eut7eykpfi613onlwmrk.webp",
-        "imageAlt": "Piezas gráficas de School of Rock Argentina",
+        "imageAlt": "",
         "imageScale": 100,
         "imageShowMuteButton": true,
         "image2": "",
@@ -436,7 +408,7 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777323731/drama-web/uploads/fydmm18gq8ujzeg2h99o.webm",
-        "imageAlt": "Logo animado de School of Rock Argentina",
+        "imageAlt": "Logo animado de School of rock Argentina",
         "imageScale": 100,
         "image2": "",
         "image2Alt": "",
@@ -451,10 +423,10 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777324968/drama-web/uploads/vnpobvad7blsy0bj0z03.webp",
-        "imageAlt": "Material de campaña de School of Rock Argentina",
+        "imageAlt": "",
         "imageScale": 100,
         "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777324976/drama-web/uploads/sal3djeeos2ozz05ozg3.webp",
-        "image2Alt": "Piezas digitales de School of Rock Argentina",
+        "image2Alt": "",
         "image2Scale": 100,
         "imageSide": "left"
       },
@@ -465,17 +437,17 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777324989/drama-web/uploads/qwgwqopxgjdwwfycbjya.webp",
-        "imageAlt": "Identidad visual de School of Rock Argentina",
+        "imageAlt": "",
         "imageScale": 100,
         "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777324995/drama-web/uploads/yfwgu52ieq0mndevkylo.webp",
-        "image2Alt": "Diseño gráfico para School of Rock Argentina",
+        "image2Alt": "",
         "image2Scale": 100,
         "imageSide": "left"
       }
     ],
-    "seoTitle": "School of Rock Argentina | Drama",
-    "seoDescription": "Diseño, comunicación e identidad visual para School of Rock Argentina. Una campaña que puso a los chicos al frente y dio dirección a todo el elenco.",
-    "excerpt": "Una campaña que puso a los chicos al centro y le dio a todo el elenco una dirección clara de comunicación, sin reducir la obra a 'rock en vivo'.",
+    "seoTitle": "School of rock",
+    "seoDescription": "",
+    "excerpt": "",
     "translations": {
       "en": {
         "tags": [
@@ -487,34 +459,26 @@
           "animation"
         ],
         "name": "School of Rock",
-        "seoTitle": "School of Rock Argentina | Drama",
+        "seoTitle": "School of Rock Argentina",
         "contentBlocks": [
           {
             "title": "From Madrid to Buenos Aires",
-            "text": "School of Rock Argentina was not DRAMA's first contact with the show. Before that, we handled communications for the Madrid version, which gave us something uncommon: the chance to do it all again with our own point of view."
+            "text": "School of Rock Argentina was not DRAMA’s first contact with the show. Before that, we handled communications for the Madrid version, which gave us something uncommon: the chance to do it all again with our own point of view."
           },
-          {
-            "imageAlt": "Graphic pieces for School of Rock Argentina"
-          },
+          {},
           {
             "title": "The kids up front",
-            "text": "Adults already knew School of Rock. The challenge was making kids feel it was for them too. The pieces placed them at the center, and we got the whole cast communicating in the same direction, without reducing the show to "live rock.""
+            "text": "Adults already knew School of Rock. The challenge was making kids feel it was for them too. The pieces placed them at the center, and we got the whole cast communicating in the same direction, without reducing the show to “live rock.”"
           },
           {
             "imageAlt": "Animated School of Rock Argentina logo"
           },
-          {
-            "imageAlt": "Campaign material for School of Rock Argentina",
-            "image2Alt": "Digital pieces for School of Rock Argentina"
-          },
-          {
-            "imageAlt": "Visual identity for School of Rock Argentina",
-            "image2Alt": "Graphic design for School of Rock Argentina"
-          }
+          {},
+          {}
         ],
         "coverImageAlt": "Official artwork for School of Rock Argentina",
-        "seoDescription": "Design, communications, and visual identity for School of Rock Argentina. A campaign that put the kids front and center.",
-        "excerpt": "A campaign that put the kids at the center and gave the whole cast one clear direction, without reducing the show to 'live rock'."
+        "seoDescription": "Communications, design, visual identity, and animation for School of Rock Argentina.",
+        "excerpt": "A campaign that put the kids at the center and gave the whole cast one clear direction."
       },
       "pt": {
         "tags": [
@@ -526,34 +490,26 @@
           "animação"
         ],
         "name": "School of Rock",
-        "seoTitle": "School of Rock Argentina | Drama",
+        "seoTitle": "School of Rock Argentina",
         "contentBlocks": [
           {
             "title": "De Madri a Buenos Aires",
             "text": "School of Rock Argentina não foi o primeiro contato da DRAMA com a obra. Antes, fizemos a comunicação da versão de Madri, o que nos deu algo pouco comum: a chance de fazer tudo de novo com um critério próprio."
           },
-          {
-            "imageAlt": "Peças gráficas de School of Rock Argentina"
-          },
+          {},
           {
             "title": "As crianças à frente",
-            "text": "Os adultos já conheciam School of Rock. O desafio era fazer com que as crianças também sentissem que era para elas. As peças colocaram os jovens no centro e conseguimos fazer todo o elenco comunicar na mesma direção, sem reduzir a obra a "rock ao vivo"."
+            "text": "Os adultos já conheciam School of Rock. O desafio era fazer com que as crianças também sentissem que era para elas. As peças colocaram os jovens no centro e conseguimos fazer todo o elenco comunicar na mesma direção, sem reduzir a obra a “rock ao vivo”."
           },
           {
             "imageAlt": "Logo animado de School of Rock Argentina"
           },
-          {
-            "imageAlt": "Material de campanha de School of Rock Argentina",
-            "image2Alt": "Peças digitais de School of Rock Argentina"
-          },
-          {
-            "imageAlt": "Identidade visual de School of Rock Argentina",
-            "image2Alt": "Design gráfico para School of Rock Argentina"
-          }
+          {},
+          {}
         ],
         "coverImageAlt": "Arte oficial de School of Rock Argentina",
-        "seoDescription": "Design, comunicação e identidade visual para School of Rock Argentina. Uma campanha que colocou as crianças à frente.",
-        "excerpt": "Uma campanha que colocou as crianças no centro e deu a todo o elenco uma direção clara de comunicação, sem reduzir a obra a 'rock ao vivo'."
+        "seoDescription": "Comunicação, design, identidade visual e animação para School of Rock Argentina.",
+        "excerpt": "Uma campanha que colocou as crianças no centro e deu a todo o elenco uma direção clara de comunicação."
       }
     }
   },
@@ -568,10 +524,10 @@
       "diseño",
       "creatividad",
       "identidad visual",
-      "retoque fotográfico"
+      "Retoque fotográfico"
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777059744/drama-web/uploads/crcu25parjraaitxido7.webp",
-    "coverImageAlt": "Gráfica oficial de Matilda el Musical Argentina",
+    "coverImageAlt": "Gráfica oficial de Matilda el músical Argentina",
     "contentBlocks": [
       {
         "id": "moj8nmf0r8s5af5dnoq",
@@ -597,7 +553,7 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777312624/drama-web/uploads/yuvuibphedhnbwi3lopv.webm",
-        "imageAlt": "Logo animado de Matilda el Musical",
+        "imageAlt": "Logo animado de Matilda el musical",
         "imageScale": 100,
         "image2": "",
         "image2Alt": "",
@@ -626,7 +582,7 @@
         "title": "Lyric video",
         "text": "Aprovechando la grabación oficial del corte promocional del musical realizamos un video animado y que los niños aprendan la letra antes de ir a la función.",
         "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777313659/drama-web/uploads/f4ltosmyuxmrkr19dw0i.webm",
-        "imageAlt": "Lyric video animado de Matilda el Musical Argentina",
+        "imageAlt": "",
         "imageScale": 100,
         "image2": "",
         "image2Alt": "",
@@ -640,7 +596,7 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777314514/drama-web/uploads/w0ge8r8uzjqqmlcbtuuh.webp",
-        "imageAlt": "Piezas gráficas de Matilda el Musical Argentina",
+        "imageAlt": "",
         "imageScale": 100,
         "image2": "",
         "image2Alt": "",
@@ -654,17 +610,17 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777315073/drama-web/uploads/ekxuhdltqyfrajirzl6t.webp",
-        "imageAlt": "Diseño impreso de Matilda el Musical Argentina",
+        "imageAlt": "",
         "imageScale": 100,
         "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777315079/drama-web/uploads/kjtebgq3lck0pcvqa7gb.png",
-        "image2Alt": "Material de campaña de Matilda el Musical Argentina",
+        "image2Alt": "",
         "image2Scale": 100,
         "imageSide": "left"
       }
     ],
-    "seoTitle": "Matilda el Musical Argentina | Drama",
-    "seoDescription": "Diseño, identidad visual y animación para Matilda el Musical en Argentina. La Pose Matilda: la imagen más icónica de la campaña, una niña sola contra el mundo.",
-    "excerpt": "Una campaña construida alrededor de La Pose Matilda: una niña sola contra el mundo, la imagen más icónica de la producción. Nuestra Matilda mira al porvenir.",
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": "",
     "translations": {
       "en": {
         "tags": [
@@ -677,7 +633,7 @@
         "contentBlocks": [
           {
             "title": "The Matilda Pose",
-            "text": "The official artwork had to show the leading cast, by contract. But we believed in another image: one girl alone against the world. We proposed it, it was accepted, and it became the campaign's most iconic piece. We called it The Matilda Pose. And it has one unique detail: while every version around the world looks to the left, ours looks to the right. Our Matilda looks toward the future."
+            "text": "The official artwork had to show the leading cast, by contract. But we believed in another image: one girl alone against the world. We proposed it, it was accepted, and it became the campaign’s most iconic piece. We called it The Matilda Pose. And it has one unique detail: while every version around the world looks to the left, ours looks to the right. Our Matilda looks toward the future."
           },
           {
             "imageAlt": "Animated logo for Matilda the Musical"
@@ -688,21 +644,15 @@
           },
           {
             "title": "Lyric video",
-            "text": "Using the official recording of the musical's promotional cut, we created an animated video so children could learn the lyrics before going to the show.",
-            "imageAlt": "Animated lyric video for Matilda the Musical Argentina"
+            "text": "Using the official recording of the musical’s promotional cut, we created an animated video so children could learn the lyrics before going to the show."
           },
-          {
-            "imageAlt": "Graphic pieces for Matilda the Musical Argentina"
-          },
-          {
-            "imageAlt": "Print design for Matilda the Musical Argentina",
-            "image2Alt": "Campaign material for Matilda the Musical Argentina"
-          }
+          {},
+          {}
         ],
         "coverImageAlt": "Official artwork for Matilda the Musical Argentina",
-        "seoTitle": "Matilda the Musical Argentina | Drama",
-        "seoDescription": "Design, visual identity, and animation for Matilda the Musical in Argentina. The Matilda Pose: the campaign's most iconic image — one girl alone against the world.",
-        "excerpt": "A campaign built around The Matilda Pose: one girl alone against the world — the most iconic image of the production, looking toward the future."
+        "seoTitle": "Matilda the Musical Argentina",
+        "seoDescription": "Design, visual identity, and animation for Matilda the Musical in Argentina.",
+        "excerpt": "A campaign built around a single, powerful image: one girl against the world."
       },
       "pt": {
         "tags": [
@@ -726,21 +676,15 @@
           },
           {
             "title": "Lyric video",
-            "text": "Aproveitando a gravação oficial do corte promocional do musical, criamos um vídeo animado para que as crianças aprendessem a letra antes de ir à sessão.",
-            "imageAlt": "Lyric video animado de Matilda, o Musical Argentina"
+            "text": "Aproveitando a gravação oficial do corte promocional do musical, criamos um vídeo animado para que as crianças aprendessem a letra antes de ir à sessão."
           },
-          {
-            "imageAlt": "Peças gráficas de Matilda, o Musical Argentina"
-          },
-          {
-            "imageAlt": "Design impresso de Matilda, o Musical Argentina",
-            "image2Alt": "Material de campanha de Matilda, o Musical Argentina"
-          }
+          {},
+          {}
         ],
         "coverImageAlt": "Arte oficial de Matilda, o Musical Argentina",
-        "seoTitle": "Matilda, o Musical Argentina | Drama",
-        "seoDescription": "Design, identidade visual e animação para Matilda, o Musical na Argentina. A Pose Matilda: a imagem mais icônica da campanha, uma menina sozinha contra o mundo.",
-        "excerpt": "Uma campanha construída ao redor de A Pose Matilda: uma menina sozinha contra o mundo, a imagem mais icônica da produção."
+        "seoTitle": "Matilda, o Musical Argentina",
+        "seoDescription": "Design, identidade visual e animação para Matilda, o Musical na Argentina.",
+        "excerpt": "Uma campanha construída ao redor de uma imagem poderosa: uma menina sozinha contra o mundo."
       }
     }
   },
@@ -752,13 +696,13 @@
     "featured": false,
     "published": true,
     "tags": [
-      "retoque fotográfico",
+      "Retoque fotográfico",
       "diseño",
       "identidad visual",
       "creatividad"
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777063293/drama-web/uploads/vcnbqv6nxis0pdlu5x0u.webp",
-    "coverImageAlt": "Gráfica oficial de Legalmente Rubia Argentina",
+    "coverImageAlt": "",
     "contentBlocks": [
       {
         "id": "mohzfvhyaby06j8vqxj",
@@ -767,7 +711,7 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777341851/drama-web/uploads/sdby1dp6sibbbutbmzsv.webm",
-        "imageAlt": "Reel animado de Legalmente Rubia Argentina",
+        "imageAlt": "",
         "imageScale": 100,
         "imageShowMuteButton": false,
         "image2": "",
@@ -783,19 +727,19 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777341886/drama-web/uploads/std2tuluypsj68nrv14t.webm",
-        "imageAlt": "Animación de Legalmente Rubia Argentina",
+        "imageAlt": "",
         "imageScale": 75,
         "imageShowMuteButton": false,
         "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777341966/drama-web/uploads/iljxjvbujwz0w6b1rion.webp",
-        "image2Alt": "Pieza gráfica de Legalmente Rubia Argentina",
+        "image2Alt": "",
         "image2Scale": 140,
         "image2ShowMuteButton": true,
         "imageSide": "left"
       }
     ],
-    "seoTitle": "Legalmente Rubia Argentina | Drama",
-    "seoDescription": "Retoque fotográfico, diseño e identidad visual para Legalmente Rubia en Argentina. Una identidad luminosa y precisa para la producción local.",
-    "excerpt": "Una identidad visual luminosa y precisa para la producción argentina de Legalmente Rubia, con diseño, creatividad y retoque fotográfico.",
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": "",
     "translations": {
       "en": {
         "tags": [
@@ -806,17 +750,12 @@
         ],
         "name": "Legally Blonde",
         "coverImageAlt": "Official artwork for Legally Blonde Argentina",
-        "seoTitle": "Legally Blonde Argentina | Drama",
-        "seoDescription": "Photo retouching, design, and visual identity for Legally Blonde in Argentina. A bright, precise identity for the local production.",
-        "excerpt": "A bright, precise visual identity for the Argentine production of Legally Blonde, with design, creativity, and photo retouching.",
+        "seoTitle": "Legally Blonde Argentina",
+        "seoDescription": "Design, visual identity, creativity, and photo retouching for Legally Blonde Argentina.",
+        "excerpt": "A bright, precise visual identity for the Argentine production of Legally Blonde.",
         "contentBlocks": [
-          {
-            "imageAlt": "Animated reel for Legally Blonde Argentina"
-          },
-          {
-            "imageAlt": "Animation for Legally Blonde Argentina",
-            "image2Alt": "Graphic piece for Legally Blonde Argentina"
-          }
+          {},
+          {}
         ]
       },
       "pt": {
@@ -828,17 +767,12 @@
         ],
         "name": "Legalmente Loira",
         "coverImageAlt": "Arte oficial de Legalmente Loira Argentina",
-        "seoTitle": "Legalmente Loira Argentina | Drama",
-        "seoDescription": "Retoque fotográfico, design e identidade visual para Legalmente Loira na Argentina. Uma identidade luminosa e precisa para a produção local.",
-        "excerpt": "Uma identidade visual luminosa e precisa para a produção argentina de Legalmente Loira, com design, criatividade e retoque fotográfico.",
+        "seoTitle": "Legalmente Loira Argentina",
+        "seoDescription": "Design, identidade visual, criatividade e retoque fotográfico para Legalmente Loira Argentina.",
+        "excerpt": "Uma identidade visual luminosa e precisa para a produção argentina de Legalmente Loira.",
         "contentBlocks": [
-          {
-            "imageAlt": "Reel animado de Legalmente Loira Argentina"
-          },
-          {
-            "imageAlt": "Animação de Legalmente Loira Argentina",
-            "image2Alt": "Peça gráfica de Legalmente Loira Argentina"
-          }
+          {},
+          {}
         ]
       }
     }
@@ -858,7 +792,7 @@
       "animación"
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777055815/drama-web/uploads/vl5yv9itzwv7zdd2vejq.webp",
-    "coverImageAlt": "Gráfica oficial de Chanta el musical con Julio Ballesteros",
+    "coverImageAlt": "",
     "contentBlocks": [
       {
         "id": "mokjmr1gzpqadacuxaj",
@@ -868,7 +802,7 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777496696/drama-web/uploads/menpfcjbl6fc9s3ui5lt.webm",
-        "imageAlt": "Reel animado de Chanta el musical con Julio Ballesteros",
+        "imageAlt": "",
         "imageScale": 100,
         "imageShowMuteButton": false,
         "image2": "",
@@ -901,7 +835,7 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777060719/drama-web/uploads/rk27txz9exxm4ttfxxhc.webp",
-        "imageAlt": "Pieza gráfica de Chanta el musical",
+        "imageAlt": "",
         "imageSide": "left"
       },
       {
@@ -912,11 +846,11 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777497123/drama-web/uploads/fllq7gqrzyej3dsnvcm1.webp",
-        "imageAlt": "Diseño de redes sociales de Chanta el musical",
+        "imageAlt": "",
         "imageScale": 100,
         "imageShowMuteButton": true,
         "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777497298/drama-web/uploads/wdq7myr7h9xkapiwp0n8.webp",
-        "image2Alt": "Contenido digital de Chanta con Julio Ballesteros",
+        "image2Alt": "",
         "image2Scale": 100,
         "image2ShowMuteButton": true,
         "imageSide": "left"
@@ -928,7 +862,7 @@
         "title": "Cuidado con darnos libertad",
         "text": "Cuando Ozono Producciones se nos acercó para que tomemos la creatividad de \"Chanta\", nos dieron vía libre para jugar. Quisimos demostrar que el personaje representaba la mayor de las argentinidades y así nació el Julio Ballesteros de las redes.",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777497104/drama-web/uploads/yyhqbwe2b0ymwhvkz7u7.webp",
-        "imageAlt": "Julio Ballesteros en contenido de redes para Chanta el musical",
+        "imageAlt": "",
         "imageSide": "right"
       },
       {
@@ -939,19 +873,19 @@
         "title": "",
         "text": "",
         "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777498079/drama-web/uploads/uofjerdmbqipcxl9uzmc.webp",
-        "imageAlt": "Material de campaña de Chanta el musical",
+        "imageAlt": "",
         "imageScale": 100,
         "imageShowMuteButton": true,
         "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777498085/drama-web/uploads/kjqj0kddyloligpforco.webp",
-        "image2Alt": "Piezas impresas de Chanta el musical",
+        "image2Alt": "",
         "image2Scale": 100,
         "image2ShowMuteButton": true,
         "imageSide": "left"
       }
     ],
-    "seoTitle": "Chanta el Musical con Julio Ballesteros | Drama",
-    "seoDescription": "Identidad visual, animación y contenido para Chanta el musical con Julio Ballesteros. Una campaña que extendió el universo de la obra a las redes sociales.",
-    "excerpt": "Una campaña que continuó el universo de la obra y convirtió a Julio Ballesteros también en personaje de las redes sociales.",
+    "seoTitle": "chanta",
+    "seoDescription": "",
+    "excerpt": "",
     "translations": {
       "en": {
         "tags": [
@@ -962,34 +896,23 @@
           "animation"
         ],
         "name": "Chanta",
-        "seoTitle": "Chanta Musical with Julio Ballesteros | Drama",
+        "seoTitle": "Chanta",
         "contentBlocks": [
-          {
-            "imageAlt": "Animated reel for Chanta the musical with Julio Ballesteros"
-          },
+          {},
           {
             "title": "Inside the show",
-            "text": "We based the campaign on the set design, the neon lights, and the makeup that aged and rejuvenated the character performance after performance. The communication did not present the show; it continued it. We even added our own jokes to the character's universe."
+            "text": "We based the campaign on the set design, the neon lights, and the makeup that aged and rejuvenated the character performance after performance. The communication did not present the show; it continued it. We even added our own jokes to the character’s universe."
           },
-          {
-            "imageAlt": "Graphic piece for Chanta the musical"
-          },
-          {
-            "imageAlt": "Social media design for Chanta the musical",
-            "image2Alt": "Digital content for Chanta with Julio Ballesteros"
-          },
+          {},
+          {},
           {
             "title": "Careful what happens when you give us freedom",
-            "text": "When Ozono Producciones came to us to take on the creative work for "Chanta," they gave us free rein to play. We wanted to prove that the character represented the most Argentine of Argentine traits, and that is how Julio Ballesteros on social media was born.",
-            "imageAlt": "Julio Ballesteros in social content for Chanta the musical"
+            "text": "When Ozono Producciones came to us to take on the creative work for “Chanta,” they gave us free rein to play. We wanted to prove that the character represented the most Argentine of Argentine traits, and that is how Julio Ballesteros on social media was born."
           },
-          {
-            "imageAlt": "Campaign material for Chanta the musical",
-            "image2Alt": "Print pieces for Chanta the musical"
-          }
+          {}
         ],
-        "coverImageAlt": "Official artwork for Chanta the musical with Julio Ballesteros",
-        "seoDescription": "Visual identity, animation, and social content for Chanta the musical with Julio Ballesteros. A campaign that extended the show's universe to social media.",
+        "coverImageAlt": "Official artwork for Chanta",
+        "seoDescription": "Visual identity, creativity, animation, and social content for Chanta.",
         "excerpt": "A campaign that extended the world of the show and turned Julio Ballesteros into a character for social media too."
       },
       "pt": {
@@ -1001,34 +924,23 @@
           "animação"
         ],
         "name": "Chanta",
-        "seoTitle": "Chanta Musical com Julio Ballesteros | Drama",
+        "seoTitle": "Chanta",
         "contentBlocks": [
-          {
-            "imageAlt": "Reel animado de Chanta, o musical com Julio Ballesteros"
-          },
+          {},
           {
             "title": "Dentro da obra",
             "text": "Nós nos baseamos na cenografia, nos neons e nas maquiagens que envelheciam e rejuveneciam o personagem a cada apresentação. A comunicação não apresentava a obra: ela continuava a obra. Até somamos piadas próprias ao universo do personagem."
           },
-          {
-            "imageAlt": "Peça gráfica de Chanta, o musical"
-          },
-          {
-            "imageAlt": "Design de redes sociais de Chanta, o musical",
-            "image2Alt": "Conteúdo digital de Chanta com Julio Ballesteros"
-          },
+          {},
+          {},
           {
             "title": "Cuidado ao nos dar liberdade",
-            "text": "Quando a Ozono Producciones nos procurou para assumir a criatividade de "Chanta", nos deram liberdade total para brincar. Queríamos demonstrar que o personagem representava a maior das argentinidades, e assim nasceu o Julio Ballesteros das redes.",
-            "imageAlt": "Julio Ballesteros em conteúdo de redes para Chanta, o musical"
+            "text": "Quando a Ozono Producciones nos procurou para assumir a criatividade de “Chanta”, nos deram liberdade total para brincar. Queríamos demonstrar que o personagem representava a maior das argentinidades, e assim nasceu o Julio Ballesteros das redes."
           },
-          {
-            "imageAlt": "Material de campanha de Chanta, o musical",
-            "image2Alt": "Peças impressas de Chanta, o musical"
-          }
+          {}
         ],
-        "coverImageAlt": "Arte oficial de Chanta, o musical com Julio Ballesteros",
-        "seoDescription": "Identidade visual, animação e conteúdo para Chanta, o musical com Julio Ballesteros. Uma campanha que expandiu o universo da obra para as redes sociais.",
+        "coverImageAlt": "Arte oficial de Chanta",
+        "seoDescription": "Identidade visual, criatividade, animação e conteúdo para redes sociais de Chanta.",
         "excerpt": "Uma campanha que expandiu o universo da obra e transformou Julio Ballesteros também em personagem das redes."
       }
     }
@@ -1047,11 +959,11 @@
       "diseño"
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777056624/drama-web/uploads/z15hocfs9wsqmqyt5ssv.webp",
-    "coverImageAlt": "Gráfica oficial de Mi amiga y yo",
+    "coverImageAlt": "",
     "contentBlocks": [],
-    "seoTitle": "Mi Amiga y Yo | Drama",
-    "seoDescription": "Identidad visual, diseño y retoque fotográfico para Mi amiga y yo, la producción teatral argentina.",
-    "excerpt": "Identidad visual y piezas de campaña para la producción argentina de Mi amiga y yo.",
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": "",
     "translations": {
       "en": {
         "tags": [
@@ -1062,9 +974,9 @@
         ],
         "name": "Mi amiga y yo",
         "coverImageAlt": "Official artwork for Mi amiga y yo",
-        "seoTitle": "Mi amiga y yo | Drama",
-        "seoDescription": "Visual identity, design, and photo retouching for Mi amiga y yo, the Argentine theatrical production.",
-        "excerpt": "Visual identity and campaign pieces for the Argentine production of Mi amiga y yo.",
+        "seoTitle": "Mi amiga y yo",
+        "seoDescription": "Visual identity, creativity, design, and photo retouching for Mi amiga y yo.",
+        "excerpt": "Visual identity and campaign pieces for Mi amiga y yo.",
         "contentBlocks": []
       },
       "pt": {
@@ -1076,9 +988,9 @@
         ],
         "name": "Mi amiga y yo",
         "coverImageAlt": "Arte oficial de Mi amiga y yo",
-        "seoTitle": "Mi amiga y yo | Drama",
-        "seoDescription": "Identidade visual, design e retoque fotográfico para Mi amiga y yo, a produção teatral argentina.",
-        "excerpt": "Identidade visual e peças de campanha para a produção argentina de Mi amiga y yo.",
+        "seoTitle": "Mi amiga y yo",
+        "seoDescription": "Identidade visual, criatividade, design e retoque fotográfico para Mi amiga y yo.",
+        "excerpt": "Identidade visual e peças de campanha para Mi amiga y yo.",
         "contentBlocks": []
       }
     }
@@ -1091,16 +1003,13 @@
     "featured": false,
     "published": true,
     "tags": [
-      "creatividad",
-      "comunicación",
-      "animación"
+      "CREATIVIDAD",
+      "COMUNICACIÓN",
+      "ANIMACIÓN"
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777055002/drama-web/uploads/pmjljwgmmqvq64ilkyly.webp",
     "coverImageAlt": "Gráfica de La cena de los tontos",
     "contentBlocks": [],
-    "seoTitle": "La Cena de los Tontos | Drama",
-    "seoDescription": "Creatividad, comunicación y animación para La cena de los tontos en Argentina. Diseño y estrategia de comunicación para la producción teatral.",
-    "excerpt": "Creatividad, comunicación y animación para la producción argentina de La cena de los tontos.",
     "translations": {
       "en": {
         "tags": [
@@ -1110,9 +1019,9 @@
         ],
         "name": "La cena de los tontos",
         "coverImageAlt": "Artwork for La cena de los tontos",
-        "seoTitle": "La cena de los tontos | Drama",
-        "seoDescription": "Creativity, communications, and animation for La cena de los tontos in Argentina.",
-        "excerpt": "Creative and communications work for the Argentine production of La cena de los tontos.",
+        "seoTitle": "La cena de los tontos",
+        "seoDescription": "Creativity, communications, and animation for La cena de los tontos.",
+        "excerpt": "Creative and communications work for La cena de los tontos.",
         "contentBlocks": []
       },
       "pt": {
@@ -1123,9 +1032,9 @@
         ],
         "name": "La cena de los tontos",
         "coverImageAlt": "Arte de La cena de los tontos",
-        "seoTitle": "La cena de los tontos | Drama",
-        "seoDescription": "Criatividade, comunicação e animação para La cena de los tontos na Argentina.",
-        "excerpt": "Trabalho de criatividade e comunicação para a produção argentina de La cena de los tontos.",
+        "seoTitle": "La cena de los tontos",
+        "seoDescription": "Criatividade, comunicação e animação para La cena de los tontos.",
+        "excerpt": "Trabalho de criatividade e comunicação para La cena de los tontos.",
         "contentBlocks": []
       }
     }
@@ -1141,11 +1050,11 @@
       "identidad visual"
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777058382/drama-web/uploads/a8keqjy6ihmzdopsxi2j.webp",
-    "coverImageAlt": "Gráfica oficial de Aquí No Podemos Hacerlo",
+    "coverImageAlt": "",
     "contentBlocks": [],
-    "seoTitle": "Aquí No Podemos Hacerlo | Drama",
-    "seoDescription": "Identidad visual y diseño para Aquí no podemos hacerlo, la nueva producción teatral argentina.",
-    "excerpt": "Identidad visual y diseño para la producción argentina de Aquí no podemos hacerlo.",
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": "",
     "translations": {
       "en": {
         "tags": [
@@ -1153,9 +1062,9 @@
         ],
         "name": "Aquí no podemos hacerlo",
         "coverImageAlt": "Official artwork for Aquí no podemos hacerlo",
-        "seoTitle": "Aquí no podemos hacerlo | Drama",
-        "seoDescription": "Visual identity and design for Aquí no podemos hacerlo, the new Argentine theatrical production.",
-        "excerpt": "Visual identity and design work for the Argentine production of Aquí no podemos hacerlo.",
+        "seoTitle": "Aquí no podemos hacerlo",
+        "seoDescription": "Visual identity for Aquí no podemos hacerlo.",
+        "excerpt": "Visual identity work for Aquí no podemos hacerlo.",
         "contentBlocks": []
       },
       "pt": {
@@ -1164,9 +1073,9 @@
         ],
         "name": "Aquí no podemos hacerlo",
         "coverImageAlt": "Arte oficial de Aquí no podemos hacerlo",
-        "seoTitle": "Aquí no podemos hacerlo | Drama",
-        "seoDescription": "Identidade visual e design para Aquí no podemos hacerlo, a nova produção teatral argentina.",
-        "excerpt": "Trabalho de identidade visual e design para a produção argentina de Aquí no podemos hacerlo.",
+        "seoTitle": "Aquí no podemos hacerlo",
+        "seoDescription": "Identidade visual para Aquí no podemos hacerlo.",
+        "excerpt": "Trabalho de identidade visual para Aquí no podemos hacerlo.",
         "contentBlocks": []
       }
     }
@@ -1179,17 +1088,17 @@
     "featured": false,
     "published": true,
     "tags": [
-      "creatividad",
-      "retoque fotográfico",
-      "diseño",
-      "identidad visual"
+      "CREATIVIDAD",
+      "RETOQUE FOTOGRÁFICO",
+      "DISEÑO",
+      "IDENTIDAD VISUAL"
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777268493/drama-web/uploads/cbp263qmerayjwysoxzu.webp",
-    "coverImageAlt": "Gráfica oficial de Avenida Q Argentina",
+    "coverImageAlt": "Gráfica oficial de Avenida Q Argentina.",
     "contentBlocks": [],
-    "seoTitle": "Avenida Q Argentina | Drama",
-    "seoDescription": "Creatividad, diseño, identidad visual y retoque fotográfico para Avenida Q Argentina. Una campaña precisa e irreverente para la producción local.",
-    "excerpt": "Identidad visual, creatividad y diseño para Avenida Q Argentina.",
+    "seoTitle": "Avenida Q Argentina",
+    "seoDescription": "",
+    "excerpt": "",
     "translations": {
       "en": {
         "tags": [
@@ -1200,8 +1109,8 @@
         ],
         "name": "Avenue Q",
         "coverImageAlt": "Official artwork for Avenue Q Argentina",
-        "seoTitle": "Avenue Q Argentina | Drama",
-        "seoDescription": "Creativity, design, visual identity, and photo retouching for Avenue Q Argentina. A precise and irreverent campaign for the local production.",
+        "seoTitle": "Avenue Q Argentina",
+        "seoDescription": "Creativity, design, visual identity, and photo retouching for Avenue Q Argentina.",
         "excerpt": "Visual identity and campaign pieces for Avenue Q Argentina.",
         "contentBlocks": []
       },
@@ -1214,8 +1123,8 @@
         ],
         "name": "Avenida Q",
         "coverImageAlt": "Arte oficial de Avenida Q Argentina",
-        "seoTitle": "Avenida Q Argentina | Drama",
-        "seoDescription": "Criatividade, design, identidade visual e retoque fotográfico para Avenida Q Argentina. Uma campanha precisa e irreverente para a produção local.",
+        "seoTitle": "Avenida Q Argentina",
+        "seoDescription": "Criatividade, design, identidade visual e retoque fotográfico para Avenida Q Argentina.",
         "excerpt": "Identidade visual e peças de campanha para Avenida Q Argentina.",
         "contentBlocks": []
       }
@@ -1236,9 +1145,9 @@
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777350070/drama-web/uploads/mnlithxjx4twefdy78h8.webp",
     "coverImageAlt": "Gráfica oficial de Casi Normales Argentina",
     "contentBlocks": [],
-    "seoTitle": "Casi Normales Argentina | Drama",
-    "seoDescription": "Diseño, identidad visual y creatividad para Casi Normales en Argentina, la versión local del musical de Broadway Next to Normal.",
-    "excerpt": "Diseño e identidad visual para la producción argentina de Casi Normales, la versión local del musical de Broadway.",
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": "",
     "translations": {
       "en": {
         "tags": [
@@ -1248,9 +1157,9 @@
         ],
         "name": "Next to Normal",
         "coverImageAlt": "Official artwork for Next to Normal Argentina",
-        "seoTitle": "Next to Normal Argentina | Drama",
-        "seoDescription": "Design, visual identity, and creativity for Next to Normal in Argentina, the local production of the Broadway musical.",
-        "excerpt": "Design and visual identity for the Argentine production of Next to Normal.",
+        "seoTitle": "Next to Normal Argentina",
+        "seoDescription": "Design, visual identity, and creativity for Next to Normal Argentina.",
+        "excerpt": "Design and visual identity work for Next to Normal Argentina.",
         "contentBlocks": []
       },
       "pt": {
@@ -1261,9 +1170,9 @@
         ],
         "name": "Quase Normais",
         "coverImageAlt": "Arte oficial de Quase Normais Argentina",
-        "seoTitle": "Quase Normais Argentina | Drama",
-        "seoDescription": "Design, identidade visual e criatividade para Quase Normais na Argentina, a produção local do musical da Broadway.",
-        "excerpt": "Design e identidade visual para a produção argentina de Quase Normais.",
+        "seoTitle": "Quase Normais Argentina",
+        "seoDescription": "Design, identidade visual e criatividade para Quase Normais Argentina.",
+        "excerpt": "Trabalho de design e identidade visual para Quase Normais Argentina.",
         "contentBlocks": []
       }
     }
@@ -1276,17 +1185,17 @@
     "featured": false,
     "published": true,
     "tags": [
-      "identidad visual",
-      "diseño",
-      "retoque fotográfico",
-      "creatividad"
+      "IDENTIDAD VISUAL",
+      "DISEÑO",
+      "RETOQUE FOTOGRÁFICO",
+      "CREATIVIDAD"
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777269228/drama-web/uploads/lk0z9vlrwv1wnzssb2t8.webp",
     "coverImageAlt": "Gráfica oficial de Navidad en las películas con Raúl Lavié",
     "contentBlocks": [],
-    "seoTitle": "Navidad en las Películas con Raúl Lavié | Drama",
-    "seoDescription": "Identidad visual, diseño y retoque fotográfico para Navidad en las películas con Raúl Lavié. Piezas de campaña para la producción teatral argentina.",
-    "excerpt": "Identidad visual y piezas de campaña para Navidad en las películas con Raúl Lavié.",
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": "",
     "translations": {
       "en": {
         "tags": [
@@ -1297,9 +1206,9 @@
         ],
         "name": "Navidad en las películas",
         "coverImageAlt": "Official artwork for Navidad en las películas with Raúl Lavié",
-        "seoTitle": "Navidad en las Películas with Raúl Lavié | Drama",
-        "seoDescription": "Visual identity, design, and photo retouching for Navidad en las películas with Raúl Lavié. Campaign pieces for the Argentine theatrical production.",
-        "excerpt": "Visual identity and campaign pieces for Navidad en las películas with Raúl Lavié.",
+        "seoTitle": "Navidad en las películas",
+        "seoDescription": "Visual identity, design, creativity, and photo retouching for Navidad en las películas.",
+        "excerpt": "Visual identity and campaign pieces for Navidad en las películas.",
         "contentBlocks": []
       },
       "pt": {
@@ -1311,9 +1220,9 @@
         ],
         "name": "Navidad en las películas",
         "coverImageAlt": "Arte oficial de Navidad en las películas com Raúl Lavié",
-        "seoTitle": "Navidad en las Películas com Raúl Lavié | Drama",
-        "seoDescription": "Identidade visual, design e retoque fotográfico para Navidad en las películas com Raúl Lavié. Peças de campanha para a produção teatral argentina.",
-        "excerpt": "Identidade visual e peças de campanha para Navidad en las películas com Raúl Lavié.",
+        "seoTitle": "Navidad en las películas",
+        "seoDescription": "Identidade visual, design, criatividade e retoque fotográfico para Navidad en las películas.",
+        "excerpt": "Identidade visual e peças de campanha para Navidad en las películas.",
         "contentBlocks": []
       }
     }
@@ -1326,16 +1235,16 @@
     "featured": false,
     "published": true,
     "tags": [
-      "creatividad",
-      "marketing",
-      "diseño"
+      "CREATIVIDAD",
+      "MARKETING",
+      "DISEÑO"
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777270315/drama-web/uploads/f1kjj7j5shkr2fyrkya3.webp",
     "coverImageAlt": "Gráfica oficial de Lucky Hank con Bob Odenkirk",
     "contentBlocks": [],
-    "seoTitle": "Lucky Hank con Bob Odenkirk | Drama",
-    "seoDescription": "Creatividad, marketing y diseño para Lucky Hank, la serie de AMC con Bob Odenkirk. Estrategia y piezas de campaña para el mercado latinoamericano.",
-    "excerpt": "Creatividad y diseño de marketing para Lucky Hank, la serie protagonizada por Bob Odenkirk.",
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": "",
     "translations": {
       "en": {
         "tags": [
@@ -1345,9 +1254,9 @@
         ],
         "name": "Lucky Hank",
         "coverImageAlt": "Official artwork for Lucky Hank with Bob Odenkirk",
-        "seoTitle": "Lucky Hank with Bob Odenkirk | Drama",
-        "seoDescription": "Creativity, marketing, and design for Lucky Hank, the AMC series with Bob Odenkirk. Strategy and campaign pieces for the Latin American market.",
-        "excerpt": "Creativity and marketing design for Lucky Hank, the series starring Bob Odenkirk.",
+        "seoTitle": "Lucky Hank",
+        "seoDescription": "Creativity, marketing, and design for Lucky Hank.",
+        "excerpt": "Creative and marketing design work for Lucky Hank.",
         "contentBlocks": []
       },
       "pt": {
@@ -1358,9 +1267,9 @@
         ],
         "name": "Lucky Hank",
         "coverImageAlt": "Arte oficial de Lucky Hank com Bob Odenkirk",
-        "seoTitle": "Lucky Hank com Bob Odenkirk | Drama",
-        "seoDescription": "Criatividade, marketing e design para Lucky Hank, a série da AMC com Bob Odenkirk. Estratégia e peças de campanha para o mercado latino-americano.",
-        "excerpt": "Criatividade e design de marketing para Lucky Hank, a série protagonizada por Bob Odenkirk.",
+        "seoTitle": "Lucky Hank",
+        "seoDescription": "Criatividade, marketing e design para Lucky Hank.",
+        "excerpt": "Trabalho de criatividade e design de marketing para Lucky Hank.",
         "contentBlocks": []
       }
     }
@@ -1373,15 +1282,15 @@
     "featured": false,
     "published": true,
     "tags": [
-      "diseño",
-      "identidad visual"
+      "DISEÑO",
+      "IDENTIDAD VISUAL"
     ],
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777270589/drama-web/uploads/xntd6j9kvbqt5uyh3yhr.webp",
     "coverImageAlt": "Tapa de libro Thrill Maker de Stephen Dolginoff",
     "contentBlocks": [],
-    "seoTitle": "Thrill Maker de Stephen Dolginoff | Drama",
-    "seoDescription": "Diseño e identidad visual para Thrill Maker de Stephen Dolginoff. Diseño de portada de libro y piezas para la producción teatral.",
-    "excerpt": "Diseño e identidad visual para Thrill Maker, la obra de Stephen Dolginoff.",
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": "",
     "translations": {
       "en": {
         "tags": [
@@ -1390,9 +1299,9 @@
         ],
         "name": "Thrill Maker",
         "coverImageAlt": "Book cover for Thrill Maker by Stephen Dolginoff",
-        "seoTitle": "Thrill Maker by Stephen Dolginoff | Drama",
-        "seoDescription": "Design and visual identity for Thrill Maker by Stephen Dolginoff. Book cover design and pieces for the theatrical production.",
-        "excerpt": "Design and visual identity for Thrill Maker, Stephen Dolginoff's theatrical work.",
+        "seoTitle": "Thrill Maker",
+        "seoDescription": "Design and visual identity for Thrill Maker.",
+        "excerpt": "Design and visual identity work for Thrill Maker.",
         "contentBlocks": []
       },
       "pt": {
@@ -1402,9 +1311,9 @@
         ],
         "name": "Thrill Maker",
         "coverImageAlt": "Capa do livro Thrill Maker, de Stephen Dolginoff",
-        "seoTitle": "Thrill Maker, de Stephen Dolginoff | Drama",
-        "seoDescription": "Design e identidade visual para Thrill Maker, de Stephen Dolginoff. Design de capa de livro e peças para a produção teatral.",
-        "excerpt": "Design e identidade visual para Thrill Maker, a obra teatral de Stephen Dolginoff.",
+        "seoTitle": "Thrill Maker",
+        "seoDescription": "Design e identidade visual para Thrill Maker.",
+        "excerpt": "Trabalho de design e identidade visual para Thrill Maker.",
         "contentBlocks": []
       }
     }
@@ -1422,9 +1331,9 @@
     "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777317110/drama-web/uploads/mclmulqsqrooyprwuwuk.webp",
     "coverImageAlt": "Gráfica oficial de Vivitos y Coleando 2",
     "contentBlocks": [],
-    "seoTitle": "Vivitos y Coleando 2 | Drama",
-    "seoDescription": "Identidad visual y diseño para Vivitos y Coleando 2, la segunda temporada de la producción teatral argentina.",
-    "excerpt": "Identidad visual y diseño para la segunda temporada de Vivitos y Coleando.",
+    "seoTitle": "",
+    "seoDescription": "",
+    "excerpt": "",
     "translations": {
       "en": {
         "tags": [
@@ -1432,9 +1341,9 @@
         ],
         "name": "Vivitos y Coleando 2",
         "coverImageAlt": "Official artwork for Vivitos y Coleando 2",
-        "seoTitle": "Vivitos y Coleando 2 | Drama",
-        "seoDescription": "Visual identity and design for Vivitos y Coleando 2, the second season of the Argentine theatrical production.",
-        "excerpt": "Visual identity and design for the second season of Vivitos y Coleando.",
+        "seoTitle": "Vivitos y Coleando 2",
+        "seoDescription": "Visual identity for Vivitos y Coleando 2.",
+        "excerpt": "Visual identity work for Vivitos y Coleando 2.",
         "contentBlocks": []
       },
       "pt": {
@@ -1443,9 +1352,9 @@
         ],
         "name": "Vivitos y Coleando 2",
         "coverImageAlt": "Arte oficial de Vivitos y Coleando 2",
-        "seoTitle": "Vivitos y Coleando 2 | Drama",
-        "seoDescription": "Identidade visual e design para Vivitos y Coleando 2, a segunda temporada da produção teatral argentina.",
-        "excerpt": "Identidade visual e design para a segunda temporada de Vivitos y Coleando.",
+        "seoTitle": "Vivitos y Coleando 2",
+        "seoDescription": "Identidade visual para Vivitos y Coleando 2.",
+        "excerpt": "Trabalho de identidade visual para Vivitos y Coleando 2.",
         "contentBlocks": []
       }
     }
