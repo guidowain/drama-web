@@ -174,6 +174,9 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
       return
     }
 
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
     startRound()
   }, [active, startRound])
 
@@ -229,6 +232,14 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
 
     function onKeyDown(event: KeyboardEvent) {
       if (event.ctrlKey || event.metaKey || event.altKey) return
+      if (
+        event.key === 'Enter' ||
+        event.key === 'Backspace' ||
+        /^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ]$/.test(event.key)
+      ) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
       handleKey(event.key)
     }
 
@@ -244,7 +255,7 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
     <AnimatePresence>
       {active && (
         <motion.div
-          className="fixed inset-0 z-[80] overflow-y-auto overflow-x-hidden overscroll-contain bg-black text-black"
+          className="fixed inset-0 z-[80] overflow-hidden overscroll-contain bg-black text-black"
           initial={{ opacity: 0, filter: 'blur(18px)' }}
           animate={{ opacity: 1, filter: 'blur(0px)' }}
           exit={{ opacity: 0, filter: 'blur(12px)' }}
@@ -282,7 +293,7 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
             )}
           </AnimatePresence>
 
-          <div className="relative z-10 flex min-h-[100dvh] items-start justify-center px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(4.25rem,calc(env(safe-area-inset-top)+3.25rem))] md:items-center md:px-8 md:py-[clamp(2rem,7vh,5rem)] lg:px-10 lg:py-[clamp(2rem,8vh,6rem)]">
+          <div className="relative z-10 flex h-[100dvh] items-center justify-center overflow-hidden px-4 py-[max(4rem,calc(env(safe-area-inset-top)+3rem))] md:px-7 md:py-[clamp(1.5rem,5vh,3rem)] lg:px-9">
             {loadError && !countdown && (
               <div className="text-center">
                 <h2 className="text-5xl font-black uppercase leading-none md:text-6xl lg:text-7xl">{copy.dramadle.loadError}</h2>
@@ -297,15 +308,25 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
             )}
 
             {!loadError && !countdown && gameData && (
-              <div className="w-full max-w-6xl">
-                <div className="mb-2 flex h-4 items-center justify-between gap-4 text-[0.66rem] font-black uppercase tracking-[0.18em] text-black/50 md:mb-4 md:text-[0.68rem] lg:mb-[clamp(0.75rem,2vh,1.5rem)] lg:text-xs">
+              <div className="w-full max-w-[88rem]">
+                <div className="mb-2 flex h-4 items-center justify-between gap-4 text-[0.66rem] font-black uppercase tracking-[0.18em] text-black/50 md:mb-3 md:text-[0.68rem] lg:text-xs">
                   <span>{copy.dramadle.title}</span>
                   <span>{gameState.guesses.length}/{MAX_ATTEMPTS}</span>
                 </div>
 
-                <div className="grid items-start gap-4 md:grid-cols-[minmax(260px,34vw)_minmax(0,1fr)] md:items-center md:gap-6 lg:grid-cols-[minmax(320px,42vh)_minmax(0,1fr)] lg:gap-[clamp(1.5rem,4vw,3rem)]">
+                <div className={[
+                  'grid items-center gap-4 md:gap-6 lg:gap-[clamp(1.25rem,3vw,2.5rem)]',
+                  isFinished
+                    ? 'md:grid-cols-[minmax(240px,28vw)_minmax(0,1fr)] lg:grid-cols-[minmax(260px,30vw)_minmax(0,1fr)]'
+                    : 'md:grid-cols-[minmax(240px,30vw)_minmax(0,1fr)] lg:grid-cols-[minmax(280px,34vh)_minmax(0,1fr)]',
+                ].join(' ')}>
                   <div className="flex justify-center">
-                    <div className="grid w-[min(88vw,23rem)] grid-rows-6 gap-1.5 md:w-[min(34vw,25rem)] lg:w-[min(420px,42vh)] lg:gap-2">
+                    <div className={[
+                      'grid grid-rows-6 gap-1.5',
+                      isFinished
+                        ? 'w-[min(82vw,18rem)] md:w-[min(28vw,18rem)] lg:w-[min(30vw,20rem)]'
+                        : 'w-[min(84vw,20rem)] md:w-[min(30vw,20rem)] lg:w-[min(360px,36vh)]',
+                    ].join(' ')}>
                       {rows.map((row, rowIndex) => (
                         <motion.div
                           key={rowIndex}
@@ -353,7 +374,7 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
                                   key={key}
                                   label={key}
                                   state={keyboardStates[key]}
-                                  onClick={() => handleKey(key)}
+                          onClick={() => handleKey(key)}
                                 />
                               ))}
                             </div>
@@ -418,7 +439,7 @@ function KeyboardKey({ label, state, onClick }: { label: string; state?: LetterS
         onClick()
       }}
       className={[
-        'flex h-11 min-w-0 items-center justify-center rounded-md border-2 text-[0.66rem] font-black uppercase leading-none tracking-normal transition-colors focus:outline-none focus-visible:outline-none md:h-12 md:text-xs lg:h-[3.55rem] lg:text-sm',
+        'flex h-10 min-w-0 items-center justify-center rounded-md border-2 text-[0.62rem] font-black uppercase leading-none tracking-normal transition-colors focus:outline-none focus-visible:outline-none md:h-11 md:text-xs lg:h-12 lg:text-sm',
         isWide ? 'min-w-[3.4rem] flex-[1.35] px-1.5' : 'flex-1 px-0.5',
         stateClass,
       ].join(' ')}
@@ -466,23 +487,23 @@ function ResultPanel({
 
   return (
     <motion.div
-      className="mx-auto overflow-hidden rounded-lg border-2 border-black/20 bg-white/18 shadow-[0_20px_50px_rgba(0,0,0,0.18)]"
+      className="mx-auto flex max-h-[calc(100dvh-7rem)] w-full max-w-[min(42rem,54vw)] flex-col overflow-hidden rounded-lg border-2 border-black/20 bg-white/18 shadow-[0_20px_50px_rgba(0,0,0,0.18)]"
       initial={{ opacity: 0, scale: 0.92, filter: 'blur(14px)' }}
       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
       exit={{ opacity: 0, scale: 0.96, filter: 'blur(8px)' }}
       transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
     >
       {gameData.coverImage && (
-        <div className="relative aspect-square w-full bg-black">
+        <div className="relative mx-auto aspect-square h-[min(48dvh,420px)] max-h-[420px] max-w-full shrink-0 bg-black">
           <Image src={gameData.coverImage} alt="" fill className="object-contain" unoptimized />
-          <div className="absolute left-4 top-4 rounded-full bg-black px-3 py-1.5 text-[0.65rem] font-black uppercase tracking-[0.16em] text-white">
+          <div className="absolute left-3 top-3 rounded-full bg-black px-3 py-1.5 text-[0.6rem] font-black uppercase tracking-[0.16em] text-white">
             {won ? copy.dramadle.win : `${copy.dramadle.theWordWas} ${gameData.word}`}
           </div>
         </div>
       )}
 
-      <div className="p-4 md:p-5">
-        <p className="text-sm font-black uppercase leading-snug tracking-[0.08em] text-black md:text-base">
+      <div className="min-h-0 p-3 md:p-4">
+        <p className="text-xs font-black uppercase leading-snug tracking-[0.08em] text-black md:text-sm">
           {gameData.projectName}
           {gameData.projectYear ? (
             <span className="ml-2 text-black/55">{gameData.projectYear}</span>
@@ -490,15 +511,15 @@ function ResultPanel({
         </p>
 
         {gameData.projectTags.length > 0 && (
-          <div className="mt-3">
-            <p className="text-xs font-black uppercase tracking-[0.14em] text-black/55">
+          <div className="mt-2">
+            <p className="text-[0.65rem] font-black uppercase tracking-[0.14em] text-black/55">
               {gameData.projectName} hicimos
             </p>
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div className="mt-1.5 flex flex-wrap gap-1.5">
               {gameData.projectTags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full border-2 border-black px-3 py-1.5 text-[0.66rem] font-black uppercase tracking-[0.12em] text-black"
+                  className="rounded-full border-2 border-black px-2.5 py-1 text-[0.58rem] font-black uppercase tracking-[0.12em] text-black"
                 >
                   {tag.toUpperCase()}
                 </span>
@@ -507,11 +528,11 @@ function ResultPanel({
           </div>
         )}
 
-        <div className="mt-5 flex flex-wrap gap-3">
+        <div className="mt-3 flex flex-wrap gap-2.5">
           <button
             type="button"
             onClick={onPlayAgain}
-            className="rounded-full border-2 border-black bg-black px-6 py-3 text-xs font-black uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-85"
+            className="rounded-full border-2 border-black bg-black px-5 py-2.5 text-[0.68rem] font-black uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-85"
           >
             {copy.dramadle.playAgain}
           </button>
@@ -519,7 +540,7 @@ function ResultPanel({
             <Link
               href={`/proyectos?slug=${gameData.projectSlug}`}
               onClick={onClose}
-              className="rounded-full border-2 border-black bg-white/20 px-6 py-3 text-xs font-black uppercase tracking-[0.14em] text-black transition-colors hover:bg-white/45"
+              className="rounded-full border-2 border-black bg-white/20 px-5 py-2.5 text-[0.68rem] font-black uppercase tracking-[0.14em] text-black transition-colors hover:bg-white/45"
             >
               {copy.dramadle.viewProject}
             </Link>
