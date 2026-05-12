@@ -23,10 +23,10 @@ function createWord(): DramaWord {
 }
 
 function normalizeBeforeSave(words: DramaWord[]) {
-  return words.map((w) => ({
-    ...w,
-    word: w.word.toUpperCase().trim(),
-    projectId: w.projectId.trim(),
+  return words.map((word) => ({
+    ...word,
+    word: word.word.toUpperCase().trim(),
+    projectId: word.projectId.trim(),
   }))
 }
 
@@ -35,12 +35,12 @@ function validateWords(words: DramaWord[]) {
     const number = index + 1
     const entry = words[index]
 
-    if (!/^[A-ZÁÉÍÓÚÜÑ]{5}$/.test(entry.word.toUpperCase().trim())) {
+    if (!/^[A-ZÁÉÍÓÚÜÑ]{5}$/.test(entry.word)) {
       return `La palabra ${number} debe tener exactamente 5 letras (solo letras, sin espacios ni números).`
     }
 
     if (!entry.projectId.trim()) {
-      return `La palabra ${number} necesita una obra asociada.`
+      return `La palabra ${number} necesita una obra para revelar al final.`
     }
   }
 
@@ -91,9 +91,7 @@ export default function AdminDramadlePage() {
   }, [])
 
   function updateWord(id: string, changes: Partial<DramaWord>) {
-    setWords((current) =>
-      current.map((w) => (w.id === id ? { ...w, ...changes } : w))
-    )
+    setWords((current) => current.map((word) => (word.id === id ? { ...word, ...changes } : word)))
   }
 
   function addWord() {
@@ -101,7 +99,7 @@ export default function AdminDramadlePage() {
   }
 
   function removeWord(id: string) {
-    setWords((current) => current.filter((w) => w.id !== id))
+    setWords((current) => current.filter((word) => word.id !== id))
   }
 
   async function handleSave() {
@@ -128,8 +126,8 @@ export default function AdminDramadlePage() {
         throw new Error(data?.error || 'No se pudo guardar el Dramadle')
       }
 
-      const saved = await response.json()
-      setWords(Array.isArray(saved) ? saved : [])
+      const savedWords = await response.json()
+      setWords(Array.isArray(savedWords) ? savedWords : [])
       setSaved(true)
       setTimeout(() => setSaved(false), 2500)
     } catch (err: unknown) {
@@ -142,12 +140,12 @@ export default function AdminDramadlePage() {
   if (loading) return <div className="p-10 text-white/30">Cargando...</div>
 
   return (
-    <div className="p-8 md:p-10 max-w-3xl">
-      <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between mb-8">
-        <div>
-          <h1 className="text-white font-black text-3xl uppercase">Dramadle</h1>
-          <p className="text-white/30 text-sm mt-1">
-            Cada día se usa una palabra distinta, rotando en orden. Agregá palabras de 5 letras y asocialas a una obra.
+    <div className="max-w-5xl p-8 md:p-10">
+      <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
+        <div className="max-w-xl">
+          <h1 className="text-3xl font-black uppercase text-white">Dramadle</h1>
+          <p className="mt-1 text-sm text-white/30">
+            Cargá palabras secretas de 5 letras. La obra elegida sólo se revela al final como contexto.
           </p>
         </div>
 
@@ -168,80 +166,105 @@ export default function AdminDramadlePage() {
 
       {wordCount === 0 ? (
         <div className="rounded-2xl border border-white/5 bg-zinc-900 p-8 text-center">
-          <p className="text-white/40 text-sm mb-5">Todavía no hay palabras cargadas.</p>
+          <p className="mb-5 text-sm text-white/40">Todavía no hay palabras cargadas.</p>
           <button
             type="button"
             onClick={addWord}
-            className="bg-white text-black font-black text-sm uppercase tracking-widest px-5 py-2.5 rounded-xl hover:bg-white/90 transition-colors"
+            className="rounded-xl bg-white px-5 py-2.5 text-sm font-black uppercase tracking-widest text-black transition-colors hover:bg-white/90"
           >
             Agregar la primera
           </button>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="overflow-hidden rounded-2xl border border-white/5 bg-zinc-950/40">
+          <div className="hidden grid-cols-[44px_170px_minmax(220px,1fr)_72px_36px] gap-3 border-b border-white/5 px-4 py-3 text-[0.65rem] font-black uppercase tracking-[0.18em] text-white/25 md:grid">
+            <span>#</span>
+            <span>Palabra</span>
+            <span>Reveal final</span>
+            <span>Preview</span>
+            <span />
+          </div>
+
           {words.map((entry, index) => {
-            const project = projects.find((p) => p.id === entry.projectId)
+            const project = projects.find((item) => item.id === entry.projectId)
 
             return (
               <div
                 key={entry.id}
-                className="relative rounded-2xl border border-white/5 bg-zinc-900 p-4 pr-12 flex items-center gap-4"
+                className="grid gap-3 border-b border-white/5 bg-zinc-900/70 p-4 last:border-b-0 md:grid-cols-[44px_170px_minmax(220px,1fr)_72px_36px] md:items-center"
               >
+                <span className="text-xs font-black text-white/20 md:text-right">{index + 1}</span>
+
+                <div>
+                  <label className="mb-1.5 block text-[0.65rem] font-bold uppercase tracking-[0.12em] text-white/25 md:hidden">
+                    Palabra
+                  </label>
+                  <input
+                    type="text"
+                    value={entry.word}
+                    maxLength={5}
+                    onChange={(event) => {
+                      const nextWord = event.target.value
+                        .toUpperCase()
+                        .replace(/[^A-ZÁÉÍÓÚÜÑ]/g, '')
+                        .slice(0, 5)
+
+                      updateWord(entry.id, { word: nextWord })
+                    }}
+                    className="admin-input h-11 text-center text-base font-black uppercase tracking-[0.32em]"
+                    placeholder="PISTA"
+                    spellCheck={false}
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-[0.65rem] font-bold uppercase tracking-[0.12em] text-white/25 md:hidden">
+                    Reveal final
+                  </label>
+                  <select
+                    value={entry.projectId}
+                    onChange={(event) => updateWord(entry.id, { projectId: event.target.value })}
+                    className="admin-input h-11"
+                  >
+                    <option value="">Elegir obra para revelar al final...</option>
+                    {projects.map((project) => (
+                      <option key={project.id} value={project.id}>
+                        {project.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="flex items-center md:justify-center">
+                  {project?.coverImage ? (
+                    <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg border border-white/10">
+                      <Image
+                        src={project.coverImage}
+                        alt={project.name}
+                        fill
+                        className="object-cover"
+                        unoptimized
+                      />
+                    </div>
+                  ) : (
+                    <div className="h-11 w-11 rounded-lg border border-white/5 bg-black/20" />
+                  )}
+                </div>
+
                 <button
                   type="button"
                   onClick={() => removeWord(entry.id)}
-                  className="danger-x absolute right-4 top-1/2 -translate-y-1/2"
+                  className="danger-x justify-self-start md:justify-self-center"
                   aria-label={`Eliminar palabra ${index + 1}`}
                   title="Eliminar"
                 >
                   ×
                 </button>
-
-                <span className="text-white/20 text-xs font-black w-5 shrink-0 text-right">
-                  {index + 1}
-                </span>
-
-                <input
-                  type="text"
-                  value={entry.word}
-                  maxLength={5}
-                  onChange={(event) =>
-                    updateWord(entry.id, { word: event.target.value.toUpperCase() })
-                  }
-                  className="admin-input w-28 font-black text-center text-lg tracking-[0.3em] uppercase shrink-0"
-                  placeholder="OBRAS"
-                  spellCheck={false}
-                />
-
-                <select
-                  value={entry.projectId}
-                  onChange={(event) => updateWord(entry.id, { projectId: event.target.value })}
-                  className="admin-input flex-1 min-w-0"
-                >
-                  <option value="">Elegir obra...</option>
-                  {projects.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.name}
-                    </option>
-                  ))}
-                </select>
-
-                {project?.coverImage && (
-                  <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg border border-white/10">
-                    <Image
-                      src={project.coverImage}
-                      alt={project.name}
-                      fill
-                      className="object-cover"
-                      unoptimized
-                    />
-                  </div>
-                )}
               </div>
             )
           })}
 
-          <div className="flex justify-end border-t border-white/5 pt-6 mt-6">
+          <div className="flex justify-end p-4">
             <DramadleActions
               canSave={canSave}
               saving={saving}
@@ -274,7 +297,7 @@ function DramadleActions({
       <button
         type="button"
         onClick={onAddWord}
-        className="bg-white text-black font-black text-sm uppercase tracking-widest px-5 py-2.5 rounded-xl hover:bg-white/90 transition-colors"
+        className="rounded-xl bg-white px-5 py-2.5 text-sm font-black uppercase tracking-widest text-black transition-colors hover:bg-white/90"
       >
         Agregar palabra
       </button>
@@ -282,7 +305,7 @@ function DramadleActions({
         type="button"
         onClick={onSave}
         disabled={!canSave}
-        className="gradient-bg text-black font-black text-sm uppercase tracking-widest px-5 py-2.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
+        className="gradient-bg rounded-xl px-5 py-2.5 text-sm font-black uppercase tracking-widest text-black transition-opacity hover:opacity-90 disabled:opacity-50"
       >
         {saving ? 'Guardando...' : saved ? '¡Guardado!' : 'Guardar'}
       </button>

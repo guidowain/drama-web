@@ -158,24 +158,24 @@ function ProyectosContent() {
       return
     }
 
-    const isEs = locale === 'es'
+    const canUseTextGames = locale === 'es'
     const canOpenDramanoid = canUseDramanoid && funMediaPool.length > 0
 
-    const available: FunModeType[] = []
-    if (canOpenDramanoid) available.push('dramanoid')
-    if (isEs) available.push('trivia', 'dramadle')
+    const availableModes: FunModeType[] = []
+    if (canOpenDramanoid) availableModes.push('dramanoid')
+    if (canUseTextGames) availableModes.push('trivia', 'dramadle')
 
-    if (!available.length) return
+    if (availableModes.length === 0) return
 
-    if (available.length === 1) {
+    if (availableModes.length === 1) {
       trackEvent('fan_mode_open')
-      setFunMode(available[0])
+      setFunMode(availableModes[0])
       return
     }
 
     const lastMode = window.sessionStorage.getItem('drama-fun-mode-last') as FunModeType | null
-    const lastIndex = lastMode ? available.indexOf(lastMode) : -1
-    const nextMode = available[(lastIndex + 1) % available.length]
+    const lastModeIndex = lastMode ? availableModes.indexOf(lastMode) : -1
+    const nextMode = availableModes[(lastModeIndex + 1) % availableModes.length]
 
     window.sessionStorage.setItem('drama-fun-mode-last', nextMode)
     trackEvent('fan_mode_open')

@@ -73,6 +73,12 @@ export interface TriviaQuestion {
   options: TriviaOption[]
 }
 
+export interface DramaWord {
+  id: string
+  word: string
+  projectId: string
+}
+
 export interface ServiceInfo {
   name: string
   description: string

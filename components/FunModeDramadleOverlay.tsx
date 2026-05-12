@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useReducer, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useSiteCopy } from '@/lib/LocaleContext'
 
@@ -9,8 +10,8 @@ const MAX_ATTEMPTS = 6
 const WORD_LENGTH = 5
 
 type LetterState = 'correct' | 'present' | 'absent' | 'typed' | 'empty'
-
 type GameStatus = 'countdown' | 'playing' | 'won' | 'lost'
+type CountdownValue = '3' | '2' | '1' | 'DRAMADLE' | null
 
 type GameData = {
   id: string
@@ -33,29 +34,40 @@ type Action =
   | { type: 'KEY'; key: string }
   | { type: 'BACKSPACE' }
   | { type: 'ENTER'; word: string }
-  | { type: 'FLASH_INVALID' }
+  | { type: 'START' }
   | { type: 'CLEAR_INVALID' }
   | { type: 'RESET' }
+
+type Props = {
+  active: boolean
+  onClose: () => void
+}
+
+const KEYBOARD_ROWS = [
+  ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+  ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Ñ'],
+  ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '⌫'],
+]
 
 function getLetterStates(guess: string[], word: string): LetterState[] {
   const result: LetterState[] = Array(WORD_LENGTH).fill('absent')
   const wordChars = word.split('')
   const remaining = [...wordChars]
 
-  guess.forEach((letter, i) => {
-    if (letter === wordChars[i]) {
-      result[i] = 'correct'
-      remaining[i] = ''
+  guess.forEach((letter, index) => {
+    if (letter === wordChars[index]) {
+      result[index] = 'correct'
+      remaining[index] = ''
     }
   })
 
-  guess.forEach((letter, i) => {
-    if (result[i] === 'correct') return
-    const j = remaining.indexOf(letter)
+  guess.forEach((letter, index) => {
+    if (result[index] === 'correct') return
+    const matchIndex = remaining.indexOf(letter)
 
-    if (j !== -1) {
-      result[i] = 'present'
-      remaining[j] = ''
+    if (matchIndex !== -1) {
+      result[index] = 'present'
+      remaining[matchIndex] = ''
     }
   })
 
@@ -68,14 +80,12 @@ function getKeyboardStates(guesses: string[][], word: string): Record<string, Le
   guesses.forEach((guess) => {
     const letterStates = getLetterStates(guess, word)
 
-    guess.forEach((letter, i) => {
+    guess.forEach((letter, index) => {
       const current = states[letter]
-      const next = letterStates[i]
+      const next = letterStates[index]
 
       if (current === 'correct') return
-      if (next === 'correct' || (!current && next === 'present') || !current) {
-        states[letter] = next
-      }
+      if (next === 'correct' || (!current && next === 'present') || !current) states[letter] = next
     })
   })
 
@@ -83,9 +93,10 @@ function getKeyboardStates(guesses: string[][], word: string): Record<string, Le
 }
 
 function gameReducer(state: GameState, action: Action): GameState {
+  if (action.type === 'START') return { ...state, status: 'playing', invalid: false }
+
   if (action.type === 'KEY') {
-    if (state.status !== 'playing') return state
-    if (state.current.length >= WORD_LENGTH) return state
+    if (state.status !== 'playing' || state.current.length >= WORD_LENGTH) return state
     return { ...state, current: [...state.current, action.key] }
   }
 
@@ -100,44 +111,25 @@ function gameReducer(state: GameState, action: Action): GameState {
 
     const guess = state.current
     const won = guess.join('') === action.word
-    const newGuesses = [...state.guesses, guess]
-    const lost = !won && newGuesses.length >= MAX_ATTEMPTS
+    const guesses = [...state.guesses, guess]
+    const lost = !won && guesses.length >= MAX_ATTEMPTS
 
     return {
-      ...state,
-      guesses: newGuesses,
+      guesses,
       current: [],
       status: won ? 'won' : lost ? 'lost' : 'playing',
       invalid: false,
     }
   }
 
-  if (action.type === 'FLASH_INVALID') {
-    return { ...state, invalid: true }
-  }
-
-  if (action.type === 'CLEAR_INVALID') {
-    return { ...state, invalid: false }
-  }
-
-  if (action.type === 'RESET') {
-    return { guesses: [], current: [], status: 'countdown', invalid: false }
-  }
+  if (action.type === 'CLEAR_INVALID') return { ...state, invalid: false }
+  if (action.type === 'RESET') return { guesses: [], current: [], status: 'countdown', invalid: false }
 
   return state
 }
 
-const KEYBOARD_ROWS = [
-  ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
-  ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Ñ'],
-  ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '⌫'],
-]
-
-type CountdownValue = '3' | '2' | '1' | 'DRAMADLE' | null
-
-type Props = {
-  active: boolean
-  onClose: () => void
+function initialState(): GameState {
+  return { guesses: [], current: [], status: 'countdown', invalid: false }
 }
 
 export default function FunModeDramadleOverlay({ active, onClose }: Props) {
@@ -145,28 +137,22 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
   const [gameData, setGameData] = useState<GameData | null>(null)
   const [loadError, setLoadError] = useState(false)
   const [countdown, setCountdown] = useState<CountdownValue>(null)
-  const [gameState, dispatch] = useReducer(gameReducer, {
-    guesses: [],
-    current: [],
-    status: 'countdown',
-    invalid: false,
-  })
+  const [gameState, dispatch] = useReducer(gameReducer, undefined, initialState)
 
-  function startRound(excludeId?: string) {
+  const startRound = useCallback((excludeId?: string) => {
     setLoadError(false)
     setCountdown('3')
+    setGameData(null)
     dispatch({ type: 'RESET' })
 
-    const url = excludeId ? `/api/dramadle?exclude=${excludeId}` : '/api/dramadle'
-
-    fetch(url)
-      .then((r) => {
-        if (!r.ok) throw new Error('no data')
-        return r.json()
+    fetch(excludeId ? `/api/dramadle?exclude=${excludeId}` : '/api/dramadle')
+      .then((response) => {
+        if (!response.ok) throw new Error('No data')
+        return response.json()
       })
-      .then((data) => setGameData(data))
+      .then((data: GameData) => setGameData(data))
       .catch(() => setLoadError(true))
-  }
+  }, [])
 
   useEffect(() => {
     if (!active) {
@@ -178,32 +164,28 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
     }
 
     startRound()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active])
+  }, [active, startRound])
 
   useEffect(() => {
     if (!active || !countdown) return
 
     if (countdown === 'DRAMADLE') {
-      const t = window.setTimeout(() => setCountdown(null), 900)
-      return () => window.clearTimeout(t)
+      const timer = window.setTimeout(() => {
+        setCountdown(null)
+        dispatch({ type: 'START' })
+      }, 960)
+      return () => window.clearTimeout(timer)
     }
 
     const next: Record<string, CountdownValue> = { '3': '2', '2': '1', '1': 'DRAMADLE' }
-    const t = window.setTimeout(() => setCountdown(next[countdown] ?? null), 700)
-    return () => window.clearTimeout(t)
+    const timer = window.setTimeout(() => setCountdown(next[countdown] ?? null), 780)
+    return () => window.clearTimeout(timer)
   }, [active, countdown])
 
   useEffect(() => {
-    if (!active || countdown !== null) return
-    dispatch({ type: 'ENTER', word: '' })
-  }, [active, countdown])
-
-  useEffect(() => {
-    if (gameState.invalid) {
-      const t = window.setTimeout(() => dispatch({ type: 'CLEAR_INVALID' }), 500)
-      return () => window.clearTimeout(t)
-    }
+    if (!gameState.invalid) return
+    const timer = window.setTimeout(() => dispatch({ type: 'CLEAR_INVALID' }), 450)
+    return () => window.clearTimeout(timer)
   }, [gameState.invalid])
 
   const handleKey = useCallback((key: string) => {
@@ -220,10 +202,7 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
     }
 
     const upper = key.toUpperCase()
-
-    if (/^[A-ZÁÉÍÓÚÜÑ]$/.test(upper)) {
-      dispatch({ type: 'KEY', key: upper })
-    }
+    if (/^[A-ZÁÉÍÓÚÜÑ]$/.test(upper)) dispatch({ type: 'KEY', key: upper })
   }, [gameData])
 
   useEffect(() => {
@@ -239,267 +218,298 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
   }, [active, gameState.status, handleKey])
 
   const isFinished = gameState.status === 'won' || gameState.status === 'lost'
-  const keyboardStates = gameData
-    ? getKeyboardStates(gameState.guesses, gameData.word)
-    : {}
-
-  function buildRows(): Array<{ letters: string[]; states: LetterState[]; shake: boolean }> {
-    const rows = []
-
-    for (let i = 0; i < MAX_ATTEMPTS; i += 1) {
-      if (i < gameState.guesses.length) {
-        const guess = gameState.guesses[i]
-        rows.push({
-          letters: guess,
-          states: gameData ? getLetterStates(guess, gameData.word) : Array(WORD_LENGTH).fill('absent' as LetterState),
-          shake: false,
-        })
-      } else if (i === gameState.guesses.length && gameState.status === 'playing') {
-        const letters = [...gameState.current]
-        while (letters.length < WORD_LENGTH) letters.push('')
-        rows.push({
-          letters,
-          states: letters.map((l) => (l ? 'typed' : 'empty')) as LetterState[],
-          shake: gameState.invalid,
-        })
-      } else {
-        rows.push({
-          letters: Array(WORD_LENGTH).fill(''),
-          states: Array(WORD_LENGTH).fill('empty') as LetterState[],
-          shake: false,
-        })
-      }
-    }
-
-    return rows
-  }
+  const keyboardStates = gameData ? getKeyboardStates(gameState.guesses, gameData.word) : {}
+  const rows = buildRows(gameState, gameData?.word ?? '')
 
   return (
     <AnimatePresence>
       {active && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/92 backdrop-blur-sm"
+          className="fixed inset-0 z-[80] overflow-y-auto overflow-x-hidden overscroll-contain bg-black text-black"
+          initial={{ opacity: 0, filter: 'blur(18px)' }}
+          animate={{ opacity: 1, filter: 'blur(0px)' }}
+          exit={{ opacity: 0, filter: 'blur(12px)' }}
+          transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* Close */}
+          <motion.div
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,#F504FF_0%,#FE796D_38%,#FCC028_68%,#F504FF_100%)] bg-[length:240%_240%]"
+            animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+          />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(255,255,255,0.42),transparent_32%),radial-gradient(circle_at_85%_24%,rgba(0,0,0,0.14),transparent_32%)]" />
+
           <button
             type="button"
+            aria-pressed="true"
             onClick={onClose}
-            className="absolute right-5 top-5 text-white/40 hover:text-white transition-colors text-2xl font-black leading-none"
-            aria-label={copy.common.close}
+            className="absolute right-5 top-[max(1rem,env(safe-area-inset-top))] z-30 rounded-full border border-black bg-black px-4 py-1.5 text-[0.62rem] font-black uppercase tracking-[0.16em] text-white shadow-[0_0_22px_rgba(0,0,0,0.18)] transition-colors md:right-8 md:top-[clamp(1.25rem,6vh,5rem)] lg:right-10 lg:top-[clamp(1.5rem,7vh,6rem)]"
           >
-            ×
+            {copy.common.funMode}
           </button>
 
-          {/* Countdown */}
-          <AnimatePresence>
+          <AnimatePresence mode="wait">
             {countdown && (
               <motion.div
                 key={countdown}
-                initial={{ scale: 0.6, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 1.3, opacity: 0 }}
-                transition={{ duration: 0.28 }}
-                className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
+                className="pointer-events-none absolute inset-0 z-40 flex items-center justify-center px-5 text-center font-black uppercase leading-none tracking-normal text-black"
+                initial={{ opacity: 0, scale: 0.6, filter: 'blur(16px)' }}
+                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, scale: 1.28, filter: 'blur(10px)' }}
+                transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+                style={{ fontSize: countdown === copy.dramadle.title ? 'clamp(3.2rem, 12vw, 9rem)' : 'clamp(6rem, 20vw, 14rem)' }}
               >
-                <span className="text-white font-black text-7xl md:text-9xl tracking-tight">
-                  {countdown}
-                </span>
+                {countdown}
               </motion.div>
             )}
           </AnimatePresence>
 
-          {/* Load error */}
-          {loadError && (
-            <div className="text-white/50 font-black text-lg uppercase tracking-widest text-center px-6">
-              {copy.dramadle.loadError}
-            </div>
-          )}
-
-          {!loadError && !countdown && (
-            <div className="flex flex-col items-center gap-5 w-full max-w-sm px-4">
-              {/* Title */}
-              <h2 className="text-white font-black text-xl uppercase tracking-[0.2em]">
-                {copy.dramadle.title}
-              </h2>
-
-              {/* Board */}
-              <div className="flex flex-col gap-1.5">
-                {buildRows().map((row, rowIndex) => (
-                  <motion.div
-                    key={rowIndex}
-                    className="flex gap-1.5"
-                    animate={row.shake ? { x: [0, -6, 6, -6, 6, 0] } : {}}
-                    transition={{ duration: 0.35 }}
-                  >
-                    {row.letters.map((letter, colIndex) => (
-                      <DramaCell
-                        key={colIndex}
-                        letter={letter}
-                        state={row.states[colIndex]}
-                        delay={rowIndex < gameState.guesses.length ? colIndex * 0.08 : 0}
-                        revealed={rowIndex < gameState.guesses.length}
-                      />
-                    ))}
-                  </motion.div>
-                ))}
+          <div className="relative z-10 flex min-h-[100dvh] items-start justify-center px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-[max(4.25rem,calc(env(safe-area-inset-top)+3.25rem))] md:items-center md:px-8 md:py-[clamp(2rem,7vh,5rem)] lg:px-10 lg:py-[clamp(2rem,8vh,6rem)]">
+            {loadError && !countdown && (
+              <div className="text-center">
+                <h2 className="text-5xl font-black uppercase leading-none md:text-6xl lg:text-7xl">{copy.dramadle.loadError}</h2>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="mt-8 rounded-full border-2 border-black bg-black px-8 py-3 text-sm font-black uppercase tracking-[0.14em] text-white"
+                >
+                  {copy.trivia.viewProjects}
+                </button>
               </div>
+            )}
 
-              {/* Result reveal */}
-              <AnimatePresence>
-                {isFinished && gameData && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className="w-full rounded-2xl overflow-hidden border border-white/10 bg-white/5"
-                  >
-                    {/* Cover image */}
-                    {gameData.coverImage && (
-                      <div className="relative w-full aspect-video">
-                        <Image
-                          src={gameData.coverImage}
-                          alt={gameData.projectName}
-                          fill
-                          className="object-cover"
-                          unoptimized
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-                        {/* Win/lose badge */}
-                        <div className="absolute top-3 left-3">
-                          {gameState.status === 'won' ? (
-                            <span className="gradient-bg text-black text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full">
-                              {copy.dramadle.win}
-                            </span>
-                          ) : (
-                            <span className="bg-white/15 text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full">
-                              {copy.dramadle.theWordWas}{' '}
-                              <span className="tracking-[0.2em]">{gameData.word}</span>
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Project info */}
-                    <div className="px-4 pt-3 pb-1 space-y-1.5">
-                      <p className="text-white/50 text-xs leading-snug">
-                        {copy.dramadle.wordBelongsTo}{' '}
-                        <span className="text-white font-black tracking-[0.1em]">{gameData.word}</span>{' '}
-                        {copy.dramadle.belongsTo}{' '}
-                        <span className="text-white font-black">&ldquo;{gameData.projectName}&rdquo;</span>
-                        {gameData.projectYear && (
-                          <>
-                            {' '}{copy.dramadle.premieredIn}{' '}
-                            <span className="text-white font-black">{gameData.projectYear}</span>
-                          </>
-                        )}
-                        .
-                      </p>
-
-                      {gameData.projectTags.length > 0 && (
-                        <p className="text-white/50 text-xs leading-snug">
-                          <span className="text-white font-black uppercase tracking-widest">Drama</span>{' '}
-                          {copy.dramadle.dramaHandled}{' '}
-                          <span className="text-white font-black">
-                            {gameData.projectTags.join(', ')}
-                          </span>
-                          .
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="p-3 flex gap-2">
-                      <button
-                        type="button"
-                        onClick={() => startRound(gameData.id)}
-                        className="flex-1 rounded-xl gradient-bg py-2.5 text-xs font-black uppercase tracking-widest text-black hover:opacity-90 transition-opacity"
-                      >
-                        {copy.dramadle.playAgain}
-                      </button>
-                      <a
-                        href={`/proyectos?slug=${gameData.projectSlug}`}
-                        className="flex-1 rounded-xl border border-white/15 py-2.5 text-xs font-black uppercase tracking-widest text-white/70 hover:text-white hover:border-white/30 transition-colors text-center"
-                      >
-                        {copy.dramadle.viewProject}
-                      </a>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {/* Keyboard */}
-              {!isFinished && (
-                <div className="flex flex-col items-center gap-1.5 w-full">
-                  {KEYBOARD_ROWS.map((row, rowIndex) => (
-                    <div key={rowIndex} className="flex gap-1">
-                      {row.map((key) => {
-                        const state = keyboardStates[key]
-                        const isWide = key === 'ENTER' || key === '⌫'
-
-                        return (
-                          <button
-                            key={key}
-                            type="button"
-                            onClick={() => handleKey(key)}
-                            className={[
-                              'h-12 rounded-lg font-black text-xs uppercase transition-colors select-none',
-                              isWide ? 'px-2 min-w-[52px]' : 'w-8',
-                              state === 'correct'
-                                ? 'bg-green-500 text-white'
-                                : state === 'present'
-                                  ? 'bg-yellow-400 text-black'
-                                  : state === 'absent'
-                                    ? 'bg-zinc-700 text-white/40'
-                                    : 'bg-zinc-600 text-white hover:bg-zinc-500',
-                            ].join(' ')}
-                          >
-                            {key}
-                          </button>
-                        )
-                      })}
-                    </div>
-                  ))}
+            {!loadError && !countdown && gameData && (
+              <div className="w-full max-w-6xl">
+                <div className="mb-2 flex h-4 items-center justify-between gap-4 text-[0.66rem] font-black uppercase tracking-[0.18em] text-black/50 md:mb-4 md:text-[0.68rem] lg:mb-[clamp(0.75rem,2vh,1.5rem)] lg:text-xs">
+                  <span>{copy.dramadle.title}</span>
+                  <span>{gameState.guesses.length}/{MAX_ATTEMPTS}</span>
                 </div>
-              )}
-            </div>
-          )}
+
+                <div className="grid items-start gap-4 md:grid-cols-[minmax(260px,34vw)_minmax(0,1fr)] md:items-center md:gap-6 lg:grid-cols-[minmax(320px,42vh)_minmax(0,1fr)] lg:gap-[clamp(1.5rem,4vw,3rem)]">
+                  <div className="flex justify-center">
+                    <div className="grid w-[min(88vw,23rem)] grid-rows-6 gap-1.5 md:w-[min(34vw,25rem)] lg:w-[min(420px,42vh)] lg:gap-2">
+                      {rows.map((row, rowIndex) => (
+                        <motion.div
+                          key={rowIndex}
+                          className="grid grid-cols-5 gap-1.5 lg:gap-2"
+                          animate={row.shake ? { x: [0, -7, 7, -7, 7, 0] } : {}}
+                          transition={{ duration: 0.35 }}
+                        >
+                          {row.letters.map((letter, colIndex) => (
+                            <DramaCell
+                              key={colIndex}
+                              letter={letter}
+                              state={row.states[colIndex]}
+                              delay={rowIndex < gameState.guesses.length ? colIndex * 0.08 : 0}
+                              revealed={rowIndex < gameState.guesses.length}
+                            />
+                          ))}
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="w-full">
+                    <AnimatePresence mode="wait">
+                      {isFinished ? (
+                        <ResultPanel
+                          key="result"
+                          gameData={gameData}
+                          won={gameState.status === 'won'}
+                          onPlayAgain={() => startRound(gameData.id)}
+                          onClose={onClose}
+                        />
+                      ) : (
+                        <motion.div
+                          key="keyboard"
+                          className="mx-auto flex w-full max-w-2xl flex-col items-center gap-1.5 rounded-lg border-2 border-black/20 bg-white/18 p-2.5 md:p-4 lg:gap-2 lg:p-5"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.24 }}
+                        >
+                          {KEYBOARD_ROWS.map((row) => (
+                            <div key={row.join('')} className="flex w-full justify-center gap-1 lg:gap-1.5">
+                              {row.map((key) => (
+                                <KeyboardKey
+                                  key={key}
+                                  label={key}
+                                  state={keyboardStates[key]}
+                                  onClick={() => handleKey(key)}
+                                />
+                              ))}
+                            </div>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
   )
 }
 
-type DramaCellProps = {
-  letter: string
-  state: LetterState
-  delay: number
-  revealed: boolean
+function buildRows(gameState: GameState, word: string): Array<{ letters: string[]; states: LetterState[]; shake: boolean }> {
+  const rows = []
+
+  for (let index = 0; index < MAX_ATTEMPTS; index += 1) {
+    if (index < gameState.guesses.length) {
+      const guess = gameState.guesses[index]
+      rows.push({ letters: guess, states: getLetterStates(guess, word), shake: false })
+    } else if (index === gameState.guesses.length && gameState.status === 'playing') {
+      const letters = [...gameState.current]
+      while (letters.length < WORD_LENGTH) letters.push('')
+      rows.push({
+        letters,
+        states: letters.map((letter) => (letter ? 'typed' : 'empty')) as LetterState[],
+        shake: gameState.invalid,
+      })
+    } else {
+      rows.push({
+        letters: Array(WORD_LENGTH).fill(''),
+        states: Array(WORD_LENGTH).fill('empty') as LetterState[],
+        shake: false,
+      })
+    }
+  }
+
+  return rows
 }
 
-function DramaCell({ letter, state, delay, revealed }: DramaCellProps) {
-  const bg =
+function KeyboardKey({ label, state, onClick }: { label: string; state?: LetterState; onClick: () => void }) {
+  const isWide = label === 'ENTER' || label === '⌫'
+  const stateClass =
     state === 'correct'
-      ? 'bg-green-500 border-green-500 text-white'
+      ? 'border-black bg-black text-white'
       : state === 'present'
-        ? 'bg-yellow-400 border-yellow-400 text-black'
+        ? 'border-black bg-[#FCC028] text-black'
         : state === 'absent'
-          ? 'bg-zinc-700 border-zinc-700 text-white/60'
+          ? 'border-black/20 bg-black/30 text-black/45'
+          : 'border-black/30 bg-white/24 text-black md:hover:border-black md:hover:bg-white/50'
+
+  return (
+    <button
+      type="button"
+      onClick={(event) => {
+        event.currentTarget.blur()
+        onClick()
+      }}
+      className={[
+        'flex h-11 min-w-0 items-center justify-center rounded-md border-2 text-[0.66rem] font-black uppercase leading-none tracking-normal transition-colors focus:outline-none focus-visible:outline-none md:h-12 md:text-xs lg:h-[3.55rem] lg:text-sm',
+        isWide ? 'min-w-[3.4rem] flex-[1.35] px-1.5' : 'flex-1 px-0.5',
+        stateClass,
+      ].join(' ')}
+    >
+      {label}
+    </button>
+  )
+}
+
+function DramaCell({ letter, state, delay, revealed }: { letter: string; state: LetterState; delay: number; revealed: boolean }) {
+  const stateClass =
+    state === 'correct'
+      ? 'border-black bg-black text-white'
+      : state === 'present'
+        ? 'border-black bg-[#FCC028] text-black'
+        : state === 'absent'
+          ? 'border-black/35 bg-white/16 text-black/42'
           : state === 'typed'
-            ? 'bg-transparent border-white/50 text-white'
-            : 'bg-transparent border-white/15 text-white'
+            ? 'border-black bg-white/32 text-black shadow-[0_12px_30px_rgba(0,0,0,0.13)]'
+            : 'border-black/24 bg-white/14 text-black'
 
   return (
     <motion.div
-      className={`w-12 h-12 md:w-13 md:h-13 flex items-center justify-center border-2 rounded-lg font-black text-xl ${bg}`}
+      className={`aspect-square min-h-0 rounded-lg border-2 ${stateClass} flex items-center justify-center text-[clamp(1.55rem,8.5vw,2.25rem)] font-black uppercase leading-none md:text-[clamp(1.8rem,4.5vw,2.7rem)] lg:text-[clamp(2.3rem,6vh,3.55rem)]`}
       animate={revealed ? { rotateX: [0, 90, 0] } : {}}
-      transition={revealed ? { duration: 0.4, delay } : {}}
+      transition={revealed ? { duration: 0.4, delay, ease: [0.22, 1, 0.36, 1] } : {}}
     >
       {letter}
+    </motion.div>
+  )
+}
+
+function ResultPanel({
+  gameData,
+  won,
+  onPlayAgain,
+  onClose,
+}: {
+  gameData: GameData
+  won: boolean
+  onPlayAgain: () => void
+  onClose: () => void
+}) {
+  const copy = useSiteCopy()
+
+  return (
+    <motion.div
+      className="mx-auto overflow-hidden rounded-lg border-2 border-black/20 bg-white/18 shadow-[0_20px_50px_rgba(0,0,0,0.18)]"
+      initial={{ opacity: 0, scale: 0.92, filter: 'blur(14px)' }}
+      animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+      exit={{ opacity: 0, scale: 0.96, filter: 'blur(8px)' }}
+      transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {gameData.coverImage && (
+        <div className="relative aspect-[16/10] w-full bg-white">
+          <Image src={gameData.coverImage} alt="" fill className="object-cover" unoptimized />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/18 to-transparent" />
+          <div className="absolute bottom-4 left-4 right-4">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-white/60">
+              {won ? copy.dramadle.win : copy.dramadle.theWordWas}
+            </p>
+            <h2 className="mt-1 text-5xl font-black uppercase leading-none text-white md:text-6xl lg:text-7xl">
+              {won ? gameData.word : gameData.word}
+            </h2>
+          </div>
+        </div>
+      )}
+
+      <div className="p-4 md:p-5">
+        <p className="text-sm font-bold leading-snug text-black/70 md:text-base">
+          {copy.dramadle.wordBelongsTo}{' '}
+          <span className="font-black tracking-[0.08em] text-black">{gameData.word}</span>{' '}
+          {copy.dramadle.belongsTo}{' '}
+          <span className="font-black text-black">{gameData.projectName}</span>
+          {gameData.projectYear ? (
+            <>
+              {' '}{copy.dramadle.premieredIn}{' '}
+              <span className="font-black text-black">{gameData.projectYear}</span>
+            </>
+          ) : null}
+          .
+        </p>
+
+        {gameData.projectTags.length > 0 && (
+          <p className="mt-2 text-sm font-bold leading-snug text-black/62 md:text-base">
+            <span className="font-black uppercase tracking-[0.12em] text-black">Drama</span>{' '}
+            {copy.dramadle.dramaHandled}{' '}
+            <span className="font-black text-black">{gameData.projectTags.join(', ')}</span>.
+          </p>
+        )}
+
+        <div className="mt-5 flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={onPlayAgain}
+            className="rounded-full border-2 border-black bg-black px-6 py-3 text-xs font-black uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-85"
+          >
+            {copy.dramadle.playAgain}
+          </button>
+          {gameData.projectSlug && (
+            <Link
+              href={`/proyectos?slug=${gameData.projectSlug}`}
+              onClick={onClose}
+              className="rounded-full border-2 border-black bg-white/20 px-6 py-3 text-xs font-black uppercase tracking-[0.14em] text-black transition-colors hover:bg-white/45"
+            >
+              {copy.dramadle.viewProject}
+            </Link>
+          )}
+        </div>
+      </div>
     </motion.div>
   )
 }

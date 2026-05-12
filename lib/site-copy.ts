@@ -57,7 +57,6 @@ type SiteCopy = {
     dramaHandled: string
     loadError: string
     viewProject: string
-    close: string
     playAgain: string
   }
   contact: {
@@ -131,14 +130,13 @@ const es: SiteCopy = {
   dramadle: {
     title: 'DRAMADLE',
     win: '¡GANASTE!',
-    theWordWas: 'La palabra era',
+    theWordWas: 'LA PALABRA ERA',
     wordBelongsTo: 'La palabra',
     belongsTo: 'pertenece a',
     premieredIn: 'que fue estrenada en',
     dramaHandled: 'se ocupó de',
     loadError: 'DRAMADLE EN ENSAYO',
     viewProject: 'VER OBRA',
-    close: 'CERRAR',
     playAgain: 'DAME OTRA PALABRA',
   },
   contact: {
@@ -211,15 +209,14 @@ const en: SiteCopy = {
   },
   dramadle: {
     title: 'DRAMADLE',
-    win: 'YOU GOT IT!',
-    theWordWas: 'The word was',
+    win: 'YOU WON!',
+    theWordWas: 'THE WORD WAS',
     wordBelongsTo: 'The word',
     belongsTo: 'belongs to',
     premieredIn: 'which premiered in',
     dramaHandled: 'took care of',
     loadError: 'DRAMADLE IN REHEARSAL',
     viewProject: 'VIEW SHOW',
-    close: 'CLOSE',
     playAgain: 'GIVE ME ANOTHER WORD',
   },
   contact: {
@@ -292,15 +289,14 @@ const pt: SiteCopy = {
   },
   dramadle: {
     title: 'DRAMADLE',
-    win: 'ACERTOU!',
-    theWordWas: 'A palavra era',
+    win: 'VOCÊ GANHOU!',
+    theWordWas: 'A PALAVRA ERA',
     wordBelongsTo: 'A palavra',
     belongsTo: 'pertence a',
     premieredIn: 'que estreou em',
     dramaHandled: 'cuidou de',
     loadError: 'DRAMADLE EM ENSAIO',
     viewProject: 'VER ESPETÁCULO',
-    close: 'FECHAR',
     playAgain: 'ME DÁ OUTRA PALAVRA',
   },
   contact: {

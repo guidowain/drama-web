@@ -14,10 +14,7 @@ function normalizeWord(item: Partial<DramaWord>): DramaWord {
 }
 
 function validateWord(entry: DramaWord) {
-  return (
-    /^[A-ZÁÉÍÓÚÜÑ]{5}$/.test(entry.word) &&
-    entry.projectId.trim()
-  )
+  return /^[A-ZÁÉÍÓÚÜÑ]{5}$/.test(entry.word) && entry.projectId.trim()
 }
 
 export async function GET() {
