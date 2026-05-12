@@ -21,6 +21,7 @@ type GameData = {
   projectYear: number | null
   projectTags: string[]
   coverImage: string
+  validGuesses: string[]
 }
 
 type GameState = {
@@ -35,6 +36,7 @@ type Action =
   | { type: 'BACKSPACE' }
   | { type: 'ENTER'; word: string }
   | { type: 'START' }
+  | { type: 'FLASH_INVALID' }
   | { type: 'CLEAR_INVALID' }
   | { type: 'RESET' }
 
@@ -48,6 +50,14 @@ const KEYBOARD_ROWS = [
   ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Ñ'],
   ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '⌫'],
 ]
+
+function normalizeGuess(value: string) {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toUpperCase()
+    .replace(/[^A-ZÑ]/g, '')
+}
 
 function getLetterStates(guess: string[], word: string): LetterState[] {
   const result: LetterState[] = Array(WORD_LENGTH).fill('absent')
@@ -122,6 +132,7 @@ function gameReducer(state: GameState, action: Action): GameState {
     }
   }
 
+  if (action.type === 'FLASH_INVALID') return { ...state, invalid: true }
   if (action.type === 'CLEAR_INVALID') return { ...state, invalid: false }
   if (action.type === 'RESET') return { guesses: [], current: [], status: 'countdown', invalid: false }
 
@@ -197,13 +208,21 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
     }
 
     if (key === 'ENTER' || key === 'Enter') {
+      const guess = normalizeGuess(gameState.current.join(''))
+      const validGuesses = new Set((gameData.validGuesses ?? []).map(normalizeGuess))
+
+      if (guess.length < WORD_LENGTH || !validGuesses.has(guess)) {
+        dispatch({ type: 'FLASH_INVALID' })
+        return
+      }
+
       dispatch({ type: 'ENTER', word: gameData.word })
       return
     }
 
-    const upper = key.toUpperCase()
+    const upper = normalizeGuess(key)
     if (/^[A-ZÁÉÍÓÚÜÑ]$/.test(upper)) dispatch({ type: 'KEY', key: upper })
-  }, [gameData])
+  }, [gameData, gameState.current])
 
   useEffect(() => {
     if (!active || gameState.status !== 'playing') return
@@ -384,11 +403,11 @@ function KeyboardKey({ label, state, onClick }: { label: string; state?: LetterS
   const isWide = label === 'ENTER' || label === '⌫'
   const stateClass =
     state === 'correct'
-      ? 'border-black bg-black text-white'
+      ? 'border-[#159447] bg-[#159447] text-white'
       : state === 'present'
-        ? 'border-black bg-[#FCC028] text-black'
+        ? 'border-[#D8A316] bg-[#FCC028] text-black'
         : state === 'absent'
-          ? 'border-black/20 bg-black/30 text-black/45'
+          ? 'border-[#777] bg-[#777] text-white/85'
           : 'border-black/30 bg-white/24 text-black md:hover:border-black md:hover:bg-white/50'
 
   return (
@@ -412,11 +431,11 @@ function KeyboardKey({ label, state, onClick }: { label: string; state?: LetterS
 function DramaCell({ letter, state, delay, revealed }: { letter: string; state: LetterState; delay: number; revealed: boolean }) {
   const stateClass =
     state === 'correct'
-      ? 'border-black bg-black text-white'
+      ? 'border-[#159447] bg-[#159447] text-white'
       : state === 'present'
-        ? 'border-black bg-[#FCC028] text-black'
+        ? 'border-[#D8A316] bg-[#FCC028] text-black'
         : state === 'absent'
-          ? 'border-black/35 bg-white/16 text-black/42'
+          ? 'border-[#777] bg-[#777] text-white/85'
           : state === 'typed'
             ? 'border-black bg-white/32 text-black shadow-[0_12px_30px_rgba(0,0,0,0.13)]'
             : 'border-black/24 bg-white/14 text-black'
@@ -454,41 +473,38 @@ function ResultPanel({
       transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
     >
       {gameData.coverImage && (
-        <div className="relative aspect-[16/10] w-full bg-white">
-          <Image src={gameData.coverImage} alt="" fill className="object-cover" unoptimized />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/18 to-transparent" />
-          <div className="absolute bottom-4 left-4 right-4">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-white/60">
-              {won ? copy.dramadle.win : copy.dramadle.theWordWas}
-            </p>
-            <h2 className="mt-1 text-5xl font-black uppercase leading-none text-white md:text-6xl lg:text-7xl">
-              {won ? gameData.word : gameData.word}
-            </h2>
+        <div className="relative aspect-square w-full bg-black">
+          <Image src={gameData.coverImage} alt="" fill className="object-contain" unoptimized />
+          <div className="absolute left-4 top-4 rounded-full bg-black px-3 py-1.5 text-[0.65rem] font-black uppercase tracking-[0.16em] text-white">
+            {won ? copy.dramadle.win : `${copy.dramadle.theWordWas} ${gameData.word}`}
           </div>
         </div>
       )}
 
       <div className="p-4 md:p-5">
-        <p className="text-sm font-bold leading-snug text-black/70 md:text-base">
-          {copy.dramadle.wordBelongsTo}{' '}
-          <span className="font-black tracking-[0.08em] text-black">{gameData.word}</span>{' '}
-          {copy.dramadle.belongsTo}{' '}
-          <span className="font-black text-black">{gameData.projectName}</span>
+        <p className="text-sm font-black uppercase leading-snug tracking-[0.08em] text-black md:text-base">
+          {gameData.projectName}
           {gameData.projectYear ? (
-            <>
-              {' '}{copy.dramadle.premieredIn}{' '}
-              <span className="font-black text-black">{gameData.projectYear}</span>
-            </>
+            <span className="ml-2 text-black/55">{gameData.projectYear}</span>
           ) : null}
-          .
         </p>
 
         {gameData.projectTags.length > 0 && (
-          <p className="mt-2 text-sm font-bold leading-snug text-black/62 md:text-base">
-            <span className="font-black uppercase tracking-[0.12em] text-black">Drama</span>{' '}
-            {copy.dramadle.dramaHandled}{' '}
-            <span className="font-black text-black">{gameData.projectTags.join(', ')}</span>.
-          </p>
+          <div className="mt-3">
+            <p className="text-xs font-black uppercase tracking-[0.14em] text-black/55">
+              {gameData.projectName} hicimos
+            </p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {gameData.projectTags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-full border-2 border-black px-3 py-1.5 text-[0.66rem] font-black uppercase tracking-[0.12em] text-black"
+                >
+                  {tag.toUpperCase()}
+                </span>
+              ))}
+            </div>
+          </div>
         )}
 
         <div className="mt-5 flex flex-wrap gap-3">
