@@ -1,4 +1,4 @@
-import type { ContactSettings, Proyecto, SiteSettings, TriviaQuestion } from './types'
+import type { ContactSettings, DramaWord, Proyecto, SiteSettings, TriviaQuestion } from './types'
 import { isDynamicServerError } from 'next/dist/client/components/hooks-server-context'
 
 const GITHUB_OWNER = process.env.GITHUB_OWNER || 'guidowain'
@@ -9,6 +9,7 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN || process.env.GITHUB_CONTENT_TOKE
 const PROJECTS_PATH = 'data/projects.json'
 const SITE_PATH = 'data/site.json'
 const TRIVIA_PATH = 'data/trivia.json'
+const DRAMADLE_PATH = 'data/dramadle.json'
 
 const DEFAULT_SITE_SETTINGS: SiteSettings = {
   home: {
@@ -265,6 +266,29 @@ export async function getTriviaQuestions(): Promise<TriviaQuestion[]> {
 
 export async function saveTriviaQuestions(questions: TriviaQuestion[]) {
   return await writeGithubJson(TRIVIA_PATH, normalizeTriviaQuestions(questions), 'Update trivia questions')
+}
+
+function normalizeDramaWords(raw: unknown): DramaWord[] {
+  if (!Array.isArray(raw)) return []
+
+  return raw.map((item, index) => {
+    const entry = item && typeof item === 'object' ? (item as Partial<DramaWord>) : {}
+
+    return {
+      id: entry.id || `dramadle-${index}`,
+      word: (entry.word || '').toUpperCase().trim(),
+      projectId: entry.projectId || '',
+    }
+  })
+}
+
+export async function getDramaWords(): Promise<DramaWord[]> {
+  const { data } = await readGithubJson<DramaWord[]>(DRAMADLE_PATH, [])
+  return normalizeDramaWords(data)
+}
+
+export async function saveDramaWords(words: DramaWord[]) {
+  return await writeGithubJson(DRAMADLE_PATH, normalizeDramaWords(words), 'Update dramadle words')
 }
 
 export async function getSiteSettings(): Promise<SiteSettings> {

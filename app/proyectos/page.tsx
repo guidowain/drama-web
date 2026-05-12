@@ -10,6 +10,7 @@ import ContactStrip from '@/components/ContactStrip'
 import Ticker from '@/components/Ticker'
 import FunModeGravityOverlay from '@/components/FunModeGravityOverlay'
 import FunModeTriviaOverlay from '@/components/FunModeTriviaOverlay'
+import FunModeDramadleOverlay from '@/components/FunModeDramadleOverlay'
 import type { ContactSettings, Proyecto, SiteSettings } from '@/lib/types'
 import { hasProjectDetailMedia, isVideoUrl } from '@/lib/media'
 import { fetchProjects } from '@/lib/projects-client'
@@ -18,7 +19,7 @@ import { useLocale, useSiteCopy } from '@/lib/LocaleContext'
 import { localizeProjects, localizeSiteSettings } from '@/lib/i18n-content'
 
 type ModalOriginRect = Pick<DOMRect, 'top' | 'left' | 'width' | 'height'>
-type FunModeType = 'dramanoid' | 'trivia'
+type FunModeType = 'dramanoid' | 'trivia' | 'dramadle'
 
 const EMPTY_CONTACT: ContactSettings = {
   instagram: '',
@@ -157,37 +158,24 @@ function ProyectosContent() {
       return
     }
 
-    const canUseTrivia = locale === 'es'
+    const isEs = locale === 'es'
     const canOpenDramanoid = canUseDramanoid && funMediaPool.length > 0
 
-    if (!canUseTrivia) {
-      if (!canOpenDramanoid) return
+    const available: FunModeType[] = []
+    if (canOpenDramanoid) available.push('dramanoid')
+    if (isEs) available.push('trivia', 'dramadle')
 
+    if (!available.length) return
+
+    if (available.length === 1) {
       trackEvent('fan_mode_open')
-      setFunMode('dramanoid')
+      setFunMode(available[0])
       return
     }
 
-    if (!canUseDramanoid) {
-      trackEvent('fan_mode_open')
-      setFunMode('trivia')
-      return
-    }
-
-    if (funMediaPool.length === 0) {
-      trackEvent('fan_mode_open')
-      setFunMode('trivia')
-      return
-    }
-
-    const lastMode = window.sessionStorage.getItem('drama-fun-mode-last')
-    const nextMode: FunModeType = lastMode === 'dramanoid'
-      ? 'trivia'
-      : lastMode === 'trivia'
-        ? 'dramanoid'
-        : Math.random() > 0.5
-          ? 'dramanoid'
-          : 'trivia'
+    const lastMode = window.sessionStorage.getItem('drama-fun-mode-last') as FunModeType | null
+    const lastIndex = lastMode ? available.indexOf(lastMode) : -1
+    const nextMode = available[(lastIndex + 1) % available.length]
 
     window.sessionStorage.setItem('drama-fun-mode-last', nextMode)
     trackEvent('fan_mode_open')
@@ -275,6 +263,11 @@ function ProyectosContent() {
 
       <FunModeTriviaOverlay
         active={funMode === 'trivia'}
+        onClose={handleFunModeClose}
+      />
+
+      <FunModeDramadleOverlay
+        active={funMode === 'dramadle'}
         onClose={handleFunModeClose}
       />
     </>

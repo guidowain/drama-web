@@ -47,6 +47,19 @@ type SiteCopy = {
     title: string
     win: string
   }
+  dramadle: {
+    title: string
+    win: string
+    theWordWas: string
+    wordBelongsTo: string
+    belongsTo: string
+    premieredIn: string
+    dramaHandled: string
+    loadError: string
+    viewProject: string
+    close: string
+    playAgain: string
+  }
   contact: {
     headline: string[]
   }
@@ -114,6 +127,19 @@ const es: SiteCopy = {
   dramanoid: {
     title: 'DRAMANOID',
     win: '¡GANASTE!',
+  },
+  dramadle: {
+    title: 'DRAMADLE',
+    win: '¡GANASTE!',
+    theWordWas: 'La palabra era',
+    wordBelongsTo: 'La palabra',
+    belongsTo: 'pertenece a',
+    premieredIn: 'que fue estrenada en',
+    dramaHandled: 'se ocupó de',
+    loadError: 'DRAMADLE EN ENSAYO',
+    viewProject: 'VER OBRA',
+    close: 'CERRAR',
+    playAgain: 'DAME OTRA PALABRA',
   },
   contact: {
     headline: ['ESCRIBINOS,', 'NO HAY DRAMA.'],
@@ -183,6 +209,19 @@ const en: SiteCopy = {
     title: 'DRAMANOID',
     win: 'YOU WON!',
   },
+  dramadle: {
+    title: 'DRAMADLE',
+    win: 'YOU GOT IT!',
+    theWordWas: 'The word was',
+    wordBelongsTo: 'The word',
+    belongsTo: 'belongs to',
+    premieredIn: 'which premiered in',
+    dramaHandled: 'took care of',
+    loadError: 'DRAMADLE IN REHEARSAL',
+    viewProject: 'VIEW SHOW',
+    close: 'CLOSE',
+    playAgain: 'GIVE ME ANOTHER WORD',
+  },
   contact: {
     headline: ['CONTACT US,', 'NO DRAMA.'],
   },
@@ -250,6 +289,19 @@ const pt: SiteCopy = {
   dramanoid: {
     title: 'DRAMANOID',
     win: 'VOCÊ GANHOU!',
+  },
+  dramadle: {
+    title: 'DRAMADLE',
+    win: 'ACERTOU!',
+    theWordWas: 'A palavra era',
+    wordBelongsTo: 'A palavra',
+    belongsTo: 'pertence a',
+    premieredIn: 'que estreou em',
+    dramaHandled: 'cuidou de',
+    loadError: 'DRAMADLE EM ENSAIO',
+    viewProject: 'VER ESPETÁCULO',
+    close: 'FECHAR',
+    playAgain: 'ME DÁ OUTRA PALAVRA',
   },
   contact: {
     headline: ['FALE COM A GENTE,', 'NO DRAMA.'],

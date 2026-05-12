@@ -53,6 +53,12 @@ export interface ProyectoTranslation {
   contentBlocks?: ContentBlockTranslation[]
 }
 
+export interface DramaWord {
+  id: string
+  word: string
+  projectId: string
+}
+
 export interface TriviaOption {
   id: string
   text: string

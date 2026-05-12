@@ -58,6 +58,17 @@ const navItems = [
     ),
   },
   {
+    label: 'Dramadle',
+    href: '/admin/dramadle',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="5" width="18" height="14" rx="2" />
+        <path d="M3 10h18" />
+        <path d="M7 15h.01M12 15h.01M17 15h.01" />
+      </svg>
+    ),
+  },
+  {
     label: 'Ajustes',
     href: '/admin/ajustes',
     icon: (
