@@ -223,14 +223,19 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
     }
 
     if (gameState.status === 'lost') {
-      setShowWinMessage(false)
-      setShowResultPanel(true)
-      return
+      setShowResultPanel(false)
+      setShowWinMessage(true)
+
+      const nextRoundTimer = window.setTimeout(() => {
+        startRound(gameData?.id)
+      }, 1350)
+
+      return () => window.clearTimeout(nextRoundTimer)
     }
 
     setShowWinMessage(false)
     setShowResultPanel(false)
-  }, [gameState.status])
+  }, [gameData?.id, gameState.status, startRound])
 
   const handleKey = useCallback((key: string) => {
     if (!gameData) return
@@ -355,7 +360,7 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
                       'grid grid-rows-6 gap-1.5',
                       isFinished
                         ? 'w-[min(82vw,18rem)] md:w-[min(28vw,18rem)] lg:w-[min(30vw,20rem)]'
-                        : 'w-[min(84vw,20rem)] md:w-[min(30vw,20rem)] lg:w-[min(360px,36vh)]',
+                        : 'w-[min(84vw,45dvh,20rem)] md:w-[min(30vw,20rem)] lg:w-[min(360px,36vh)]',
                     ].join(' ')}>
                       {rows.map((row, rowIndex) => (
                         <motion.div
@@ -390,21 +395,24 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
                             onClose={onClose}
                           />
                         ) : showWinMessage ? (
-                          <WinMessagePanel key="win-message" label={copy.dramadle.win} />
+                          <WinMessagePanel
+                            key="status-message"
+                            label={gameState.status === 'lost' ? 'OTRA PALABRA' : copy.dramadle.win}
+                          />
                         ) : (
                           <div key="pending-result" className="h-[min(52dvh,24rem)] md:h-[min(72dvh,34rem)]" />
                         )
                       ) : (
                         <motion.div
                           key="keyboard"
-                          className="mx-auto flex w-full max-w-2xl flex-col items-center gap-1.5 rounded-lg border-2 border-black/20 bg-white/18 p-2.5 md:p-4 lg:gap-2 lg:p-5"
+                          className="mx-auto flex w-full max-w-[min(96vw,42rem)] flex-col items-center gap-[clamp(0.35rem,1.3vw,0.5rem)] rounded-lg border-2 border-black/20 bg-white/18 p-[clamp(0.6rem,2.2vw,1rem)] lg:gap-2 lg:p-5"
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
                           transition={{ duration: 0.24 }}
                         >
                           {KEYBOARD_ROWS.map((row) => (
-                            <div key={row.join('')} className="flex w-full justify-center gap-1 lg:gap-1.5">
+                            <div key={row.join('')} className="flex w-full justify-center gap-[clamp(0.25rem,1vw,0.4rem)] lg:gap-1.5">
                               {row.map((key) => (
                                 <KeyboardKey
                                   key={key}
@@ -490,8 +498,8 @@ function KeyboardKey({ label, state, onClick }: { label: string; state?: LetterS
         onClick()
       }}
       className={[
-        'flex h-10 min-w-0 items-center justify-center rounded-md border-2 text-[0.62rem] font-black uppercase leading-none tracking-normal transition-colors focus:outline-none focus-visible:outline-none md:h-11 md:text-xs lg:h-12 lg:text-sm',
-        isWide ? 'min-w-[3.4rem] flex-[1.35] px-1.5' : 'flex-1 px-0.5',
+        'flex h-[clamp(2.55rem,11vw,3rem)] min-w-0 items-center justify-center rounded-md border-2 text-[clamp(0.7rem,3.2vw,0.95rem)] font-black uppercase leading-none tracking-normal transition-colors focus:outline-none focus-visible:outline-none md:h-11 md:text-xs lg:h-12 lg:text-sm',
+        isWide ? 'min-w-[clamp(3.8rem,16vw,5.4rem)] flex-[1.35] px-1.5' : 'flex-1 px-0.5',
         stateClass,
       ].join(' ')}
     >
