@@ -5,6 +5,7 @@ import { Suspense, useEffect } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
 
 const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+const ADMIN_PREVIEW_FUN_MODES = new Set(['trivia', 'dramadle'])
 
 function PageViewTracker({ measurementId }: { measurementId: string }) {
   const pathname = usePathname()
@@ -12,6 +13,10 @@ function PageViewTracker({ measurementId }: { measurementId: string }) {
 
   useEffect(() => {
     if (!pathname || typeof window.gtag !== 'function') {
+      return
+    }
+
+    if (pathname === '/proyectos' && ADMIN_PREVIEW_FUN_MODES.has(searchParams.get('funMode') ?? '')) {
       return
     }
 

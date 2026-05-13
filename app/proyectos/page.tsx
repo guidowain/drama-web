@@ -42,6 +42,10 @@ function collectProjectMedia(projects: Proyecto[]) {
   return Array.from(media)
 }
 
+function isFunModeType(value: string | null): value is FunModeType {
+  return value === 'dramanoid' || value === 'trivia' || value === 'dramadle'
+}
+
 export default function ProyectosPage() {
   return (
     <Suspense>
@@ -118,6 +122,16 @@ function ProyectosContent() {
   }, [copy.home.wheelText, locale])
 
   useEffect(() => {
+    const requestedFunMode = searchParams.get('funMode')
+    if (!isFunModeType(requestedFunMode)) return
+    if (requestedFunMode === 'dramanoid' && (!canUseDramanoid || funMediaPool.length === 0)) return
+
+    setSelected(null)
+    setModalOrigin(null)
+    setFunMode(requestedFunMode)
+  }, [canUseDramanoid, funMediaPool.length, searchParams])
+
+  useEffect(() => {
     if (!selected) {
       lastTrackedProjectSlugRef.current = null
       return
@@ -184,7 +198,15 @@ function ProyectosContent() {
 
   const handleFunModeClose = useCallback(() => {
     setFunMode(null)
-  }, [])
+
+    if (searchParams.has('funMode')) {
+      const nextParams = new URLSearchParams(searchParams.toString())
+      nextParams.delete('funMode')
+      const nextQuery = nextParams.toString()
+
+      router.push(nextQuery ? `/proyectos?${nextQuery}` : '/proyectos', { scroll: false })
+    }
+  }, [router, searchParams])
 
   return (
     <>

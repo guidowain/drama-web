@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import type { DramaWord } from '@/lib/types'
 
 type ProjectOption = {
@@ -294,6 +295,13 @@ function DramadleActions({
 }) {
   return (
     <div className="flex flex-wrap gap-3">
+      <Link
+        href="/proyectos?funMode=dramadle"
+        target="_blank"
+        className="rounded-xl border border-white/15 bg-black/20 px-5 py-2.5 text-sm font-black uppercase tracking-widest text-white transition-colors hover:border-white/35 hover:bg-white/10"
+      >
+        Visualizar
+      </Link>
       <button
         type="button"
         onClick={onAddWord}
