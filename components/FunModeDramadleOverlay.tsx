@@ -148,11 +148,15 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
   const [gameData, setGameData] = useState<GameData | null>(null)
   const [loadError, setLoadError] = useState(false)
   const [countdown, setCountdown] = useState<CountdownValue>(null)
+  const [showWinMessage, setShowWinMessage] = useState(false)
+  const [showResultPanel, setShowResultPanel] = useState(false)
   const [gameState, dispatch] = useReducer(gameReducer, undefined, initialState)
 
   const startRound = useCallback((excludeId?: string) => {
     setLoadError(false)
     setCountdown('3')
+    setShowWinMessage(false)
+    setShowResultPanel(false)
     setGameData(null)
     dispatch({ type: 'RESET' })
 
@@ -170,6 +174,8 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
       setGameData(null)
       setLoadError(false)
       setCountdown(null)
+      setShowWinMessage(false)
+      setShowResultPanel(false)
       dispatch({ type: 'RESET' })
       return
     }
@@ -201,6 +207,30 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
     const timer = window.setTimeout(() => dispatch({ type: 'CLEAR_INVALID' }), 450)
     return () => window.clearTimeout(timer)
   }, [gameState.invalid])
+
+  useEffect(() => {
+    if (gameState.status === 'won') {
+      setShowResultPanel(false)
+      setShowWinMessage(true)
+
+      const hideTimer = window.setTimeout(() => setShowWinMessage(false), 980)
+      const revealTimer = window.setTimeout(() => setShowResultPanel(true), 1180)
+
+      return () => {
+        window.clearTimeout(hideTimer)
+        window.clearTimeout(revealTimer)
+      }
+    }
+
+    if (gameState.status === 'lost') {
+      setShowWinMessage(false)
+      setShowResultPanel(true)
+      return
+    }
+
+    setShowWinMessage(false)
+    setShowResultPanel(false)
+  }, [gameState.status])
 
   const handleKey = useCallback((key: string) => {
     if (!gameData) return
@@ -248,6 +278,7 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
   }, [active, gameState.status, handleKey])
 
   const isFinished = gameState.status === 'won' || gameState.status === 'lost'
+  const canShowResultPanel = isFinished && showResultPanel
   const keyboardStates = gameData ? getKeyboardStates(gameState.guesses, gameData.word) : {}
   const rows = buildRows(gameState, gameData?.word ?? '')
 
@@ -289,6 +320,21 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
                 style={{ fontSize: countdown === copy.dramadle.title ? 'clamp(3.2rem, 12vw, 9rem)' : 'clamp(6rem, 20vw, 14rem)' }}
               >
                 {countdown}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {showWinMessage && (
+              <motion.div
+                className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center px-5 text-center font-black uppercase leading-none tracking-normal text-black"
+                initial={{ opacity: 0, scale: 0.72, filter: 'blur(18px)' }}
+                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, scale: 1.2, filter: 'blur(10px)' }}
+                transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                style={{ fontSize: 'clamp(3.5rem, 12vw, 10rem)' }}
+              >
+                {copy.dramadle.win}
               </motion.div>
             )}
           </AnimatePresence>
@@ -351,13 +397,17 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
                   <div className="w-full">
                     <AnimatePresence mode="wait">
                       {isFinished ? (
-                        <ResultPanel
-                          key="result"
-                          gameData={gameData}
-                          won={gameState.status === 'won'}
-                          onPlayAgain={() => startRound(gameData.id)}
-                          onClose={onClose}
-                        />
+                        canShowResultPanel ? (
+                          <ResultPanel
+                            key="result"
+                            gameData={gameData}
+                            won={gameState.status === 'won'}
+                            onPlayAgain={() => startRound(gameData.id)}
+                            onClose={onClose}
+                          />
+                        ) : (
+                          <div key="pending-result" className="h-[min(72dvh,34rem)]" />
+                        )
                       ) : (
                         <motion.div
                           key="keyboard"
@@ -484,47 +534,36 @@ function ResultPanel({
   onClose: () => void
 }) {
   const copy = useSiteCopy()
+  const servicesLabel = gameData.projectTags.join(', ').toUpperCase()
 
   return (
     <motion.div
-      className="mx-auto flex max-h-[calc(100dvh-7rem)] w-full max-w-[min(42rem,54vw)] flex-col overflow-hidden rounded-lg border-2 border-black/20 bg-white/18 shadow-[0_20px_50px_rgba(0,0,0,0.18)]"
+      className="mx-auto flex max-h-[calc(100dvh-7rem)] w-full max-w-[min(34rem,44vw)] flex-col overflow-hidden rounded-lg border-2 border-black/20 bg-white/18 shadow-[0_20px_50px_rgba(0,0,0,0.18)]"
       initial={{ opacity: 0, scale: 0.92, filter: 'blur(14px)' }}
       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
       exit={{ opacity: 0, scale: 0.96, filter: 'blur(8px)' }}
       transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
     >
       {gameData.coverImage && (
-        <div className="relative mx-auto aspect-square h-[min(48dvh,420px)] max-h-[420px] max-w-full shrink-0 bg-black">
+        <div className="relative aspect-square w-full shrink-0 bg-black">
           <Image src={gameData.coverImage} alt="" fill className="object-contain" unoptimized />
-          <div className="absolute left-3 top-3 rounded-full bg-black px-3 py-1.5 text-[0.6rem] font-black uppercase tracking-[0.16em] text-white">
-            {won ? copy.dramadle.win : `${copy.dramadle.theWordWas} ${gameData.word}`}
-          </div>
+          {!won && (
+            <div className="absolute left-3 top-3 rounded-full bg-black px-3 py-1.5 text-[0.6rem] font-black uppercase tracking-[0.16em] text-white">
+              {copy.dramadle.theWordWas} {gameData.word}
+            </div>
+          )}
         </div>
       )}
 
       <div className="min-h-0 p-3 md:p-4">
-        <p className="text-xs font-black uppercase leading-snug tracking-[0.08em] text-black md:text-sm">
-          {gameData.projectName}
-          {gameData.projectYear ? (
-            <span className="ml-2 text-black/55">{gameData.projectYear}</span>
-          ) : null}
-        </p>
-
         {gameData.projectTags.length > 0 && (
-          <div className="mt-2">
-            <p className="text-[0.65rem] font-black uppercase tracking-[0.14em] text-black/55">
-              {gameData.projectName} hicimos
+          <div>
+            <p className="text-sm font-black uppercase leading-snug tracking-[0.08em] text-black md:text-base">
+              En {gameData.projectName} hicimos:
             </p>
-            <div className="mt-1.5 flex flex-wrap gap-1.5">
-              {gameData.projectTags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border-2 border-black px-2.5 py-1 text-[0.58rem] font-black uppercase tracking-[0.12em] text-black"
-                >
-                  {tag.toUpperCase()}
-                </span>
-              ))}
-            </div>
+            <p className="mt-1 text-sm font-black uppercase leading-snug tracking-[0.08em] text-black md:text-base">
+              {servicesLabel}
+            </p>
           </div>
         )}
 
