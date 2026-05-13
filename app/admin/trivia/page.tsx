@@ -222,7 +222,7 @@ export default function AdminTriviaPage() {
 
   return (
     <div className="p-8 md:p-10 max-w-5xl">
-      <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between mb-8">
+      <div className="mb-8">
         <div>
           <h1 className="text-white font-black text-3xl uppercase">Trivia</h1>
           <p className="text-white/30 text-sm mt-1">
@@ -373,18 +373,11 @@ function TriviaActions({
   onSave: () => void
 }) {
   return (
-    <div className="flex w-full flex-col gap-3 md:w-auto md:flex-row md:flex-wrap md:justify-end">
-      <Link
-        href="/proyectos?funMode=trivia"
-        target="_blank"
-        className="inline-flex justify-center rounded-xl border border-white/15 bg-black/20 px-5 py-2.5 text-sm font-black uppercase tracking-widest text-white transition-colors hover:border-white/35 hover:bg-white/10"
-      >
-        Visualizar
-      </Link>
+    <div className="mt-5 flex w-full flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
       <button
         type="button"
         onClick={onAddQuestion}
-        className="bg-white text-black font-black text-sm uppercase tracking-widest px-5 py-2.5 rounded-xl hover:bg-white/90 transition-colors"
+        className="inline-flex min-h-11 min-w-[13rem] justify-center rounded-xl bg-white px-4 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-black transition-colors hover:bg-white/90"
       >
         Agregar pregunta
       </button>
@@ -392,10 +385,17 @@ function TriviaActions({
         type="button"
         onClick={onSave}
         disabled={!canSave}
-        className="gradient-bg text-black font-black text-sm uppercase tracking-widest px-5 py-2.5 rounded-xl hover:opacity-90 transition-opacity disabled:opacity-50"
+        className="gradient-bg inline-flex min-h-11 min-w-[9rem] justify-center rounded-xl px-4 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-black transition-opacity hover:opacity-90 disabled:opacity-50"
       >
         {saving ? 'Guardando...' : saved ? '¡Guardado!' : 'Guardar'}
       </button>
+      <Link
+        href="/proyectos?funMode=trivia"
+        target="_blank"
+        className="inline-flex min-h-11 min-w-[9rem] justify-center rounded-xl border border-white/15 bg-black/20 px-4 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-white transition-colors hover:border-white/35 hover:bg-white/10"
+      >
+        Visualizar
+      </Link>
     </div>
   )
 }

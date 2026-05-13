@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getDramaWords, getProjects } from '@/lib/api'
 import { DRAMADLE_VALID_GUESSES, normalizeDramadleGuess } from '@/lib/dramadle-dictionary'
+import { DRAMADLE_DRAMA_REVEAL, isDramadleDramaReveal } from '@/lib/dramadle-special'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,7 +16,9 @@ export async function GET(request: NextRequest) {
 
   const candidates = playable.length > 1 ? playable.filter((word) => word.id !== exclude) : playable
   const word = candidates[Math.floor(Math.random() * candidates.length)]
-  const project = projects.find((item) => item.id === word.projectId)
+  const project = isDramadleDramaReveal(word.projectId)
+    ? DRAMADLE_DRAMA_REVEAL
+    : projects.find((item) => item.id === word.projectId)
   const validGuesses = Array.from(new Set([
     ...DRAMADLE_VALID_GUESSES,
     ...allWords.map((item) => item.word),

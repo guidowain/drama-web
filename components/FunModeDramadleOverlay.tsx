@@ -583,6 +583,15 @@ function ResultPanel({
               {copy.dramadle.viewProject}
             </Link>
           )}
+          {!gameData.projectSlug && (
+            <button
+              type="button"
+              onClick={onClose}
+              className="rounded-full border-2 border-black bg-white/20 px-5 py-2.5 text-[0.68rem] font-black uppercase tracking-[0.14em] text-black transition-colors hover:bg-white/45"
+            >
+              {copy.trivia.viewProjects}
+            </button>
+          )}
         </div>
       </div>
     </motion.div>

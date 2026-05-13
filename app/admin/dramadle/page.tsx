@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { DRAMADLE_DRAMA_REVEAL } from '@/lib/dramadle-special'
 import type { DramaWord } from '@/lib/types'
 
 type ProjectOption = {
@@ -72,18 +73,25 @@ export default function AdminDramadlePage() {
     ])
       .then(([dramaData, projectsData]) => {
         setWords(Array.isArray(dramaData) ? dramaData : [])
-        setProjects(
-          Array.isArray(projectsData)
-            ? projectsData
-                .filter((project) => project?.id && project?.name && project?.coverImage)
-                .map((project) => ({
-                  id: project.id,
-                  name: project.name,
-                  coverImage: project.coverImage,
-                }))
-                .sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))
-            : []
-        )
+        const projectOptions = Array.isArray(projectsData)
+          ? projectsData
+              .filter((project) => project?.id && project?.name && project?.coverImage)
+              .map((project) => ({
+                id: project.id,
+                name: project.name,
+                coverImage: project.coverImage,
+              }))
+              .sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))
+          : []
+
+        setProjects([
+          {
+            id: DRAMADLE_DRAMA_REVEAL.id,
+            name: DRAMADLE_DRAMA_REVEAL.name,
+            coverImage: DRAMADLE_DRAMA_REVEAL.coverImage,
+          },
+          ...projectOptions,
+        ])
       })
       .catch((err: unknown) => {
         setError(err instanceof Error ? err.message : 'No se pudo cargar el Dramadle')
@@ -142,7 +150,7 @@ export default function AdminDramadlePage() {
 
   return (
     <div className="max-w-5xl p-8 md:p-10">
-      <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
+      <div className="mb-8">
         <div className="max-w-xl">
           <h1 className="text-3xl font-black uppercase text-white">Dramadle</h1>
           <p className="mt-1 text-sm text-white/30">
@@ -285,18 +293,11 @@ function DramadleActions({
   onSave: () => void
 }) {
   return (
-    <div className="flex w-full flex-col gap-3 md:w-auto md:flex-row md:flex-wrap md:justify-end">
-      <Link
-        href="/proyectos?funMode=dramadle"
-        target="_blank"
-        className="inline-flex justify-center rounded-xl border border-white/15 bg-black/20 px-5 py-2.5 text-sm font-black uppercase tracking-widest text-white transition-colors hover:border-white/35 hover:bg-white/10"
-      >
-        Visualizar
-      </Link>
+    <div className="mt-5 flex w-full flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center">
       <button
         type="button"
         onClick={onAddWord}
-        className="rounded-xl bg-white px-5 py-2.5 text-sm font-black uppercase tracking-widest text-black transition-colors hover:bg-white/90"
+        className="inline-flex min-h-11 min-w-[13rem] justify-center rounded-xl bg-white px-4 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-black transition-colors hover:bg-white/90"
       >
         Agregar palabra
       </button>
@@ -304,10 +305,17 @@ function DramadleActions({
         type="button"
         onClick={onSave}
         disabled={!canSave}
-        className="gradient-bg rounded-xl px-5 py-2.5 text-sm font-black uppercase tracking-widest text-black transition-opacity hover:opacity-90 disabled:opacity-50"
+        className="gradient-bg inline-flex min-h-11 min-w-[9rem] justify-center rounded-xl px-4 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-black transition-opacity hover:opacity-90 disabled:opacity-50"
       >
         {saving ? 'Guardando...' : saved ? '¡Guardado!' : 'Guardar'}
       </button>
+      <Link
+        href="/proyectos?funMode=dramadle"
+        target="_blank"
+        className="inline-flex min-h-11 min-w-[9rem] justify-center rounded-xl border border-white/15 bg-black/20 px-4 py-2.5 text-xs font-black uppercase tracking-[0.16em] text-white transition-colors hover:border-white/35 hover:bg-white/10"
+      >
+        Visualizar
+      </Link>
     </div>
   )
 }
