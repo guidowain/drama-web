@@ -46,6 +46,17 @@ function isFunModeType(value: string | null): value is FunModeType {
   return value === 'dramanoid' || value === 'trivia' || value === 'dramadle'
 }
 
+function pickRandomFunMode(availableModes: FunModeType[]) {
+  const lastMode = window.sessionStorage.getItem('drama-fun-mode-last') as FunModeType | null
+  const candidates = availableModes.length > 1
+    ? availableModes.filter((mode) => mode !== lastMode)
+    : availableModes
+  const nextMode = candidates[Math.floor(Math.random() * candidates.length)]
+
+  window.sessionStorage.setItem('drama-fun-mode-last', nextMode)
+  return nextMode
+}
+
 export default function ProyectosPage() {
   return (
     <Suspense>
@@ -181,17 +192,8 @@ function ProyectosContent() {
 
     if (availableModes.length === 0) return
 
-    if (availableModes.length === 1) {
-      trackEvent('fan_mode_open')
-      setFunMode(availableModes[0])
-      return
-    }
+    const nextMode = pickRandomFunMode(availableModes)
 
-    const lastMode = window.sessionStorage.getItem('drama-fun-mode-last') as FunModeType | null
-    const lastModeIndex = lastMode ? availableModes.indexOf(lastMode) : -1
-    const nextMode = availableModes[(lastModeIndex + 1) % availableModes.length]
-
-    window.sessionStorage.setItem('drama-fun-mode-last', nextMode)
     trackEvent('fan_mode_open')
     setFunMode(nextMode)
   }, [canUseDramanoid, funMediaPool.length, funMode, locale])
