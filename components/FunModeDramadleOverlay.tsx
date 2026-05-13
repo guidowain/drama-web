@@ -324,21 +324,6 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
             )}
           </AnimatePresence>
 
-          <AnimatePresence>
-            {showWinMessage && (
-              <motion.div
-                className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center px-5 text-center font-black uppercase leading-none tracking-normal text-black"
-                initial={{ opacity: 0, scale: 0.72, filter: 'blur(18px)' }}
-                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, scale: 1.2, filter: 'blur(10px)' }}
-                transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
-                style={{ fontSize: 'clamp(3.5rem, 12vw, 10rem)' }}
-              >
-                {copy.dramadle.win}
-              </motion.div>
-            )}
-          </AnimatePresence>
-
           <div className="relative z-10 flex h-[100dvh] items-center justify-center overflow-hidden px-4 py-[max(4rem,calc(env(safe-area-inset-top)+3rem))] md:px-7 md:py-[clamp(1.5rem,5vh,3rem)] lg:px-9">
             {loadError && !countdown && (
               <div className="text-center">
@@ -365,7 +350,7 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
                     ? 'md:grid-cols-[minmax(240px,28vw)_minmax(0,1fr)] lg:grid-cols-[minmax(260px,30vw)_minmax(0,1fr)]'
                     : 'md:grid-cols-[minmax(240px,30vw)_minmax(0,1fr)] lg:grid-cols-[minmax(280px,34vh)_minmax(0,1fr)]',
                 ].join(' ')}>
-                  <div className="flex justify-center">
+                  <div className={isFinished ? 'hidden md:flex md:justify-center' : 'flex justify-center'}>
                     <div className={[
                       'grid grid-rows-6 gap-1.5',
                       isFinished
@@ -404,8 +389,10 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
                             onPlayAgain={() => startRound(gameData.id)}
                             onClose={onClose}
                           />
+                        ) : showWinMessage ? (
+                          <WinMessagePanel key="win-message" label={copy.dramadle.win} />
                         ) : (
-                          <div key="pending-result" className="h-[min(72dvh,34rem)]" />
+                          <div key="pending-result" className="h-[min(52dvh,24rem)] md:h-[min(72dvh,34rem)]" />
                         )
                       ) : (
                         <motion.div
@@ -423,7 +410,7 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
                                   key={key}
                                   label={key}
                                   state={keyboardStates[key]}
-                          onClick={() => handleKey(key)}
+                                  onClick={() => handleKey(key)}
                                 />
                               ))}
                             </div>
@@ -439,6 +426,21 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
         </motion.div>
       )}
     </AnimatePresence>
+  )
+}
+
+function WinMessagePanel({ label }: { label: string }) {
+  return (
+    <motion.div
+      className="mx-auto flex aspect-square w-full max-w-[min(86vw,19rem)] items-center justify-center text-center font-black uppercase leading-none tracking-normal text-black md:max-w-[min(34rem,44vw)]"
+      initial={{ opacity: 0, scale: 0.72, filter: 'blur(18px)' }}
+      animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+      exit={{ opacity: 0, scale: 1.16, filter: 'blur(10px)' }}
+      transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+      style={{ fontSize: 'clamp(2.5rem, 8vw, 7.5rem)' }}
+    >
+      {label}
+    </motion.div>
   )
 }
 
@@ -537,7 +539,7 @@ function ResultPanel({
 
   return (
     <motion.div
-      className="mx-auto flex max-h-[calc(100dvh-7rem)] w-full max-w-[min(34rem,44vw)] flex-col overflow-hidden rounded-lg border-2 border-black/20 bg-white/18 shadow-[0_20px_50px_rgba(0,0,0,0.18)]"
+      className="mx-auto flex max-h-[calc(100dvh-7rem)] w-full max-w-[min(86vw,19rem)] flex-col overflow-hidden rounded-lg border-2 border-black/20 bg-white/18 shadow-[0_20px_50px_rgba(0,0,0,0.18)] md:max-w-[min(34rem,44vw)]"
       initial={{ opacity: 0, scale: 0.92, filter: 'blur(14px)' }}
       animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
       exit={{ opacity: 0, scale: 0.96, filter: 'blur(8px)' }}
