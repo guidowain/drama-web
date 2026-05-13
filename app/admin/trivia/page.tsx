@@ -353,15 +353,6 @@ export default function AdminTriviaPage() {
             </section>
           ))}
 
-          <div className="flex justify-end border-t border-white/5 pt-6">
-            <TriviaActions
-              canSave={canSave}
-              saving={saving}
-              saved={saved}
-              onAddQuestion={addQuestion}
-              onSave={handleSave}
-            />
-          </div>
         </div>
       )}
     </div>
@@ -382,11 +373,11 @@ function TriviaActions({
   onSave: () => void
 }) {
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex w-full flex-col gap-3 md:w-auto md:flex-row md:flex-wrap md:justify-end">
       <Link
         href="/proyectos?funMode=trivia"
         target="_blank"
-        className="rounded-xl border border-white/15 bg-black/20 px-5 py-2.5 text-sm font-black uppercase tracking-widest text-white transition-colors hover:border-white/35 hover:bg-white/10"
+        className="inline-flex justify-center rounded-xl border border-white/15 bg-black/20 px-5 py-2.5 text-sm font-black uppercase tracking-widest text-white transition-colors hover:border-white/35 hover:bg-white/10"
       >
         Visualizar
       </Link>

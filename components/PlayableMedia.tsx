@@ -12,6 +12,8 @@ type Props = {
   imageClassName?: string
   style?: CSSProperties
   width?: string
+  loading?: 'eager' | 'lazy'
+  fetchPriority?: 'high' | 'low' | 'auto'
   showMuteButton?: boolean
   protectedMedia?: boolean
 }
@@ -24,6 +26,8 @@ export default function PlayableMedia({
   imageClassName,
   style,
   width,
+  loading = 'lazy',
+  fetchPriority = 'auto',
   showMuteButton = true,
   protectedMedia = false,
 }: Props) {
@@ -57,6 +61,8 @@ export default function PlayableMedia({
         alt={alt}
         className={imageClassName || sharedClassName}
         style={protectedStyle}
+        loading={loading}
+        fetchPriority={fetchPriority}
         draggable={false}
         onDragStart={preventProtectedAction}
         onContextMenu={preventProtectedAction}

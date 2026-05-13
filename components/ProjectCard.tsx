@@ -6,6 +6,8 @@ import type { Proyecto } from '@/lib/types'
 import { hasProjectDetailMedia } from '@/lib/media'
 import PlayableMedia from './PlayableMedia'
 
+const EAGER_PROJECT_COUNT = 4
+
 type Props = {
   project: Proyecto
   index: number
@@ -25,7 +27,7 @@ const revealVariants = {
     transition: {
       duration: 0.7,
       ease: [0.22, 1, 0.36, 1],
-      delay: index < 2 ? 0.12 + index * 0.1 : 0,
+      delay: index < EAGER_PROJECT_COUNT ? 0.12 + index * 0.1 : 0,
     },
   }),
 }
@@ -34,7 +36,8 @@ export default function ProjectCard({ project, index, onClick }: Props) {
   const [isDesktop, setIsDesktop] = useState(() => (
     typeof window === 'undefined' ? true : window.matchMedia('(min-width: 768px)').matches
   ))
-  const shouldRevealOnScroll = isDesktop && index >= 2
+  const shouldLoadEagerly = index < EAGER_PROJECT_COUNT
+  const shouldRevealOnScroll = isDesktop && !shouldLoadEagerly
   const isClickable = hasProjectDetailMedia(project)
   const hasManyTags = project.tags.length >= 5
   const tagClassName = hasManyTags
@@ -77,6 +80,8 @@ export default function ProjectCard({ project, index, onClick }: Props) {
               src={project.coverImage}
               alt={project.coverImageAlt}
               className="w-full h-full object-cover"
+              loading={shouldLoadEagerly ? 'eager' : 'lazy'}
+              fetchPriority={shouldLoadEagerly ? 'high' : 'auto'}
             />
           ) : (
             <div className="w-full h-full gradient-bg opacity-30" />

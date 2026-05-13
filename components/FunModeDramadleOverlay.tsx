@@ -357,7 +357,6 @@ export default function FunModeDramadleOverlay({ active, onClose }: Props) {
               <div className="w-full max-w-[88rem]">
                 <div className="mb-2 flex h-4 items-center justify-between gap-4 text-[0.66rem] font-black uppercase tracking-[0.18em] text-black/50 md:mb-3 md:text-[0.68rem] lg:text-xs">
                   <span>{copy.dramadle.title}</span>
-                  <span>{gameState.guesses.length}/{MAX_ATTEMPTS}</span>
                 </div>
 
                 <div className={[
