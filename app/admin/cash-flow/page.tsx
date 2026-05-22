@@ -7,10 +7,11 @@ export default async function AdminCashFlowPage() {
   const data = await getCashFlowViewerData()
   const latest = data.months.at(-1) ?? null
   const chartMax = Math.max(...data.billingChart.map((item) => item.billing), 1)
-  const partnerTotal = data.partnerTotals.mati + data.partnerTotals.guido
+  const notBilledTotal = data.months.slice(-12).reduce((total, month) => total + month.notBilled, 0)
+  const partnerTotal = data.partnerTotals.mati + data.partnerTotals.guido + notBilledTotal
   const partnerDifference = Math.abs(data.partnerTotals.mati - data.partnerTotals.guido)
   const leadingPartner = data.partnerTotals.mati > data.partnerTotals.guido ? 'Mati' : 'Guido'
-  const recentMonths = data.months.slice(-6).reverse()
+  const recentMonths = data.months.slice(-3).reverse()
 
   return (
     <div className="min-h-screen bg-zinc-950 p-4 text-white md:h-screen md:overflow-hidden md:p-5 xl:p-6">
@@ -34,7 +35,7 @@ export default async function AdminCashFlowPage() {
               <MetricCard label="Facturación" value={money(latest?.billing)} detail={latest?.month ?? 'Sin mes'} tone="white" />
               <MetricCard label="Gasto" value={money(latest?.spending)} detail={latest?.month ?? 'Sin mes'} tone="rose" />
               <MetricCard label="Ganancia" value={money(latest?.profit)} detail={latest?.margin == null ? 'Margen s/d' : `${percent(latest.margin)} margen`} tone="emerald" />
-              <MetricCard label="No facturado" value={money(latest?.notBilled)} detail={latest?.month ?? 'Sin mes'} tone="amber" />
+              <MetricCard label="Margen" value={latest?.margin == null ? '-' : percent(latest.margin)} detail={latest?.month ?? 'Sin mes'} tone="amber" />
             </div>
           </div>
         </section>
@@ -71,24 +72,30 @@ export default async function AdminCashFlowPage() {
               <h2 className="mt-0.5 text-lg font-black uppercase tracking-tight">Facturado por persona</h2>
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-3 gap-2">
               <MetricCard label="Mati" value={money(data.partnerTotals.mati)} detail="12 meses" tone="pink" />
               <MetricCard label="Guido" value={money(data.partnerTotals.guido)} detail="12 meses" tone="orange" />
+              <MetricCard label="Sin factura" value={money(notBilledTotal)} detail="12 meses" tone="gray" />
             </div>
 
             <div className="mt-3 rounded-lg border border-white/5 bg-black/25 p-3">
               <div className="mb-2 flex items-center justify-between text-[11px] font-black uppercase tracking-[0.16em] text-white/35">
                 <span>Mati</span>
+                <span>Sin factura</span>
                 <span>Guido</span>
               </div>
               <div className="flex h-5 overflow-hidden rounded-full bg-white/10">
                 <div
                   className="h-full bg-[#F504FF]"
-                  style={{ width: `${partnerTotal ? (data.partnerTotals.mati / partnerTotal) * 100 : 50}%` }}
+                  style={{ width: `${partnerTotal ? (data.partnerTotals.mati / partnerTotal) * 100 : 0}%` }}
+                />
+                <div
+                  className="h-full bg-zinc-500"
+                  style={{ width: `${partnerTotal ? (notBilledTotal / partnerTotal) * 100 : 0}%` }}
                 />
                 <div
                   className="h-full bg-[#FCC028]"
-                  style={{ width: `${partnerTotal ? (data.partnerTotals.guido / partnerTotal) * 100 : 50}%` }}
+                  style={{ width: `${partnerTotal ? (data.partnerTotals.guido / partnerTotal) * 100 : 0}%` }}
                 />
               </div>
               <p className="mt-3 text-sm font-semibold text-white/55">
@@ -103,7 +110,7 @@ export default async function AdminCashFlowPage() {
                 <p className="text-[10px] font-black uppercase tracking-[0.22em] text-white/30">Dashboard</p>
                 <h2 className="mt-0.5 text-lg font-black uppercase tracking-tight">Resumen mensual</h2>
               </div>
-              <p className="text-xs font-semibold text-white/35">Últimos 6 meses</p>
+              <p className="text-xs font-semibold text-white/35">Últimos 3 meses</p>
             </div>
 
             <div className="max-h-[calc(100vh-33rem)] min-h-[160px] overflow-auto">
@@ -143,7 +150,7 @@ function MetricCard({
   label: string
   value: string
   detail: string
-  tone: 'white' | 'rose' | 'emerald' | 'amber' | 'pink' | 'orange'
+  tone: 'white' | 'rose' | 'emerald' | 'amber' | 'pink' | 'orange' | 'gray'
 }) {
   const toneClass = {
     white: 'text-white',
@@ -152,6 +159,7 @@ function MetricCard({
     amber: 'text-amber-300',
     pink: 'text-fuchsia-300',
     orange: 'text-orange-200',
+    gray: 'text-zinc-300',
   }[tone]
 
   return (
