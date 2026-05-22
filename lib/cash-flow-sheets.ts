@@ -48,14 +48,12 @@ export type CashFlowPartnerBilling = {
 export type CashFlowViewerData = {
   balanceText: string
   months: CashFlowDashboardMonth[]
-  latestMonth: CashFlowDashboardMonth | null
   billingChart: CashFlowChartMonth[]
   partnerBillingChart: CashFlowPartnerBilling[]
   partnerTotals: {
     mati: number
     guido: number
   }
-  updatedAt: string
 }
 
 export function getCashFlowSpreadsheetId() {
@@ -125,19 +123,16 @@ export async function getCashFlowViewerData(): Promise<CashFlowViewerData> {
     getCashFlowRange('Gráfico!A1:I18'),
   ])
   const months = parseDashboardRows(dashboardRows)
-  const latestMonth = months.at(-1) ?? null
 
   return {
     balanceText: dashboardRows[0]?.[0] || 'Sin balance disponible',
     months,
-    latestMonth,
     billingChart: parseBillingChartRows(chartRows),
     partnerBillingChart: parsePartnerBillingRows(chartRows),
     partnerTotals: {
       mati: parseMoney(chartRows[15]?.[7]),
       guido: parseMoney(chartRows[15]?.[8]),
     },
-    updatedAt: new Date().toISOString(),
   }
 }
 
