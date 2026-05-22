@@ -48,6 +48,7 @@ export type CashFlowPartnerBilling = {
 export type CashFlowViewerData = {
   balanceText: string
   pendingCollectionAmount: number
+  hasPendingCollection: boolean
   months: CashFlowDashboardMonth[]
   billingChart: CashFlowChartMonth[]
   partnerBillingChart: CashFlowPartnerBilling[]
@@ -124,10 +125,12 @@ export async function getCashFlowViewerData(): Promise<CashFlowViewerData> {
     getCashFlowRange('Gráfico!A1:I18'),
   ])
   const months = parseDashboardRows(dashboardRows)
+  const pendingCollectionAmount = parseMoneyFromText(dashboardRows[0]?.[4])
 
   return {
     balanceText: dashboardRows[0]?.[0] || 'Sin balance disponible',
-    pendingCollectionAmount: parseMoneyFromText(dashboardRows[0]?.[4]),
+    pendingCollectionAmount,
+    hasPendingCollection: pendingCollectionAmount > 0,
     months,
     billingChart: parseBillingChartRows(chartRows),
     partnerBillingChart: parsePartnerBillingRows(chartRows),

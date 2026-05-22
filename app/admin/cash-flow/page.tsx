@@ -20,7 +20,6 @@ export default async function AdminCashFlowPage() {
   const partnerDifference = Math.abs(partnerTotals.mati - partnerTotals.guido)
   const leadingPartner = partnerTotals.mati > partnerTotals.guido ? 'Mati' : 'Guido'
   const recentMonths = data.months.slice(-3).reverse()
-  const hasPendingCollection = data.pendingCollectionAmount > 0
 
   return (
     <div className="min-h-screen bg-zinc-950 p-4 text-white md:h-screen md:overflow-hidden md:p-5 xl:p-6">
@@ -39,10 +38,13 @@ export default async function AdminCashFlowPage() {
               <p className="mt-2 text-2xl font-black leading-tight text-white md:text-3xl">{data.balanceText}</p>
             </div>
 
-            <div className={`grid gap-2 sm:grid-cols-2 ${hasPendingCollection ? 'xl:grid-cols-4' : 'xl:grid-cols-3'}`}>
-              {hasPendingCollection ? (
-                <MetricCard label="Pendiente de cobro" value={money(data.pendingCollectionAmount)} detail="Clientes avisados" tone="amber" important />
-              ) : null}
+            <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+              <MetricCard
+                label="Pendiente de cobro"
+                value={data.hasPendingCollection ? money(data.pendingCollectionAmount) : 'Nada por cobrar'}
+                tone={data.hasPendingCollection ? 'amber' : 'emerald'}
+                important={data.hasPendingCollection}
+              />
               <MetricCard label="Facturación" value={money(latest?.billing)} detail={latest?.month ?? 'Sin mes'} tone="white" />
               <MetricCard label="Gasto" value={money(latest?.spending)} detail={latest?.month ?? 'Sin mes'} tone="rose" />
               <MetricCard label="Ganancia" value={money(latest?.profit)} detail={latest?.margin == null ? 'Margen s/d' : `${percent(latest.margin)} margen`} tone="emerald" />
@@ -156,7 +158,7 @@ function MetricCard({
 }: {
   label: string
   value: string
-  detail: string
+  detail?: string
   tone: 'white' | 'rose' | 'emerald' | 'amber' | 'pink' | 'orange' | 'gray'
   important?: boolean
 }) {
@@ -174,7 +176,7 @@ function MetricCard({
     <div className={`rounded-lg border p-3 ${important ? 'border-amber-300/35 bg-amber-300/10' : 'border-white/10 bg-black/25'}`}>
       <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/30">{label}</p>
       <p className={`mt-2 truncate font-black ${important ? 'text-2xl' : 'text-xl'} ${toneClass}`}>{value}</p>
-      <p className="mt-0.5 text-[11px] font-semibold text-white/35">{detail}</p>
+      {detail ? <p className="mt-0.5 text-[11px] font-semibold text-white/35">{detail}</p> : null}
     </div>
   )
 }
