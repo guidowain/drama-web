@@ -7,8 +7,10 @@ export default async function AdminCashFlowPage() {
   const data = await getCashFlowViewerData()
   const latest = data.months.at(-1) ?? null
   const chartMax = Math.max(...data.billingChart.map((item) => item.billing), 1)
-  const partnerMax = Math.max(...data.partnerBillingChart.flatMap((item) => [item.mati, item.guido]), 1)
-  const recentMonths = data.months.slice(-8).reverse()
+  const partnerTotal = data.partnerTotals.mati + data.partnerTotals.guido
+  const partnerDifference = Math.abs(data.partnerTotals.mati - data.partnerTotals.guido)
+  const leadingPartner = data.partnerTotals.mati > data.partnerTotals.guido ? 'Mati' : 'Guido'
+  const recentMonths = data.months.slice(-6).reverse()
 
   return (
     <div className="min-h-screen bg-zinc-950 p-4 text-white md:h-screen md:overflow-hidden md:p-5 xl:p-6">
@@ -37,7 +39,7 @@ export default async function AdminCashFlowPage() {
           </div>
         </section>
 
-        <div className="grid min-h-0 gap-4 xl:grid-cols-[minmax(0,1.25fr)_minmax(340px,0.75fr)]">
+        <div className="grid min-h-0 gap-4 xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)]">
           <section className="min-h-0 rounded-xl border border-white/10 bg-zinc-900/70 p-4">
             <div className="mb-3">
               <p className="text-[10px] font-black uppercase tracking-[0.22em] text-white/30">Gráfico</p>
@@ -69,24 +71,29 @@ export default async function AdminCashFlowPage() {
               <h2 className="mt-0.5 text-lg font-black uppercase tracking-tight">Facturado por persona</h2>
             </div>
 
-            <div className="mb-3 grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2">
               <MetricCard label="Mati" value={money(data.partnerTotals.mati)} detail="12 meses" tone="pink" />
               <MetricCard label="Guido" value={money(data.partnerTotals.guido)} detail="12 meses" tone="orange" />
             </div>
 
-            <div className="space-y-2.5 rounded-lg border border-white/5 bg-black/25 p-3">
-              {data.partnerBillingChart.map((item) => (
-                <div key={item.month}>
-                  <div className="mb-1 flex items-center justify-between gap-3 text-[11px]">
-                    <span className="font-black text-white/65">{shortMonth(item.month)}</span>
-                    <span className="text-white/35">M {compactMoney(item.mati)} · G {compactMoney(item.guido)}</span>
-                  </div>
-                  <div className="grid gap-1">
-                    <Bar value={item.mati} max={partnerMax} className="bg-[#F504FF]" />
-                    <Bar value={item.guido} max={partnerMax} className="bg-[#FCC028]" />
-                  </div>
-                </div>
-              ))}
+            <div className="mt-3 rounded-lg border border-white/5 bg-black/25 p-3">
+              <div className="mb-2 flex items-center justify-between text-[11px] font-black uppercase tracking-[0.16em] text-white/35">
+                <span>Mati</span>
+                <span>Guido</span>
+              </div>
+              <div className="flex h-5 overflow-hidden rounded-full bg-white/10">
+                <div
+                  className="h-full bg-[#F504FF]"
+                  style={{ width: `${partnerTotal ? (data.partnerTotals.mati / partnerTotal) * 100 : 50}%` }}
+                />
+                <div
+                  className="h-full bg-[#FCC028]"
+                  style={{ width: `${partnerTotal ? (data.partnerTotals.guido / partnerTotal) * 100 : 50}%` }}
+                />
+              </div>
+              <p className="mt-3 text-sm font-semibold text-white/55">
+                {partnerDifference ? `${leadingPartner} lleva ${money(partnerDifference)} más facturado en el período.` : 'Están empatados en facturación.'}
+              </p>
             </div>
           </section>
 
@@ -96,10 +103,10 @@ export default async function AdminCashFlowPage() {
                 <p className="text-[10px] font-black uppercase tracking-[0.22em] text-white/30">Dashboard</p>
                 <h2 className="mt-0.5 text-lg font-black uppercase tracking-tight">Resumen mensual</h2>
               </div>
-              <p className="text-xs font-semibold text-white/35">Últimos 8 meses</p>
+              <p className="text-xs font-semibold text-white/35">Últimos 6 meses</p>
             </div>
 
-            <div className="max-h-[calc(100vh-34rem)] min-h-[170px] overflow-auto">
+            <div className="max-h-[calc(100vh-33rem)] min-h-[160px] overflow-auto">
               <table className="w-full min-w-[860px] border-separate border-spacing-0 text-sm">
                 <thead className="sticky top-0 z-10 bg-zinc-900">
                   <tr className="text-left text-[10px] font-black uppercase tracking-[0.16em] text-white/35">
