@@ -12,20 +12,36 @@ const oauthTokenCache = new Map<string, {
   expiresAt: number
 }>()
 
-export async function getGoogleAccessToken(scope: string, subject?: string) {
-  const cacheKey = `${scope}:${subject ?? ''}`
+type GoogleAccessTokenOptions = {
+  subject?: string
+  serviceAccountKey?: string
+  serviceAccountKeyEnv?: string
+  cacheKey?: string
+}
+
+export async function getGoogleAccessToken(scope: string, subjectOrOptions?: string | GoogleAccessTokenOptions) {
+  const options = typeof subjectOrOptions === 'string'
+    ? { subject: subjectOrOptions }
+    : subjectOrOptions ?? {}
+  const subject = options.subject
+  const usesSpecificServiceAccount = Boolean(options.serviceAccountKeyEnv || options.serviceAccountKey)
+  const serviceAccountKey = options.serviceAccountKeyEnv
+    ? process.env[options.serviceAccountKeyEnv]
+    : options.serviceAccountKey
+  const cacheKey = options.cacheKey || `${scope}:${subject ?? ''}:${options.serviceAccountKeyEnv ?? (serviceAccountKey ? 'custom' : 'default')}`
   const cachedToken = tokenCache.get(cacheKey)
 
   if (cachedToken && cachedToken.expiresAt > Date.now() + 60_000) {
     return cachedToken.accessToken
   }
 
-  const serviceAccount = parseServiceAccountKey(process.env.GOOGLE_SERVICE_ACCOUNT_KEY)
-  const clientEmail = serviceAccount?.clientEmail || process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || process.env.GOOGLE_CLIENT_EMAIL
-  const privateKey = normalizePrivateKey(serviceAccount?.privateKey || process.env.GOOGLE_PRIVATE_KEY)
+  const serviceAccount = parseServiceAccountKey(usesSpecificServiceAccount ? serviceAccountKey : process.env.GOOGLE_SERVICE_ACCOUNT_KEY)
+  const clientEmail = serviceAccount?.clientEmail || (!usesSpecificServiceAccount ? process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || process.env.GOOGLE_CLIENT_EMAIL : '')
+  const privateKey = normalizePrivateKey(serviceAccount?.privateKey || (!usesSpecificServiceAccount ? process.env.GOOGLE_PRIVATE_KEY : ''))
 
   if (!clientEmail || !privateKey) {
-    throw new Error('Falta configurar GOOGLE_SERVICE_ACCOUNT_KEY o las credenciales separadas de Google.')
+    const envHint = options.serviceAccountKeyEnv || 'GOOGLE_SERVICE_ACCOUNT_KEY'
+    throw new Error(`Falta configurar ${envHint} o las credenciales separadas de Google.`)
   }
 
   const now = Math.floor(Date.now() / 1000)

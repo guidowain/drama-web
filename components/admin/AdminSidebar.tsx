@@ -82,6 +82,16 @@ const navItems = [
 
 const toolItems = [
   {
+    label: 'Cash Flow',
+    href: '/admin/cash-flow',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 3v18h18" />
+        <path d="M7 15l4-4 3 3 5-7" />
+      </svg>
+    ),
+  },
+  {
     label: 'Presupuestador',
     href: '/admin/presupuestador',
     icon: (
