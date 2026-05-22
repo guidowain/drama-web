@@ -47,6 +47,7 @@ export type CashFlowPartnerBilling = {
 
 export type CashFlowViewerData = {
   balanceText: string
+  pendingCollectionText: string
   months: CashFlowDashboardMonth[]
   billingChart: CashFlowChartMonth[]
   partnerBillingChart: CashFlowPartnerBilling[]
@@ -126,6 +127,7 @@ export async function getCashFlowViewerData(): Promise<CashFlowViewerData> {
 
   return {
     balanceText: dashboardRows[0]?.[0] || 'Sin balance disponible',
+    pendingCollectionText: dashboardRows[0]?.[4] || 'Sin pendiente de cobro',
     months,
     billingChart: parseBillingChartRows(chartRows),
     partnerBillingChart: parsePartnerBillingRows(chartRows),

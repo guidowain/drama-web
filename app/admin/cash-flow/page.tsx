@@ -7,17 +7,24 @@ export default async function AdminCashFlowPage() {
   const data = await getCashFlowViewerData()
   const latest = data.months.at(-1) ?? null
   const chartMax = Math.max(...data.billingChart.map((item) => item.billing), 1)
-  const notBilledTotal = data.months.slice(-12).reduce((total, month) => total + month.notBilled, 0)
-  const partnerTotal = data.partnerTotals.mati + data.partnerTotals.guido + notBilledTotal
-  const partnerDifference = Math.abs(data.partnerTotals.mati - data.partnerTotals.guido)
-  const leadingPartner = data.partnerTotals.mati > data.partnerTotals.guido ? 'Mati' : 'Guido'
+  const partnerMonths = data.months.slice(-6)
+  const partnerTotals = partnerMonths.reduce(
+    (totals, month) => ({
+      mati: totals.mati + month.billedByMati,
+      guido: totals.guido + month.billedByGuido,
+      notBilled: totals.notBilled + month.notBilled,
+    }),
+    { mati: 0, guido: 0, notBilled: 0 }
+  )
+  const partnerTotal = partnerTotals.mati + partnerTotals.guido + partnerTotals.notBilled
+  const partnerDifference = Math.abs(partnerTotals.mati - partnerTotals.guido)
+  const leadingPartner = partnerTotals.mati > partnerTotals.guido ? 'Mati' : 'Guido'
   const recentMonths = data.months.slice(-3).reverse()
 
   return (
     <div className="min-h-screen bg-zinc-950 p-4 text-white md:h-screen md:overflow-hidden md:p-5 xl:p-6">
       <header className="mb-4 flex items-end justify-between gap-4">
         <div>
-          <p className="text-[10px] font-black uppercase tracking-[0.28em] text-white/30">Herramienta interna</p>
           <h1 className="mt-0.5 text-2xl font-black uppercase tracking-tight text-white md:text-3xl">Cash Flow</h1>
         </div>
       </header>
@@ -32,10 +39,10 @@ export default async function AdminCashFlowPage() {
             </div>
 
             <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+              <MetricCard label="Pendiente de cobro" value={data.pendingCollectionText} detail="Clientes avisados" tone="amber" important />
               <MetricCard label="Facturación" value={money(latest?.billing)} detail={latest?.month ?? 'Sin mes'} tone="white" />
               <MetricCard label="Gasto" value={money(latest?.spending)} detail={latest?.month ?? 'Sin mes'} tone="rose" />
               <MetricCard label="Ganancia" value={money(latest?.profit)} detail={latest?.margin == null ? 'Margen s/d' : `${percent(latest.margin)} margen`} tone="emerald" />
-              <MetricCard label="Margen" value={latest?.margin == null ? '-' : percent(latest.margin)} detail={latest?.month ?? 'Sin mes'} tone="amber" />
             </div>
           </div>
         </section>
@@ -43,8 +50,7 @@ export default async function AdminCashFlowPage() {
         <div className="grid min-h-0 gap-4 xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)]">
           <section className="min-h-0 rounded-xl border border-white/10 bg-zinc-900/70 p-4">
             <div className="mb-3">
-              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-white/30">Gráfico</p>
-              <h2 className="mt-0.5 text-lg font-black uppercase tracking-tight">Facturación últimos 12 meses</h2>
+              <h2 className="text-lg font-black uppercase tracking-tight">Facturación</h2>
             </div>
 
             <div className="flex h-[260px] items-end gap-2 rounded-lg border border-white/5 bg-black/25 px-3 pb-3 pt-4 sm:gap-3 sm:px-4">
@@ -68,14 +74,13 @@ export default async function AdminCashFlowPage() {
 
           <section className="min-h-0 rounded-xl border border-white/10 bg-zinc-900/70 p-4">
             <div className="mb-3">
-              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-white/30">Gráfico</p>
-              <h2 className="mt-0.5 text-lg font-black uppercase tracking-tight">Facturado por persona</h2>
+              <h2 className="text-lg font-black uppercase tracking-tight">Facturado por persona</h2>
             </div>
 
             <div className="grid grid-cols-3 gap-2">
-              <MetricCard label="Mati" value={money(data.partnerTotals.mati)} detail="12 meses" tone="pink" />
-              <MetricCard label="Guido" value={money(data.partnerTotals.guido)} detail="12 meses" tone="orange" />
-              <MetricCard label="Sin factura" value={money(notBilledTotal)} detail="12 meses" tone="gray" />
+              <MetricCard label="Mati" value={money(partnerTotals.mati)} detail="6 meses" tone="pink" />
+              <MetricCard label="Guido" value={money(partnerTotals.guido)} detail="6 meses" tone="orange" />
+              <MetricCard label="Sin factura" value={money(partnerTotals.notBilled)} detail="6 meses" tone="gray" />
             </div>
 
             <div className="mt-3 rounded-lg border border-white/5 bg-black/25 p-3">
@@ -87,15 +92,15 @@ export default async function AdminCashFlowPage() {
               <div className="flex h-5 overflow-hidden rounded-full bg-white/10">
                 <div
                   className="h-full bg-[#F504FF]"
-                  style={{ width: `${partnerTotal ? (data.partnerTotals.mati / partnerTotal) * 100 : 0}%` }}
+                  style={{ width: `${partnerTotal ? (partnerTotals.mati / partnerTotal) * 100 : 0}%` }}
                 />
                 <div
                   className="h-full bg-zinc-500"
-                  style={{ width: `${partnerTotal ? (notBilledTotal / partnerTotal) * 100 : 0}%` }}
+                  style={{ width: `${partnerTotal ? (partnerTotals.notBilled / partnerTotal) * 100 : 0}%` }}
                 />
                 <div
                   className="h-full bg-[#FCC028]"
-                  style={{ width: `${partnerTotal ? (data.partnerTotals.guido / partnerTotal) * 100 : 0}%` }}
+                  style={{ width: `${partnerTotal ? (partnerTotals.guido / partnerTotal) * 100 : 0}%` }}
                 />
               </div>
               <p className="mt-3 text-sm font-semibold text-white/55">
@@ -107,10 +112,8 @@ export default async function AdminCashFlowPage() {
           <section className="min-h-0 rounded-xl border border-white/10 bg-zinc-900/70 p-4 xl:col-span-2">
             <div className="mb-3 flex items-end justify-between gap-3">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-white/30">Dashboard</p>
-                <h2 className="mt-0.5 text-lg font-black uppercase tracking-tight">Resumen mensual</h2>
+                <h2 className="text-lg font-black uppercase tracking-tight">Resumen mensual</h2>
               </div>
-              <p className="text-xs font-semibold text-white/35">Últimos 3 meses</p>
             </div>
 
             <div className="max-h-[calc(100vh-33rem)] min-h-[160px] overflow-auto">
@@ -146,11 +149,13 @@ function MetricCard({
   value,
   detail,
   tone,
+  important = false,
 }: {
   label: string
   value: string
   detail: string
   tone: 'white' | 'rose' | 'emerald' | 'amber' | 'pink' | 'orange' | 'gray'
+  important?: boolean
 }) {
   const toneClass = {
     white: 'text-white',
@@ -163,9 +168,9 @@ function MetricCard({
   }[tone]
 
   return (
-    <div className="rounded-lg border border-white/10 bg-black/25 p-3">
+    <div className={`rounded-lg border p-3 ${important ? 'border-amber-300/35 bg-amber-300/10' : 'border-white/10 bg-black/25'}`}>
       <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/30">{label}</p>
-      <p className={`mt-2 truncate text-xl font-black ${toneClass}`}>{value}</p>
+      <p className={`mt-2 truncate font-black ${important ? 'text-2xl' : 'text-xl'} ${toneClass}`}>{value}</p>
       <p className="mt-0.5 text-[11px] font-semibold text-white/35">{detail}</p>
     </div>
   )
