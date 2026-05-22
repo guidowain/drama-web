@@ -40,10 +40,10 @@ export default async function AdminCashFlowPage() {
 
             <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
               <MetricCard
-                label="Pendiente de cobro"
+                label={data.hasPendingCollection ? 'Pendiente de cobro' : 'Cobros al día'}
                 value={data.hasPendingCollection ? money(data.pendingCollectionAmount) : 'Nada por cobrar'}
                 tone={data.hasPendingCollection ? 'amber' : 'emerald'}
-                important={data.hasPendingCollection}
+                important
               />
               <MetricCard label="Facturación" value={money(latest?.billing)} detail={latest?.month ?? 'Sin mes'} tone="white" />
               <MetricCard label="Gasto" value={money(latest?.spending)} detail={latest?.month ?? 'Sin mes'} tone="rose" />
@@ -171,9 +171,18 @@ function MetricCard({
     orange: 'text-orange-200',
     gray: 'text-zinc-300',
   }[tone]
+  const importantClass = {
+    white: 'border-white/20 bg-white/10',
+    rose: 'border-rose-300/35 bg-rose-300/10',
+    emerald: 'border-emerald-300/35 bg-emerald-300/10',
+    amber: 'border-amber-300/35 bg-amber-300/10',
+    pink: 'border-fuchsia-300/35 bg-fuchsia-300/10',
+    orange: 'border-orange-200/35 bg-orange-200/10',
+    gray: 'border-zinc-300/25 bg-zinc-300/10',
+  }[tone]
 
   return (
-    <div className={`rounded-lg border p-3 ${important ? 'border-amber-300/35 bg-amber-300/10' : 'border-white/10 bg-black/25'}`}>
+    <div className={`rounded-lg border p-3 ${important ? importantClass : 'border-white/10 bg-black/25'}`}>
       <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/30">{label}</p>
       <p className={`mt-2 truncate font-black ${important ? 'text-2xl' : 'text-xl'} ${toneClass}`}>{value}</p>
       {detail ? <p className="mt-0.5 text-[11px] font-semibold text-white/35">{detail}</p> : null}
