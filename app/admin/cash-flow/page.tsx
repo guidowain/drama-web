@@ -20,6 +20,7 @@ export default async function AdminCashFlowPage() {
   const partnerDifference = Math.abs(partnerTotals.mati - partnerTotals.guido)
   const leadingPartner = partnerTotals.mati > partnerTotals.guido ? 'Mati' : 'Guido'
   const recentMonths = data.months.slice(-3).reverse()
+  const hasPendingCollection = data.pendingCollectionAmount > 0
 
   return (
     <div className="min-h-screen bg-zinc-950 p-4 text-white md:h-screen md:overflow-hidden md:p-5 xl:p-6">
@@ -38,8 +39,10 @@ export default async function AdminCashFlowPage() {
               <p className="mt-2 text-2xl font-black leading-tight text-white md:text-3xl">{data.balanceText}</p>
             </div>
 
-            <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
-              <MetricCard label="Pendiente de cobro" value={data.pendingCollectionText} detail="Clientes avisados" tone="amber" important />
+            <div className={`grid gap-2 sm:grid-cols-2 ${hasPendingCollection ? 'xl:grid-cols-4' : 'xl:grid-cols-3'}`}>
+              {hasPendingCollection ? (
+                <MetricCard label="Pendiente de cobro" value={money(data.pendingCollectionAmount)} detail="Clientes avisados" tone="amber" important />
+              ) : null}
               <MetricCard label="Facturación" value={money(latest?.billing)} detail={latest?.month ?? 'Sin mes'} tone="white" />
               <MetricCard label="Gasto" value={money(latest?.spending)} detail={latest?.month ?? 'Sin mes'} tone="rose" />
               <MetricCard label="Ganancia" value={money(latest?.profit)} detail={latest?.margin == null ? 'Margen s/d' : `${percent(latest.margin)} margen`} tone="emerald" />

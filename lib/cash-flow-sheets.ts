@@ -47,7 +47,7 @@ export type CashFlowPartnerBilling = {
 
 export type CashFlowViewerData = {
   balanceText: string
-  pendingCollectionText: string
+  pendingCollectionAmount: number
   months: CashFlowDashboardMonth[]
   billingChart: CashFlowChartMonth[]
   partnerBillingChart: CashFlowPartnerBilling[]
@@ -127,7 +127,7 @@ export async function getCashFlowViewerData(): Promise<CashFlowViewerData> {
 
   return {
     balanceText: dashboardRows[0]?.[0] || 'Sin balance disponible',
-    pendingCollectionText: dashboardRows[0]?.[4] || 'Sin pendiente de cobro',
+    pendingCollectionAmount: parseMoneyFromText(dashboardRows[0]?.[4]),
     months,
     billingChart: parseBillingChartRows(chartRows),
     partnerBillingChart: parsePartnerBillingRows(chartRows),
@@ -200,6 +200,15 @@ function parseMoney(value: unknown) {
     .replace(/^-$/, '')
 
   return Number(normalized || 0)
+}
+
+function parseMoneyFromText(value: unknown) {
+  if (typeof value === 'number') return value
+  if (typeof value !== 'string') return 0
+
+  const match = value.match(/-?\$?\s*[\d.,]+/)
+
+  return parseMoney(match?.[0])
 }
 
 function parsePercent(value: unknown) {
