@@ -88,6 +88,7 @@ export type CashFlowExpenseSummary = {
 
 export type CashFlowExpensesData = {
   total: number
+  month: string
   summaries: CashFlowExpenseSummary[]
   recentExpenses: CashFlowExpenseMovement[]
 }
@@ -310,9 +311,11 @@ export async function markCashFlowClientBilled(input: MarkCashFlowClientBilledIn
 export async function getCashFlowExpensesData(): Promise<CashFlowExpensesData> {
   const rows = await getCashFlowRange('CashFlow!A2:L1000')
   const expenses = parseExpenseMovementRows(rows)
+  const currentMonth = getArgentinaMonthKey()
+  const currentMonthExpenses = expenses.filter((expense) => expense.month === currentMonth)
   const summaryMap = new Map<CashFlowExpenseCategory, CashFlowExpenseSummary>()
 
-  for (const expense of expenses) {
+  for (const expense of currentMonthExpenses) {
     const current = summaryMap.get(expense.category) ?? {
       category: expense.category,
       count: 0,
@@ -327,7 +330,8 @@ export async function getCashFlowExpensesData(): Promise<CashFlowExpensesData> {
   }
 
   return {
-    total: expenses.reduce((total, expense) => total + expense.amount, 0),
+    total: currentMonthExpenses.reduce((total, expense) => total + expense.amount, 0),
+    month: currentMonth,
     summaries: expenseCategories.map((category) => summaryMap.get(category) ?? { category, count: 0, total: 0 }),
     recentExpenses: expenses
       .sort((a, b) => b.row - a.row)
@@ -520,6 +524,18 @@ function toSheetDate(value: string) {
   if (!year || !month || !day) return value
 
   return `${day}/${month}/${String(year).slice(-2)}`
+}
+
+function getArgentinaMonthKey() {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Argentina/Buenos_Aires',
+    year: 'numeric',
+    month: 'numeric',
+  }).formatToParts(new Date())
+  const year = parts.find((part) => part.type === 'year')?.value
+  const month = parts.find((part) => part.type === 'month')?.value
+
+  return year && month ? `${year}-${Number(month)}` : ''
 }
 
 function parsePercent(value: unknown) {

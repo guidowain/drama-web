@@ -66,15 +66,15 @@ export default function CashFlowExpensesPanel({ initialData }: { initialData: Ca
   return (
     <div className="grid min-h-0 gap-4 xl:grid-cols-[minmax(360px,0.7fr)_minmax(0,1.3fr)]">
       <section className="min-h-0 rounded-xl border border-white/10 bg-zinc-900/70 p-4">
-        <div className="mb-4 flex items-start justify-between gap-3">
+        <div className="mb-4">
           <div>
-            <h2 className="text-lg font-black uppercase tracking-tight">Egresos</h2>
+            <h2 className="text-lg font-black uppercase tracking-tight">Mes actual</h2>
             <p className="mt-1 text-sm font-semibold text-rose-300">{money(data.total)}</p>
           </div>
           <button
             type="button"
             onClick={() => setIsCreateOpen(true)}
-            className="rounded-lg border border-white/10 bg-white px-3 py-2 text-xs font-black uppercase tracking-wide text-zinc-950 transition hover:bg-zinc-200"
+            className="mt-4 w-full rounded-lg border border-white/10 bg-white px-4 py-3 text-sm font-black uppercase tracking-wide text-zinc-950 transition hover:bg-zinc-200"
           >
             Nuevo egreso
           </button>
@@ -86,7 +86,6 @@ export default function CashFlowExpensesPanel({ initialData }: { initialData: Ca
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className="text-sm font-black text-white">{summary.category}</p>
-                  <p className="mt-1 text-[11px] font-bold uppercase tracking-wide text-white/35">{summary.count} movimientos</p>
                 </div>
                 <p className="text-sm font-black text-rose-300">{money(summary.total)}</p>
               </div>
