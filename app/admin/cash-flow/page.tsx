@@ -1,10 +1,17 @@
-import { getCashFlowViewerData, type CashFlowDashboardMonth } from '@/lib/cash-flow-sheets'
+import CashFlowClientsPanel from '@/components/admin/cash-flow/CashFlowClientsPanel'
+import { getCashFlowClientsData, getCashFlowViewerData, type CashFlowDashboardMonth } from '@/lib/cash-flow-sheets'
 
 export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Cash Flow — Drama Admin' }
 
-export default async function AdminCashFlowPage() {
+export default async function AdminCashFlowPage({
+  searchParams,
+}: {
+  searchParams?: { tab?: string }
+}) {
+  const activeTab = searchParams?.tab === 'clientes' ? 'clientes' : 'resumen'
   const data = await getCashFlowViewerData()
+  const clientsData = activeTab === 'clientes' ? await getCashFlowClientsData() : null
   const latest = data.months.at(-1) ?? null
   const chartMax = Math.max(...data.billingChart.map((item) => item.billing), 1)
   const partnerMonths = data.months.slice(-6)
@@ -27,8 +34,29 @@ export default async function AdminCashFlowPage() {
         <div>
           <h1 className="mt-0.5 text-2xl font-black uppercase tracking-tight text-white md:text-3xl">Cash Flow</h1>
         </div>
+        <nav className="flex rounded-lg border border-white/10 bg-black/25 p-1">
+          <a
+            href="/admin/cash-flow"
+            className={`rounded-md px-3 py-2 text-xs font-black uppercase tracking-wide transition ${
+              activeTab === 'resumen' ? 'bg-white text-zinc-950' : 'text-white/50 hover:text-white'
+            }`}
+          >
+            Resumen
+          </a>
+          <a
+            href="/admin/cash-flow?tab=clientes"
+            className={`rounded-md px-3 py-2 text-xs font-black uppercase tracking-wide transition ${
+              activeTab === 'clientes' ? 'bg-white text-zinc-950' : 'text-white/50 hover:text-white'
+            }`}
+          >
+            Clientes
+          </a>
+        </nav>
       </header>
 
+      {activeTab === 'clientes' && clientsData ? (
+        <CashFlowClientsPanel initialData={clientsData} />
+      ) : (
       <div className="grid gap-4 md:h-[calc(100vh-6.5rem)] md:grid-rows-[auto_minmax(0,1fr)]">
         <section className="overflow-hidden rounded-xl border border-white/10 bg-zinc-900/80">
           <div className="h-1 gradient-bg" />
@@ -145,6 +173,7 @@ export default async function AdminCashFlowPage() {
           </section>
         </div>
       </div>
+      )}
     </div>
   )
 }

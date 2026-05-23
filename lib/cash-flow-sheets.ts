@@ -45,6 +45,42 @@ export type CashFlowPartnerBilling = {
   guido: number
 }
 
+export type CashFlowClientMovement = {
+  row: number
+  date: string
+  client: string
+  work: string
+  pendingAmount: number
+  guidoAmount: number
+  matiAmount: number
+  billedBy: CashFlowBilledBy | ''
+  category: string
+  month: string
+}
+
+export type CashFlowClientsData = {
+  pending: CashFlowClientMovement[]
+  recentCollections: CashFlowClientMovement[]
+}
+
+export type CashFlowBilledBy = 'Guido' | 'Mati' | 'Nadie'
+export type CashFlowCashbox = 'Guido' | 'Mati'
+
+export type CreateCashFlowClientInput = {
+  date: string
+  client: string
+  work: string
+  amount: number
+  mode: 'pending' | 'collected'
+  cashbox?: CashFlowCashbox
+  billedBy?: CashFlowBilledBy | ''
+}
+
+export type MarkCashFlowClientCollectedInput = {
+  row: number
+  cashbox: CashFlowCashbox
+}
+
 export type CashFlowViewerData = {
   balanceText: string
   pendingCollectionAmount: number
@@ -105,6 +141,24 @@ export async function getCashFlowRange(range: string, readonly = true) {
   return data.values ?? []
 }
 
+async function updateCashFlowRange(range: string, values: unknown[][]) {
+  const spreadsheetId = getCashFlowSpreadsheetId()
+  const accessToken = await getCashFlowAccessToken(false)
+  const data = await sheetsFetch<{ updatedRange?: string }>(
+    `${SHEETS_API_BASE}/${spreadsheetId}/values/${encodeURIComponent(range)}?valueInputOption=USER_ENTERED`,
+    accessToken,
+    {
+      method: 'PUT',
+      body: JSON.stringify({ values }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  )
+
+  return data
+}
+
 export async function getCashFlowReadSnapshot(): Promise<CashFlowReadSnapshot> {
   const [metadata, cashFlowPreview, dashboardPreview] = await Promise.all([
     getCashFlowSpreadsheetMetadata(),
@@ -141,9 +195,81 @@ export async function getCashFlowViewerData(): Promise<CashFlowViewerData> {
   }
 }
 
-async function sheetsFetch<T>(url: string, accessToken: string): Promise<T> {
+export async function getCashFlowClientsData(): Promise<CashFlowClientsData> {
+  const rows = await getCashFlowRange('CashFlow!A2:L1000')
+  const movements = parseClientMovementRows(rows)
+
+  return {
+    pending: movements
+      .filter((movement) => movement.pendingAmount > 0)
+      .sort((a, b) => b.row - a.row),
+    recentCollections: movements
+      .filter((movement) => movement.guidoAmount > 0 || movement.matiAmount > 0)
+      .sort((a, b) => b.row - a.row)
+      .slice(0, 20),
+  }
+}
+
+export async function createCashFlowClientMovement(input: CreateCashFlowClientInput) {
+  const row = await getFirstEmptyCashFlowRow()
+  const billedBy = input.billedBy || ''
+  const valuesAtoG = [[
+    toSheetDate(input.date),
+    input.client.trim(),
+    input.work.trim(),
+    input.mode === 'pending' ? input.amount : '',
+    input.mode === 'collected' && input.cashbox === 'Guido' ? input.amount : '',
+    input.mode === 'collected' && input.cashbox === 'Mati' ? input.amount : '',
+    billedBy,
+  ]]
+
+  await Promise.all([
+    updateCashFlowRange(`CashFlow!A${row}:G${row}`, valuesAtoG),
+    updateCashFlowRange(`CashFlow!I${row}:I${row}`, [['Cliente']]),
+  ])
+
+  return { row }
+}
+
+export async function markCashFlowClientCollected(input: MarkCashFlowClientCollectedInput) {
+  const [row] = await getCashFlowRange(`CashFlow!A${input.row}:L${input.row}`)
+  const movement = parseClientMovementRow(row ?? [], input.row)
+
+  if (!movement || movement.category !== 'Cliente' || movement.pendingAmount <= 0) {
+    throw new Error('Ese cobro pendiente ya no está disponible.')
+  }
+
+  const values = [[
+    '',
+    input.cashbox === 'Guido' ? movement.pendingAmount : '',
+    input.cashbox === 'Mati' ? movement.pendingAmount : '',
+  ]]
+
+  await updateCashFlowRange(`CashFlow!D${input.row}:F${input.row}`, values)
+
+  return { row: input.row }
+}
+
+async function getFirstEmptyCashFlowRow() {
+  const rows = await getCashFlowRange('CashFlow!A3:L1000')
+  const index = rows.findIndex((row) => !hasEditableCashFlowValues(row))
+
+  if (index === -1) {
+    throw new Error('No quedan filas preparadas en CashFlow.')
+  }
+
+  return index + 3
+}
+
+async function sheetsFetch<T>(
+  url: string,
+  accessToken: string,
+  init: RequestInit = {}
+): Promise<T> {
   const response = await fetch(url, {
+    ...init,
     headers: {
+      ...init.headers,
       Authorization: `Bearer ${accessToken}`,
     },
   })
@@ -155,6 +281,38 @@ async function sheetsFetch<T>(url: string, accessToken: string): Promise<T> {
   }
 
   return data as T
+}
+
+function parseClientMovementRows(rows: string[][]) {
+  return rows
+    .slice(1)
+    .map((row, index) => parseClientMovementRow(row, index + 3))
+    .filter((movement): movement is CashFlowClientMovement => Boolean(movement))
+}
+
+function parseClientMovementRow(row: string[], rowNumber: number): CashFlowClientMovement | null {
+  const category = row[8] ?? ''
+
+  if (category !== 'Cliente') return null
+
+  return {
+    row: rowNumber,
+    date: row[0] ?? '',
+    client: row[1] ?? '',
+    work: row[2] ?? '',
+    pendingAmount: parseMoney(row[3]),
+    guidoAmount: parseMoney(row[4]),
+    matiAmount: parseMoney(row[5]),
+    billedBy: isBilledBy(row[6]) ? row[6] : '',
+    category,
+    month: row[11] ?? '',
+  }
+}
+
+function hasEditableCashFlowValues(row: string[]) {
+  const editableIndexes = [0, 1, 2, 3, 4, 5, 6, 8]
+
+  return editableIndexes.some((index) => String(row[index] ?? '').trim())
 }
 
 function parseDashboardRows(rows: string[][]): CashFlowDashboardMonth[] {
@@ -212,6 +370,18 @@ function parseMoneyFromText(value: unknown) {
   const match = value.match(/-?\$?\s*[\d.,]+/)
 
   return parseMoney(match?.[0])
+}
+
+function isBilledBy(value: unknown): value is CashFlowBilledBy {
+  return value === 'Guido' || value === 'Mati' || value === 'Nadie'
+}
+
+function toSheetDate(value: string) {
+  const [year, month, day] = value.split('-').map(Number)
+
+  if (!year || !month || !day) return value
+
+  return `${day}/${month}/${String(year).slice(-2)}`
 }
 
 function parsePercent(value: unknown) {
