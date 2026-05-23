@@ -1,3 +1,4 @@
+import BalanceTransferButton from '@/components/admin/cash-flow/BalanceTransferButton'
 import CashFlowClientsPanel from '@/components/admin/cash-flow/CashFlowClientsPanel'
 import CashFlowExpensesPanel from '@/components/admin/cash-flow/CashFlowExpensesPanel'
 import { getCashFlowClientsData, getCashFlowExpensesData, getCashFlowViewerData, type CashFlowDashboardMonth } from '@/lib/cash-flow-sheets'
@@ -76,6 +77,7 @@ export default async function AdminCashFlowPage({
             <div className="rounded-lg border border-white/10 bg-black/25 p-4">
               <p className="text-[10px] font-black uppercase tracking-[0.22em] text-white/30">Balance entre cajas</p>
               <p className="mt-2 text-2xl font-black leading-tight text-white md:text-3xl">{data.balanceText}</p>
+              {data.balanceTransfer ? <BalanceTransferButton /> : null}
             </div>
 
             <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">

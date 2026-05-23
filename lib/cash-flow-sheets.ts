@@ -93,6 +93,12 @@ export type CashFlowExpensesData = {
   recentExpenses: CashFlowExpenseMovement[]
 }
 
+export type CashFlowBalanceTransfer = {
+  debtor: CashFlowCashbox
+  creditor: CashFlowCashbox
+  amount: number
+}
+
 export type CreateCashFlowExpenseInput = {
   date: string
   category: CashFlowExpenseCategory
@@ -124,6 +130,7 @@ export type MarkCashFlowClientBilledInput = {
 
 export type CashFlowViewerData = {
   balanceText: string
+  balanceTransfer: CashFlowBalanceTransfer | null
   pendingCollectionAmount: number
   hasPendingCollection: boolean
   months: CashFlowDashboardMonth[]
@@ -220,10 +227,12 @@ export async function getCashFlowViewerData(): Promise<CashFlowViewerData> {
     getCashFlowRange('Gráfico!A1:I18'),
   ])
   const months = parseDashboardRows(dashboardRows)
+  const balanceText = dashboardRows[0]?.[0] || 'Sin balance disponible'
   const pendingCollectionAmount = parseMoneyFromText(dashboardRows[0]?.[4])
 
   return {
-    balanceText: dashboardRows[0]?.[0] || 'Sin balance disponible',
+    balanceText,
+    balanceTransfer: parseBalanceTransfer(balanceText),
     pendingCollectionAmount,
     hasPendingCollection: pendingCollectionAmount > 0,
     months,
@@ -360,6 +369,27 @@ export async function createCashFlowExpense(input: CreateCashFlowExpenseInput) {
   return { row }
 }
 
+export async function createCashFlowBalanceTransfer(input: CashFlowBalanceTransfer) {
+  const row = await getFirstEmptyCashFlowRow()
+  const amount = Math.abs(input.amount)
+  const valuesAtoG = [[
+    toSheetDate(getArgentinaDateInputValue()),
+    'Pase',
+    '',
+    '',
+    input.debtor === 'Guido' ? -amount : amount,
+    input.debtor === 'Mati' ? -amount : amount,
+    '',
+  ]]
+
+  await Promise.all([
+    updateCashFlowRange(`CashFlow!A${row}:G${row}`, valuesAtoG),
+    updateCashFlowRange(`CashFlow!I${row}:I${row}`, [['Pase']]),
+  ])
+
+  return { row }
+}
+
 async function getFirstEmptyCashFlowRow() {
   const rows = await getCashFlowRange('CashFlow!A3:L1000')
   const index = rows.findIndex((row) => !hasEditableCashFlowValues(row))
@@ -489,11 +519,18 @@ function parseMoney(value: unknown) {
   if (typeof value === 'number') return value
   if (typeof value !== 'string') return 0
 
+  const compact = value
+    .replace(/\$/g, '')
+    .replace(/\s/g, '')
+    .replace(/^-$/, '')
+  const hasDot = compact.includes('.')
+  const hasComma = compact.includes(',')
+  const commaThousands = !hasDot && /^-?\d{1,3}(,\d{3})+$/.test(compact)
   const normalized = value
     .replace(/\$/g, '')
     .replace(/\s/g, '')
-    .replace(/\./g, '')
-    .replace(',', '.')
+    .replace(/\./g, hasComma ? '' : '')
+    .replace(/,/g, commaThousands ? '' : '.')
     .replace(/^-$/, '')
 
   return Number(normalized || 0)
@@ -506,6 +543,27 @@ function parseMoneyFromText(value: unknown) {
   const match = value.match(/-?\$?\s*[\d.,]+/)
 
   return parseMoney(match?.[0])
+}
+
+function parseBalanceTransfer(value: string): CashFlowBalanceTransfer | null {
+  const match = value.match(/^(Guido|Mati) le debe \$?\s*([\d.,]+) a (Guido|Mati)$/i)
+
+  if (!match) return null
+
+  const debtor = normalizeCashbox(match[1])
+  const creditor = normalizeCashbox(match[3])
+  const amount = parseMoney(match[2])
+
+  if (!debtor || !creditor || debtor === creditor || amount <= 0) return null
+
+  return { debtor, creditor, amount }
+}
+
+function normalizeCashbox(value: string): CashFlowCashbox | null {
+  if (value.toLowerCase() === 'guido') return 'Guido'
+  if (value.toLowerCase() === 'mati') return 'Mati'
+
+  return null
 }
 
 function isBilledBy(value: unknown): value is CashFlowBilledBy {
@@ -536,6 +594,20 @@ function getArgentinaMonthKey() {
   const month = parts.find((part) => part.type === 'month')?.value
 
   return year && month ? `${year}-${Number(month)}` : ''
+}
+
+function getArgentinaDateInputValue() {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Argentina/Buenos_Aires',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(new Date())
+  const year = parts.find((part) => part.type === 'year')?.value
+  const month = parts.find((part) => part.type === 'month')?.value
+  const day = parts.find((part) => part.type === 'day')?.value
+
+  return year && month && day ? `${year}-${month}-${day}` : new Date().toISOString().slice(0, 10)
 }
 
 function parsePercent(value: unknown) {
