@@ -23,7 +23,6 @@ export const servicesCatalog: ServiceCategory[] = [
       'Diseño de KV principal y adaptaciones',
       'Diseño de plantillas para redes sociales',
       'Retoque de fotografías',
-      'Composición con AI para fotos de producto',
     ].map((label, index) => ({ id: `grafica-${index}`, label })),
   },
   {
@@ -34,8 +33,7 @@ export const servicesCatalog: ServiceCategory[] = [
       'Animación de logo',
       'Diseño y animación de pantallas',
       'Coordinación de animaciones complejas',
-      'Community manager always on',
-      'Apoyo en edición de videos',
+      'Publicación de programa digital en www.programademano.com.ar',
     ].map((label, index) => ({ id: `contenido-${index}`, label })),
   },
 ]
