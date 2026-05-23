@@ -82,6 +82,11 @@ export type MarkCashFlowClientCollectedInput = {
   cashbox: CashFlowCashbox
 }
 
+export type MarkCashFlowClientBilledInput = {
+  row: number
+  billedBy: CashFlowBilledBy
+}
+
 export type CashFlowViewerData = {
   balanceText: string
   pendingCollectionAmount: number
@@ -249,6 +254,19 @@ export async function markCashFlowClientCollected(input: MarkCashFlowClientColle
   ]]
 
   await updateCashFlowRange(`CashFlow!D${input.row}:F${input.row}`, values)
+
+  return { row: input.row }
+}
+
+export async function markCashFlowClientBilled(input: MarkCashFlowClientBilledInput) {
+  const [row] = await getCashFlowRange(`CashFlow!A${input.row}:L${input.row}`)
+  const movement = parseClientMovementRow(row ?? [], input.row)
+
+  if (!movement || movement.category !== 'Cliente' || movement.pendingAmount <= 0 || movement.billedBy) {
+    throw new Error('Ese pendiente de facturación ya no está disponible.')
+  }
+
+  await updateCashFlowRange(`CashFlow!G${input.row}:G${input.row}`, [[input.billedBy]])
 
   return { row: input.row }
 }

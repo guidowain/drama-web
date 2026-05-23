@@ -11,7 +11,9 @@ type Mode = 'pending' | 'collected'
 export default function CashFlowClientsPanel({ initialData }: { initialData: CashFlowClientsData }) {
   const [data, setData] = useState(initialData)
   const [selectedPending, setSelectedPending] = useState<CashFlowClientMovement | null>(null)
+  const [selectedBilling, setSelectedBilling] = useState<CashFlowClientMovement | null>(null)
   const [cashbox, setCashbox] = useState<Cashbox>('Guido')
+  const [billedBy, setBilledBy] = useState<BilledBy>('Nadie')
   const [isCreateOpen, setIsCreateOpen] = useState(false)
   const [error, setError] = useState('')
   const [isPending, startTransition] = useTransition()
@@ -49,6 +51,28 @@ export default function CashFlowClientsPanel({ initialData }: { initialData: Cas
       }
 
       setSelectedPending(null)
+      await refresh()
+    })
+  }
+
+  function markBilled() {
+    if (!selectedBilling || !billedBy) return
+
+    setError('')
+    startTransition(async () => {
+      const response = await fetch(`/api/admin/cash-flow/clientes/${selectedBilling.row}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ billedBy }),
+      })
+      const result = await response.json().catch(() => ({}))
+
+      if (!response.ok) {
+        setError(result.error || 'No se pudo marcar como facturado.')
+        return
+      }
+
+      setSelectedBilling(null)
       await refresh()
     })
   }
@@ -106,6 +130,11 @@ export default function CashFlowClientsPanel({ initialData }: { initialData: Cas
                   movement={movement}
                   amount={movement.pendingAmount}
                   tone="gray"
+                  actionLabel="Facturado"
+                  onAction={() => {
+                    setBilledBy('Nadie')
+                    setSelectedBilling(movement)
+                  }}
                 />
               ))}
             </div>
@@ -191,6 +220,31 @@ export default function CashFlowClientsPanel({ initialData }: { initialData: Cas
                 Cancelar
               </button>
               <button type="button" onClick={markCollected} disabled={isPending} className="rounded-lg bg-white px-3 py-2 text-sm font-black text-zinc-950 transition hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-50">
+                {isPending ? 'Guardando...' : 'Confirmar'}
+              </button>
+            </div>
+          </div>
+        </Dialog>
+      ) : null}
+
+      {selectedBilling ? (
+        <Dialog title="Marcar facturado" onClose={() => setSelectedBilling(null)}>
+          <div className="space-y-4">
+            <div className="rounded-lg border border-white/10 bg-black/25 p-3">
+              <p className="text-sm font-black text-white">{selectedBilling.client}</p>
+              <p className="mt-1 text-sm text-white/50">{selectedBilling.work || 'Sin obra'}</p>
+              <p className="mt-3 text-2xl font-black text-zinc-200">{money(selectedBilling.pendingAmount)}</p>
+            </div>
+
+            <SegmentedBilledBy value={billedBy} onChange={setBilledBy} />
+
+            {error ? <p className="text-sm font-semibold text-rose-300">{error}</p> : null}
+
+            <div className="flex justify-end gap-2">
+              <button type="button" onClick={() => setSelectedBilling(null)} className="rounded-lg border border-white/10 px-3 py-2 text-sm font-black text-white/60 transition hover:text-white">
+                Cancelar
+              </button>
+              <button type="button" onClick={markBilled} disabled={isPending} className="rounded-lg bg-white px-3 py-2 text-sm font-black text-zinc-950 transition hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-50">
                 {isPending ? 'Guardando...' : 'Confirmar'}
               </button>
             </div>
@@ -352,6 +406,27 @@ function SegmentedCashbox({ value, onChange }: { value: Cashbox; onChange: (valu
           }`}
         >
           Caja {option}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function SegmentedBilledBy({ value, onChange }: { value: BilledBy; onChange: (value: BilledBy) => void }) {
+  return (
+    <div className="grid grid-cols-3 gap-2">
+      {(['Guido', 'Mati', 'Nadie'] as const).map((option) => (
+        <button
+          key={option}
+          type="button"
+          onClick={() => onChange(option)}
+          className={`rounded-lg border px-3 py-2 text-sm font-black transition ${
+            value === option
+              ? 'border-amber-300/40 bg-amber-300/10 text-amber-200'
+              : 'border-white/10 bg-black/25 text-white/55 hover:text-white'
+          }`}
+        >
+          {option}
         </button>
       ))}
     </div>
