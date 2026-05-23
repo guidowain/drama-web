@@ -1,32 +1,13 @@
-import { getProjects } from '@/lib/api'
 import { getAnalyticsSummary } from '@/lib/google-analytics'
 
 export default async function AdminDashboard() {
-  const projects = await getProjects()
   const analytics = await getAnalyticsSummary()
-  const published = projects.filter((p) => p.published).length
-  const drafts = projects.length - published
 
   return (
     <div className="p-8 md:p-12">
       <div className="mb-10">
         <h1 className="text-white font-black text-4xl uppercase tracking-tight mb-1">Dashboard</h1>
         <p className="text-white/30 text-sm">Bienvenido al panel de administración de Drama.</p>
-      </div>
-
-      <div className="flex flex-wrap gap-5 mb-10">
-        <div className="bg-zinc-900 border border-white/5 rounded-2xl px-6 py-4 min-w-[120px]">
-          <p className="text-white font-black text-3xl">{projects.length}</p>
-          <p className="text-white/30 text-xs uppercase tracking-widest mt-0.5">Proyectos</p>
-        </div>
-        <div className="bg-zinc-900 border border-white/5 rounded-2xl px-6 py-4 min-w-[120px]">
-          <p className="text-green-400 font-black text-3xl">{published}</p>
-          <p className="text-white/30 text-xs uppercase tracking-widest mt-0.5">Publicados</p>
-        </div>
-        <div className="bg-zinc-900 border border-white/5 rounded-2xl px-6 py-4 min-w-[120px]">
-          <p className="text-white/50 font-black text-3xl">{drafts}</p>
-          <p className="text-white/30 text-xs uppercase tracking-widest mt-0.5">Borradores</p>
-        </div>
       </div>
 
       <section className="max-w-6xl overflow-hidden rounded-2xl border border-white/5 bg-zinc-900">
