@@ -188,6 +188,7 @@ function CreateExpenseDialog({
         className="space-y-4"
       >
         <input type="hidden" name="concept" value={finalConcept} />
+        <input type="hidden" name="category" value={category} />
 
         <div className="grid gap-3 sm:grid-cols-2">
           <Field label="Fecha">
@@ -199,16 +200,17 @@ function CreateExpenseDialog({
         </div>
 
         <Field label="Categoría">
-          <select
-            name="category"
-            value={category}
-            onChange={(event) => updateCategory(event.target.value as CashFlowExpenseCategory)}
-            className="admin-input"
-          >
+          <div className="grid grid-cols-2 gap-2">
             {expenseCategories.map((option) => (
-              <option key={option} value={option}>{option}</option>
+              <ChoiceButton
+                key={option}
+                active={category === option}
+                onClick={() => updateCategory(option)}
+              >
+                {option}
+              </ChoiceButton>
             ))}
-          </select>
+          </div>
         </Field>
 
         {category === 'Proveedores' ? (
@@ -217,11 +219,17 @@ function CreateExpenseDialog({
           </Field>
         ) : (
           <Field label="Concepto">
-            <select value={selectedConcept} onChange={(event) => setSelectedConcept(event.target.value)} className="admin-input">
+            <div className="grid grid-cols-2 gap-2">
               {concepts.map((option) => (
-                <option key={option.label} value={option.label}>{option.label}</option>
+                <ChoiceButton
+                  key={option.label}
+                  active={selectedConcept === option.label}
+                  onClick={() => setSelectedConcept(option.label)}
+                >
+                  {option.label}
+                </ChoiceButton>
               ))}
-            </select>
+            </div>
           </Field>
         )}
 
@@ -236,10 +244,7 @@ function CreateExpenseDialog({
         </Field>
 
         <Field label="Pagó">
-          <select name="cashbox" className="admin-input">
-            <option value="Guido">Guido</option>
-            <option value="Mati">Mati</option>
-          </select>
+          <CashboxCards />
         </Field>
 
         {error ? <p className="text-sm font-semibold text-rose-300">{error}</p> : null}
@@ -254,6 +259,39 @@ function CreateExpenseDialog({
         </div>
       </form>
     </Dialog>
+  )
+}
+
+function ChoiceButton({ active, onClick, children }: { active: boolean; onClick: () => void; children: ReactNode }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`min-h-11 rounded-lg border px-3 py-2 text-sm font-black transition ${
+        active
+          ? 'border-white/30 bg-white text-zinc-950'
+          : 'border-white/10 bg-black/25 text-white/60 hover:text-white'
+      }`}
+    >
+      {children}
+    </button>
+  )
+}
+
+function CashboxCards() {
+  const [cashbox, setCashbox] = useState<CashFlowCashbox>('Guido')
+
+  return (
+    <>
+      <input type="hidden" name="cashbox" value={cashbox} />
+      <div className="grid grid-cols-2 gap-2">
+        {(['Guido', 'Mati'] as const).map((option) => (
+          <ChoiceButton key={option} active={cashbox === option} onClick={() => setCashbox(option)}>
+            {option}
+          </ChoiceButton>
+        ))}
+      </div>
+    </>
   )
 }
 
