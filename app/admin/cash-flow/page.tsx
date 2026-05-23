@@ -1,5 +1,6 @@
 import CashFlowClientsPanel from '@/components/admin/cash-flow/CashFlowClientsPanel'
-import { getCashFlowClientsData, getCashFlowViewerData, type CashFlowDashboardMonth } from '@/lib/cash-flow-sheets'
+import CashFlowExpensesPanel from '@/components/admin/cash-flow/CashFlowExpensesPanel'
+import { getCashFlowClientsData, getCashFlowExpensesData, getCashFlowViewerData, type CashFlowDashboardMonth } from '@/lib/cash-flow-sheets'
 
 export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Cash Flow — Drama Admin' }
@@ -9,9 +10,10 @@ export default async function AdminCashFlowPage({
 }: {
   searchParams?: { tab?: string }
 }) {
-  const activeTab = searchParams?.tab === 'clientes' ? 'clientes' : 'resumen'
+  const activeTab = normalizeTab(searchParams?.tab)
   const data = await getCashFlowViewerData()
-  const clientsData = activeTab === 'clientes' ? await getCashFlowClientsData() : null
+  const clientsData = activeTab === 'ingresos' ? await getCashFlowClientsData() : null
+  const expensesData = activeTab === 'egresos' ? await getCashFlowExpensesData() : null
   const latest = data.months.at(-1) ?? null
   const chartMax = Math.max(...data.billingChart.map((item) => item.billing), 1)
   const partnerMonths = data.months.slice(-6)
@@ -44,18 +46,28 @@ export default async function AdminCashFlowPage({
             Resumen
           </a>
           <a
-            href="/admin/cash-flow?tab=clientes"
+            href="/admin/cash-flow?tab=ingresos"
             className={`rounded-md px-3 py-2 text-xs font-black uppercase tracking-wide transition ${
-              activeTab === 'clientes' ? 'bg-white text-zinc-950' : 'text-white/50 hover:text-white'
+              activeTab === 'ingresos' ? 'bg-white text-zinc-950' : 'text-white/50 hover:text-white'
             }`}
           >
-            Clientes
+            Ingresos
+          </a>
+          <a
+            href="/admin/cash-flow?tab=egresos"
+            className={`rounded-md px-3 py-2 text-xs font-black uppercase tracking-wide transition ${
+              activeTab === 'egresos' ? 'bg-white text-zinc-950' : 'text-white/50 hover:text-white'
+            }`}
+          >
+            Egresos
           </a>
         </nav>
       </header>
 
-      {activeTab === 'clientes' && clientsData ? (
+      {activeTab === 'ingresos' && clientsData ? (
         <CashFlowClientsPanel initialData={clientsData} />
+      ) : activeTab === 'egresos' && expensesData ? (
+        <CashFlowExpensesPanel initialData={expensesData} />
       ) : (
       <div className="grid gap-4 md:h-[calc(100vh-6.5rem)] md:grid-rows-[auto_minmax(0,1fr)]">
         <section className="overflow-hidden rounded-xl border border-white/10 bg-zinc-900/80">
@@ -176,6 +188,13 @@ export default async function AdminCashFlowPage({
       )}
     </div>
   )
+}
+
+function normalizeTab(value?: string) {
+  if (value === 'clientes' || value === 'ingresos') return 'ingresos'
+  if (value === 'egresos') return 'egresos'
+
+  return 'resumen'
 }
 
 function MetricCard({

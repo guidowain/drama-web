@@ -66,6 +66,40 @@ export type CashFlowClientsData = {
 
 export type CashFlowBilledBy = 'Guido' | 'Mati' | 'Nadie'
 export type CashFlowCashbox = 'Guido' | 'Mati'
+export type CashFlowExpenseCategory = 'Sueldos' | 'Servicios' | 'Marketing' | 'Proveedores'
+
+export type CashFlowExpenseMovement = {
+  row: number
+  date: string
+  concept: string
+  detail: string
+  guidoAmount: number
+  matiAmount: number
+  amount: number
+  category: CashFlowExpenseCategory
+  month: string
+}
+
+export type CashFlowExpenseSummary = {
+  category: CashFlowExpenseCategory
+  count: number
+  total: number
+}
+
+export type CashFlowExpensesData = {
+  total: number
+  summaries: CashFlowExpenseSummary[]
+  recentExpenses: CashFlowExpenseMovement[]
+}
+
+export type CreateCashFlowExpenseInput = {
+  date: string
+  category: CashFlowExpenseCategory
+  concept: string
+  detail: string
+  amount: number
+  cashbox: CashFlowCashbox
+}
 
 export type CreateCashFlowClientInput = {
   date: string
@@ -209,7 +243,9 @@ export async function getCashFlowClientsData(): Promise<CashFlowClientsData> {
     .sort((a, b) => b.row - a.row)
 
   return {
-    pendingBilling: pending.filter((movement) => !movement.billedBy),
+    pendingBilling: pending
+      .filter((movement) => !movement.billedBy)
+      .sort((a, b) => a.row - b.row),
     pendingCollection: pending.filter((movement) => movement.billedBy),
     recentCollections: movements
       .filter((movement) => movement.guidoAmount > 0 || movement.matiAmount > 0)
@@ -271,6 +307,55 @@ export async function markCashFlowClientBilled(input: MarkCashFlowClientBilledIn
   return { row: input.row }
 }
 
+export async function getCashFlowExpensesData(): Promise<CashFlowExpensesData> {
+  const rows = await getCashFlowRange('CashFlow!A2:L1000')
+  const expenses = parseExpenseMovementRows(rows)
+  const summaryMap = new Map<CashFlowExpenseCategory, CashFlowExpenseSummary>()
+
+  for (const expense of expenses) {
+    const current = summaryMap.get(expense.category) ?? {
+      category: expense.category,
+      count: 0,
+      total: 0,
+    }
+
+    summaryMap.set(expense.category, {
+      ...current,
+      count: current.count + 1,
+      total: current.total + expense.amount,
+    })
+  }
+
+  return {
+    total: expenses.reduce((total, expense) => total + expense.amount, 0),
+    summaries: expenseCategories.map((category) => summaryMap.get(category) ?? { category, count: 0, total: 0 }),
+    recentExpenses: expenses
+      .sort((a, b) => b.row - a.row)
+      .slice(0, 40),
+  }
+}
+
+export async function createCashFlowExpense(input: CreateCashFlowExpenseInput) {
+  const row = await getFirstEmptyCashFlowRow()
+  const signedAmount = -Math.abs(input.amount)
+  const valuesAtoG = [[
+    toSheetDate(input.date),
+    input.concept.trim(),
+    input.detail.trim(),
+    '',
+    input.cashbox === 'Guido' ? signedAmount : '',
+    input.cashbox === 'Mati' ? signedAmount : '',
+    '',
+  ]]
+
+  await Promise.all([
+    updateCashFlowRange(`CashFlow!A${row}:G${row}`, valuesAtoG),
+    updateCashFlowRange(`CashFlow!I${row}:I${row}`, [[input.category]]),
+  ])
+
+  return { row }
+}
+
 async function getFirstEmptyCashFlowRow() {
   const rows = await getCashFlowRange('CashFlow!A3:L1000')
   const index = rows.findIndex((row) => !hasEditableCashFlowValues(row))
@@ -325,6 +410,32 @@ function parseClientMovementRow(row: string[], rowNumber: number): CashFlowClien
     guidoAmount: parseMoney(row[4]),
     matiAmount: parseMoney(row[5]),
     billedBy: isBilledBy(row[6]) ? row[6] : '',
+    category,
+    month: row[11] ?? '',
+  }
+}
+
+function parseExpenseMovementRows(rows: string[][]) {
+  return rows
+    .slice(1)
+    .map((row, index) => parseExpenseMovementRow(row, index + 3))
+    .filter((movement): movement is CashFlowExpenseMovement => Boolean(movement))
+}
+
+function parseExpenseMovementRow(row: string[], rowNumber: number): CashFlowExpenseMovement | null {
+  const type = row[7] ?? ''
+  const category = row[8] ?? ''
+
+  if (type !== 'Egreso' || !isExpenseCategory(category)) return null
+
+  return {
+    row: rowNumber,
+    date: row[0] ?? '',
+    concept: row[1] ?? '',
+    detail: row[2] ?? '',
+    guidoAmount: parseMoney(row[4]),
+    matiAmount: parseMoney(row[5]),
+    amount: parseMoney(row[10]),
     category,
     month: row[11] ?? '',
   }
@@ -395,6 +506,12 @@ function parseMoneyFromText(value: unknown) {
 
 function isBilledBy(value: unknown): value is CashFlowBilledBy {
   return value === 'Guido' || value === 'Mati' || value === 'Nadie'
+}
+
+const expenseCategories: CashFlowExpenseCategory[] = ['Sueldos', 'Servicios', 'Marketing', 'Proveedores']
+
+function isExpenseCategory(value: unknown): value is CashFlowExpenseCategory {
+  return expenseCategories.includes(value as CashFlowExpenseCategory)
 }
 
 function toSheetDate(value: string) {
