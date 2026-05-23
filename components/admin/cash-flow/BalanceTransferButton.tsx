@@ -26,12 +26,12 @@ export default function BalanceTransferButton() {
   }
 
   return (
-    <div className="mt-3">
+    <div className="shrink-0">
       <button
         type="button"
         onClick={createTransfer}
         disabled={isPending}
-        className="rounded-md bg-white px-3 py-2 text-xs font-black uppercase tracking-wide text-zinc-950 transition hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-50"
+        className="rounded-md bg-white px-2.5 py-1.5 text-[10px] font-black uppercase tracking-wide text-zinc-950 transition hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {isPending ? 'Creando...' : 'Pase'}
       </button>

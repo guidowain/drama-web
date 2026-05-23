@@ -75,9 +75,11 @@ export default async function AdminCashFlowPage({
           <div className="h-1 gradient-bg" />
           <div className="grid gap-3 p-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,2fr)]">
             <div className="rounded-lg border border-white/10 bg-black/25 p-4">
-              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-white/30">Balance entre cajas</p>
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-white/30">Balance entre cajas</p>
+                {data.balanceTransfer ? <BalanceTransferButton /> : null}
+              </div>
               <p className="mt-2 text-2xl font-black leading-tight text-white md:text-3xl">{data.balanceText}</p>
-              {data.balanceTransfer ? <BalanceTransferButton /> : null}
             </div>
 
             <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
