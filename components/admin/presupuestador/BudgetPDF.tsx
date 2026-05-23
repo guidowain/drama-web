@@ -11,11 +11,11 @@ import { budgetBrand } from '@/lib/presupuestador/brand'
 import { delayClauseText, renderAdjustmentClause, renderPaymentClause, renderValidity } from '@/lib/presupuestador/clauses'
 import type { BudgetDraft, FixedInvestment, MonthlyInvestment } from '@/lib/presupuestador/types'
 
-const HEADER_WIDTH = 511
-const HEADER_HEIGHT = 95
+const HEADER_WIDTH = 547
+const HEADER_HEIGHT = 118
 const TOTAL_WIDTH = 475
 const TOTAL_GRADIENT_HEIGHT = 5
-const LABEL_HEIGHT = 18
+const LABEL_HEIGHT = 20
 const HEADER_GRADIENT_SRC = '/brand/drama-gradient-header.png'
 const STRIP_GRADIENT_SRC = '/brand/drama-gradient-strip.png'
 const PILL_GRADIENT_SRC = '/brand/drama-gradient-pill.png'
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     color: budgetBrand.colors.ink,
     fontFamily: 'Archivo',
     fontWeight: 400,
-    fontSize: 10,
+    fontSize: 11,
     lineHeight: 1.45,
   },
   shell: {
@@ -74,11 +74,11 @@ const styles = StyleSheet.create({
     width: HEADER_WIDTH,
     height: HEADER_HEIGHT,
   },
-  logo: { width: 104, height: 'auto' },
+  logo: { width: 126, height: 'auto' },
   meta: {
     color: '#76716d',
     textAlign: 'right',
-    fontSize: 8,
+    fontSize: 9,
     letterSpacing: 0.4,
   },
   titleMetaRow: {
@@ -87,10 +87,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   body: {
-    paddingTop: 20,
-    paddingRight: 36,
+    paddingTop: 30,
+    paddingRight: 45,
     paddingBottom: 40,
-    paddingLeft: 36,
+    paddingLeft: 45,
   },
   eyebrow: {
     color: '#76716d',
@@ -104,15 +104,15 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 1.4,
     fontFamily: 'Enriq',
-    fontSize: 7.5,
+    fontSize: 8.6,
   },
   project: {
     fontFamily: 'Enriq',
-    fontSize: 32,
+    fontSize: 43,
     fontWeight: 900,
     lineHeight: 0.95,
-    marginTop: 7,
-    marginBottom: 17,
+    marginTop: 10,
+    marginBottom: 25,
     textTransform: 'uppercase',
   },
   intro: {
@@ -122,10 +122,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     maxWidth: 440,
   },
-  section: { marginBottom: 14 },
+  section: { marginBottom: 22 },
   sectionTitle: {
     fontFamily: 'Enriq',
-    fontSize: 7.6,
+    fontSize: 8.2,
     letterSpacing: 1.4,
     textTransform: 'uppercase',
     color: '#050505',
@@ -136,10 +136,10 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     height: LABEL_HEIGHT,
     borderRadius: LABEL_HEIGHT / 2,
-    paddingTop: 5,
-    paddingRight: 9,
-    paddingLeft: 9,
-    marginBottom: 8,
+    paddingTop: 5.5,
+    paddingRight: 10,
+    paddingLeft: 10,
+    marginBottom: 11,
     position: 'relative',
     overflow: 'hidden',
   },
@@ -150,20 +150,20 @@ const styles = StyleSheet.create({
     height: LABEL_HEIGHT,
   },
   sectionContent: {
-    marginLeft: 10,
+    marginLeft: 11,
   },
   unlabelledSection: {
-    marginTop: 14,
+    marginTop: 26,
     marginBottom: 14,
-    marginLeft: 10,
+    marginLeft: 11,
   },
-  paragraph: { fontSize: 10, fontWeight: 400, color: '#2a2927' },
-  bullet: { flexDirection: 'row', gap: 7, marginBottom: 4.5, alignItems: 'flex-start' },
-  bulletDot: { width: 6.5, height: 6.5, marginTop: 3.6 },
-  bulletText: { flex: 1, fontSize: 9.8, fontWeight: 400, color: '#23211f' },
+  paragraph: { fontSize: 11.2, fontWeight: 400, color: '#2a2927' },
+  bullet: { flexDirection: 'row', gap: 9, marginBottom: 9, alignItems: 'flex-start' },
+  bulletDot: { width: 6.8, height: 6.8, marginTop: 4.4 },
+  bulletText: { flex: 1, fontSize: 11.2, fontWeight: 400, color: '#23211f' },
   servicesColumns: {
     flexDirection: 'row',
-    gap: 18,
+    gap: 44,
   },
   servicesColumn: {
     flex: 1,
@@ -189,8 +189,8 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   totalBox: {
-    marginTop: 17,
-    marginBottom: 17,
+    marginTop: 23,
+    marginBottom: 24,
     backgroundColor: '#050505',
     color: '#ffffff',
     borderRadius: 12,
@@ -201,40 +201,40 @@ const styles = StyleSheet.create({
     height: TOTAL_GRADIENT_HEIGHT,
   },
   totalContent: {
-    paddingTop: 12,
-    paddingRight: 16,
-    paddingBottom: 12,
-    paddingLeft: 16,
+    paddingTop: 19,
+    paddingRight: 20,
+    paddingBottom: 19,
+    paddingLeft: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   totalLabel: {
     fontFamily: 'Enriq',
-    fontSize: 8,
+    fontSize: 9.2,
     textTransform: 'uppercase',
     letterSpacing: 1.4,
     lineHeight: 1,
   },
   totalAmount: {
     fontFamily: 'Enriq',
-    fontSize: 24,
+    fontSize: 31,
     fontWeight: 900,
     lineHeight: 1,
   },
-  conditions: { color: budgetBrand.colors.muted, fontSize: 9.3, fontWeight: 400, lineHeight: 1.35 },
+  conditions: { color: budgetBrand.colors.muted, fontSize: 11.2, fontWeight: 400, lineHeight: 1.45, marginBottom: 8 },
   footer: {
     position: 'absolute',
-    left: 60,
-    right: 60,
+    left: 45,
+    right: 45,
     bottom: 34,
     borderTop: '1px solid #ded8cf',
-    paddingTop: 7,
+    paddingTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     color: '#050505',
     fontFamily: 'Enriq',
-    fontSize: 7.5,
+    fontSize: 8.6,
     letterSpacing: 1.1,
     textTransform: 'uppercase',
   },
