@@ -32,12 +32,12 @@ export default async function AdminCashFlowPage({
   const recentMonths = data.months.slice(-3).reverse()
 
   return (
-    <div className="min-h-screen bg-zinc-950 p-3 text-white sm:p-4 md:h-screen md:overflow-hidden md:p-5 xl:p-6">
+    <div className="min-h-screen overflow-x-hidden bg-zinc-950 p-3 text-white sm:p-4 md:h-screen md:p-5 xl:overflow-hidden xl:p-6">
       <header className="mb-4 flex flex-col items-start gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
         <div>
           <h1 className="mt-0.5 text-2xl font-black uppercase tracking-tight text-white md:text-3xl">Cash Flow</h1>
         </div>
-        <nav className="flex w-full overflow-x-auto rounded-lg border border-white/10 bg-black/25 p-1 sm:w-auto">
+        <nav className="flex w-full rounded-lg border border-white/10 bg-black/25 p-1 sm:w-auto">
           <a
             href="/admin/cash-flow"
             className={`flex-1 rounded-md px-3 py-2 text-center text-xs font-black uppercase tracking-wide transition sm:flex-none ${
@@ -70,8 +70,8 @@ export default async function AdminCashFlowPage({
       ) : activeTab === 'egresos' && expensesData ? (
         <CashFlowExpensesPanel initialData={expensesData} />
       ) : (
-      <div className="grid gap-4 md:h-[calc(100vh-6.5rem)] md:grid-rows-[auto_minmax(0,1fr)]">
-        <section className="overflow-hidden rounded-xl border border-white/10 bg-zinc-900/80">
+      <div className="grid min-w-0 gap-4 xl:h-[calc(100vh-6.5rem)] xl:grid-rows-[auto_minmax(0,1fr)]">
+        <section className="min-w-0 overflow-hidden rounded-xl border border-white/10 bg-zinc-900/80">
           <div className="h-1 gradient-bg" />
           <div className="grid gap-3 p-3 sm:p-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,2fr)]">
             <div className="rounded-lg border border-white/10 bg-black/25 p-4">
@@ -97,14 +97,14 @@ export default async function AdminCashFlowPage({
         </section>
 
         <div className="grid min-h-0 gap-4 xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.75fr)]">
-          <section className="min-h-0 rounded-xl border border-white/10 bg-zinc-900/70 p-4">
+          <section className="min-w-0 rounded-xl border border-white/10 bg-zinc-900/70 p-3 sm:p-4 xl:min-h-0">
             <div className="mb-3">
               <h2 className="text-lg font-black uppercase tracking-tight">Facturación</h2>
             </div>
 
-            <div className="flex h-[220px] items-end gap-1.5 overflow-x-auto rounded-lg border border-white/5 bg-black/25 px-3 pb-3 pt-4 sm:h-[260px] sm:gap-3 sm:px-4">
+            <div className="flex h-[220px] min-w-0 items-end gap-1 rounded-lg border border-white/5 bg-black/25 px-2 pb-3 pt-4 sm:h-[260px] sm:gap-3 sm:px-4">
               {data.billingChart.map((item) => (
-                <div key={item.month} className="flex min-w-8 flex-1 flex-col items-center justify-end gap-2">
+                <div key={item.month} className="flex min-w-0 flex-1 flex-col items-center justify-end gap-2">
                   <div className="flex h-[155px] w-full items-end sm:h-[190px]">
                     <div
                       className="w-full rounded-t-md bg-gradient-to-t from-[#FE796D] via-[#FCC028] to-[#FED791] shadow-[0_0_22px_rgba(254,121,109,0.16)]"
@@ -113,15 +113,15 @@ export default async function AdminCashFlowPage({
                     />
                   </div>
                   <div className="w-full text-center">
-                    <p className="truncate text-[10px] font-black text-white/70">{shortMonth(item.month)}</p>
-                    <p className="mt-0.5 truncate text-[10px] text-white/35">{compactMoney(item.billing)}</p>
+                    <p className="truncate text-[9px] font-black text-white/70 sm:text-[10px]">{shortMonth(item.month)}</p>
+                    <p className="mt-0.5 hidden truncate text-[10px] text-white/35 sm:block">{compactMoney(item.billing)}</p>
                   </div>
                 </div>
               ))}
             </div>
           </section>
 
-          <section className="min-h-0 rounded-xl border border-white/10 bg-zinc-900/70 p-4">
+          <section className="min-w-0 rounded-xl border border-white/10 bg-zinc-900/70 p-3 sm:p-4 xl:min-h-0">
             <div className="mb-3">
               <h2 className="text-lg font-black uppercase tracking-tight">Facturado por persona</h2>
             </div>
@@ -158,14 +158,20 @@ export default async function AdminCashFlowPage({
             </div>
           </section>
 
-          <section className="min-h-0 rounded-xl border border-white/10 bg-zinc-900/70 p-4 xl:col-span-2">
+          <section className="min-w-0 rounded-xl border border-white/10 bg-zinc-900/70 p-3 sm:p-4 xl:col-span-2 xl:min-h-0">
             <div className="mb-3 flex items-end justify-between gap-3">
               <div>
                 <h2 className="text-lg font-black uppercase tracking-tight">Resumen mensual</h2>
               </div>
             </div>
 
-            <div className="max-h-none min-h-[160px] overflow-auto md:max-h-[calc(100vh-33rem)]">
+            <div className="grid gap-2 md:hidden">
+              {recentMonths.map((month) => (
+                <SummaryMobileCard key={month.month} month={month} />
+              ))}
+            </div>
+
+            <div className="hidden max-h-none min-h-[160px] overflow-auto md:block xl:max-h-[calc(100vh-33rem)]">
               <table className="w-full min-w-[860px] border-separate border-spacing-0 text-sm">
                 <thead className="sticky top-0 z-10 bg-zinc-900">
                   <tr className="text-left text-[10px] font-black uppercase tracking-[0.16em] text-white/35">
@@ -239,6 +245,31 @@ function MetricCard({
       <p className={`mt-2 break-words font-black leading-tight ${important ? 'text-2xl' : 'text-xl'} ${toneClass}`}>{value}</p>
       {detail ? <p className="mt-0.5 text-[11px] font-semibold text-white/35">{detail}</p> : null}
     </div>
+  )
+}
+
+function SummaryMobileCard({ month }: { month: CashFlowDashboardMonth }) {
+  return (
+    <article className="rounded-lg border border-white/10 bg-black/25 p-3">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-sm font-black text-white">{month.month}</p>
+          <p className="mt-1 text-xs font-semibold text-white/40">
+            Margen {month.margin === null ? '-' : percent(month.margin)}
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="text-sm font-black text-white">{money(month.billing)}</p>
+          <p className="mt-1 text-xs font-semibold text-emerald-300">{money(month.profit)}</p>
+        </div>
+      </div>
+      <div className="mt-3 grid grid-cols-2 gap-2 text-xs font-semibold text-white/55">
+        <span>Gasto: <strong className="text-rose-300">{money(month.spending)}</strong></span>
+        <span>Mati: {money(month.billedByMati)}</span>
+        <span>Guido: {money(month.billedByGuido)}</span>
+        <span>No fact.: <strong className="text-amber-300">{money(month.notBilled)}</strong></span>
+      </div>
+    </article>
   )
 }
 

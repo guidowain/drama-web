@@ -138,7 +138,7 @@ export default function AdminSidebar() {
       </div>
 
       {/* Nav */}
-      <nav className="flex flex-1 gap-2 overflow-x-auto px-3 py-2 [scrollbar-width:none] md:block md:space-y-0.5 md:overflow-visible md:px-2.5 md:py-3 [&::-webkit-scrollbar]:hidden">
+      <nav className="flex flex-1 flex-wrap gap-1.5 overflow-hidden px-2 py-2 md:block md:space-y-0.5 md:overflow-visible md:px-2.5 md:py-3">
         {navItems.map((item) => {
           const isActive = item.href === '/admin'
             ? pathname === '/admin'
@@ -147,7 +147,7 @@ export default function AdminSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`order-3 flex min-w-[4.75rem] flex-col items-center justify-center gap-1 rounded-lg px-2 py-2 text-center text-[10px] font-bold transition-all md:order-none md:min-w-0 md:flex-row md:justify-start md:gap-2.5 md:px-3 md:text-left md:text-sm md:font-medium ${
+              className={`order-3 flex min-w-0 flex-[1_0_calc(16.666%-0.35rem)] flex-col items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-center text-[8px] font-bold transition-all sm:text-[9px] md:order-none md:min-w-0 md:flex-none md:flex-row md:justify-start md:gap-2.5 md:px-3 md:py-2 md:text-left md:text-sm md:font-medium ${
                 isActive
                   ? 'bg-white/10 text-white'
                   : 'text-white/40 hover:text-white hover:bg-white/5'
@@ -167,7 +167,7 @@ export default function AdminSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`order-1 flex min-w-[6.9rem] flex-col items-center justify-center gap-1 rounded-lg px-2 py-2 text-center text-[10px] font-black uppercase tracking-wide transition-all md:order-none md:min-w-0 md:flex-row md:justify-start md:gap-2.5 md:px-3 md:text-left md:text-sm ${
+              className={`order-1 flex min-w-0 flex-[1_0_calc(16.666%-0.35rem)] flex-col items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-center text-[8px] font-black uppercase tracking-wide transition-all sm:text-[9px] md:order-none md:min-w-0 md:flex-none md:flex-row md:justify-start md:gap-2.5 md:px-3 md:py-2 md:text-left md:text-sm ${
                 isActive
                   ? 'gradient-bg text-black'
                   : 'border border-white/10 bg-white/[0.03] text-white/70 hover:text-white hover:bg-white/10'
@@ -182,7 +182,7 @@ export default function AdminSidebar() {
         <Link
           href="/"
           target="_blank"
-          className="order-4 flex min-w-[4.75rem] flex-col items-center justify-center gap-1 rounded-lg px-2 py-2 text-center text-[10px] font-bold text-white/40 transition-all hover:bg-white/5 hover:text-white md:hidden"
+          className="order-4 flex min-w-0 flex-[1_0_calc(16.666%-0.35rem)] flex-col items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-center text-[8px] font-bold text-white/40 transition-all hover:bg-white/5 hover:text-white sm:text-[9px] md:hidden"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
@@ -194,7 +194,7 @@ export default function AdminSidebar() {
         <button
           type="button"
           onClick={handleLogout}
-          className="order-4 flex min-w-[4.75rem] flex-col items-center justify-center gap-1 rounded-lg px-2 py-2 text-center text-[10px] font-bold text-white/40 transition-all hover:bg-white/5 hover:text-white md:hidden"
+          className="order-4 flex min-w-0 flex-[1_0_calc(16.666%-0.35rem)] flex-col items-center justify-center gap-1 rounded-lg px-1 py-1.5 text-center text-[8px] font-bold text-white/40 transition-all hover:bg-white/5 hover:text-white sm:text-[9px] md:hidden"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
