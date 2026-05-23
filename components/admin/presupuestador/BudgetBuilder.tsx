@@ -639,7 +639,7 @@ function normalizeLegacyDraft(draft: BudgetDraft): BudgetDraft {
 function compactDate(value: string) {
   const date = value || new Date().toISOString().slice(0, 10)
   const [year, month, day] = date.split('-')
-  return `${day}-${month}-${year}`
+  return `${year.slice(-2)}${month}${day}`
 }
 
 function splitBalanced<T>(items: T[]) {
