@@ -12,8 +12,7 @@ import { delayClauseText, renderAdjustmentClause, renderPaymentClause, renderVal
 import type { BudgetDraft, FixedInvestment, MonthlyInvestment } from '@/lib/presupuestador/types'
 
 const HEADER_WIDTH = 547
-const HEADER_HEIGHT = 118
-const TOTAL_WIDTH = 475
+const HEADER_HEIGHT = 104
 const TOTAL_GRADIENT_HEIGHT = 5
 const LABEL_HEIGHT = 20
 const HEADER_GRADIENT_SRC = '/brand/drama-gradient-header.png'
@@ -59,7 +58,7 @@ const styles = StyleSheet.create({
   header: {
     width: HEADER_WIDTH,
     height: HEADER_HEIGHT,
-    marginTop: 34,
+    marginTop: 28,
     alignSelf: 'center',
     borderRadius: 12,
     justifyContent: 'center',
@@ -74,7 +73,7 @@ const styles = StyleSheet.create({
     width: HEADER_WIDTH,
     height: HEADER_HEIGHT,
   },
-  logo: { width: 126, height: 'auto' },
+  logo: { width: 118, height: 'auto' },
   meta: {
     color: '#76716d',
     textAlign: 'right',
@@ -87,7 +86,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   body: {
-    paddingTop: 30,
+    paddingTop: 22,
     paddingRight: 45,
     paddingBottom: 40,
     paddingLeft: 45,
@@ -108,11 +107,11 @@ const styles = StyleSheet.create({
   },
   project: {
     fontFamily: 'Enriq',
-    fontSize: 43,
+    fontSize: 41,
     fontWeight: 900,
     lineHeight: 0.95,
-    marginTop: 10,
-    marginBottom: 25,
+    marginTop: 9,
+    marginBottom: 19,
     textTransform: 'uppercase',
   },
   intro: {
@@ -122,7 +121,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     maxWidth: 440,
   },
-  section: { marginBottom: 22 },
+  section: { marginBottom: 16 },
   sectionTitle: {
     fontFamily: 'Enriq',
     fontSize: 8.2,
@@ -139,7 +138,7 @@ const styles = StyleSheet.create({
     paddingTop: 5.5,
     paddingRight: 10,
     paddingLeft: 10,
-    marginBottom: 11,
+    marginBottom: 9,
     position: 'relative',
     overflow: 'hidden',
   },
@@ -153,14 +152,14 @@ const styles = StyleSheet.create({
     marginLeft: 11,
   },
   unlabelledSection: {
-    marginTop: 26,
+    marginTop: 18,
     marginBottom: 14,
     marginLeft: 11,
   },
-  paragraph: { fontSize: 11.2, fontWeight: 400, color: '#2a2927' },
-  bullet: { flexDirection: 'row', gap: 9, marginBottom: 9, alignItems: 'flex-start' },
-  bulletDot: { width: 6.8, height: 6.8, marginTop: 4.4 },
-  bulletText: { flex: 1, fontSize: 11.2, fontWeight: 400, color: '#23211f' },
+  paragraph: { fontSize: 10.8, fontWeight: 400, color: '#2a2927' },
+  bullet: { flexDirection: 'row', gap: 9, marginBottom: 6.2, alignItems: 'flex-start' },
+  bulletDot: { width: 6.8, height: 6.8, marginTop: 4.1 },
+  bulletText: { flex: 1, fontSize: 10.6, fontWeight: 400, color: '#23211f' },
   servicesColumns: {
     flexDirection: 'row',
     gap: 44,
@@ -189,21 +188,21 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
   },
   totalBox: {
-    marginTop: 23,
-    marginBottom: 24,
+    marginTop: 17,
+    marginBottom: 18,
     backgroundColor: '#050505',
     color: '#ffffff',
     borderRadius: 12,
     overflow: 'hidden',
   },
   totalGradient: {
-    width: TOTAL_WIDTH,
+    width: '100%',
     height: TOTAL_GRADIENT_HEIGHT,
   },
   totalContent: {
-    paddingTop: 19,
+    paddingTop: 15,
     paddingRight: 20,
-    paddingBottom: 19,
+    paddingBottom: 15,
     paddingLeft: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -218,11 +217,11 @@ const styles = StyleSheet.create({
   },
   totalAmount: {
     fontFamily: 'Enriq',
-    fontSize: 31,
+    fontSize: 30,
     fontWeight: 900,
     lineHeight: 1,
   },
-  conditions: { color: budgetBrand.colors.muted, fontSize: 11.2, fontWeight: 400, lineHeight: 1.45, marginBottom: 8 },
+  conditions: { color: budgetBrand.colors.muted, fontSize: 10.5, fontWeight: 400, lineHeight: 1.35, marginBottom: 5 },
   footer: {
     position: 'absolute',
     left: 45,
