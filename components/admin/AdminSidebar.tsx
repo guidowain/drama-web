@@ -117,12 +117,12 @@ export default function AdminSidebar() {
   }
 
   return (
-    <aside className="w-56 shrink-0 bg-zinc-950 border-r border-white/5 flex flex-col h-screen sticky top-0">
+    <aside className="fixed inset-x-0 bottom-0 z-40 flex max-w-full shrink-0 flex-col border-t border-white/10 bg-zinc-950/95 shadow-[0_-18px_40px_rgba(0,0,0,0.35)] backdrop-blur md:sticky md:top-0 md:h-screen md:w-56 md:border-r md:border-t-0 md:bg-zinc-950 md:shadow-none md:backdrop-blur-none">
       {/* Gradient accent stripe */}
       <div className="h-[3px] gradient-bg shrink-0" />
 
       {/* Logo */}
-      <div className="px-5 py-4 border-b border-white/5">
+      <div className="hidden border-b border-white/5 px-5 py-4 md:block">
         <Link href="/" target="_blank" className="block hover:opacity-70 transition-opacity">
           <Image
             src="/logos/Logo ByN invertido.png"
@@ -138,7 +138,7 @@ export default function AdminSidebar() {
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 py-3 px-2.5 space-y-0.5">
+      <nav className="flex flex-1 gap-2 overflow-x-auto px-3 py-2 [scrollbar-width:none] md:block md:space-y-0.5 md:overflow-visible md:px-2.5 md:py-3 [&::-webkit-scrollbar]:hidden">
         {navItems.map((item) => {
           const isActive = item.href === '/admin'
             ? pathname === '/admin'
@@ -147,19 +147,19 @@ export default function AdminSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`order-3 flex min-w-[4.75rem] flex-col items-center justify-center gap-1 rounded-lg px-2 py-2 text-center text-[10px] font-bold transition-all md:order-none md:min-w-0 md:flex-row md:justify-start md:gap-2.5 md:px-3 md:text-left md:text-sm md:font-medium ${
                 isActive
                   ? 'bg-white/10 text-white'
                   : 'text-white/40 hover:text-white hover:bg-white/5'
               }`}
             >
               <span className={isActive ? 'text-white' : 'text-white/40'}>{item.icon}</span>
-              {item.label}
+              <span className="max-w-full truncate">{item.label}</span>
             </Link>
           )
         })}
 
-        <div className="my-3 h-px bg-white/5" />
+        <div className="order-2 my-2 hidden w-px shrink-0 bg-white/10 md:order-none md:my-3 md:block md:h-px md:w-auto md:bg-white/5" />
 
         {toolItems.map((item) => {
           const isActive = pathname.startsWith(item.href)
@@ -167,21 +167,45 @@ export default function AdminSidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-black uppercase tracking-wide transition-all ${
+              className={`order-1 flex min-w-[6.9rem] flex-col items-center justify-center gap-1 rounded-lg px-2 py-2 text-center text-[10px] font-black uppercase tracking-wide transition-all md:order-none md:min-w-0 md:flex-row md:justify-start md:gap-2.5 md:px-3 md:text-left md:text-sm ${
                 isActive
                   ? 'gradient-bg text-black'
                   : 'border border-white/10 bg-white/[0.03] text-white/70 hover:text-white hover:bg-white/10'
               }`}
             >
               <span>{item.icon}</span>
-              {item.label}
+              <span className="max-w-full truncate">{item.label}</span>
             </Link>
           )
         })}
+
+        <Link
+          href="/"
+          target="_blank"
+          className="order-4 flex min-w-[4.75rem] flex-col items-center justify-center gap-1 rounded-lg px-2 py-2 text-center text-[10px] font-bold text-white/40 transition-all hover:bg-white/5 hover:text-white md:hidden"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+            <polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
+          </svg>
+          <span className="max-w-full truncate">Ver sitio</span>
+        </Link>
+
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="order-4 flex min-w-[4.75rem] flex-col items-center justify-center gap-1 rounded-lg px-2 py-2 text-center text-[10px] font-bold text-white/40 transition-all hover:bg-white/5 hover:text-white md:hidden"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          <span className="max-w-full truncate">Salir</span>
+        </button>
       </nav>
 
       {/* Ver sitio */}
-      <div className="px-2.5 pb-2">
+      <div className="hidden px-2.5 pb-2 md:block">
         <Link
           href="/"
           target="_blank"
@@ -196,7 +220,7 @@ export default function AdminSidebar() {
       </div>
 
       {/* Logout */}
-      <div className="px-2.5 py-3 border-t border-white/5">
+      <div className="hidden border-t border-white/5 px-2.5 py-3 md:block">
         <button
           onClick={handleLogout}
           className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium text-white/30 hover:text-white hover:bg-white/5 transition-all"

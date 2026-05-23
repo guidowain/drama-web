@@ -32,15 +32,15 @@ export default async function AdminCashFlowPage({
   const recentMonths = data.months.slice(-3).reverse()
 
   return (
-    <div className="min-h-screen bg-zinc-950 p-4 text-white md:h-screen md:overflow-hidden md:p-5 xl:p-6">
-      <header className="mb-4 flex items-end justify-between gap-4">
+    <div className="min-h-screen bg-zinc-950 p-3 text-white sm:p-4 md:h-screen md:overflow-hidden md:p-5 xl:p-6">
+      <header className="mb-4 flex flex-col items-start gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
         <div>
           <h1 className="mt-0.5 text-2xl font-black uppercase tracking-tight text-white md:text-3xl">Cash Flow</h1>
         </div>
-        <nav className="flex rounded-lg border border-white/10 bg-black/25 p-1">
+        <nav className="flex w-full overflow-x-auto rounded-lg border border-white/10 bg-black/25 p-1 sm:w-auto">
           <a
             href="/admin/cash-flow"
-            className={`rounded-md px-3 py-2 text-xs font-black uppercase tracking-wide transition ${
+            className={`flex-1 rounded-md px-3 py-2 text-center text-xs font-black uppercase tracking-wide transition sm:flex-none ${
               activeTab === 'resumen' ? 'bg-white text-zinc-950' : 'text-white/50 hover:text-white'
             }`}
           >
@@ -48,7 +48,7 @@ export default async function AdminCashFlowPage({
           </a>
           <a
             href="/admin/cash-flow?tab=ingresos"
-            className={`rounded-md px-3 py-2 text-xs font-black uppercase tracking-wide transition ${
+            className={`flex-1 rounded-md px-3 py-2 text-center text-xs font-black uppercase tracking-wide transition sm:flex-none ${
               activeTab === 'ingresos' ? 'bg-white text-zinc-950' : 'text-white/50 hover:text-white'
             }`}
           >
@@ -56,7 +56,7 @@ export default async function AdminCashFlowPage({
           </a>
           <a
             href="/admin/cash-flow?tab=egresos"
-            className={`rounded-md px-3 py-2 text-xs font-black uppercase tracking-wide transition ${
+            className={`flex-1 rounded-md px-3 py-2 text-center text-xs font-black uppercase tracking-wide transition sm:flex-none ${
               activeTab === 'egresos' ? 'bg-white text-zinc-950' : 'text-white/50 hover:text-white'
             }`}
           >
@@ -73,13 +73,13 @@ export default async function AdminCashFlowPage({
       <div className="grid gap-4 md:h-[calc(100vh-6.5rem)] md:grid-rows-[auto_minmax(0,1fr)]">
         <section className="overflow-hidden rounded-xl border border-white/10 bg-zinc-900/80">
           <div className="h-1 gradient-bg" />
-          <div className="grid gap-3 p-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,2fr)]">
+          <div className="grid gap-3 p-3 sm:p-4 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,2fr)]">
             <div className="rounded-lg border border-white/10 bg-black/25 p-4">
-              <div className="flex items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center justify-between gap-3">
                 <p className="text-[10px] font-black uppercase tracking-[0.22em] text-white/30">Balance entre cajas</p>
                 {data.balanceTransfer ? <BalanceTransferButton /> : null}
               </div>
-              <p className="mt-2 text-2xl font-black leading-tight text-white md:text-3xl">{data.balanceText}</p>
+              <p className="mt-2 text-xl font-black leading-tight text-white sm:text-2xl md:text-3xl">{data.balanceText}</p>
             </div>
 
             <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
@@ -102,10 +102,10 @@ export default async function AdminCashFlowPage({
               <h2 className="text-lg font-black uppercase tracking-tight">Facturación</h2>
             </div>
 
-            <div className="flex h-[260px] items-end gap-2 rounded-lg border border-white/5 bg-black/25 px-3 pb-3 pt-4 sm:gap-3 sm:px-4">
+            <div className="flex h-[220px] items-end gap-1.5 overflow-x-auto rounded-lg border border-white/5 bg-black/25 px-3 pb-3 pt-4 sm:h-[260px] sm:gap-3 sm:px-4">
               {data.billingChart.map((item) => (
-                <div key={item.month} className="flex min-w-0 flex-1 flex-col items-center justify-end gap-2">
-                  <div className="flex h-[190px] w-full items-end">
+                <div key={item.month} className="flex min-w-8 flex-1 flex-col items-center justify-end gap-2">
+                  <div className="flex h-[155px] w-full items-end sm:h-[190px]">
                     <div
                       className="w-full rounded-t-md bg-gradient-to-t from-[#FE796D] via-[#FCC028] to-[#FED791] shadow-[0_0_22px_rgba(254,121,109,0.16)]"
                       style={{ height: `${Math.max(4, (item.billing / chartMax) * 100)}%` }}
@@ -126,14 +126,14 @@ export default async function AdminCashFlowPage({
               <h2 className="text-lg font-black uppercase tracking-tight">Facturado por persona</h2>
             </div>
 
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid gap-2 sm:grid-cols-3">
               <MetricCard label="Mati" value={money(partnerTotals.mati)} detail="6 meses" tone="pink" />
               <MetricCard label="Guido" value={money(partnerTotals.guido)} detail="6 meses" tone="orange" />
               <MetricCard label="Sin factura" value={money(partnerTotals.notBilled)} detail="6 meses" tone="gray" />
             </div>
 
             <div className="mt-3 rounded-lg border border-white/5 bg-black/25 p-3">
-              <div className="mb-2 flex items-center justify-between text-[11px] font-black uppercase tracking-[0.16em] text-white/35">
+              <div className="mb-2 flex items-center justify-between gap-2 text-[10px] font-black uppercase tracking-[0.12em] text-white/35 sm:text-[11px] sm:tracking-[0.16em]">
                 <span>Mati</span>
                 <span>Sin factura</span>
                 <span>Guido</span>
@@ -165,7 +165,7 @@ export default async function AdminCashFlowPage({
               </div>
             </div>
 
-            <div className="max-h-[calc(100vh-33rem)] min-h-[160px] overflow-auto">
+            <div className="max-h-none min-h-[160px] overflow-auto md:max-h-[calc(100vh-33rem)]">
               <table className="w-full min-w-[860px] border-separate border-spacing-0 text-sm">
                 <thead className="sticky top-0 z-10 bg-zinc-900">
                   <tr className="text-left text-[10px] font-black uppercase tracking-[0.16em] text-white/35">
@@ -234,9 +234,9 @@ function MetricCard({
   }[tone]
 
   return (
-    <div className={`rounded-lg border p-3 ${important ? importantClass : 'border-white/10 bg-black/25'}`}>
+    <div className={`min-w-0 rounded-lg border p-3 ${important ? importantClass : 'border-white/10 bg-black/25'}`}>
       <p className="text-[10px] font-black uppercase tracking-[0.16em] text-white/30">{label}</p>
-      <p className={`mt-2 truncate font-black ${important ? 'text-2xl' : 'text-xl'} ${toneClass}`}>{value}</p>
+      <p className={`mt-2 break-words font-black leading-tight ${important ? 'text-2xl' : 'text-xl'} ${toneClass}`}>{value}</p>
       {detail ? <p className="mt-0.5 text-[11px] font-semibold text-white/35">{detail}</p> : null}
     </div>
   )
