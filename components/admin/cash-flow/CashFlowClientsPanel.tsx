@@ -16,9 +16,13 @@ export default function CashFlowClientsPanel({ initialData }: { initialData: Cas
   const [error, setError] = useState('')
   const [isPending, startTransition] = useTransition()
 
-  const pendingTotal = useMemo(
-    () => data.pending.reduce((total, movement) => total + movement.pendingAmount, 0),
-    [data.pending]
+  const pendingBillingTotal = useMemo(
+    () => data.pendingBilling.reduce((total, movement) => total + movement.pendingAmount, 0),
+    [data.pendingBilling]
+  )
+  const pendingCollectionTotal = useMemo(
+    () => data.pendingCollection.reduce((total, movement) => total + movement.pendingAmount, 0),
+    [data.pendingCollection]
   )
 
   function refresh() {
@@ -77,12 +81,12 @@ export default function CashFlowClientsPanel({ initialData }: { initialData: Cas
   }
 
   return (
-    <div className="grid min-h-0 gap-4 xl:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)]">
+    <div className="grid min-h-0 gap-4 xl:grid-cols-3">
       <section className="min-h-0 rounded-xl border border-white/10 bg-zinc-900/70 p-4">
         <div className="mb-4 flex items-start justify-between gap-3">
           <div>
-            <h2 className="text-lg font-black uppercase tracking-tight">A cobrar</h2>
-            <p className="mt-1 text-sm font-semibold text-amber-200">{money(pendingTotal)}</p>
+            <h2 className="text-lg font-black uppercase tracking-tight">Pendiente de facturación</h2>
+            <p className="mt-1 text-sm font-semibold text-white/60">{money(pendingBillingTotal)}</p>
           </div>
           <button
             type="button"
@@ -94,9 +98,33 @@ export default function CashFlowClientsPanel({ initialData }: { initialData: Cas
         </div>
 
         <div className="max-h-[calc(100vh-15rem)] min-h-[240px] overflow-auto pr-1">
-          {data.pending.length ? (
+          {data.pendingBilling.length ? (
             <div className="space-y-2">
-              {data.pending.map((movement) => (
+              {data.pendingBilling.map((movement) => (
+                <ClientMovementCard
+                  key={movement.row}
+                  movement={movement}
+                  amount={movement.pendingAmount}
+                  tone="gray"
+                />
+              ))}
+            </div>
+          ) : (
+            <EmptyState title="Facturación al día" body="No hay clientes pendientes de aviso o factura." />
+          )}
+        </div>
+      </section>
+
+      <section className="min-h-0 rounded-xl border border-white/10 bg-zinc-900/70 p-4">
+        <div className="mb-4">
+          <h2 className="text-lg font-black uppercase tracking-tight">Pendiente de cobro</h2>
+          <p className="mt-1 text-sm font-semibold text-amber-200">{money(pendingCollectionTotal)}</p>
+        </div>
+
+        <div className="max-h-[calc(100vh-15rem)] min-h-[240px] overflow-auto pr-1">
+          {data.pendingCollection.length ? (
+            <div className="space-y-2">
+              {data.pendingCollection.map((movement) => (
                 <ClientMovementCard
                   key={movement.row}
                   movement={movement}
@@ -111,7 +139,7 @@ export default function CashFlowClientsPanel({ initialData }: { initialData: Cas
               ))}
             </div>
           ) : (
-            <EmptyState title="Cobros al día" body="No hay clientes pendientes en CashFlow." />
+            <EmptyState title="Cobros al día" body="No hay clientes avisados pendientes de pago." />
           )}
         </div>
       </section>
@@ -192,7 +220,7 @@ function ClientMovementCard({
 }: {
   movement: CashFlowClientMovement
   amount: number
-  tone: 'amber' | 'pink' | 'orange'
+  tone: 'amber' | 'pink' | 'orange' | 'gray'
   meta?: string
   actionLabel?: string
   onAction?: () => void
@@ -201,6 +229,7 @@ function ClientMovementCard({
     amber: 'text-amber-300',
     pink: 'text-fuchsia-300',
     orange: 'text-orange-200',
+    gray: 'text-zinc-300',
   }[tone]
 
   return (

@@ -59,7 +59,8 @@ export type CashFlowClientMovement = {
 }
 
 export type CashFlowClientsData = {
-  pending: CashFlowClientMovement[]
+  pendingBilling: CashFlowClientMovement[]
+  pendingCollection: CashFlowClientMovement[]
   recentCollections: CashFlowClientMovement[]
 }
 
@@ -198,11 +199,13 @@ export async function getCashFlowViewerData(): Promise<CashFlowViewerData> {
 export async function getCashFlowClientsData(): Promise<CashFlowClientsData> {
   const rows = await getCashFlowRange('CashFlow!A2:L1000')
   const movements = parseClientMovementRows(rows)
+  const pending = movements
+    .filter((movement) => movement.pendingAmount > 0)
+    .sort((a, b) => b.row - a.row)
 
   return {
-    pending: movements
-      .filter((movement) => movement.pendingAmount > 0)
-      .sort((a, b) => b.row - a.row),
+    pendingBilling: pending.filter((movement) => !movement.billedBy),
+    pendingCollection: pending.filter((movement) => movement.billedBy),
     recentCollections: movements
       .filter((movement) => movement.guidoAmount > 0 || movement.matiAmount > 0)
       .sort((a, b) => b.row - a.row)
