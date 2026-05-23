@@ -42,8 +42,8 @@ Font.registerHyphenationCallback((word) => [word])
 
 const styles = StyleSheet.create({
   page: {
-    padding: 24,
-    backgroundColor: '#f0efec',
+    padding: 0,
+    backgroundColor: '#fffdf8',
     color: budgetBrand.colors.ink,
     fontFamily: 'Archivo',
     fontWeight: 400,
@@ -53,16 +53,14 @@ const styles = StyleSheet.create({
   shell: {
     flex: 1,
     backgroundColor: '#fffdf8',
-    borderRadius: 14,
+    borderRadius: 0,
     overflow: 'hidden',
-    border: '1px solid #e5ded4',
   },
   header: {
     width: HEADER_WIDTH,
     height: HEADER_HEIGHT,
-    marginTop: 18,
-    marginRight: 18,
-    marginLeft: 18,
+    marginTop: 34,
+    alignSelf: 'center',
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
