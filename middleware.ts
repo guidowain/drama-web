@@ -20,14 +20,24 @@ function withPathnameHeader(request: NextRequest) {
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+  const isApi = pathname.startsWith('/api/')
 
   if (pathname === '/admin/login') {
+    return withPathnameHeader(request)
+  }
+
+  // Lecturas públicas: el sitio renderiza estos datos en /proyectos y el home.
+  const publicReads = ['/api/admin/site', '/api/admin/proyectos']
+  if (request.method === 'GET' && publicReads.includes(pathname)) {
     return withPathnameHeader(request)
   }
 
   const token = request.cookies.get('admin-token')?.value
 
   if (!token) {
+    if (isApi) {
+      return NextResponse.json({ error: 'No autorizado.' }, { status: 401 })
+    }
     return NextResponse.redirect(new URL('/admin/login', request.url))
   }
 
@@ -35,6 +45,9 @@ export async function middleware(request: NextRequest) {
     await jwtVerify(token, getSecret())
     return withPathnameHeader(request)
   } catch {
+    if (isApi) {
+      return NextResponse.json({ error: 'No autorizado.' }, { status: 401 })
+    }
     const response = NextResponse.redirect(new URL('/admin/login', request.url))
     response.cookies.delete('admin-token')
     return response
@@ -42,5 +55,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/admin/:path*', '/api/admin/:path*', '/api/upload'],
 }
