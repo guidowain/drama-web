@@ -6,6 +6,13 @@ import AboutFaqAccordion from '@/components/AboutFaqAccordion'
 import { localizeSiteSettings } from '@/lib/i18n-content'
 import { getRequestLocale } from '@/lib/server-locale'
 import { getFixedSiteCopy } from '@/lib/site-copy'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Nosotros | Drama',
+  description:
+    'Somos Drama, una agencia de diseño y comunicación especializada en entretenimiento. Conocé quiénes somos, cómo trabajamos y qué nos diferencia.',
+}
 
 export default async function NosotrosPage() {
   const { locale } = getRequestLocale()

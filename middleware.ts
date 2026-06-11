@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { jwtVerify } from 'jose'
 
 function getSecret() {
-  return new TextEncoder().encode(
-    process.env.JWT_SECRET || 'drama-default-secret-change-in-prod'
-  )
+  if (!process.env.JWT_SECRET) {
+    throw new Error('Falta configurar JWT_SECRET.')
+  }
+  return new TextEncoder().encode(process.env.JWT_SECRET)
 }
 
 function withPathnameHeader(request: NextRequest) {

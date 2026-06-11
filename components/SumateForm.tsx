@@ -222,7 +222,7 @@ export default function SumateForm({ instagramUrl }: { instagramUrl: string }) {
           )}
 
           <Link
-            href="/home"
+            href="/"
             className="mx-auto mt-5 rounded-lg bg-black px-7 py-4 font-enriq text-xs font-black uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-85"
           >
             Volver a Drama

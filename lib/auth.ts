@@ -1,9 +1,10 @@
 import { SignJWT, jwtVerify } from 'jose'
 
 function getSecret() {
-  return new TextEncoder().encode(
-    process.env.JWT_SECRET || 'drama-default-secret-change-in-prod'
-  )
+  if (!process.env.JWT_SECRET) {
+    throw new Error('Falta configurar JWT_SECRET.')
+  }
+  return new TextEncoder().encode(process.env.JWT_SECRET)
 }
 
 export async function createToken(username: string) {
@@ -24,7 +25,8 @@ export async function verifyToken(token: string) {
 }
 
 export function checkCredentials(username: string, password: string) {
-  const validUser = process.env.ADMIN_USERNAME || 'admin'
-  const validPass = process.env.ADMIN_PASSWORD || 'drama2024'
+  const validUser = process.env.ADMIN_USERNAME
+  const validPass = process.env.ADMIN_PASSWORD
+  if (!validUser || !validPass) return false
   return username === validUser && password === validPass
 }
