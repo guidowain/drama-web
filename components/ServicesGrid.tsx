@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 const MOBILE_FLIP_EARLY_OFFSET_PX = 48
+const NUDGE_STORAGE_KEY = 'drama-service-design-nudge-seen'
 
 type ServiceInfo = {
   name: string
@@ -16,6 +17,11 @@ type Props = {
 
 export default function ServicesGrid({ services }: Props) {
   const [activeMobileIndex, setActiveMobileIndex] = useState<number | null>(null)
+  const [isNudgeDismissed, setIsNudgeDismissed] = useState(false)
+
+  useEffect(() => {
+    setIsNudgeDismissed(sessionStorage.getItem(NUDGE_STORAGE_KEY) === '1')
+  }, [])
 
   return (
     <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -27,6 +33,8 @@ export default function ServicesGrid({ services }: Props) {
           items={service.items}
           icon={service.icon}
           shouldHint={index === 0}
+          isNudgeDismissed={isNudgeDismissed}
+          setIsNudgeDismissed={setIsNudgeDismissed}
           activeMobileIndex={activeMobileIndex}
           setActiveMobileIndex={setActiveMobileIndex}
         />
@@ -41,6 +49,8 @@ function ServiceCard({
   items,
   icon,
   shouldHint,
+  isNudgeDismissed,
+  setIsNudgeDismissed,
   activeMobileIndex,
   setActiveMobileIndex,
 }: {
@@ -49,6 +59,8 @@ function ServiceCard({
   items: string[]
   icon: React.ReactNode
   shouldHint: boolean
+  isNudgeDismissed: boolean
+  setIsNudgeDismissed: React.Dispatch<React.SetStateAction<boolean>>
   activeMobileIndex: number | null
   setActiveMobileIndex: React.Dispatch<React.SetStateAction<number | null>>
 }) {
@@ -58,7 +70,6 @@ function ServiceCard({
   const [isNudging, setIsNudging] = useState(false)
   const hasInteractedRef = useRef(false)
   const nudgeTimerRef = useRef<number | null>(null)
-  const nudgeStorageKey = 'drama-service-design-nudge-seen'
 
   useEffect(() => {
     const mobileMedia = window.matchMedia('(max-width: 767px)')
@@ -93,16 +104,17 @@ function ServiceCard({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (!shouldHint || sessionStorage.getItem(nudgeStorageKey) === '1') return
+        if (!shouldHint || isNudgeDismissed) return
 
         if (entry.isIntersecting && entry.intersectionRatio >= 0.45) {
           if (nudgeTimerRef.current || hasInteractedRef.current) return
 
           nudgeTimerRef.current = window.setTimeout(() => {
             nudgeTimerRef.current = null
-            if (hasInteractedRef.current || sessionStorage.getItem(nudgeStorageKey) === '1') return
+            if (hasInteractedRef.current || isNudgeDismissed) return
 
-            sessionStorage.setItem(nudgeStorageKey, '1')
+            sessionStorage.setItem(NUDGE_STORAGE_KEY, '1')
+            setIsNudgeDismissed(true)
             setIsNudging(true)
             window.setTimeout(() => setIsNudging(false), 1800)
           }, 1000)
@@ -119,7 +131,7 @@ function ServiceCard({
       clearNudgeTimer()
       observer.disconnect()
     }
-  }, [index, isMobile, setActiveMobileIndex, shouldHint])
+  }, [index, isMobile, isNudgeDismissed, setActiveMobileIndex, setIsNudgeDismissed, shouldHint])
 
   useEffect(() => {
     const element = ref.current
@@ -164,7 +176,11 @@ function ServiceCard({
 
   function handlePointerEnter() {
     hasInteractedRef.current = true
-    if (shouldHint) sessionStorage.setItem(nudgeStorageKey, '1')
+    if (isTapFlipEnabled) return
+
+    sessionStorage.setItem(NUDGE_STORAGE_KEY, '1')
+    setIsNudgeDismissed(true)
+    setIsNudging(false)
     if (nudgeTimerRef.current) {
       window.clearTimeout(nudgeTimerRef.current)
       nudgeTimerRef.current = null
@@ -175,7 +191,6 @@ function ServiceCard({
     hasInteractedRef.current = true
     if (!isTapFlipEnabled) return
 
-    if (shouldHint) sessionStorage.setItem(nudgeStorageKey, '1')
     if (nudgeTimerRef.current) {
       window.clearTimeout(nudgeTimerRef.current)
       nudgeTimerRef.current = null
