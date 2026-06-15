@@ -15,10 +15,11 @@ export default async function HomePage() {
   const settings = localizeSiteSettings(await getSiteSettings(), locale)
   const copy = getFixedSiteCopy(locale)
   const { home, settings: contact } = settings
+  const heroVideoType = home.heroVideo.toLowerCase().endsWith('.webm') ? 'video/webm' : 'video/mp4'
 
   return (
     <>
-      <link rel="preload" href={home.heroVideo} as="video" type="video/mp4" />
+      <link rel="preload" href={home.heroVideo} as="video" type={heroVideoType} />
       <main className="flex min-h-screen flex-col pt-16 md:pt-[72px]">
         <ProyectosPrefetch />
 

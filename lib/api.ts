@@ -10,10 +10,12 @@ const PROJECTS_PATH = 'data/projects.json'
 const SITE_PATH = 'data/site.json'
 const TRIVIA_PATH = 'data/trivia.json'
 const DRAMADLE_PATH = 'data/dramadle.json'
+const LEGACY_HERO_VIDEO = '/video/Logo Drama Match cut_export_16-9.mp4'
+const DEFAULT_HERO_VIDEO = '/video/Logo Drama Match cut_export_16-9.webm'
 
 const DEFAULT_SITE_SETTINGS: SiteSettings = {
   home: {
-    heroVideo: '/video/Logo Drama Match cut_export_16-9.mp4',
+    heroVideo: DEFAULT_HERO_VIDEO,
     heroLine1: 'LA HISTORIA DEBAJO',
     heroLine2: 'DEL ESCENARIO.',
     services: {
@@ -96,11 +98,15 @@ function normalizeSiteSettings(raw: unknown): SiteSettings {
         scale: typeof logo?.scale === 'number' ? logo.scale : 1,
       }))
     : DEFAULT_SITE_SETTINGS.home.logos
+  const normalizedHeroVideo = homeData.heroVideo === LEGACY_HERO_VIDEO
+    ? DEFAULT_HERO_VIDEO
+    : homeData.heroVideo ?? DEFAULT_SITE_SETTINGS.home.heroVideo
 
   return {
     home: {
       ...DEFAULT_SITE_SETTINGS.home,
       ...homeData,
+      heroVideo: normalizedHeroVideo,
       services: {
         design: {
           ...DEFAULT_SITE_SETTINGS.home.services.design,
