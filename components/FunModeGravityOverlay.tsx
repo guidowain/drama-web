@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Matter from 'matter-js'
 import { useSiteCopy } from '@/lib/LocaleContext'
+import { optimizedCloudinaryUrl } from '@/lib/media'
 
 type Props = {
   active: boolean
@@ -28,10 +29,11 @@ function shuffle<T>(items: T[]) {
 
 function loadImage(src: string) {
   return new Promise<{ src: string; ratio: number }>((resolve, reject) => {
+    const optimizedSrc = optimizedCloudinaryUrl(src, { width: 360 })
     const image = new Image()
-    image.onload = () => resolve({ src, ratio: image.naturalWidth / Math.max(image.naturalHeight, 1) })
+    image.onload = () => resolve({ src: optimizedSrc, ratio: image.naturalWidth / Math.max(image.naturalHeight, 1) })
     image.onerror = reject
-    image.src = src
+    image.src = optimizedSrc
   })
 }
 

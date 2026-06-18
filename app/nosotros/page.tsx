@@ -6,6 +6,7 @@ import AboutFaqAccordion from '@/components/AboutFaqAccordion'
 import { localizeSiteSettings } from '@/lib/i18n-content'
 import { getRequestLocale } from '@/lib/server-locale'
 import { getFixedSiteCopy } from '@/lib/site-copy'
+import { optimizedCloudinaryUrl } from '@/lib/media'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -37,7 +38,7 @@ export default async function NosotrosPage() {
             {about.image ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={about.image}
+                src={optimizedCloudinaryUrl(about.image, { width: 1200 })}
                 alt={about.imageAlt}
                 className="w-full rounded-2xl object-contain"
               />

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { TriviaQuestion } from '@/lib/types'
 import { useSiteCopy } from '@/lib/LocaleContext'
+import { optimizedCloudinaryUrl } from '@/lib/media'
 
 type Props = {
   active: boolean
@@ -29,7 +30,7 @@ function loadCanvasImage(src: string) {
     const image = new window.Image()
     image.onload = () => resolve(image)
     image.onerror = reject
-    image.src = src
+    image.src = optimizedCloudinaryUrl(src, { width: 720 })
   })
 }
 
@@ -296,7 +297,7 @@ export default function FunModeTriviaOverlay({ active, onClose }: Props) {
                 <div className="grid items-start gap-3 md:grid-cols-[minmax(180px,30vw)_minmax(0,1fr)] md:items-center md:gap-6 lg:grid-cols-[minmax(250px,34vh)_minmax(0,1fr)] lg:gap-[clamp(1.5rem,4vw,3rem)]">
                   <div className="relative mx-auto aspect-square w-[min(46vw,10.5rem)] shrink-0 overflow-hidden rounded-lg border-[7px] border-white bg-white shadow-[0_16px_34px_rgba(0,0,0,0.2)] md:w-[min(30vw,14rem)] md:border-[8px] md:shadow-[0_18px_42px_rgba(0,0,0,0.2)] lg:w-[min(360px,34vh)] lg:border-[10px] lg:shadow-[0_20px_50px_rgba(0,0,0,0.22)]">
                     <Image
-                      src={currentQuestion.image}
+                      src={optimizedCloudinaryUrl(currentQuestion.image, { width: 720 })}
                       alt=""
                       fill
                       className="object-contain"

@@ -1,7 +1,7 @@
 'use client'
 
 import type { Proyecto } from './types'
-import { isVideoUrl } from './media'
+import { isVideoUrl, optimizedCloudinaryUrl } from './media'
 
 let projectsCache: Proyecto[] | null = null
 let projectsPromise: Promise<Proyecto[]> | null = null
@@ -39,11 +39,15 @@ function preloadMedia(src?: string) {
   if (!src || preloadedMedia.has(src)) return
 
   preloadedMedia.add(src)
+  const optimizedSrc = optimizedCloudinaryUrl(src, {
+    width: isVideoUrl(src) ? 640 : 720,
+    quality: isVideoUrl(src) ? 'auto:eco' : 'auto',
+  })
 
   if (!isVideoUrl(src)) {
     const image = new Image()
     image.decoding = 'async'
-    image.src = src
+    image.src = optimizedSrc
     return
   }
 
@@ -51,5 +55,5 @@ function preloadMedia(src?: string) {
   video.preload = 'metadata'
   video.muted = true
   video.playsInline = true
-  video.src = src
+  video.src = optimizedSrc
 }

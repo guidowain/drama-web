@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useSiteCopy } from '@/lib/LocaleContext'
+import { optimizedCloudinaryUrl } from '@/lib/media'
 
 const MAX_ATTEMPTS = 6
 const WORD_LENGTH = 5
@@ -555,7 +556,7 @@ function ResultPanel({
     >
       {gameData.coverImage && (
         <div className="relative aspect-square w-full shrink-0 bg-black">
-          <Image src={gameData.coverImage} alt="" fill className="object-contain" unoptimized />
+          <Image src={optimizedCloudinaryUrl(gameData.coverImage, { width: 720 })} alt="" fill className="object-contain" unoptimized />
           {!won && (
             <div className="absolute left-3 top-3 rounded-full bg-black px-3 py-1.5 text-[0.6rem] font-black uppercase tracking-[0.16em] text-white">
               {copy.dramadle.theWordWas} {gameData.word}

@@ -82,6 +82,8 @@ export default function ProjectCard({ project, index, onClick }: Props) {
               className="w-full h-full object-cover"
               loading={shouldLoadEagerly ? 'eager' : 'lazy'}
               fetchPriority={shouldLoadEagerly ? 'high' : 'auto'}
+              imageWidth={720}
+              videoWidth={640}
             />
           ) : (
             <div className="w-full h-full gradient-bg opacity-30" />

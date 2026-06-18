@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { CSSProperties, DragEvent, MouseEvent } from 'react'
-import { isVideoUrl } from '@/lib/media'
+import { isVideoUrl, optimizedCloudinaryUrl } from '@/lib/media'
 
 type Props = {
   src: string
@@ -16,6 +16,9 @@ type Props = {
   fetchPriority?: 'high' | 'low' | 'auto'
   showMuteButton?: boolean
   protectedMedia?: boolean
+  imageWidth?: number
+  videoWidth?: number
+  autoplayVideo?: boolean
 }
 
 export default function PlayableMedia({
@@ -30,8 +33,18 @@ export default function PlayableMedia({
   fetchPriority = 'auto',
   showMuteButton = true,
   protectedMedia = false,
+  imageWidth = 1200,
+  videoWidth = 720,
+  autoplayVideo = true,
 }: Props) {
   const [muted, setMuted] = useState(true)
+  const [shouldPlayVideo, setShouldPlayVideo] = useState(!autoplayVideo)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const isVideo = isVideoUrl(src)
+  const optimizedSrc = optimizedCloudinaryUrl(src, {
+    width: isVideo ? videoWidth : imageWidth,
+    quality: isVideo ? 'auto:eco' : 'auto',
+  })
   const mediaStyle = width ? { ...style, width, maxWidth: '140%' } : style
   const sharedClassName = className || 'w-full h-full object-cover'
   const roundedMediaStyle = {
@@ -53,11 +66,29 @@ export default function PlayableMedia({
     event.stopPropagation()
   }
 
-  if (!isVideoUrl(src)) {
+  useEffect(() => {
+    if (!isVideo || !autoplayVideo) return
+
+    const node = containerRef.current
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setShouldPlayVideo(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setShouldPlayVideo(Boolean(entry?.isIntersecting)),
+      { rootMargin: '160px 0px', threshold: 0.12 }
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [autoplayVideo, isVideo])
+
+  if (!isVideo) {
     // eslint-disable-next-line @next/next/no-img-element
     return (
       <img
-        src={src}
+        src={optimizedSrc}
         alt={alt}
         className={imageClassName || sharedClassName}
         style={protectedStyle}
@@ -72,20 +103,21 @@ export default function PlayableMedia({
 
   return (
     <div
+      ref={containerRef}
       className="relative h-full w-full overflow-hidden rounded-xl"
       style={{ clipPath: 'inset(0 round 0.75rem)' }}
       onContextMenu={preventProtectedAction}
       onDragStart={preventProtectedAction}
     >
       <video
-        src={src}
+        src={optimizedSrc}
         className={videoClassName || `${sharedClassName} pointer-events-none`}
         style={protectedStyle}
-        autoPlay
+        autoPlay={autoplayVideo}
         loop
         muted={muted}
         playsInline
-        preload="metadata"
+        preload={shouldPlayVideo ? 'metadata' : 'none'}
         controls={false}
         controlsList="nodownload noremoteplayback noplaybackrate"
         disablePictureInPicture

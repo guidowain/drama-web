@@ -164,7 +164,143 @@ El form se adapta según el Tipo:
 
 ---
 
-## 8. Lo que la app NO hace
+## 8. Carga de facturación de un nuevo mes
+
+Cuando haya que preparar la facturación de un mes nuevo, el flujo no es copiar filas a ciegas. Hay que detectar recurrencias, separar casos dudosos y pedir confirmación antes de escribir en el Sheets.
+
+### 8.1. Meses de referencia
+
+Para cargar el mes actual, se revisan principalmente los **dos meses anteriores cerrados**.
+
+Ejemplo: para cargar junio 2026, se revisan abril 2026 y mayo 2026.
+
+### 8.2. Qué cuenta como recurrente
+
+Un cliente/trabajo es candidato recurrente si:
+
+- aparece como `Ingreso` + `Cliente`
+- tiene el mismo cliente y el mismo trabajo, o nombres claramente equivalentes
+- aparece en los dos meses anteriores
+- los montos tienen una relación razonable entre sí
+
+No alcanza con repetir cliente/trabajo. El monto tambien tiene que estar en la misma escala.
+
+Ejemplo valido:
+
+```
+Ozono / Charlie y la fabrica de chocolate
+Abril: $2.053.865
+Mayo:  $2.183.160
+```
+
+Es una variacion razonable, entonces se toma el monto mas nuevo como referencia.
+
+Ejemplo que NO debe tomarse como base:
+
+```
+Ozono / Charlie y la fabrica de chocolate
+Mayo: $2.183.160
+Mayo: $400.000
+```
+
+El segundo monto esta demasiado alejado. Probablemente sea un parcial, extra, saldo o ajuste puntual.
+
+### 8.3. Monto propuesto
+
+Si hay dos meses consecutivos con montos comparables, se propone cargar el monto del ultimo mes.
+
+Ejemplo:
+
+```
+Abril: $1.250.870
+Mayo:  $1.329.615
+Propuesta para junio: $1.329.615
+```
+
+### 8.4. Dos meses iguales
+
+Si el monto se repitio igual durante dos meses seguidos, no se carga automaticamente con ese mismo precio. Puede corresponder aumento.
+
+En ese caso se carga el cliente/trabajo **sin precio**, o se deja en la lista de revision, segun lo que se acuerde.
+
+Ejemplo:
+
+```
+Bautista Laviaguerre / Alejandra
+Abril: $617.490
+Mayo:  $617.490
+```
+
+Para junio se puede crear la fila sin monto, esperando el precio actualizado.
+
+### 8.5. Si ya existe en el mes actual
+
+Antes de cargar una recurrencia hay que revisar si el cliente/trabajo ya existe en el mes actual.
+
+- Si ya existe con monto comparable, no se duplica.
+- Si ya existe con un monto muy distinto, se informa como caso a revisar.
+- Si ya existe sin monto, puede ser un placeholder para completar.
+
+### 8.6. Como se carga por defecto
+
+Cuando el usuario confirma la carga, las filas nuevas van asi:
+
+| Columna | Valor |
+|---------|-------|
+| Fecha | Fecha del dia de carga |
+| Detalle | Cliente |
+| Detalle II | Trabajo |
+| A cuenta | Monto propuesto |
+| Caja Guido | Vacio |
+| Caja Mati | Vacio |
+| Facturado | Vacio |
+| Categoria | Cliente |
+
+Las columnas `Tipo`, `Check`, `Monto` y `Año-Mes` quedan a cargo de las formulas del Sheets.
+
+Si se carga una fila sin precio, `Tipo` puede mostrarse como `Pase` porque la formula clasifica por la suma de montos. Eso es esperable hasta que se complete `A cuenta`.
+
+### 8.7. Reporte previo obligatorio
+
+Antes de escribir, hay que mostrar una tabla de revision con:
+
+- cliente/trabajo
+- filas usadas como evidencia
+- montos anteriores
+- monto propuesto
+- decision sugerida
+
+Las decisiones posibles son:
+
+| Decision | Significado |
+|----------|-------------|
+| Cargar | Recurrente con monto comparable |
+| Cargar sin precio | Recurrente, pero requiere aumento o precio nuevo |
+| Revisar | Hay montos raros, parciales, duplicados o conflicto |
+| Solo aparecio el mes pasado | Posible nuevo recurrente, pero sin historial suficiente |
+
+### 8.8. Clientes que aparecieron solo el mes pasado
+
+Despues de detectar recurrentes, tambien hay que revisar los `Ingreso` + `Cliente` del ultimo mes cerrado que no aparecieron en el mes anterior.
+
+No se cargan automaticamente, pero se informan porque pueden ser nuevos clientes mensuales que todavia no tienen dos meses de historial.
+
+Ejemplo de salida esperada:
+
+```
+Solo aparecieron en mayo:
+- Cliente / Trabajo / Monto / Fila
+```
+
+El usuario decide si alguno se suma al mes nuevo.
+
+### 8.9. Regla de seguridad
+
+Si hay duda, no se escribe. Se informa el caso y se espera confirmacion.
+
+---
+
+## 9. Lo que la app NO hace
 
 - No escribe las columnas J (Check), K (Monto) ni L (Año-Mes) — el Sheets las calcula solo con sus fórmulas
 - No edita las tablas de Resumen, Servicios Compartidos ni Proyección Futura (solo las lee para el dashboard)
