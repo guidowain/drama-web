@@ -11,6 +11,8 @@ type CloudinaryOptimizationOptions = {
   format?: 'auto'
 }
 
+const DEFAULT_IMAGE_SRCSET_WIDTHS = [360, 540, 720, 960, 1200]
+
 export function isVideoUrl(url?: string) {
   if (!url) return false
 
@@ -53,6 +55,24 @@ export function optimizedCloudinaryUrl(src: string, options: CloudinaryOptimizat
   }
 
   return `${src.slice(0, uploadEndIndex)}${transformations.join(',')}/${rest}`
+}
+
+export function cloudinaryImageSrcSet(
+  src: string,
+  options: Omit<CloudinaryOptimizationOptions, 'width'> & { widths?: number[] } = {},
+) {
+  if (!isCloudinaryUrl(src) || isVideoUrl(src)) return undefined
+
+  const widths = (options.widths || DEFAULT_IMAGE_SRCSET_WIDTHS)
+    .map((width) => Math.round(width))
+    .filter((width, index, list) => width > 0 && list.indexOf(width) === index)
+    .sort((first, second) => first - second)
+
+  if (widths.length === 0) return undefined
+
+  return widths
+    .map((width) => `${optimizedCloudinaryUrl(src, { ...options, width })} ${width}w`)
+    .join(', ')
 }
 
 function hasMediaValue(value?: string) {

@@ -1,11 +1,9 @@
 'use client'
 
 import type { Proyecto } from './types'
-import { isVideoUrl, optimizedCloudinaryUrl } from './media'
 
 let projectsCache: Proyecto[] | null = null
 let projectsPromise: Promise<Proyecto[]> | null = null
-const preloadedMedia = new Set<string>()
 
 export function fetchProjects() {
   if (projectsCache) return Promise.resolve(projectsCache)
@@ -26,34 +24,4 @@ export function fetchProjects() {
     })
 
   return projectsPromise
-}
-
-export function preloadFirstProjectCovers(projects: Proyecto[], count = 2) {
-  projects
-    .filter((project) => project.published)
-    .slice(0, count)
-    .forEach((project) => preloadMedia(project.coverImage))
-}
-
-function preloadMedia(src?: string) {
-  if (!src || preloadedMedia.has(src)) return
-
-  preloadedMedia.add(src)
-  const optimizedSrc = optimizedCloudinaryUrl(src, {
-    width: isVideoUrl(src) ? 640 : 720,
-    quality: isVideoUrl(src) ? 'auto:eco' : 'auto',
-  })
-
-  if (!isVideoUrl(src)) {
-    const image = new Image()
-    image.decoding = 'async'
-    image.src = optimizedSrc
-    return
-  }
-
-  const video = document.createElement('video')
-  video.preload = 'metadata'
-  video.muted = true
-  video.playsInline = true
-  video.src = optimizedSrc
 }

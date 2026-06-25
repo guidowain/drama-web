@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { fetchProjects, preloadFirstProjectCovers } from '@/lib/projects-client'
+import { fetchProjects } from '@/lib/projects-client'
 
 type IdleWindow = Window & {
   requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number
@@ -20,7 +20,6 @@ export default function ProyectosPrefetch() {
     const prefetch = () => {
       router.prefetch('/proyectos')
       fetchProjects()
-        .then((projects) => preloadFirstProjectCovers(projects, 2))
         .catch(() => {})
     }
 

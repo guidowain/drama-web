@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import type { CSSProperties, DragEvent, MouseEvent } from 'react'
-import { isVideoUrl, optimizedCloudinaryUrl } from '@/lib/media'
+import { cloudinaryImageSrcSet, isVideoUrl, optimizedCloudinaryUrl } from '@/lib/media'
 
 type Props = {
   src: string
@@ -19,6 +19,8 @@ type Props = {
   imageWidth?: number
   videoWidth?: number
   autoplayVideo?: boolean
+  imageSizes?: string
+  imageSrcSetWidths?: number[]
 }
 
 export default function PlayableMedia({
@@ -36,15 +38,24 @@ export default function PlayableMedia({
   imageWidth = 1200,
   videoWidth = 720,
   autoplayVideo = true,
+  imageSizes = '100vw',
+  imageSrcSetWidths,
 }: Props) {
   const [muted, setMuted] = useState(true)
   const [shouldPlayVideo, setShouldPlayVideo] = useState(!autoplayVideo)
   const containerRef = useRef<HTMLDivElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const isVideo = isVideoUrl(src)
   const optimizedSrc = optimizedCloudinaryUrl(src, {
     width: isVideo ? videoWidth : imageWidth,
     quality: isVideo ? 'auto:eco' : 'auto',
   })
+  const imageSrcSet = !isVideo
+    ? cloudinaryImageSrcSet(src, {
+        quality: 'auto',
+        widths: imageSrcSetWidths,
+      })
+    : undefined
   const mediaStyle = width ? { ...style, width, maxWidth: '140%' } : style
   const sharedClassName = className || 'w-full h-full object-cover'
   const roundedMediaStyle = {
@@ -84,11 +95,27 @@ export default function PlayableMedia({
     return () => observer.disconnect()
   }, [autoplayVideo, isVideo])
 
+  useEffect(() => {
+    if (!isVideo || !autoplayVideo) return
+
+    const video = videoRef.current
+    if (!video) return
+
+    if (!shouldPlayVideo) {
+      video.pause()
+      return
+    }
+
+    video.play().catch(() => {})
+  }, [autoplayVideo, isVideo, shouldPlayVideo])
+
   if (!isVideo) {
     // eslint-disable-next-line @next/next/no-img-element
     return (
       <img
         src={optimizedSrc}
+        srcSet={imageSrcSet}
+        sizes={imageSrcSet ? imageSizes : undefined}
         alt={alt}
         className={imageClassName || sharedClassName}
         style={protectedStyle}
@@ -110,10 +137,11 @@ export default function PlayableMedia({
       onDragStart={preventProtectedAction}
     >
       <video
-        src={optimizedSrc}
+        ref={videoRef}
+        src={shouldPlayVideo ? optimizedSrc : undefined}
         className={videoClassName || `${sharedClassName} pointer-events-none`}
         style={protectedStyle}
-        autoPlay={autoplayVideo}
+        autoPlay={autoplayVideo && shouldPlayVideo}
         loop
         muted={muted}
         playsInline

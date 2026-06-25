@@ -83,6 +83,8 @@ export default function ProjectCard({ project, index, onClick }: Props) {
               loading={shouldLoadEagerly ? 'eager' : 'lazy'}
               fetchPriority={shouldLoadEagerly ? 'high' : 'auto'}
               imageWidth={720}
+              imageSizes="(max-width: 767px) calc(100vw - 64px), 544px"
+              imageSrcSetWidths={[320, 480, 640, 720]}
               videoWidth={640}
             />
           ) : (

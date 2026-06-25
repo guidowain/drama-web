@@ -460,6 +460,10 @@ function ScaledImage({
           className="w-full object-contain"
           videoClassName="w-full object-contain pointer-events-none"
           style={{ maxHeight: 'var(--modal-media-max-height)', height: 'auto' }}
+          imageWidth={960}
+          imageSizes="(max-width: 767px) 100vw, min(86vw, 960px)"
+          imageSrcSetWidths={[360, 540, 720, 960]}
+          videoWidth={720}
           showMuteButton={showMuteButton}
           protectedMedia
         />
