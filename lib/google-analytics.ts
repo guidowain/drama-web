@@ -27,7 +27,9 @@ type RunReportResponse = {
 
 export type AnalyticsSummary = {
   configured: boolean
+  connected: boolean
   serviceAccountEmail: string
+  credentialLabel: string
   propertyId: string
   rangeLabel: string
   metrics: {
@@ -81,10 +83,22 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
     process.env.GOOGLE_ANALYTICS_CLIENT_SECRET &&
     process.env.GOOGLE_ANALYTICS_REFRESH_TOKEN
   )
-  const serviceAccountEmail = getGoogleServiceAccountEmail()
+  const hasAnalyticsServiceAccount = Boolean(
+    process.env.GOOGLE_ANALYTICS_SERVICE_ACCOUNT_KEY ||
+    (process.env.GOOGLE_ANALYTICS_SERVICE_ACCOUNT_EMAIL && process.env.GOOGLE_ANALYTICS_PRIVATE_KEY)
+  )
+  const hasDefaultServiceAccount = Boolean(
+    process.env.GOOGLE_SERVICE_ACCOUNT_KEY ||
+    (process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL && process.env.GOOGLE_PRIVATE_KEY) ||
+    (process.env.GOOGLE_CLIENT_EMAIL && process.env.GOOGLE_PRIVATE_KEY)
+  )
+  const hasServiceAccount = hasAnalyticsServiceAccount || hasDefaultServiceAccount
+  const serviceAccountEmail = getAnalyticsServiceAccountEmail()
   const base: AnalyticsSummary = {
-    configured: Boolean(propertyId && (hasOAuthCredentials || serviceAccountEmail)),
+    configured: Boolean(propertyId && (hasOAuthCredentials || hasServiceAccount)),
+    connected: false,
     serviceAccountEmail,
+    credentialLabel: analyticsCredentialLabel(),
     propertyId,
     rangeLabel: 'Últimos 30 días',
     metrics: EMPTY_METRICS,
@@ -107,10 +121,10 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
     }
   }
 
-  if (!hasOAuthCredentials && !serviceAccountEmail) {
+  if (!hasOAuthCredentials && !hasServiceAccount) {
     return {
       ...base,
-      error: 'Falta configurar OAuth de Google Analytics o un service account de Google.',
+      error: 'Falta configurar OAuth de Google Analytics o un service account específico de Analytics.',
     }
   }
 
@@ -182,6 +196,7 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
     return {
       ...base,
       configured: true,
+      connected: true,
       metrics: {
         activeUsers: numberValue(metricValues[0]?.value),
         sessions: numberValue(metricValues[1]?.value),
@@ -212,7 +227,7 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
   } catch (error) {
     return {
       ...base,
-      error: error instanceof Error ? error.message : 'No se pudo leer Google Analytics.',
+      error: analyticsErrorMessage(error, base.credentialLabel),
     }
   }
 }
@@ -337,7 +352,70 @@ async function getAnalyticsAccessToken() {
     })
   }
 
-  return getGoogleAccessToken(GA_SCOPE)
+  if (process.env.GOOGLE_ANALYTICS_SERVICE_ACCOUNT_KEY) {
+    return getGoogleAccessToken(GA_SCOPE, {
+      serviceAccountKeyEnv: 'GOOGLE_ANALYTICS_SERVICE_ACCOUNT_KEY',
+      cacheKey: 'google-analytics-service-account',
+    })
+  }
+
+  if (process.env.GOOGLE_ANALYTICS_SERVICE_ACCOUNT_EMAIL && process.env.GOOGLE_ANALYTICS_PRIVATE_KEY) {
+    return getGoogleAccessToken(GA_SCOPE, {
+      serviceAccountKey: JSON.stringify({
+        client_email: process.env.GOOGLE_ANALYTICS_SERVICE_ACCOUNT_EMAIL,
+        private_key: process.env.GOOGLE_ANALYTICS_PRIVATE_KEY,
+      }),
+      cacheKey: 'google-analytics-service-account-fields',
+    })
+  }
+
+  return getGoogleAccessToken(GA_SCOPE, { cacheKey: 'google-analytics-default-service-account' })
+}
+
+function getAnalyticsServiceAccountEmail() {
+  if (process.env.GOOGLE_ANALYTICS_SERVICE_ACCOUNT_KEY) {
+    return getGoogleServiceAccountEmail(process.env.GOOGLE_ANALYTICS_SERVICE_ACCOUNT_KEY)
+  }
+
+  return process.env.GOOGLE_ANALYTICS_SERVICE_ACCOUNT_EMAIL || getGoogleServiceAccountEmail()
+}
+
+function analyticsCredentialLabel() {
+  if (
+    process.env.GOOGLE_ANALYTICS_CLIENT_ID &&
+    process.env.GOOGLE_ANALYTICS_CLIENT_SECRET &&
+    process.env.GOOGLE_ANALYTICS_REFRESH_TOKEN
+  ) {
+    return 'OAuth de Google Analytics'
+  }
+
+  if (process.env.GOOGLE_ANALYTICS_SERVICE_ACCOUNT_KEY || process.env.GOOGLE_ANALYTICS_SERVICE_ACCOUNT_EMAIL) {
+    return 'service account de Google Analytics'
+  }
+
+  if (
+    process.env.GOOGLE_SERVICE_ACCOUNT_KEY ||
+    process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL ||
+    process.env.GOOGLE_CLIENT_EMAIL
+  ) {
+    return 'service account genérico de Google'
+  }
+
+  return 'sin credencial'
+}
+
+function analyticsErrorMessage(error: unknown, credentialLabel: string) {
+  const message = error instanceof Error ? error.message : 'No se pudo leer Google Analytics.'
+
+  if (message.includes('invalid authentication credentials')) {
+    return `Google Analytics rechazó las credenciales (${credentialLabel}). Revisá que producción tenga las variables OAuth de Analytics o un service account agregado como usuario de la propiedad GA4.`
+  }
+
+  if (message.includes('sufficient permissions')) {
+    return `La credencial configurada (${credentialLabel}) no tiene permisos sobre la propiedad de Google Analytics.`
+  }
+
+  return message
 }
 
 function numberValue(value?: string) {

@@ -18,9 +18,13 @@ export default async function AdminDashboard() {
             <h2 className="text-white font-black text-xl uppercase tracking-tight">Analytics</h2>
             <p className="text-white/30 text-sm">Tráfico e interacciones del sitio.</p>
           </div>
-          {analytics.configured ? (
+          {analytics.connected ? (
             <span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-emerald-300">
               Conectado
+            </span>
+          ) : analytics.configured ? (
+            <span className="rounded-full border border-rose-400/20 bg-rose-400/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-rose-300">
+              Error
             </span>
           ) : (
             <span className="rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-amber-300">
@@ -37,6 +41,9 @@ export default async function AdminDashboard() {
                 Service account: <span className="font-mono text-white/55">{analytics.serviceAccountEmail}</span>
               </p>
             ) : null}
+            <p className="mt-2 text-xs text-white/35">
+              Credencial: <span className="text-white/55">{analytics.credentialLabel}</span>
+            </p>
           </div>
         ) : (
           <>

@@ -130,8 +130,13 @@ export async function getGoogleOAuthAccessToken({
   return data.access_token
 }
 
-export function getGoogleServiceAccountEmail() {
-  const serviceAccount = parseServiceAccountKey(process.env.GOOGLE_SERVICE_ACCOUNT_KEY)
+export function getGoogleServiceAccountEmail(serviceAccountKey?: string) {
+  const serviceAccount = parseServiceAccountKey(serviceAccountKey ?? process.env.GOOGLE_SERVICE_ACCOUNT_KEY)
+
+  if (serviceAccountKey) {
+    return serviceAccount?.clientEmail || ''
+  }
+
   return serviceAccount?.clientEmail || process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL || process.env.GOOGLE_CLIENT_EMAIL || ''
 }
 
