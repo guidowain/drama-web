@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter, useParams } from 'next/navigation'
+import { useUnsavedChanges } from '@/lib/use-unsaved-changes'
 import ContentBlockEditor from '@/components/admin/ContentBlockEditor'
 import { ProjectFormFields } from '@/components/admin/ProjectFormFields'
 import LanguageTabs from '@/components/admin/LanguageTabs'
@@ -31,6 +32,9 @@ export default function EditarProyectoPage() {
   const [tagInput, setTagInput] = useState('')
   const [blocks, setBlocks] = useState<ContentBlock[]>([])
   const [translations, setTranslations] = useState<Proyecto['translations']>({})
+  const savedSnapshot = useRef<string | null>(null)
+  // Tras guardar navegamos al listado; sin esto el guard saltaría en esa misma navegación.
+  const justSaved = useRef(false)
 
   useEffect(() => {
     fetch(`/api/admin/proyectos/${id}`)
@@ -51,9 +55,31 @@ export default function EditarProyectoPage() {
         })
         setBlocks(data.contentBlocks)
         setTranslations(data.translations ?? {})
+        savedSnapshot.current = JSON.stringify({
+          name: data.name,
+          slug: data.slug,
+          year: data.year,
+          featured: data.featured,
+          published: data.published,
+          tags: data.tags,
+          coverImage: data.coverImage,
+          coverImageAlt: data.coverImageAlt,
+          seoTitle: data.seoTitle || '',
+          seoDescription: data.seoDescription || '',
+          excerpt: data.excerpt || '',
+          contentBlocks: data.contentBlocks,
+          translations: data.translations ?? {},
+        })
         setLoading(false)
       })
   }, [id])
+
+  const isDirty =
+    savedSnapshot.current !== null &&
+    !justSaved.current &&
+    JSON.stringify({ ...form, contentBlocks: blocks, translations }) !== savedSnapshot.current
+
+  useUnsavedChanges(isDirty)
 
   function handleNameChange(name: string) {
     setForm((f) => ({ ...f, name, slug: slugify(name) }))
@@ -130,6 +156,7 @@ export default function EditarProyectoPage() {
         )
       }
 
+      justSaved.current = true
       router.push('/admin/proyectos')
     } catch (error) {
       setSaveError(error instanceof Error ? error.message : 'No se pudieron guardar los cambios.')

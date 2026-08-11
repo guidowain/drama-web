@@ -4,23 +4,35 @@ import { useEffect, useRef, useState } from 'react'
 import type { LocaleCode, SiteSettings, Logo, SiteSettingsTranslation } from '@/lib/types'
 import ImageUploader from '@/components/admin/ImageUploader'
 import LanguageTabs from '@/components/admin/LanguageTabs'
+import { useUnsavedChanges } from '@/lib/use-unsaved-changes'
 
 export default function AdminHomePage() {
   const [settings, setSettings] = useState<SiteSettings | null>(null)
   const [activeLocale, setActiveLocale] = useState<LocaleCode>('es')
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
   const lastSavedLogosRef = useRef('')
   const logosAutosaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const savedSnapshot = useRef<string | null>(null)
 
   useEffect(() => {
     fetch('/api/admin/site')
       .then((r) => r.json())
       .then((data: SiteSettings) => {
+        savedSnapshot.current = JSON.stringify(data)
         setSettings(data)
         lastSavedLogosRef.current = JSON.stringify(data.home.logos)
       })
   }, [])
+
+  const isDirty =
+    savedSnapshot.current !== null &&
+    settings !== null &&
+    JSON.stringify(settings) !== savedSnapshot.current
+
+  useUnsavedChanges(isDirty)
 
   useEffect(() => {
     if (!settings) return
@@ -33,8 +45,8 @@ export default function AdminHomePage() {
     }
 
     logosAutosaveTimerRef.current = setTimeout(async () => {
-      await persistSettings(settings)
-      lastSavedLogosRef.current = nextSerializedLogos
+      const ok = await persistSettings(settings)
+      if (ok) lastSavedLogosRef.current = nextSerializedLogos
     }, 800)
 
     return () => {
@@ -44,16 +56,37 @@ export default function AdminHomePage() {
     }
   }, [settings])
 
+  // Devuelve si se guardó de verdad: quien llama sólo debe marcar los logos como
+  // persistidos cuando el guardado salió bien, o el cambio se pierde en silencio.
   async function persistSettings(nextSettings: SiteSettings) {
     setSaving(true)
-    await fetch('/api/admin/site', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(nextSettings),
-    })
-    setSaving(false)
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2500)
+    setSaveError(null)
+    try {
+      const res = await fetch('/api/admin/site', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(nextSettings),
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(
+          res.status === 401
+            ? 'Se venció tu sesión. Abrí el login en otra pestaña, entrá de nuevo y volvé a guardar.'
+            : data?.error || 'No se pudieron guardar los cambios.'
+        )
+      }
+
+      savedSnapshot.current = JSON.stringify(nextSettings)
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2500)
+      return true
+    } catch (error) {
+      setSaveError(error instanceof Error ? error.message : 'No se pudieron guardar los cambios.')
+      return false
+    } finally {
+      setSaving(false)
+    }
   }
 
   async function handleSave() {
@@ -62,8 +95,8 @@ export default function AdminHomePage() {
       clearTimeout(logosAutosaveTimerRef.current)
       logosAutosaveTimerRef.current = null
     }
-    await persistSettings(settings)
-    lastSavedLogosRef.current = JSON.stringify(settings.home.logos)
+    const ok = await persistSettings(settings)
+    if (ok) lastSavedLogosRef.current = JSON.stringify(settings.home.logos)
   }
 
   function updateHome(changes: Partial<SiteSettings['home']>) {
@@ -163,6 +196,12 @@ export default function AdminHomePage() {
           </button>
         </div>
       </div>
+
+      {saveError && (
+        <p className="mb-6 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-400">
+          {saveError} No cierres esta pestaña: tus cambios siguen acá.
+        </p>
+      )}
 
       <div className="space-y-8">
         {/* Hero */}

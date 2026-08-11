@@ -1,30 +1,62 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { FaqItem, LocaleCode, SiteSettings, SiteSettingsTranslation } from '@/lib/types'
 import LanguageTabs from '@/components/admin/LanguageTabs'
+import { useUnsavedChanges } from '@/lib/use-unsaved-changes'
 
 export default function AdminNosotrosPage() {
   const [settings, setSettings] = useState<SiteSettings | null>(null)
   const [activeLocale, setActiveLocale] = useState<LocaleCode>('es')
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
+  const savedSnapshot = useRef<string | null>(null)
 
   useEffect(() => {
-    fetch('/api/admin/site').then((r) => r.json()).then(setSettings)
+    fetch('/api/admin/site')
+      .then((r) => r.json())
+      .then((data: SiteSettings) => {
+        savedSnapshot.current = JSON.stringify(data)
+        setSettings(data)
+      })
   }, [])
+
+  const isDirty =
+    savedSnapshot.current !== null &&
+    settings !== null &&
+    JSON.stringify(settings) !== savedSnapshot.current
+
+  useUnsavedChanges(isDirty)
 
   async function handleSave() {
     if (!settings) return
     setSaving(true)
-    await fetch('/api/admin/site', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(settings),
-    })
-    setSaving(false)
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2500)
+    setSaveError(null)
+    try {
+      const res = await fetch('/api/admin/site', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(settings),
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(
+          res.status === 401
+            ? 'Se venció tu sesión. Abrí el login en otra pestaña, entrá de nuevo y volvé a guardar.'
+            : data?.error || 'No se pudieron guardar los cambios.'
+        )
+      }
+
+      savedSnapshot.current = JSON.stringify(settings)
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2500)
+    } catch (error) {
+      setSaveError(error instanceof Error ? error.message : 'No se pudieron guardar los cambios.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   function update(changes: Partial<SiteSettings['about']>) {
@@ -111,6 +143,12 @@ export default function AdminNosotrosPage() {
           </button>
         </div>
       </div>
+
+      {saveError && (
+        <p className="mb-6 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-400">
+          {saveError} No cierres esta pestaña: tus cambios siguen acá.
+        </p>
+      )}
 
       <div className="space-y-5">
         <Field label="Título principal">

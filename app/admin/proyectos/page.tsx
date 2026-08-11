@@ -24,6 +24,7 @@ import {
 import { CSS } from '@dnd-kit/utilities'
 import type { Proyecto } from '@/lib/types'
 import { isVideoUrl } from '@/lib/media'
+import { useUnsavedChanges } from '@/lib/use-unsaved-changes'
 
 type ViewMode = 'grid' | 'list'
 type StatusFilter = 'all' | 'published' | 'draft'
@@ -87,6 +88,8 @@ export default function AdminProyectosPage() {
     () => projects.length === savedIds.length && projects.some((project, index) => project.id !== savedIds[index]),
     [projects, savedIds]
   )
+
+  useUnsavedChanges(isDirty, 'Reordenaste proyectos y no guardaste el orden. Si salís ahora se pierde. ¿Salir igual?')
 
   // Reordenar un subconjunto filtrado es ambiguo: sólo se arrastra sobre la lista completa.
   const canReorder = !query.trim() && statusFilter === 'all'

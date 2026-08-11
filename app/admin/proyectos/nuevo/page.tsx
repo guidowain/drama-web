@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import { useUnsavedChanges } from '@/lib/use-unsaved-changes'
 import ContentBlockEditor from '@/components/admin/ContentBlockEditor'
 import { ProjectFormFields } from '@/components/admin/ProjectFormFields'
 import { slugify } from '@/lib/utils'
@@ -26,6 +27,18 @@ export default function NuevoProyectoPage() {
   })
   const [tagInput, setTagInput] = useState('')
   const [blocks, setBlocks] = useState<ContentBlock[]>([])
+  const justSaved = useRef(false)
+
+  // Un proyecto nuevo está "sucio" apenas se cargó algo: no hay nada guardado que recuperar.
+  const isDirty =
+    !justSaved.current &&
+    (Boolean(form.name.trim()) ||
+      Boolean(form.coverImage) ||
+      Boolean(form.excerpt.trim()) ||
+      form.tags.length > 0 ||
+      blocks.length > 0)
+
+  useUnsavedChanges(isDirty)
 
   function handleNameChange(name: string) {
     setForm((f) => ({ ...f, name, slug: slugify(name) }))
@@ -63,6 +76,7 @@ export default function NuevoProyectoPage() {
         )
       }
 
+      justSaved.current = true
       router.push('/admin/proyectos')
     } catch (error) {
       setSaveError(error instanceof Error ? error.message : 'No se pudo crear el proyecto.')

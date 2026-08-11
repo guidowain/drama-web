@@ -1,17 +1,31 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { SiteSettings } from '@/lib/types'
+import { useUnsavedChanges } from '@/lib/use-unsaved-changes'
 
 export default function AdminAjustesPage() {
   const [settings, setSettings] = useState<SiteSettings | null>(null)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
+  const savedSnapshot = useRef<string | null>(null)
 
   useEffect(() => {
-    fetch('/api/admin/site').then((r) => r.json()).then(setSettings)
+    fetch('/api/admin/site')
+      .then((r) => r.json())
+      .then((data: SiteSettings) => {
+        savedSnapshot.current = JSON.stringify(data.settings)
+        setSettings(data)
+      })
   }, [])
+
+  const isDirty =
+    savedSnapshot.current !== null &&
+    settings !== null &&
+    JSON.stringify(settings.settings) !== savedSnapshot.current
+
+  useUnsavedChanges(isDirty)
 
   async function handleSave() {
     if (!settings) return
@@ -33,6 +47,7 @@ export default function AdminAjustesPage() {
         )
       }
 
+      savedSnapshot.current = JSON.stringify(settings.settings)
       setSaved(true)
       setTimeout(() => setSaved(false), 2500)
     } catch (error) {
