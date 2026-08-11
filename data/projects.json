@@ -1081,6 +1081,38 @@
     "excerpt": "Comunicación y creatividad para La cena de los tontos."
   },
   {
+    "id": "msouov5fnwouqe33ty",
+    "name": "Soy Luna Tour",
+    "slug": "soy-luna-tour",
+    "year": 2026,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "Diseño gráfico",
+      "Retoque fotográfico"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464231/drama-web/uploads/p0pouaqszcg04genmgrc.webp",
+    "coverImageAlt": "Gráfica oficial de Soy Luna Tour",
+    "contentBlocks": [],
+    "seoTitle": "Soy Luna Tour",
+    "seoDescription": "",
+    "excerpt": "",
+    "translations": {
+      "en": {
+        "tags": [
+          "Graphic Design",
+          "Photo retouch"
+        ]
+      },
+      "pt": {
+        "tags": [
+          "Design gráfico",
+          "Retoque fotográfico"
+        ]
+      }
+    }
+  },
+  {
     "id": "modaoixnfk4hht2h38w",
     "name": "Aquí no podemos hacerlo",
     "slug": "aqui-no-podemos-hacerlo",
@@ -1118,38 +1150,6 @@
         "seoDescription": "Identidade visual para Aquí no podemos hacerlo.",
         "excerpt": "Trabalho de identidade visual para Aquí no podemos hacerlo.",
         "contentBlocks": []
-      }
-    }
-  },
-  {
-    "id": "msouov5fnwouqe33ty",
-    "name": "Soy Luna Tour",
-    "slug": "soy-luna-tour",
-    "year": 2026,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "Diseño gráfico",
-      "Retoque fotográfico"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464231/drama-web/uploads/p0pouaqszcg04genmgrc.webp",
-    "coverImageAlt": "Gráfica oficial de Soy Luna Tour",
-    "contentBlocks": [],
-    "seoTitle": "Soy Luna Tour",
-    "seoDescription": "",
-    "excerpt": "",
-    "translations": {
-      "en": {
-        "tags": [
-          "Graphic Design",
-          "Photo retouch"
-        ]
-      },
-      "pt": {
-        "tags": [
-          "Design gráfico",
-          "Retoque fotográfico"
-        ]
       }
     }
   },
