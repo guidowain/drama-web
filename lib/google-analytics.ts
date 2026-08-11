@@ -93,12 +93,13 @@ export async function getAnalyticsSummary(): Promise<AnalyticsSummary> {
     (process.env.GOOGLE_CLIENT_EMAIL && process.env.GOOGLE_PRIVATE_KEY)
   )
   const hasServiceAccount = hasAnalyticsServiceAccount || hasDefaultServiceAccount
-  const serviceAccountEmail = getAnalyticsServiceAccountEmail()
+  const credentialLabel = analyticsCredentialLabel()
+  const serviceAccountEmail = credentialLabel.includes('service account') ? getAnalyticsServiceAccountEmail() : ''
   const base: AnalyticsSummary = {
     configured: Boolean(propertyId && (hasOAuthCredentials || hasServiceAccount)),
     connected: false,
     serviceAccountEmail,
-    credentialLabel: analyticsCredentialLabel(),
+    credentialLabel,
     propertyId,
     rangeLabel: 'Últimos 30 días',
     metrics: EMPTY_METRICS,

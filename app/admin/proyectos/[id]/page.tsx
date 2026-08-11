@@ -12,6 +12,7 @@ export default function EditarProyectoPage() {
   const router = useRouter()
   const { id } = useParams() as { id: string }
   const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [activeLocale, setActiveLocale] = useState<LocaleCode>('es')
   const [form, setForm] = useState({
@@ -112,13 +113,26 @@ export default function EditarProyectoPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setSaving(true)
+    setSaveError(null)
     try {
-      await fetch(`/api/admin/proyectos/${id}`, {
+      const res = await fetch(`/api/admin/proyectos/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, contentBlocks: blocks, translations }),
       })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(
+          res.status === 401
+            ? 'Se venció tu sesión. Abrí el login en otra pestaña, entrá de nuevo y volvé a guardar.'
+            : data?.error || 'No se pudieron guardar los cambios.'
+        )
+      }
+
       router.push('/admin/proyectos')
+    } catch (error) {
+      setSaveError(error instanceof Error ? error.message : 'No se pudieron guardar los cambios.')
     } finally {
       setSaving(false)
     }
@@ -175,6 +189,12 @@ export default function EditarProyectoPage() {
             onRemoveTag={removeTranslatedTag}
             onBlockChange={updateTranslatedBlock}
           />
+        )}
+
+        {saveError && (
+          <p className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-400">
+            {saveError} No cierres esta pestaña: tus cambios siguen acá.
+          </p>
         )}
 
         <div className="flex gap-3 pt-4 border-t border-white/10">

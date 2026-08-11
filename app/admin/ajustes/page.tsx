@@ -7,6 +7,7 @@ export default function AdminAjustesPage() {
   const [settings, setSettings] = useState<SiteSettings | null>(null)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
 
   useEffect(() => {
     fetch('/api/admin/site').then((r) => r.json()).then(setSettings)
@@ -15,14 +16,30 @@ export default function AdminAjustesPage() {
   async function handleSave() {
     if (!settings) return
     setSaving(true)
-    await fetch('/api/admin/site', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(settings),
-    })
-    setSaving(false)
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2500)
+    setSaveError(null)
+    try {
+      const res = await fetch('/api/admin/site', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(settings),
+      })
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(
+          res.status === 401
+            ? 'Se venció tu sesión. Abrí el login en otra pestaña, entrá de nuevo y volvé a guardar.'
+            : data?.error || 'No se pudieron guardar los ajustes.'
+        )
+      }
+
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2500)
+    } catch (error) {
+      setSaveError(error instanceof Error ? error.message : 'No se pudieron guardar los ajustes.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   function update(changes: Partial<SiteSettings['settings']>) {
@@ -44,6 +61,12 @@ export default function AdminAjustesPage() {
           {saving ? 'Guardando...' : saved ? '¡Guardado!' : 'Guardar'}
         </button>
       </div>
+
+      {saveError && (
+        <p className="mb-6 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-400">
+          {saveError} No cierres esta pestaña: tus cambios siguen acá.
+        </p>
+      )}
 
       <div className="space-y-8">
         <Section title="Redes sociales y contacto">

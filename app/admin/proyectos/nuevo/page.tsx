@@ -10,6 +10,7 @@ import type { ContentBlock } from '@/lib/types'
 export default function NuevoProyectoPage() {
   const router = useRouter()
   const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
   const [form, setForm] = useState({
     name: '',
     slug: '',
@@ -45,15 +46,26 @@ export default function NuevoProyectoPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setSaving(true)
+    setSaveError(null)
     try {
       const res = await fetch('/api/admin/proyectos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, contentBlocks: blocks }),
       })
-      if (res.ok) {
-        router.push('/admin/proyectos')
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(
+          res.status === 401
+            ? 'Se venció tu sesión. Abrí el login en otra pestaña, entrá de nuevo y volvé a guardar.'
+            : data?.error || 'No se pudo crear el proyecto.'
+        )
       }
+
+      router.push('/admin/proyectos')
+    } catch (error) {
+      setSaveError(error instanceof Error ? error.message : 'No se pudo crear el proyecto.')
     } finally {
       setSaving(false)
     }
@@ -86,6 +98,12 @@ export default function NuevoProyectoPage() {
           </legend>
           <ContentBlockEditor blocks={blocks} onChange={setBlocks} />
         </fieldset>
+
+        {saveError && (
+          <p className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-400">
+            {saveError} No cierres esta pestaña: tus cambios siguen acá.
+          </p>
+        )}
 
         {/* Actions */}
         <div className="flex gap-3 pt-4 border-t border-white/10">
