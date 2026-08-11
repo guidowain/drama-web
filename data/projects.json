@@ -333,6 +333,181 @@
     }
   },
   {
+    "id": "modbhpubocxnmlsff6",
+    "name": "Matilda",
+    "slug": "matilda",
+    "year": 2023,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "diseño",
+      "creatividad",
+      "identidad visual",
+      "Retoque fotográfico"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777059744/drama-web/uploads/crcu25parjraaitxido7.webp",
+    "coverImageAlt": "Gráfica oficial de Matilda el músical Argentina",
+    "contentBlocks": [
+      {
+        "id": "moj8nmf0r8s5af5dnoq",
+        "type": "text",
+        "alignment": "center",
+        "order": 0,
+        "title": "La Pose Matilda",
+        "text": "La gráfica oficial tenía que mostrar al elenco protagónico, por contrato. Pero nosotros creímos en otra imagen: una niña sola contra el mundo. La propusimos, la aceptaron, y se convirtió en la pieza más icónica de la campaña. La llamamos La Pose Matilda. Y tiene un detalle único: mientras todas las versiones del mundo miran hacia la izquierda, la nuestra mira hacia la derecha. Nuestra Matilda mira al porvenir.",
+        "image": "",
+        "imageAlt": "",
+        "imageScale": 100,
+        "imageShowMuteButton": true,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "image2ShowMuteButton": true,
+        "imageSide": "left"
+      },
+      {
+        "id": "mohi1fbh4qcnitnc9or",
+        "type": "image",
+        "order": 1,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777312624/drama-web/uploads/yuvuibphedhnbwi3lopv.webm",
+        "imageAlt": "Logo animado de Matilda el musical",
+        "imageScale": 100,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "imageSide": "left",
+        "imageShowMuteButton": false
+      },
+      {
+        "id": "mohj3g08kxi19d2hwc",
+        "type": "imageImage",
+        "order": 2,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777314398/drama-web/uploads/ncywhztpam9eknbqmku6.webp",
+        "imageAlt": "Matilda con sus padres",
+        "imageScale": 100,
+        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777314404/drama-web/uploads/kzv2rfymt7ahkbdisw1h.webp",
+        "image2Alt": "Niños revoltosos con miedo por la figura de Tronchatoro",
+        "image2Scale": 100,
+        "imageSide": "left"
+      },
+      {
+        "id": "mohikboe4vdxecc1k8r",
+        "type": "imageText",
+        "order": 3,
+        "title": "Lyric video",
+        "text": "Aprovechando la grabación oficial del corte promocional del musical realizamos un video animado y que los niños aprendan la letra antes de ir a la función.",
+        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777313659/drama-web/uploads/f4ltosmyuxmrkr19dw0i.webm",
+        "imageAlt": "Lyric video animado de Matilda el musical",
+        "imageScale": 100,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "imageSide": "right"
+      },
+      {
+        "id": "mohj637ixaa7i953bh",
+        "type": "image",
+        "order": 4,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777314514/drama-web/uploads/w0ge8r8uzjqqmlcbtuuh.webp",
+        "imageAlt": "Piezas gráficas de Matilda el musical",
+        "imageScale": 100,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "imageSide": "left"
+      },
+      {
+        "id": "mohjhzzac0g8lhy1nn8",
+        "type": "imageImage",
+        "order": 5,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777315073/drama-web/uploads/ekxuhdltqyfrajirzl6t.webp",
+        "imageAlt": "Piezas de campaña de Matilda el musical Argentina",
+        "imageScale": 100,
+        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777315079/drama-web/uploads/kjtebgq3lck0pcvqa7gb.png",
+        "image2Alt": "Piezas de campaña de Matilda el musical Argentina",
+        "image2Scale": 100,
+        "imageSide": "left"
+      }
+    ],
+    "seoTitle": "Matilda el musical Argentina | Drama",
+    "seoDescription": "Diseño, identidad visual y animación para Matilda el musical en Argentina.",
+    "excerpt": "Una campaña construida alrededor de una imagen poderosa: una niña sola contra el mundo.",
+    "translations": {
+      "en": {
+        "tags": [
+          "design",
+          "creativity",
+          "visual identity",
+          "photo retouching"
+        ],
+        "name": "Matilda",
+        "contentBlocks": [
+          {
+            "title": "The Matilda Pose",
+            "text": "The official artwork had to show the leading cast, by contract. But we believed in another image: one girl alone against the world. We proposed it, it was accepted, and it became the campaign’s most iconic piece. We called it The Matilda Pose. And it has one unique detail: while every version around the world looks to the left, ours looks to the right. Our Matilda looks toward the future."
+          },
+          {
+            "imageAlt": "Animated logo for Matilda the Musical"
+          },
+          {
+            "imageAlt": "Matilda with her parents",
+            "image2Alt": "Revolting children frightened by Miss Trunchbull"
+          },
+          {
+            "title": "Lyric video",
+            "text": "Using the official recording of the musical’s promotional cut, we created an animated video so children could learn the lyrics before going to the show."
+          },
+          {},
+          {}
+        ],
+        "coverImageAlt": "Official artwork for Matilda the Musical Argentina",
+        "seoTitle": "Matilda the Musical Argentina",
+        "seoDescription": "Design, visual identity, and animation for Matilda the Musical in Argentina.",
+        "excerpt": "A campaign built around a single, powerful image: one girl against the world."
+      },
+      "pt": {
+        "tags": [
+          "design",
+          "criatividade",
+          "identidade visual",
+          "retoque fotográfico"
+        ],
+        "name": "Matilda",
+        "contentBlocks": [
+          {
+            "title": "A Pose Matilda",
+            "text": "A arte oficial precisava mostrar o elenco protagonista, por contrato. Mas nós acreditávamos em outra imagem: uma menina sozinha contra o mundo. Propusemos, aceitaram, e ela se tornou a peça mais icônica da campanha. Chamamos de A Pose Matilda. E ela tem um detalhe único: enquanto todas as versões do mundo olham para a esquerda, a nossa olha para a direita. Nossa Matilda olha para o futuro."
+          },
+          {
+            "imageAlt": "Logo animado de Matilda, o Musical"
+          },
+          {
+            "imageAlt": "Matilda com seus pais",
+            "image2Alt": "Crianças revoltadas com medo da Senhorita Trunchbull"
+          },
+          {
+            "title": "Lyric video",
+            "text": "Aproveitando a gravação oficial do corte promocional do musical, criamos um vídeo animado para que as crianças aprendessem a letra antes de ir à sessão."
+          },
+          {},
+          {}
+        ],
+        "coverImageAlt": "Arte oficial de Matilda, o Musical Argentina",
+        "seoTitle": "Matilda, o Musical Argentina",
+        "seoDescription": "Design, identidade visual e animação para Matilda, o Musical na Argentina.",
+        "excerpt": "Uma campanha construída ao redor de uma imagem poderosa: uma menina sozinha contra o mundo."
+      }
+    }
+  },
+  {
     "id": "mod7llya4r2rz5jhxk9",
     "name": "School of rock",
     "slug": "school-of-rock",
@@ -510,181 +685,6 @@
         "coverImageAlt": "Arte oficial de School of Rock Argentina",
         "seoDescription": "Comunicação, design, identidade visual e animação para School of Rock Argentina.",
         "excerpt": "Uma campanha que colocou as crianças no centro e deu a todo o elenco uma direção clara de comunicação."
-      }
-    }
-  },
-  {
-    "id": "modbhpubocxnmlsff6",
-    "name": "Matilda",
-    "slug": "matilda",
-    "year": 2023,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "diseño",
-      "creatividad",
-      "identidad visual",
-      "Retoque fotográfico"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777059744/drama-web/uploads/crcu25parjraaitxido7.webp",
-    "coverImageAlt": "Gráfica oficial de Matilda el músical Argentina",
-    "contentBlocks": [
-      {
-        "id": "moj8nmf0r8s5af5dnoq",
-        "type": "text",
-        "alignment": "center",
-        "order": 0,
-        "title": "La Pose Matilda",
-        "text": "La gráfica oficial tenía que mostrar al elenco protagónico, por contrato. Pero nosotros creímos en otra imagen: una niña sola contra el mundo. La propusimos, la aceptaron, y se convirtió en la pieza más icónica de la campaña. La llamamos La Pose Matilda. Y tiene un detalle único: mientras todas las versiones del mundo miran hacia la izquierda, la nuestra mira hacia la derecha. Nuestra Matilda mira al porvenir.",
-        "image": "",
-        "imageAlt": "",
-        "imageScale": 100,
-        "imageShowMuteButton": true,
-        "image2": "",
-        "image2Alt": "",
-        "image2Scale": 100,
-        "image2ShowMuteButton": true,
-        "imageSide": "left"
-      },
-      {
-        "id": "mohi1fbh4qcnitnc9or",
-        "type": "image",
-        "order": 1,
-        "title": "",
-        "text": "",
-        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777312624/drama-web/uploads/yuvuibphedhnbwi3lopv.webm",
-        "imageAlt": "Logo animado de Matilda el musical",
-        "imageScale": 100,
-        "image2": "",
-        "image2Alt": "",
-        "image2Scale": 100,
-        "imageSide": "left",
-        "imageShowMuteButton": false
-      },
-      {
-        "id": "mohj3g08kxi19d2hwc",
-        "type": "imageImage",
-        "order": 2,
-        "title": "",
-        "text": "",
-        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777314398/drama-web/uploads/ncywhztpam9eknbqmku6.webp",
-        "imageAlt": "Matilda con sus padres",
-        "imageScale": 100,
-        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777314404/drama-web/uploads/kzv2rfymt7ahkbdisw1h.webp",
-        "image2Alt": "Niños revoltosos con miedo por la figura de Tronchatoro",
-        "image2Scale": 100,
-        "imageSide": "left"
-      },
-      {
-        "id": "mohikboe4vdxecc1k8r",
-        "type": "imageText",
-        "order": 3,
-        "title": "Lyric video",
-        "text": "Aprovechando la grabación oficial del corte promocional del musical realizamos un video animado y que los niños aprendan la letra antes de ir a la función.",
-        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777313659/drama-web/uploads/f4ltosmyuxmrkr19dw0i.webm",
-        "imageAlt": "Lyric video animado de Matilda el musical",
-        "imageScale": 100,
-        "image2": "",
-        "image2Alt": "",
-        "image2Scale": 100,
-        "imageSide": "right"
-      },
-      {
-        "id": "mohj637ixaa7i953bh",
-        "type": "image",
-        "order": 4,
-        "title": "",
-        "text": "",
-        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777314514/drama-web/uploads/w0ge8r8uzjqqmlcbtuuh.webp",
-        "imageAlt": "Piezas gráficas de Matilda el musical",
-        "imageScale": 100,
-        "image2": "",
-        "image2Alt": "",
-        "image2Scale": 100,
-        "imageSide": "left"
-      },
-      {
-        "id": "mohjhzzac0g8lhy1nn8",
-        "type": "imageImage",
-        "order": 5,
-        "title": "",
-        "text": "",
-        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777315073/drama-web/uploads/ekxuhdltqyfrajirzl6t.webp",
-        "imageAlt": "Piezas de campaña de Matilda el musical Argentina",
-        "imageScale": 100,
-        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777315079/drama-web/uploads/kjtebgq3lck0pcvqa7gb.png",
-        "image2Alt": "Piezas de campaña de Matilda el musical Argentina",
-        "image2Scale": 100,
-        "imageSide": "left"
-      }
-    ],
-    "seoTitle": "Matilda el musical Argentina | Drama",
-    "seoDescription": "Diseño, identidad visual y animación para Matilda el musical en Argentina.",
-    "excerpt": "Una campaña construida alrededor de una imagen poderosa: una niña sola contra el mundo.",
-    "translations": {
-      "en": {
-        "tags": [
-          "design",
-          "creativity",
-          "visual identity",
-          "photo retouching"
-        ],
-        "name": "Matilda",
-        "contentBlocks": [
-          {
-            "title": "The Matilda Pose",
-            "text": "The official artwork had to show the leading cast, by contract. But we believed in another image: one girl alone against the world. We proposed it, it was accepted, and it became the campaign’s most iconic piece. We called it The Matilda Pose. And it has one unique detail: while every version around the world looks to the left, ours looks to the right. Our Matilda looks toward the future."
-          },
-          {
-            "imageAlt": "Animated logo for Matilda the Musical"
-          },
-          {
-            "imageAlt": "Matilda with her parents",
-            "image2Alt": "Revolting children frightened by Miss Trunchbull"
-          },
-          {
-            "title": "Lyric video",
-            "text": "Using the official recording of the musical’s promotional cut, we created an animated video so children could learn the lyrics before going to the show."
-          },
-          {},
-          {}
-        ],
-        "coverImageAlt": "Official artwork for Matilda the Musical Argentina",
-        "seoTitle": "Matilda the Musical Argentina",
-        "seoDescription": "Design, visual identity, and animation for Matilda the Musical in Argentina.",
-        "excerpt": "A campaign built around a single, powerful image: one girl against the world."
-      },
-      "pt": {
-        "tags": [
-          "design",
-          "criatividade",
-          "identidade visual",
-          "retoque fotográfico"
-        ],
-        "name": "Matilda",
-        "contentBlocks": [
-          {
-            "title": "A Pose Matilda",
-            "text": "A arte oficial precisava mostrar o elenco protagonista, por contrato. Mas nós acreditávamos em outra imagem: uma menina sozinha contra o mundo. Propusemos, aceitaram, e ela se tornou a peça mais icônica da campanha. Chamamos de A Pose Matilda. E ela tem um detalhe único: enquanto todas as versões do mundo olham para a esquerda, a nossa olha para a direita. Nossa Matilda olha para o futuro."
-          },
-          {
-            "imageAlt": "Logo animado de Matilda, o Musical"
-          },
-          {
-            "imageAlt": "Matilda com seus pais",
-            "image2Alt": "Crianças revoltadas com medo da Senhorita Trunchbull"
-          },
-          {
-            "title": "Lyric video",
-            "text": "Aproveitando a gravação oficial do corte promocional do musical, criamos um vídeo animado para que as crianças aprendessem a letra antes de ir à sessão."
-          },
-          {},
-          {}
-        ],
-        "coverImageAlt": "Arte oficial de Matilda, o Musical Argentina",
-        "seoTitle": "Matilda, o Musical Argentina",
-        "seoDescription": "Design, identidade visual e animação para Matilda, o Musical na Argentina.",
-        "excerpt": "Uma campanha construída ao redor de uma imagem poderosa: uma menina sozinha contra o mundo."
       }
     }
   },
