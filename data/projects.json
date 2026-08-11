@@ -789,95 +789,6 @@
     }
   },
   {
-    "id": "moddlsv13hfc84fky1o",
-    "name": "Legalmente rubia",
-    "slug": "legalmente-rubia",
-    "year": 2024,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "Retoque fotográfico",
-      "diseño",
-      "identidad visual",
-      "creatividad"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777063293/drama-web/uploads/vcnbqv6nxis0pdlu5x0u.webp",
-    "coverImageAlt": "Arte oficial de Legalmente rubia Argentina",
-    "contentBlocks": [
-      {
-        "id": "mohzfvhyaby06j8vqxj",
-        "type": "image",
-        "order": 0,
-        "title": "",
-        "text": "",
-        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777341851/drama-web/uploads/sdby1dp6sibbbutbmzsv.webm",
-        "imageAlt": "",
-        "imageScale": 100,
-        "imageShowMuteButton": false,
-        "image2": "",
-        "image2Alt": "",
-        "image2Scale": 100,
-        "image2ShowMuteButton": true,
-        "imageSide": "left"
-      },
-      {
-        "id": "mohzgq2ecjp1dhflimi",
-        "type": "imageImage",
-        "order": 1,
-        "title": "",
-        "text": "",
-        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777341886/drama-web/uploads/std2tuluypsj68nrv14t.webm",
-        "imageAlt": "",
-        "imageScale": 75,
-        "imageShowMuteButton": false,
-        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777341966/drama-web/uploads/iljxjvbujwz0w6b1rion.webp",
-        "image2Alt": "",
-        "image2Scale": 140,
-        "image2ShowMuteButton": true,
-        "imageSide": "left"
-      }
-    ],
-    "seoTitle": "Legalmente rubia Argentina | Drama",
-    "seoDescription": "Diseño, identidad visual, creatividad y retoque fotográfico para Legalmente rubia Argentina.",
-    "excerpt": "Una identidad visual luminosa y precisa para la producción argentina de Legalmente rubia.",
-    "translations": {
-      "en": {
-        "tags": [
-          "photo retouching",
-          "design",
-          "visual identity",
-          "creativity"
-        ],
-        "name": "Legally Blonde",
-        "coverImageAlt": "Official artwork for Legally Blonde Argentina",
-        "seoTitle": "Legally Blonde Argentina",
-        "seoDescription": "Design, visual identity, creativity, and photo retouching for Legally Blonde Argentina.",
-        "excerpt": "A bright, precise visual identity for the Argentine production of Legally Blonde.",
-        "contentBlocks": [
-          {},
-          {}
-        ]
-      },
-      "pt": {
-        "tags": [
-          "retoque fotográfico",
-          "design",
-          "identidade visual",
-          "criatividade"
-        ],
-        "name": "Legalmente Loira",
-        "coverImageAlt": "Arte oficial de Legalmente Loira Argentina",
-        "seoTitle": "Legalmente Loira Argentina",
-        "seoDescription": "Design, identidade visual, criatividade e retoque fotográfico para Legalmente Loira Argentina.",
-        "excerpt": "Uma identidade visual luminosa e precisa para a produção argentina de Legalmente Loira.",
-        "contentBlocks": [
-          {},
-          {}
-        ]
-      }
-    }
-  },
-  {
     "id": "mod95mm7bzd6bgvrl74",
     "name": "Chanta",
     "slug": "chanta",
@@ -1042,6 +953,95 @@
         "coverImageAlt": "Arte oficial de Chanta",
         "seoDescription": "Identidade visual, criatividade, animação e conteúdo para redes sociais de Chanta.",
         "excerpt": "Uma campanha que expandiu o universo da obra e transformou Julio Ballesteros também em personagem das redes."
+      }
+    }
+  },
+  {
+    "id": "moddlsv13hfc84fky1o",
+    "name": "Legalmente rubia",
+    "slug": "legalmente-rubia",
+    "year": 2024,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "Retoque fotográfico",
+      "diseño",
+      "identidad visual",
+      "creatividad"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777063293/drama-web/uploads/vcnbqv6nxis0pdlu5x0u.webp",
+    "coverImageAlt": "Arte oficial de Legalmente rubia Argentina",
+    "contentBlocks": [
+      {
+        "id": "mohzfvhyaby06j8vqxj",
+        "type": "image",
+        "order": 0,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777341851/drama-web/uploads/sdby1dp6sibbbutbmzsv.webm",
+        "imageAlt": "",
+        "imageScale": 100,
+        "imageShowMuteButton": false,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "image2ShowMuteButton": true,
+        "imageSide": "left"
+      },
+      {
+        "id": "mohzgq2ecjp1dhflimi",
+        "type": "imageImage",
+        "order": 1,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777341886/drama-web/uploads/std2tuluypsj68nrv14t.webm",
+        "imageAlt": "",
+        "imageScale": 75,
+        "imageShowMuteButton": false,
+        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777341966/drama-web/uploads/iljxjvbujwz0w6b1rion.webp",
+        "image2Alt": "",
+        "image2Scale": 140,
+        "image2ShowMuteButton": true,
+        "imageSide": "left"
+      }
+    ],
+    "seoTitle": "Legalmente rubia Argentina | Drama",
+    "seoDescription": "Diseño, identidad visual, creatividad y retoque fotográfico para Legalmente rubia Argentina.",
+    "excerpt": "Una identidad visual luminosa y precisa para la producción argentina de Legalmente rubia.",
+    "translations": {
+      "en": {
+        "tags": [
+          "photo retouching",
+          "design",
+          "visual identity",
+          "creativity"
+        ],
+        "name": "Legally Blonde",
+        "coverImageAlt": "Official artwork for Legally Blonde Argentina",
+        "seoTitle": "Legally Blonde Argentina",
+        "seoDescription": "Design, visual identity, creativity, and photo retouching for Legally Blonde Argentina.",
+        "excerpt": "A bright, precise visual identity for the Argentine production of Legally Blonde.",
+        "contentBlocks": [
+          {},
+          {}
+        ]
+      },
+      "pt": {
+        "tags": [
+          "retoque fotográfico",
+          "design",
+          "identidade visual",
+          "criatividade"
+        ],
+        "name": "Legalmente Loira",
+        "coverImageAlt": "Arte oficial de Legalmente Loira Argentina",
+        "seoTitle": "Legalmente Loira Argentina",
+        "seoDescription": "Design, identidade visual, criatividade e retoque fotográfico para Legalmente Loira Argentina.",
+        "excerpt": "Uma identidade visual luminosa e precisa para a produção argentina de Legalmente Loira.",
+        "contentBlocks": [
+          {},
+          {}
+        ]
       }
     }
   },
