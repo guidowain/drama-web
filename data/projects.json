@@ -1093,56 +1093,6 @@
     "excerpt": "Comunicación y creatividad para La cena de los tontos."
   },
   {
-    "id": "mod9mw1kgsr4f2qknxc",
-    "name": "Mi amiga y yo",
-    "slug": "mi-amiga-y-yo",
-    "year": 2025,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "identidad visual",
-      "retoque fotográfico",
-      "creatividad",
-      "diseño"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777056624/drama-web/uploads/z15hocfs9wsqmqyt5ssv.webp",
-    "coverImageAlt": "Arte oficial de Mi amiga y yo",
-    "contentBlocks": [],
-    "seoTitle": "Mi amiga y yo | Drama",
-    "seoDescription": "Identidad visual, creatividad, diseño y retoque fotográfico para Mi amiga y yo.",
-    "excerpt": "Identidad visual y piezas de campaña para Mi amiga y yo.",
-    "translations": {
-      "en": {
-        "tags": [
-          "visual identity",
-          "photo retouching",
-          "creativity",
-          "design"
-        ],
-        "name": "Mi amiga y yo",
-        "coverImageAlt": "Official artwork for Mi amiga y yo",
-        "seoTitle": "Mi amiga y yo",
-        "seoDescription": "Visual identity, creativity, design, and photo retouching for Mi amiga y yo.",
-        "excerpt": "Visual identity and campaign pieces for Mi amiga y yo.",
-        "contentBlocks": []
-      },
-      "pt": {
-        "tags": [
-          "identidade visual",
-          "retoque fotográfico",
-          "criatividade",
-          "design"
-        ],
-        "name": "Mi amiga y yo",
-        "coverImageAlt": "Arte oficial de Mi amiga y yo",
-        "seoTitle": "Mi amiga y yo",
-        "seoDescription": "Identidade visual, criatividade, design e retoque fotográfico para Mi amiga y yo.",
-        "excerpt": "Identidade visual e peças de campanha para Mi amiga y yo.",
-        "contentBlocks": []
-      }
-    }
-  },
-  {
     "id": "mogrtbmlbdegoq7jpn5",
     "name": "Avenida Q",
     "slug": "avenida-q",
@@ -1188,6 +1138,56 @@
         "seoTitle": "Avenida Q Argentina",
         "seoDescription": "Criatividade, design, identidade visual e retoque fotográfico para Avenida Q Argentina.",
         "excerpt": "Identidade visual e peças de campanha para Avenida Q Argentina.",
+        "contentBlocks": []
+      }
+    }
+  },
+  {
+    "id": "mod9mw1kgsr4f2qknxc",
+    "name": "Mi amiga y yo",
+    "slug": "mi-amiga-y-yo",
+    "year": 2025,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "identidad visual",
+      "retoque fotográfico",
+      "creatividad",
+      "diseño"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777056624/drama-web/uploads/z15hocfs9wsqmqyt5ssv.webp",
+    "coverImageAlt": "Arte oficial de Mi amiga y yo",
+    "contentBlocks": [],
+    "seoTitle": "Mi amiga y yo | Drama",
+    "seoDescription": "Identidad visual, creatividad, diseño y retoque fotográfico para Mi amiga y yo.",
+    "excerpt": "Identidad visual y piezas de campaña para Mi amiga y yo.",
+    "translations": {
+      "en": {
+        "tags": [
+          "visual identity",
+          "photo retouching",
+          "creativity",
+          "design"
+        ],
+        "name": "Mi amiga y yo",
+        "coverImageAlt": "Official artwork for Mi amiga y yo",
+        "seoTitle": "Mi amiga y yo",
+        "seoDescription": "Visual identity, creativity, design, and photo retouching for Mi amiga y yo.",
+        "excerpt": "Visual identity and campaign pieces for Mi amiga y yo.",
+        "contentBlocks": []
+      },
+      "pt": {
+        "tags": [
+          "identidade visual",
+          "retoque fotográfico",
+          "criatividade",
+          "design"
+        ],
+        "name": "Mi amiga y yo",
+        "coverImageAlt": "Arte oficial de Mi amiga y yo",
+        "seoTitle": "Mi amiga y yo",
+        "seoDescription": "Identidade visual, criatividade, design e retoque fotográfico para Mi amiga y yo.",
+        "excerpt": "Identidade visual e peças de campanha para Mi amiga y yo.",
         "contentBlocks": []
       }
     }
