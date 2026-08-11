@@ -1181,51 +1181,51 @@
     "excerpt": "Comunicación y creatividad para La cena de los tontos."
   },
   {
-    "id": "mogrtbmlbdegoq7jpn5",
-    "name": "Avenida Q",
-    "slug": "avenida-q",
-    "year": 2024,
+    "id": "mogs82r6xj14x5i53b",
+    "name": "Navidad en las películas",
+    "slug": "navidad-en-las-peliculas",
+    "year": 2025,
     "featured": false,
     "published": true,
     "tags": [
-      "CREATIVIDAD",
-      "RETOQUE FOTOGRÁFICO",
+      "IDENTIDAD VISUAL",
       "DISEÑO",
-      "IDENTIDAD VISUAL"
+      "RETOQUE FOTOGRÁFICO",
+      "CREATIVIDAD"
     ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777268493/drama-web/uploads/cbp263qmerayjwysoxzu.webp",
-    "coverImageAlt": "Gráfica oficial de Avenida Q Argentina.",
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777269228/drama-web/uploads/lk0z9vlrwv1wnzssb2t8.webp",
+    "coverImageAlt": "Gráfica oficial de Navidad en las películas con Raúl Lavié",
     "contentBlocks": [],
-    "seoTitle": "Avenida Q Argentina",
-    "seoDescription": "Creatividad, diseño, identidad visual y retoque fotográfico para Avenida Q Argentina.",
-    "excerpt": "Identidad visual y piezas de campaña para Avenida Q Argentina.",
+    "seoTitle": "Navidad en las películas | Drama",
+    "seoDescription": "Identidad visual, diseño, creatividad y retoque fotográfico para Navidad en las películas con Raúl Lavié.",
+    "excerpt": "Identidad visual y piezas de campaña para Navidad en las películas.",
     "translations": {
       "en": {
         "tags": [
-          "creativity",
-          "photo retouching",
+          "visual identity",
           "design",
-          "visual identity"
+          "photo retouching",
+          "creativity"
         ],
-        "name": "Avenue Q",
-        "coverImageAlt": "Official artwork for Avenue Q Argentina",
-        "seoTitle": "Avenue Q Argentina",
-        "seoDescription": "Creativity, design, visual identity, and photo retouching for Avenue Q Argentina.",
-        "excerpt": "Visual identity and campaign pieces for Avenue Q Argentina.",
+        "name": "Navidad en las películas",
+        "coverImageAlt": "Official artwork for Navidad en las películas with Raúl Lavié",
+        "seoTitle": "Navidad en las películas",
+        "seoDescription": "Visual identity, design, creativity, and photo retouching for Navidad en las películas.",
+        "excerpt": "Visual identity and campaign pieces for Navidad en las películas.",
         "contentBlocks": []
       },
       "pt": {
         "tags": [
-          "criatividade",
-          "retoque fotográfico",
+          "identidade visual",
           "design",
-          "identidade visual"
+          "retoque fotográfico",
+          "criatividade"
         ],
-        "name": "Avenida Q",
-        "coverImageAlt": "Arte oficial de Avenida Q Argentina",
-        "seoTitle": "Avenida Q Argentina",
-        "seoDescription": "Criatividade, design, identidade visual e retoque fotográfico para Avenida Q Argentina.",
-        "excerpt": "Identidade visual e peças de campanha para Avenida Q Argentina.",
+        "name": "Navidad en las películas",
+        "coverImageAlt": "Arte oficial de Navidad en las películas com Raúl Lavié",
+        "seoTitle": "Navidad en las películas",
+        "seoDescription": "Identidade visual, design, criatividade e retoque fotográfico para Navidad en las películas.",
+        "excerpt": "Identidade visual e peças de campanha para Navidad en las películas.",
         "contentBlocks": []
       }
     }
@@ -1281,6 +1281,56 @@
     }
   },
   {
+    "id": "mogrtbmlbdegoq7jpn5",
+    "name": "Avenida Q",
+    "slug": "avenida-q",
+    "year": 2024,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "CREATIVIDAD",
+      "RETOQUE FOTOGRÁFICO",
+      "DISEÑO",
+      "IDENTIDAD VISUAL"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777268493/drama-web/uploads/cbp263qmerayjwysoxzu.webp",
+    "coverImageAlt": "Gráfica oficial de Avenida Q Argentina.",
+    "contentBlocks": [],
+    "seoTitle": "Avenida Q Argentina",
+    "seoDescription": "Creatividad, diseño, identidad visual y retoque fotográfico para Avenida Q Argentina.",
+    "excerpt": "Identidad visual y piezas de campaña para Avenida Q Argentina.",
+    "translations": {
+      "en": {
+        "tags": [
+          "creativity",
+          "photo retouching",
+          "design",
+          "visual identity"
+        ],
+        "name": "Avenue Q",
+        "coverImageAlt": "Official artwork for Avenue Q Argentina",
+        "seoTitle": "Avenue Q Argentina",
+        "seoDescription": "Creativity, design, visual identity, and photo retouching for Avenue Q Argentina.",
+        "excerpt": "Visual identity and campaign pieces for Avenue Q Argentina.",
+        "contentBlocks": []
+      },
+      "pt": {
+        "tags": [
+          "criatividade",
+          "retoque fotográfico",
+          "design",
+          "identidade visual"
+        ],
+        "name": "Avenida Q",
+        "coverImageAlt": "Arte oficial de Avenida Q Argentina",
+        "seoTitle": "Avenida Q Argentina",
+        "seoDescription": "Criatividade, design, identidade visual e retoque fotográfico para Avenida Q Argentina.",
+        "excerpt": "Identidade visual e peças de campanha para Avenida Q Argentina.",
+        "contentBlocks": []
+      }
+    }
+  },
+  {
     "id": "modaoixnfk4hht2h38w",
     "name": "Aquí no podemos hacerlo",
     "slug": "aqui-no-podemos-hacerlo",
@@ -1317,56 +1367,6 @@
         "seoTitle": "Aquí no podemos hacerlo",
         "seoDescription": "Identidade visual para Aquí no podemos hacerlo.",
         "excerpt": "Trabalho de identidade visual para Aquí no podemos hacerlo.",
-        "contentBlocks": []
-      }
-    }
-  },
-  {
-    "id": "mogs82r6xj14x5i53b",
-    "name": "Navidad en las películas",
-    "slug": "navidad-en-las-peliculas",
-    "year": 2025,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "IDENTIDAD VISUAL",
-      "DISEÑO",
-      "RETOQUE FOTOGRÁFICO",
-      "CREATIVIDAD"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777269228/drama-web/uploads/lk0z9vlrwv1wnzssb2t8.webp",
-    "coverImageAlt": "Gráfica oficial de Navidad en las películas con Raúl Lavié",
-    "contentBlocks": [],
-    "seoTitle": "Navidad en las películas | Drama",
-    "seoDescription": "Identidad visual, diseño, creatividad y retoque fotográfico para Navidad en las películas con Raúl Lavié.",
-    "excerpt": "Identidad visual y piezas de campaña para Navidad en las películas.",
-    "translations": {
-      "en": {
-        "tags": [
-          "visual identity",
-          "design",
-          "photo retouching",
-          "creativity"
-        ],
-        "name": "Navidad en las películas",
-        "coverImageAlt": "Official artwork for Navidad en las películas with Raúl Lavié",
-        "seoTitle": "Navidad en las películas",
-        "seoDescription": "Visual identity, design, creativity, and photo retouching for Navidad en las películas.",
-        "excerpt": "Visual identity and campaign pieces for Navidad en las películas.",
-        "contentBlocks": []
-      },
-      "pt": {
-        "tags": [
-          "identidade visual",
-          "design",
-          "retoque fotográfico",
-          "criatividade"
-        ],
-        "name": "Navidad en las películas",
-        "coverImageAlt": "Arte oficial de Navidad en las películas com Raúl Lavié",
-        "seoTitle": "Navidad en las películas",
-        "seoDescription": "Identidade visual, design, criatividade e retoque fotográfico para Navidad en las películas.",
-        "excerpt": "Identidade visual e peças de campanha para Navidad en las películas.",
         "contentBlocks": []
       }
     }
