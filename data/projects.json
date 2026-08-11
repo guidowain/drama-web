@@ -1417,6 +1417,19 @@
     "seoTitle": "Soy Luna Tour",
     "seoDescription": "",
     "excerpt": "",
-    "translations": {}
+    "translations": {
+      "en": {
+        "tags": [
+          "Graphic Design",
+          "Photo retouch"
+        ]
+      },
+      "pt": {
+        "tags": [
+          "Design gráfico",
+          "Retoque fotográfico"
+        ]
+      }
+    }
   }
 ]
