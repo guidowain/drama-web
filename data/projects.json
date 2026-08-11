@@ -759,6 +759,36 @@
     }
   },
   {
+    "id": "msov2w6e9t458iv3zbf",
+    "name": "La llamada",
+    "slug": "la-llamada",
+    "year": 2026,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "Identidad visual",
+      "Creatividad",
+      "Diseño gráfico",
+      "Retoque fotográfico"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464887/drama-web/uploads/l2q4c7tokdun8ppef93f.webp",
+    "coverImageAlt": "Gráfica oficial de La llamada",
+    "contentBlocks": [],
+    "seoTitle": "La llamada Argentina",
+    "seoDescription": "",
+    "excerpt": "",
+    "translations": {
+      "en": {
+        "tags": [
+          "Identidade visual",
+          "Design gráfico",
+          "Retoque fotográfico",
+          "Criatividade"
+        ]
+      }
+    }
+  },
+  {
     "id": "moddlsv13hfc84fky1o",
     "name": "Legalmente rubia",
     "slug": "legalmente-rubia",
@@ -843,36 +873,6 @@
         "contentBlocks": [
           {},
           {}
-        ]
-      }
-    }
-  },
-  {
-    "id": "msov2w6e9t458iv3zbf",
-    "name": "La llamada",
-    "slug": "la-llamada",
-    "year": 2026,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "Identidad visual",
-      "Creatividad",
-      "Diseño gráfico",
-      "Retoque fotográfico"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464887/drama-web/uploads/l2q4c7tokdun8ppef93f.webp",
-    "coverImageAlt": "Gráfica oficial de La llamada",
-    "contentBlocks": [],
-    "seoTitle": "La llamada Argentina",
-    "seoDescription": "",
-    "excerpt": "",
-    "translations": {
-      "en": {
-        "tags": [
-          "Identidade visual",
-          "Design gráfico",
-          "Retoque fotográfico",
-          "Criatividade"
         ]
       }
     }
