@@ -1360,6 +1360,38 @@
     }
   },
   {
+    "id": "msouov5fnwouqe33ty",
+    "name": "Soy Luna Tour",
+    "slug": "soy-luna-tour",
+    "year": 2026,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "Diseño gráfico",
+      "Retoque fotográfico"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464231/drama-web/uploads/p0pouaqszcg04genmgrc.webp",
+    "coverImageAlt": "Gráfica oficial de Soy Luna Tour",
+    "contentBlocks": [],
+    "seoTitle": "Soy Luna Tour",
+    "seoDescription": "",
+    "excerpt": "",
+    "translations": {
+      "en": {
+        "tags": [
+          "Graphic Design",
+          "Photo retouch"
+        ]
+      },
+      "pt": {
+        "tags": [
+          "Design gráfico",
+          "Retoque fotográfico"
+        ]
+      }
+    }
+  },
+  {
     "id": "mohkq6smauen13jxdxe",
     "name": "Vivitos y Coleando 2",
     "slug": "vivitos-y-coleando-2",
@@ -1397,38 +1429,6 @@
         "seoDescription": "Identidade visual para Vivitos y Coleando 2.",
         "excerpt": "Trabalho de identidade visual para Vivitos y Coleando 2.",
         "contentBlocks": []
-      }
-    }
-  },
-  {
-    "id": "msouov5fnwouqe33ty",
-    "name": "Soy Luna Tour",
-    "slug": "soy-luna-tour",
-    "year": 2026,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "Diseño gráfico",
-      "Retoque fotográfico"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464231/drama-web/uploads/p0pouaqszcg04genmgrc.webp",
-    "coverImageAlt": "Gráfica oficial de Soy Luna Tour",
-    "contentBlocks": [],
-    "seoTitle": "Soy Luna Tour",
-    "seoDescription": "",
-    "excerpt": "",
-    "translations": {
-      "en": {
-        "tags": [
-          "Graphic Design",
-          "Photo retouch"
-        ]
-      },
-      "pt": {
-        "tags": [
-          "Design gráfico",
-          "Retoque fotográfico"
-        ]
       }
     }
   }
