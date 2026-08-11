@@ -1122,6 +1122,38 @@
     }
   },
   {
+    "id": "msouov5fnwouqe33ty",
+    "name": "Soy Luna Tour",
+    "slug": "soy-luna-tour",
+    "year": 2026,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "Diseño gráfico",
+      "Retoque fotográfico"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464231/drama-web/uploads/p0pouaqszcg04genmgrc.webp",
+    "coverImageAlt": "Gráfica oficial de Soy Luna Tour",
+    "contentBlocks": [],
+    "seoTitle": "Soy Luna Tour",
+    "seoDescription": "",
+    "excerpt": "",
+    "translations": {
+      "en": {
+        "tags": [
+          "Graphic Design",
+          "Photo retouch"
+        ]
+      },
+      "pt": {
+        "tags": [
+          "Design gráfico",
+          "Retoque fotográfico"
+        ]
+      }
+    }
+  },
+  {
     "id": "mogrtbmlbdegoq7jpn5",
     "name": "Avenida Q",
     "slug": "avenida-q",
@@ -1168,38 +1200,6 @@
         "seoDescription": "Criatividade, design, identidade visual e retoque fotográfico para Avenida Q Argentina.",
         "excerpt": "Identidade visual e peças de campanha para Avenida Q Argentina.",
         "contentBlocks": []
-      }
-    }
-  },
-  {
-    "id": "msouov5fnwouqe33ty",
-    "name": "Soy Luna Tour",
-    "slug": "soy-luna-tour",
-    "year": 2026,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "Diseño gráfico",
-      "Retoque fotográfico"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464231/drama-web/uploads/p0pouaqszcg04genmgrc.webp",
-    "coverImageAlt": "Gráfica oficial de Soy Luna Tour",
-    "contentBlocks": [],
-    "seoTitle": "Soy Luna Tour",
-    "seoDescription": "",
-    "excerpt": "",
-    "translations": {
-      "en": {
-        "tags": [
-          "Graphic Design",
-          "Photo retouch"
-        ]
-      },
-      "pt": {
-        "tags": [
-          "Design gráfico",
-          "Retoque fotográfico"
-        ]
       }
     }
   },
