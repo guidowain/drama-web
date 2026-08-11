@@ -1322,6 +1322,27 @@
     }
   },
   {
+    "id": "msoths6jy7ikry34g1r",
+    "name": "Luna y su galaxia",
+    "slug": "luna-y-su-galaxia",
+    "year": 2026,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "Identidad visual",
+      "Diseño gráfico",
+      "Estrategia",
+      "Retoque fotográfico"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786462220/drama-web/uploads/j5flqg2etn3y6ceqqees.webp",
+    "coverImageAlt": "Gráfica oficial de Luna y su galaxia",
+    "contentBlocks": [],
+    "seoTitle": "Luna y su galaxia",
+    "seoDescription": "",
+    "excerpt": "",
+    "translations": {}
+  },
+  {
     "id": "mohkq6smauen13jxdxe",
     "name": "Vivitos y Coleando 2",
     "slug": "vivitos-y-coleando-2",
@@ -1361,26 +1382,5 @@
         "contentBlocks": []
       }
     }
-  },
-  {
-    "id": "msoths6jy7ikry34g1r",
-    "name": "Luna y su galaxia",
-    "slug": "luna-y-su-galaxia",
-    "year": 2026,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "Identidad visual",
-      "Diseño gráfico",
-      "Estrategia",
-      "Retoque fotográfico"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786462220/drama-web/uploads/j5flqg2etn3y6ceqqees.webp",
-    "coverImageAlt": "Gráfica oficial de Luna y su galaxia",
-    "contentBlocks": [],
-    "seoTitle": "Luna y su galaxia",
-    "seoDescription": "",
-    "excerpt": "",
-    "translations": {}
   }
 ]
