@@ -526,7 +526,24 @@
     "seoTitle": "Luna y su galaxia",
     "seoDescription": "",
     "excerpt": "",
-    "translations": {}
+    "translations": {
+      "en": {
+        "tags": [
+          "Visual Identity",
+          "Grpahic design",
+          "Photo retouch",
+          "Strategy"
+        ]
+      },
+      "pt": {
+        "tags": [
+          "Identidade visual",
+          "Design gráfico",
+          "Estratégia",
+          "Retoque fotográfico"
+        ]
+      }
+    }
   },
   {
     "id": "mod7llya4r2rz5jhxk9",
