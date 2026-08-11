@@ -1193,47 +1193,6 @@
     }
   },
   {
-    "id": "modaoixnfk4hht2h38w",
-    "name": "Aquí no podemos hacerlo",
-    "slug": "aqui-no-podemos-hacerlo",
-    "year": 2026,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "identidad visual"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777058382/drama-web/uploads/a8keqjy6ihmzdopsxi2j.webp",
-    "coverImageAlt": "Arte oficial de Aquí no podemos hacerlo",
-    "contentBlocks": [],
-    "seoTitle": "Aquí no podemos hacerlo | Drama",
-    "seoDescription": "Identidad visual para Aquí no podemos hacerlo.",
-    "excerpt": "Identidad visual para Aquí no podemos hacerlo.",
-    "translations": {
-      "en": {
-        "tags": [
-          "visual identity"
-        ],
-        "name": "Aquí no podemos hacerlo",
-        "coverImageAlt": "Official artwork for Aquí no podemos hacerlo",
-        "seoTitle": "Aquí no podemos hacerlo",
-        "seoDescription": "Visual identity for Aquí no podemos hacerlo.",
-        "excerpt": "Visual identity work for Aquí no podemos hacerlo.",
-        "contentBlocks": []
-      },
-      "pt": {
-        "tags": [
-          "identidade visual"
-        ],
-        "name": "Aquí no podemos hacerlo",
-        "coverImageAlt": "Arte oficial de Aquí no podemos hacerlo",
-        "seoTitle": "Aquí no podemos hacerlo",
-        "seoDescription": "Identidade visual para Aquí no podemos hacerlo.",
-        "excerpt": "Trabalho de identidade visual para Aquí no podemos hacerlo.",
-        "contentBlocks": []
-      }
-    }
-  },
-  {
     "id": "mohkq6smauen13jxdxe",
     "name": "Vivitos y Coleando 2",
     "slug": "vivitos-y-coleando-2",
@@ -1270,6 +1229,47 @@
         "seoTitle": "Vivitos y Coleando 2",
         "seoDescription": "Identidade visual para Vivitos y Coleando 2.",
         "excerpt": "Trabalho de identidade visual para Vivitos y Coleando 2.",
+        "contentBlocks": []
+      }
+    }
+  },
+  {
+    "id": "modaoixnfk4hht2h38w",
+    "name": "Aquí no podemos hacerlo",
+    "slug": "aqui-no-podemos-hacerlo",
+    "year": 2026,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "identidad visual"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777058382/drama-web/uploads/a8keqjy6ihmzdopsxi2j.webp",
+    "coverImageAlt": "Arte oficial de Aquí no podemos hacerlo",
+    "contentBlocks": [],
+    "seoTitle": "Aquí no podemos hacerlo | Drama",
+    "seoDescription": "Identidad visual para Aquí no podemos hacerlo.",
+    "excerpt": "Identidad visual para Aquí no podemos hacerlo.",
+    "translations": {
+      "en": {
+        "tags": [
+          "visual identity"
+        ],
+        "name": "Aquí no podemos hacerlo",
+        "coverImageAlt": "Official artwork for Aquí no podemos hacerlo",
+        "seoTitle": "Aquí no podemos hacerlo",
+        "seoDescription": "Visual identity for Aquí no podemos hacerlo.",
+        "excerpt": "Visual identity work for Aquí no podemos hacerlo.",
+        "contentBlocks": []
+      },
+      "pt": {
+        "tags": [
+          "identidade visual"
+        ],
+        "name": "Aquí no podemos hacerlo",
+        "coverImageAlt": "Arte oficial de Aquí no podemos hacerlo",
+        "seoTitle": "Aquí no podemos hacerlo",
+        "seoDescription": "Identidade visual para Aquí no podemos hacerlo.",
+        "excerpt": "Trabalho de identidade visual para Aquí no podemos hacerlo.",
         "contentBlocks": []
       }
     }
