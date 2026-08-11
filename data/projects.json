@@ -1269,6 +1269,38 @@
     }
   },
   {
+    "id": "msouov5fnwouqe33ty",
+    "name": "Soy Luna Tour",
+    "slug": "soy-luna-tour",
+    "year": 2026,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "Diseño gráfico",
+      "Retoque fotográfico"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464231/drama-web/uploads/p0pouaqszcg04genmgrc.webp",
+    "coverImageAlt": "Gráfica oficial de Soy Luna Tour",
+    "contentBlocks": [],
+    "seoTitle": "Soy Luna Tour",
+    "seoDescription": "",
+    "excerpt": "",
+    "translations": {
+      "en": {
+        "tags": [
+          "Graphic Design",
+          "Photo retouch"
+        ]
+      },
+      "pt": {
+        "tags": [
+          "Design gráfico",
+          "Retoque fotográfico"
+        ]
+      }
+    }
+  },
+  {
     "id": "mogsvbm3w066py1wp4",
     "name": "Lucky Hank",
     "slug": "lucky-hank",
@@ -1312,38 +1344,6 @@
         "seoDescription": "Criatividade, marketing e design para Lucky Hank.",
         "excerpt": "Trabalho de criatividade e design de marketing para Lucky Hank.",
         "contentBlocks": []
-      }
-    }
-  },
-  {
-    "id": "msouov5fnwouqe33ty",
-    "name": "Soy Luna Tour",
-    "slug": "soy-luna-tour",
-    "year": 2026,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "Diseño gráfico",
-      "Retoque fotográfico"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464231/drama-web/uploads/p0pouaqszcg04genmgrc.webp",
-    "coverImageAlt": "Gráfica oficial de Soy Luna Tour",
-    "contentBlocks": [],
-    "seoTitle": "Soy Luna Tour",
-    "seoDescription": "",
-    "excerpt": "",
-    "translations": {
-      "en": {
-        "tags": [
-          "Graphic Design",
-          "Photo retouch"
-        ]
-      },
-      "pt": {
-        "tags": [
-          "Design gráfico",
-          "Retoque fotográfico"
-        ]
       }
     }
   },
