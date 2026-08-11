@@ -1451,6 +1451,15 @@
     "seoTitle": "La llamada Argentina",
     "seoDescription": "",
     "excerpt": "",
-    "translations": {}
+    "translations": {
+      "en": {
+        "tags": [
+          "Identidade visual",
+          "Design gráfico",
+          "Retoque fotográfico",
+          "Criatividade"
+        ]
+      }
+    }
   }
 ]
