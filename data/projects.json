@@ -1046,6 +1046,53 @@
     }
   },
   {
+    "id": "2",
+    "name": "La cena de los tontos",
+    "slug": "la-cena-de-los-tontos",
+    "year": 2025,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "CREATIVIDAD",
+      "COMUNICACIÓN",
+      "ANIMACIÓN"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777055002/drama-web/uploads/pmjljwgmmqvq64ilkyly.webp",
+    "coverImageAlt": "Gráfica de La cena de los tontos",
+    "contentBlocks": [],
+    "translations": {
+      "en": {
+        "tags": [
+          "creativity",
+          "communications",
+          "animation"
+        ],
+        "name": "La cena de los tontos",
+        "coverImageAlt": "Artwork for La cena de los tontos",
+        "seoTitle": "La cena de los tontos",
+        "seoDescription": "Creativity, communications, and animation for La cena de los tontos.",
+        "excerpt": "Creative and communications work for La cena de los tontos.",
+        "contentBlocks": []
+      },
+      "pt": {
+        "tags": [
+          "criatividade",
+          "comunicação",
+          "animação"
+        ],
+        "name": "La cena de los tontos",
+        "coverImageAlt": "Arte de La cena de los tontos",
+        "seoTitle": "La cena de los tontos",
+        "seoDescription": "Criatividade, comunicação e animação para La cena de los tontos.",
+        "excerpt": "Trabalho de criatividade e comunicação para La cena de los tontos.",
+        "contentBlocks": []
+      }
+    },
+    "seoTitle": "La cena de los tontos | Drama",
+    "seoDescription": "Creatividad, comunicación y animación para La cena de los tontos.",
+    "excerpt": "Comunicación y creatividad para La cena de los tontos."
+  },
+  {
     "id": "mod9mw1kgsr4f2qknxc",
     "name": "Mi amiga y yo",
     "slug": "mi-amiga-y-yo",
@@ -1094,53 +1141,6 @@
         "contentBlocks": []
       }
     }
-  },
-  {
-    "id": "2",
-    "name": "La cena de los tontos",
-    "slug": "la-cena-de-los-tontos",
-    "year": 2025,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "CREATIVIDAD",
-      "COMUNICACIÓN",
-      "ANIMACIÓN"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777055002/drama-web/uploads/pmjljwgmmqvq64ilkyly.webp",
-    "coverImageAlt": "Gráfica de La cena de los tontos",
-    "contentBlocks": [],
-    "translations": {
-      "en": {
-        "tags": [
-          "creativity",
-          "communications",
-          "animation"
-        ],
-        "name": "La cena de los tontos",
-        "coverImageAlt": "Artwork for La cena de los tontos",
-        "seoTitle": "La cena de los tontos",
-        "seoDescription": "Creativity, communications, and animation for La cena de los tontos.",
-        "excerpt": "Creative and communications work for La cena de los tontos.",
-        "contentBlocks": []
-      },
-      "pt": {
-        "tags": [
-          "criatividade",
-          "comunicação",
-          "animação"
-        ],
-        "name": "La cena de los tontos",
-        "coverImageAlt": "Arte de La cena de los tontos",
-        "seoTitle": "La cena de los tontos",
-        "seoDescription": "Criatividade, comunicação e animação para La cena de los tontos.",
-        "excerpt": "Trabalho de criatividade e comunicação para La cena de los tontos.",
-        "contentBlocks": []
-      }
-    },
-    "seoTitle": "La cena de los tontos | Drama",
-    "seoDescription": "Creatividad, comunicación y animación para La cena de los tontos.",
-    "excerpt": "Comunicación y creatividad para La cena de los tontos."
   },
   {
     "id": "mogrtbmlbdegoq7jpn5",
