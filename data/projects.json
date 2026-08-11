@@ -1331,6 +1331,47 @@
     }
   },
   {
+    "id": "mohkq6smauen13jxdxe",
+    "name": "Vivitos y Coleando 2",
+    "slug": "vivitos-y-coleando-2",
+    "year": 2026,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "identidad visual"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777317110/drama-web/uploads/mclmulqsqrooyprwuwuk.webp",
+    "coverImageAlt": "Gráfica oficial de Vivitos y Coleando 2",
+    "contentBlocks": [],
+    "seoTitle": "Vivitos y Coleando 2 | Drama",
+    "seoDescription": "Identidad visual para Vivitos y Coleando 2.",
+    "excerpt": "Identidad visual para Vivitos y Coleando 2.",
+    "translations": {
+      "en": {
+        "tags": [
+          "visual identity"
+        ],
+        "name": "Vivitos y Coleando 2",
+        "coverImageAlt": "Official artwork for Vivitos y Coleando 2",
+        "seoTitle": "Vivitos y Coleando 2",
+        "seoDescription": "Visual identity for Vivitos y Coleando 2.",
+        "excerpt": "Visual identity work for Vivitos y Coleando 2.",
+        "contentBlocks": []
+      },
+      "pt": {
+        "tags": [
+          "identidade visual"
+        ],
+        "name": "Vivitos y Coleando 2",
+        "coverImageAlt": "Arte oficial de Vivitos y Coleando 2",
+        "seoTitle": "Vivitos y Coleando 2",
+        "seoDescription": "Identidade visual para Vivitos y Coleando 2.",
+        "excerpt": "Trabalho de identidade visual para Vivitos y Coleando 2.",
+        "contentBlocks": []
+      }
+    }
+  },
+  {
     "id": "mogsvbm3w066py1wp4",
     "name": "Lucky Hank",
     "slug": "lucky-hank",
@@ -1373,47 +1414,6 @@
         "seoTitle": "Lucky Hank",
         "seoDescription": "Criatividade, marketing e design para Lucky Hank.",
         "excerpt": "Trabalho de criatividade e design de marketing para Lucky Hank.",
-        "contentBlocks": []
-      }
-    }
-  },
-  {
-    "id": "mohkq6smauen13jxdxe",
-    "name": "Vivitos y Coleando 2",
-    "slug": "vivitos-y-coleando-2",
-    "year": 2026,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "identidad visual"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777317110/drama-web/uploads/mclmulqsqrooyprwuwuk.webp",
-    "coverImageAlt": "Gráfica oficial de Vivitos y Coleando 2",
-    "contentBlocks": [],
-    "seoTitle": "Vivitos y Coleando 2 | Drama",
-    "seoDescription": "Identidad visual para Vivitos y Coleando 2.",
-    "excerpt": "Identidad visual para Vivitos y Coleando 2.",
-    "translations": {
-      "en": {
-        "tags": [
-          "visual identity"
-        ],
-        "name": "Vivitos y Coleando 2",
-        "coverImageAlt": "Official artwork for Vivitos y Coleando 2",
-        "seoTitle": "Vivitos y Coleando 2",
-        "seoDescription": "Visual identity for Vivitos y Coleando 2.",
-        "excerpt": "Visual identity work for Vivitos y Coleando 2.",
-        "contentBlocks": []
-      },
-      "pt": {
-        "tags": [
-          "identidade visual"
-        ],
-        "name": "Vivitos y Coleando 2",
-        "coverImageAlt": "Arte oficial de Vivitos y Coleando 2",
-        "seoTitle": "Vivitos y Coleando 2",
-        "seoDescription": "Identidade visual para Vivitos y Coleando 2.",
-        "excerpt": "Trabalho de identidade visual para Vivitos y Coleando 2.",
         "contentBlocks": []
       }
     }
