@@ -540,6 +540,44 @@
     }
   },
   {
+    "id": "msoths6jy7ikry34g1r",
+    "name": "Luna y su galaxia",
+    "slug": "luna-y-su-galaxia",
+    "year": 2026,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "Identidad visual",
+      "Diseño gráfico",
+      "Estrategia",
+      "Retoque fotográfico"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786462220/drama-web/uploads/j5flqg2etn3y6ceqqees.webp",
+    "coverImageAlt": "Gráfica oficial de Luna y su galaxia",
+    "contentBlocks": [],
+    "seoTitle": "Luna y su galaxia",
+    "seoDescription": "",
+    "excerpt": "",
+    "translations": {
+      "en": {
+        "tags": [
+          "Visual Identity",
+          "Grpahic design",
+          "Photo retouch",
+          "Strategy"
+        ]
+      },
+      "pt": {
+        "tags": [
+          "Identidade visual",
+          "Design gráfico",
+          "Estratégia",
+          "Retoque fotográfico"
+        ]
+      }
+    }
+  },
+  {
     "id": "mod7llya4r2rz5jhxk9",
     "name": "School of rock",
     "slug": "school-of-rock",
@@ -717,44 +755,6 @@
         "coverImageAlt": "Arte oficial de School of Rock Argentina",
         "seoDescription": "Comunicação, design, identidade visual e animação para School of Rock Argentina.",
         "excerpt": "Uma campanha que colocou as crianças no centro e deu a todo o elenco uma direção clara de comunicação."
-      }
-    }
-  },
-  {
-    "id": "msoths6jy7ikry34g1r",
-    "name": "Luna y su galaxia",
-    "slug": "luna-y-su-galaxia",
-    "year": 2026,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "Identidad visual",
-      "Diseño gráfico",
-      "Estrategia",
-      "Retoque fotográfico"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786462220/drama-web/uploads/j5flqg2etn3y6ceqqees.webp",
-    "coverImageAlt": "Gráfica oficial de Luna y su galaxia",
-    "contentBlocks": [],
-    "seoTitle": "Luna y su galaxia",
-    "seoDescription": "",
-    "excerpt": "",
-    "translations": {
-      "en": {
-        "tags": [
-          "Visual Identity",
-          "Grpahic design",
-          "Photo retouch",
-          "Strategy"
-        ]
-      },
-      "pt": {
-        "tags": [
-          "Identidade visual",
-          "Design gráfico",
-          "Estratégia",
-          "Retoque fotográfico"
-        ]
       }
     }
   },
