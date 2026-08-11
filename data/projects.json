@@ -508,6 +508,38 @@
     }
   },
   {
+    "id": "msouov5fnwouqe33ty",
+    "name": "Soy Luna Tour",
+    "slug": "soy-luna-tour",
+    "year": 2026,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "Diseño gráfico",
+      "Retoque fotográfico"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464231/drama-web/uploads/p0pouaqszcg04genmgrc.webp",
+    "coverImageAlt": "Gráfica oficial de Soy Luna Tour",
+    "contentBlocks": [],
+    "seoTitle": "Soy Luna Tour",
+    "seoDescription": "",
+    "excerpt": "",
+    "translations": {
+      "en": {
+        "tags": [
+          "Graphic Design",
+          "Photo retouch"
+        ]
+      },
+      "pt": {
+        "tags": [
+          "Design gráfico",
+          "Retoque fotográfico"
+        ]
+      }
+    }
+  },
+  {
     "id": "msoths6jy7ikry34g1r",
     "name": "Luna y su galaxia",
     "slug": "luna-y-su-galaxia",
@@ -540,38 +572,6 @@
           "Identidade visual",
           "Design gráfico",
           "Estratégia",
-          "Retoque fotográfico"
-        ]
-      }
-    }
-  },
-  {
-    "id": "msouov5fnwouqe33ty",
-    "name": "Soy Luna Tour",
-    "slug": "soy-luna-tour",
-    "year": 2026,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "Diseño gráfico",
-      "Retoque fotográfico"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464231/drama-web/uploads/p0pouaqszcg04genmgrc.webp",
-    "coverImageAlt": "Gráfica oficial de Soy Luna Tour",
-    "contentBlocks": [],
-    "seoTitle": "Soy Luna Tour",
-    "seoDescription": "",
-    "excerpt": "",
-    "translations": {
-      "en": {
-        "tags": [
-          "Graphic Design",
-          "Photo retouch"
-        ]
-      },
-      "pt": {
-        "tags": [
-          "Design gráfico",
           "Retoque fotográfico"
         ]
       }
