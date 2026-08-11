@@ -199,136 +199,34 @@
     }
   },
   {
-    "id": "modah3k8jvhnhvprpxk",
-    "name": "Charlie y la fábrica de chocolate",
-    "slug": "charlie-y-la-fabrica-de-chocolate",
+    "id": "msouov5fnwouqe33ty",
+    "name": "Soy Luna Tour",
+    "slug": "soy-luna-tour",
     "year": 2026,
     "featured": false,
     "published": true,
     "tags": [
-      "retoque fotográfico",
-      "diseño",
-      "creatividad",
-      "ai"
+      "Diseño gráfico",
+      "Retoque fotográfico"
     ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777058035/drama-web/uploads/xmzvih90alloq6umkcun.webp",
-    "coverImageAlt": "Arte oficial de Charlie y la fábrica de chocolate Argentina",
-    "contentBlocks": [
-      {
-        "id": "moj7ek4rrgdko18c7ef",
-        "type": "imageText",
-        "alignment": "left",
-        "order": 0,
-        "title": "El dorado correcto",
-        "text": "Algunos elementos no se inventan, se descubren. El golden ticket tenía que verse exactamente como todos lo recuerdan, aunque nadie lo haya visto igual dos veces. Llegamos a él después de muchas pruebas, buscando el color y la textura con el peso justo.",
-        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777415689/drama-web/uploads/kg06fvjjuf8t0v6abwz7.webp",
-        "imageAlt": "El golden ticket de Charlie y la fábrica de chocolate",
-        "imageScale": 100,
-        "imageShowMuteButton": true,
-        "image2": "",
-        "image2Alt": "",
-        "image2Scale": 100,
-        "image2ShowMuteButton": true,
-        "imageSide": "right"
-      },
-      {
-        "id": "mohlca0sp4k2sn0d3k",
-        "type": "imageText",
-        "order": 1,
-        "title": "El universo en movimiento",
-        "text": "Generamos una pieza combinando animación 2D, 3D y chroma para la salida a la venta de entradas para vacaciones de invierno.",
-        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777414663/drama-web/uploads/n62h2njysniu3ehd7wyw.webm",
-        "imageAlt": "Reel animado de Charlie y la fábrica de chocolate",
-        "imageScale": 100,
-        "image2": "",
-        "image2Alt": "",
-        "image2Scale": 100,
-        "imageSide": "left"
-      },
-      {
-        "id": "mohlpq17zmlbzis14a",
-        "type": "imageImage",
-        "order": 2,
-        "title": "",
-        "text": "",
-        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777318791/drama-web/uploads/lewcsyrvubwocnkwc1co.webp",
-        "imageAlt": "Piezas gráficas de Charlie y la fábrica de chocolate",
-        "imageScale": 100,
-        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777318799/drama-web/uploads/emnqpjrdxra2bs7iq8k8.webp",
-        "image2Alt": "Piezas gráficas de Charlie y la fábrica de chocolate",
-        "image2Scale": 100,
-        "imageSide": "left"
-      },
-      {
-        "id": "mohlp4jwr8p8qiufr1",
-        "type": "imageImage",
-        "order": 3,
-        "title": "",
-        "text": "",
-        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777318772/drama-web/uploads/qnhaebbdnirookhiufgs.webp",
-        "imageAlt": "Piezas gráficas de Charlie y la fábrica de chocolate",
-        "imageScale": 100,
-        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777318779/drama-web/uploads/u9we9ep6xd6txeridgny.webp",
-        "image2Alt": "Piezas gráficas de Charlie y la fábrica de chocolate",
-        "image2Scale": 100,
-        "imageSide": "left"
-      }
-    ],
-    "seoTitle": "Charlie y la fábrica de chocolate Argentina | Drama",
-    "seoDescription": "Diseño, animación y universo visual para Charlie y la fábrica de chocolate en Argentina.",
-    "excerpt": "Del golden ticket a las piezas animadas de lanzamiento, construimos un universo visual con el color, la textura y el movimiento precisos.",
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464231/drama-web/uploads/p0pouaqszcg04genmgrc.webp",
+    "coverImageAlt": "Gráfica oficial de Soy Luna Tour",
+    "contentBlocks": [],
+    "seoTitle": "Soy Luna Tour",
+    "seoDescription": "",
+    "excerpt": "",
     "translations": {
       "en": {
         "tags": [
-          "photo retouching",
-          "design",
-          "creativity",
-          "AI"
-        ],
-        "name": "Charlie and the Chocolate Factory",
-        "contentBlocks": [
-          {
-            "title": "The right gold",
-            "text": "Some elements are not invented; they are discovered. The golden ticket had to look exactly the way everyone remembers it, even if no one has ever seen it the same way twice. We arrived there after many tests, searching for the color and texture with exactly the right weight."
-          },
-          {
-            "title": "A universe in motion",
-            "text": "We created a piece combining 2D animation, 3D, and chroma key for the winter-break ticket sales launch.",
-            "imageAlt": "Animated reel for Charlie and the Chocolate Factory"
-          },
-          {},
-          {}
-        ],
-        "coverImageAlt": "Official artwork for Charlie and the Chocolate Factory Argentina",
-        "seoTitle": "Charlie and the Chocolate Factory Argentina",
-        "seoDescription": "Design, animation, and visual assets for Charlie and the Chocolate Factory in Argentina.",
-        "excerpt": "From the golden ticket to animated launch pieces, we shaped a visual world with the right color, texture, and movement."
+          "Graphic Design",
+          "Photo retouch"
+        ]
       },
       "pt": {
         "tags": [
-          "retoque fotográfico",
-          "design",
-          "criatividade",
-          "IA"
-        ],
-        "name": "A Fantástica Fábrica de Chocolate",
-        "contentBlocks": [
-          {
-            "title": "O dourado certo",
-            "text": "Alguns elementos não se inventam, se descobrem. O golden ticket precisava parecer exatamente como todo mundo se lembra, mesmo que ninguém o tenha visto igual duas vezes. Chegamos a ele depois de muitos testes, buscando a cor e a textura com o peso certo."
-          },
-          {
-            "title": "O universo em movimento",
-            "text": "Criamos uma peça combinando animação 2D, 3D e chroma para o lançamento da venda de ingressos das férias de inverno.",
-            "imageAlt": "Reel animado de A Fantástica Fábrica de Chocolate"
-          },
-          {},
-          {}
-        ],
-        "coverImageAlt": "Arte oficial de A Fantástica Fábrica de Chocolate Argentina",
-        "seoTitle": "A Fantástica Fábrica de Chocolate Argentina",
-        "seoDescription": "Design, animação e universo visual para A Fantástica Fábrica de Chocolate na Argentina.",
-        "excerpt": "Do golden ticket às peças animadas de lançamento, construímos um universo visual com a cor, a textura e o movimento certos."
+          "Design gráfico",
+          "Retoque fotográfico"
+        ]
       }
     }
   },
@@ -508,34 +406,136 @@
     }
   },
   {
-    "id": "msouov5fnwouqe33ty",
-    "name": "Soy Luna Tour",
-    "slug": "soy-luna-tour",
+    "id": "modah3k8jvhnhvprpxk",
+    "name": "Charlie y la fábrica de chocolate",
+    "slug": "charlie-y-la-fabrica-de-chocolate",
     "year": 2026,
     "featured": false,
     "published": true,
     "tags": [
-      "Diseño gráfico",
-      "Retoque fotográfico"
+      "retoque fotográfico",
+      "diseño",
+      "creatividad",
+      "ai"
     ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464231/drama-web/uploads/p0pouaqszcg04genmgrc.webp",
-    "coverImageAlt": "Gráfica oficial de Soy Luna Tour",
-    "contentBlocks": [],
-    "seoTitle": "Soy Luna Tour",
-    "seoDescription": "",
-    "excerpt": "",
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777058035/drama-web/uploads/xmzvih90alloq6umkcun.webp",
+    "coverImageAlt": "Arte oficial de Charlie y la fábrica de chocolate Argentina",
+    "contentBlocks": [
+      {
+        "id": "moj7ek4rrgdko18c7ef",
+        "type": "imageText",
+        "alignment": "left",
+        "order": 0,
+        "title": "El dorado correcto",
+        "text": "Algunos elementos no se inventan, se descubren. El golden ticket tenía que verse exactamente como todos lo recuerdan, aunque nadie lo haya visto igual dos veces. Llegamos a él después de muchas pruebas, buscando el color y la textura con el peso justo.",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777415689/drama-web/uploads/kg06fvjjuf8t0v6abwz7.webp",
+        "imageAlt": "El golden ticket de Charlie y la fábrica de chocolate",
+        "imageScale": 100,
+        "imageShowMuteButton": true,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "image2ShowMuteButton": true,
+        "imageSide": "right"
+      },
+      {
+        "id": "mohlca0sp4k2sn0d3k",
+        "type": "imageText",
+        "order": 1,
+        "title": "El universo en movimiento",
+        "text": "Generamos una pieza combinando animación 2D, 3D y chroma para la salida a la venta de entradas para vacaciones de invierno.",
+        "image": "https://res.cloudinary.com/dsqre3rmd/video/upload/v1777414663/drama-web/uploads/n62h2njysniu3ehd7wyw.webm",
+        "imageAlt": "Reel animado de Charlie y la fábrica de chocolate",
+        "imageScale": 100,
+        "image2": "",
+        "image2Alt": "",
+        "image2Scale": 100,
+        "imageSide": "left"
+      },
+      {
+        "id": "mohlpq17zmlbzis14a",
+        "type": "imageImage",
+        "order": 2,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777318791/drama-web/uploads/lewcsyrvubwocnkwc1co.webp",
+        "imageAlt": "Piezas gráficas de Charlie y la fábrica de chocolate",
+        "imageScale": 100,
+        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777318799/drama-web/uploads/emnqpjrdxra2bs7iq8k8.webp",
+        "image2Alt": "Piezas gráficas de Charlie y la fábrica de chocolate",
+        "image2Scale": 100,
+        "imageSide": "left"
+      },
+      {
+        "id": "mohlp4jwr8p8qiufr1",
+        "type": "imageImage",
+        "order": 3,
+        "title": "",
+        "text": "",
+        "image": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777318772/drama-web/uploads/qnhaebbdnirookhiufgs.webp",
+        "imageAlt": "Piezas gráficas de Charlie y la fábrica de chocolate",
+        "imageScale": 100,
+        "image2": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777318779/drama-web/uploads/u9we9ep6xd6txeridgny.webp",
+        "image2Alt": "Piezas gráficas de Charlie y la fábrica de chocolate",
+        "image2Scale": 100,
+        "imageSide": "left"
+      }
+    ],
+    "seoTitle": "Charlie y la fábrica de chocolate Argentina | Drama",
+    "seoDescription": "Diseño, animación y universo visual para Charlie y la fábrica de chocolate en Argentina.",
+    "excerpt": "Del golden ticket a las piezas animadas de lanzamiento, construimos un universo visual con el color, la textura y el movimiento precisos.",
     "translations": {
       "en": {
         "tags": [
-          "Graphic Design",
-          "Photo retouch"
-        ]
+          "photo retouching",
+          "design",
+          "creativity",
+          "AI"
+        ],
+        "name": "Charlie and the Chocolate Factory",
+        "contentBlocks": [
+          {
+            "title": "The right gold",
+            "text": "Some elements are not invented; they are discovered. The golden ticket had to look exactly the way everyone remembers it, even if no one has ever seen it the same way twice. We arrived there after many tests, searching for the color and texture with exactly the right weight."
+          },
+          {
+            "title": "A universe in motion",
+            "text": "We created a piece combining 2D animation, 3D, and chroma key for the winter-break ticket sales launch.",
+            "imageAlt": "Animated reel for Charlie and the Chocolate Factory"
+          },
+          {},
+          {}
+        ],
+        "coverImageAlt": "Official artwork for Charlie and the Chocolate Factory Argentina",
+        "seoTitle": "Charlie and the Chocolate Factory Argentina",
+        "seoDescription": "Design, animation, and visual assets for Charlie and the Chocolate Factory in Argentina.",
+        "excerpt": "From the golden ticket to animated launch pieces, we shaped a visual world with the right color, texture, and movement."
       },
       "pt": {
         "tags": [
-          "Design gráfico",
-          "Retoque fotográfico"
-        ]
+          "retoque fotográfico",
+          "design",
+          "criatividade",
+          "IA"
+        ],
+        "name": "A Fantástica Fábrica de Chocolate",
+        "contentBlocks": [
+          {
+            "title": "O dourado certo",
+            "text": "Alguns elementos não se inventam, se descobrem. O golden ticket precisava parecer exatamente como todo mundo se lembra, mesmo que ninguém o tenha visto igual duas vezes. Chegamos a ele depois de muitos testes, buscando a cor e a textura com o peso certo."
+          },
+          {
+            "title": "O universo em movimento",
+            "text": "Criamos uma peça combinando animação 2D, 3D e chroma para o lançamento da venda de ingressos das férias de inverno.",
+            "imageAlt": "Reel animado de A Fantástica Fábrica de Chocolate"
+          },
+          {},
+          {}
+        ],
+        "coverImageAlt": "Arte oficial de A Fantástica Fábrica de Chocolate Argentina",
+        "seoTitle": "A Fantástica Fábrica de Chocolate Argentina",
+        "seoDescription": "Design, animação e universo visual para A Fantástica Fábrica de Chocolate na Argentina.",
+        "excerpt": "Do golden ticket às peças animadas de lançamento, construímos um universo visual com a cor, a textura e o movimento certos."
       }
     }
   },
