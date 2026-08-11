@@ -1087,6 +1087,53 @@
     }
   },
   {
+    "id": "moi4clsoy0w61xndric",
+    "name": "Casi normales",
+    "slug": "casi-normales",
+    "year": 2024,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "diseño",
+      "identidad visual",
+      "creatividad"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777350070/drama-web/uploads/mnlithxjx4twefdy78h8.webp",
+    "coverImageAlt": "Gráfica oficial de Casi Normales Argentina",
+    "contentBlocks": [],
+    "seoTitle": "Casi normales Argentina | Drama",
+    "seoDescription": "Diseño, identidad visual y creatividad para Casi normales Argentina.",
+    "excerpt": "Diseño e identidad visual para Casi normales Argentina.",
+    "translations": {
+      "en": {
+        "tags": [
+          "design",
+          "visual identity",
+          "creativity"
+        ],
+        "name": "Next to Normal",
+        "coverImageAlt": "Official artwork for Next to Normal Argentina",
+        "seoTitle": "Next to Normal Argentina",
+        "seoDescription": "Design, visual identity, and creativity for Next to Normal Argentina.",
+        "excerpt": "Design and visual identity work for Next to Normal Argentina.",
+        "contentBlocks": []
+      },
+      "pt": {
+        "tags": [
+          "design",
+          "identidade visual",
+          "criatividade"
+        ],
+        "name": "Quase Normais",
+        "coverImageAlt": "Arte oficial de Quase Normais Argentina",
+        "seoTitle": "Quase Normais Argentina",
+        "seoDescription": "Design, identidade visual e criatividade para Quase Normais Argentina.",
+        "excerpt": "Trabalho de design e identidade visual para Quase Normais Argentina.",
+        "contentBlocks": []
+      }
+    }
+  },
+  {
     "id": "mogrtbmlbdegoq7jpn5",
     "name": "Avenida Q",
     "slug": "avenida-q",
@@ -1132,53 +1179,6 @@
         "seoTitle": "Avenida Q Argentina",
         "seoDescription": "Criatividade, design, identidade visual e retoque fotográfico para Avenida Q Argentina.",
         "excerpt": "Identidade visual e peças de campanha para Avenida Q Argentina.",
-        "contentBlocks": []
-      }
-    }
-  },
-  {
-    "id": "moi4clsoy0w61xndric",
-    "name": "Casi normales",
-    "slug": "casi-normales",
-    "year": 2024,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "diseño",
-      "identidad visual",
-      "creatividad"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1777350070/drama-web/uploads/mnlithxjx4twefdy78h8.webp",
-    "coverImageAlt": "Gráfica oficial de Casi Normales Argentina",
-    "contentBlocks": [],
-    "seoTitle": "Casi normales Argentina | Drama",
-    "seoDescription": "Diseño, identidad visual y creatividad para Casi normales Argentina.",
-    "excerpt": "Diseño e identidad visual para Casi normales Argentina.",
-    "translations": {
-      "en": {
-        "tags": [
-          "design",
-          "visual identity",
-          "creativity"
-        ],
-        "name": "Next to Normal",
-        "coverImageAlt": "Official artwork for Next to Normal Argentina",
-        "seoTitle": "Next to Normal Argentina",
-        "seoDescription": "Design, visual identity, and creativity for Next to Normal Argentina.",
-        "excerpt": "Design and visual identity work for Next to Normal Argentina.",
-        "contentBlocks": []
-      },
-      "pt": {
-        "tags": [
-          "design",
-          "identidade visual",
-          "criatividade"
-        ],
-        "name": "Quase Normais",
-        "coverImageAlt": "Arte oficial de Quase Normais Argentina",
-        "seoTitle": "Quase Normais Argentina",
-        "seoDescription": "Design, identidade visual e criatividade para Quase Normais Argentina.",
-        "excerpt": "Trabalho de design e identidade visual para Quase Normais Argentina.",
         "contentBlocks": []
       }
     }
