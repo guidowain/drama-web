@@ -848,6 +848,36 @@
     }
   },
   {
+    "id": "msov2w6e9t458iv3zbf",
+    "name": "La llamada",
+    "slug": "la-llamada",
+    "year": 2026,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "Identidad visual",
+      "Creatividad",
+      "Diseño gráfico",
+      "Retoque fotográfico"
+    ],
+    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464887/drama-web/uploads/l2q4c7tokdun8ppef93f.webp",
+    "coverImageAlt": "Gráfica oficial de La llamada",
+    "contentBlocks": [],
+    "seoTitle": "La llamada Argentina",
+    "seoDescription": "",
+    "excerpt": "",
+    "translations": {
+      "en": {
+        "tags": [
+          "Identidade visual",
+          "Design gráfico",
+          "Retoque fotográfico",
+          "Criatividade"
+        ]
+      }
+    }
+  },
+  {
     "id": "mod95mm7bzd6bgvrl74",
     "name": "Chanta",
     "slug": "chanta",
@@ -1012,36 +1042,6 @@
         "coverImageAlt": "Arte oficial de Chanta",
         "seoDescription": "Identidade visual, criatividade, animação e conteúdo para redes sociais de Chanta.",
         "excerpt": "Uma campanha que expandiu o universo da obra e transformou Julio Ballesteros também em personagem das redes."
-      }
-    }
-  },
-  {
-    "id": "msov2w6e9t458iv3zbf",
-    "name": "La llamada",
-    "slug": "la-llamada",
-    "year": 2026,
-    "featured": false,
-    "published": true,
-    "tags": [
-      "Identidad visual",
-      "Creatividad",
-      "Diseño gráfico",
-      "Retoque fotográfico"
-    ],
-    "coverImage": "https://res.cloudinary.com/dsqre3rmd/image/upload/v1786464887/drama-web/uploads/l2q4c7tokdun8ppef93f.webp",
-    "coverImageAlt": "Gráfica oficial de La llamada",
-    "contentBlocks": [],
-    "seoTitle": "La llamada Argentina",
-    "seoDescription": "",
-    "excerpt": "",
-    "translations": {
-      "en": {
-        "tags": [
-          "Identidade visual",
-          "Design gráfico",
-          "Retoque fotográfico",
-          "Criatividade"
-        ]
       }
     }
   },
