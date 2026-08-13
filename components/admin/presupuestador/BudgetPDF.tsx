@@ -91,8 +91,31 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     paddingLeft: 45,
   },
-  stageBody: {
+  stagedPageBody: {
     flexGrow: 1,
+    paddingTop: 154,
+    paddingRight: 45,
+    paddingBottom: 40,
+    paddingLeft: 45,
+  },
+  subsequentStageBody: {
+    flexGrow: 1,
+    paddingTop: 0,
+    paddingRight: 45,
+    paddingBottom: 40,
+    paddingLeft: 45,
+  },
+  absoluteHeader: {
+    width: HEADER_WIDTH,
+    height: HEADER_HEIGHT,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+    left: 24,
+    marginTop: 0,
+    position: 'absolute',
+    top: 28,
   },
   eyebrow: {
     color: '#76716d',
@@ -116,6 +139,29 @@ const styles = StyleSheet.create({
     marginTop: 9,
     marginBottom: 19,
     textTransform: 'uppercase',
+  },
+  stageTitleRow: {
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 19,
+    marginTop: 9,
+  },
+  stageProject: {
+    flex: 1,
+    fontFamily: 'Enriq',
+    fontSize: 34,
+    fontWeight: 900,
+    lineHeight: 0.95,
+    paddingRight: 18,
+    textTransform: 'uppercase',
+  },
+  stagePeriod: {
+    color: '#76716d',
+    fontSize: 9,
+    letterSpacing: 0.4,
+    paddingBottom: 2,
+    textAlign: 'right',
   },
   intro: {
     fontSize: 12.2,
@@ -226,8 +272,10 @@ const styles = StyleSheet.create({
   },
   conditions: { color: budgetBrand.colors.muted, fontSize: 10.5, fontWeight: 400, lineHeight: 1.35, marginBottom: 5 },
   stageConditions: {
-    marginTop: 'auto',
-    marginLeft: 11,
+    position: 'absolute',
+    left: 56,
+    right: 45,
+    bottom: 54,
     paddingTop: 20,
     paddingBottom: 18,
   },
@@ -332,13 +380,14 @@ export default function BudgetPDF({ data }: { data: BudgetDraft }) {
 
 function StagedBudgetPDF({ data, investment }: { data: BudgetDraft; investment: StageInvestment }) {
   const adjustment = renderAdjustmentClause(data.conditions.adjustment)
+  const firstStage = investment.stages[0]
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.shell}>
-          <PdfHeader />
-          <View style={[styles.body, styles.stageBody]}>
+          <PdfHeader absolute />
+          <View style={styles.stagedPageBody} wrap={false}>
             <View style={styles.titleMetaRow}>
               <Text style={styles.client}>{data.client.name || 'Solicitante'}{data.client.company ? ` / ${data.client.company}` : ''}</Text>
               <Text style={styles.meta}>{formatDate(data.date)}</Text>
@@ -351,30 +400,30 @@ function StagedBudgetPDF({ data, investment }: { data: BudgetDraft; investment: 
                 {data.notIncluded.map((item, index) => <Bullet key={`${item}-${index}`}>{item}</Bullet>)}
               </Section>
             ) : null}
-            {!investment.stages.length ? <StageClosingConditions data={data} adjustment={adjustment} /> : null}
+            {firstStage ? (
+              <StageContent
+                stage={firstStage}
+                currency={data.currency}
+                closing={investment.stages.length === 1 ? <StageClosingConditions data={data} adjustment={adjustment} /> : null}
+              />
+            ) : <StageClosingConditions data={data} adjustment={adjustment} />}
           </View>
           <PdfFooter />
         </View>
       </Page>
 
-      {investment.stages.map((stage, index) => {
+      {investment.stages.slice(1).map((stage, relativeIndex) => {
+        const index = relativeIndex + 1
         const isLastStage = index === investment.stages.length - 1
         return (
           <Page key={stage.id} size="A4" style={styles.page}>
             <View style={styles.shell}>
-              <PdfHeader />
-              <View style={[styles.body, styles.stageBody]}>
-                <View style={styles.titleMetaRow}>
-                  <Text style={styles.client}>Etapa {index + 1} · {data.projectName || 'Proyecto'}</Text>
-                  <Text style={styles.meta}>{formatStagePeriod(stage)}</Text>
-                </View>
-                <Text style={styles.project}>{stage.name || `Etapa ${index + 1}`}</Text>
-                {stage.description ? <Section title="Alcance de la etapa"><Text style={styles.paragraph}>{stage.description}</Text></Section> : null}
-                <Section title="Servicios">
-                  <StageServicesList stage={stage} />
-                </Section>
-                <Total amount={stage.monthlyFee} label="Abono mensual" currency={data.currency} />
-                {isLastStage ? <StageClosingConditions data={data} adjustment={adjustment} /> : null}
+              <View style={styles.subsequentStageBody} wrap={false}>
+                <StageContent
+                  stage={stage}
+                  currency={data.currency}
+                  closing={isLastStage ? <StageClosingConditions data={data} adjustment={adjustment} /> : null}
+                />
               </View>
               <PdfFooter />
             </View>
@@ -382,6 +431,23 @@ function StagedBudgetPDF({ data, investment }: { data: BudgetDraft; investment: 
         )
       })}
     </Document>
+  )
+}
+
+function StageContent({ stage, currency, closing }: { stage: BudgetStage; currency: BudgetDraft['currency']; closing?: React.ReactNode }) {
+  return (
+    <>
+      <View style={styles.stageTitleRow}>
+        <Text style={styles.stageProject}>{stage.name || 'Etapa'}</Text>
+        <Text style={styles.stagePeriod}>{formatStagePeriod(stage)}</Text>
+      </View>
+      {stage.description ? <Section title="Alcance de la etapa"><Text style={styles.paragraph}>{stage.description}</Text></Section> : null}
+      <Section title="Servicios">
+        <StageServicesList stage={stage} />
+      </Section>
+      <Total amount={stage.monthlyFee} label="Abono mensual" currency={currency} />
+      {closing}
+    </>
   )
 }
 
@@ -403,7 +469,16 @@ function StageClosingConditions({ data, adjustment }: { data: BudgetDraft; adjus
   )
 }
 
-function PdfHeader() {
+function PdfHeader({ absolute = false }: { absolute?: boolean }) {
+  if (absolute) {
+    return (
+      <View fixed style={styles.absoluteHeader}>
+        <HeaderGradient />
+        <Image src={budgetBrand.logoPath} style={styles.logo} />
+      </View>
+    )
+  }
+
   return (
     <View style={styles.header}>
       <HeaderGradient />
@@ -414,7 +489,7 @@ function PdfHeader() {
 
 function PdfFooter() {
   return (
-    <View style={styles.footer}>
+    <View fixed style={styles.footer}>
       <Text>los@drama.com.ar</Text>
       <Text>{budgetBrand.website}</Text>
     </View>
