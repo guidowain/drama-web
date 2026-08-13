@@ -5,7 +5,7 @@ import { servicesCatalog } from '@/data/services-catalog'
 import { budgetBrand } from '@/lib/presupuestador/brand'
 import { delayClauseText, renderAdjustmentClause, renderPaymentClause, renderValidity } from '@/lib/presupuestador/clauses'
 import { budgetStorage, makeId, sanitizePdfFilename } from '@/lib/presupuestador/storage'
-import type { BudgetDraft, BudgetModality, FixedInvestment, MonthlyInvestment, ServiceItem } from '@/lib/presupuestador/types'
+import type { BudgetDraft, BudgetModality, BudgetStage, FixedInvestment, ServiceItem, StageInvestment } from '@/lib/presupuestador/types'
 
 const steps = ['Modalidad', 'Datos', 'Textos', 'Servicios', 'Inversión', 'Condiciones', 'Preview']
 const identityMergeIds = ['identidad-0', 'identidad-1', 'identidad-2']
@@ -158,7 +158,7 @@ export default function BudgetBuilder() {
                 onClick={() => setStep(index)}
                 className={`rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider ${step === index ? 'bg-white text-black' : 'bg-white/5 text-white/35 hover:text-white'}`}
               >
-                {index + 1}. {label}
+                {index + 1}. {draft.modality === 'staged-monthly' && index === 3 ? 'Servicios generales' : draft.modality === 'staged-monthly' && index === 4 ? 'Etapas' : label}
               </button>
             ))}
           </div>
@@ -222,10 +222,22 @@ export default function BudgetBuilder() {
           <p className="text-[10px] font-black uppercase tracking-[0.26em] text-white/30">Vista rápida</p>
           <h2 className="mt-2 text-2xl font-black uppercase leading-none text-white">{draft.projectName || 'Sin proyecto'}</h2>
           <p className="mt-2 text-sm text-white/35">{draft.client.name || 'Sin solicitante'}</p>
-          <div className="mt-6 rounded-xl bg-black p-4">
-            <p className="text-[10px] font-black uppercase tracking-widest text-white/35">Total</p>
-            <p className="mt-1 text-3xl font-black text-white">{money(total, draft.currency)}</p>
-          </div>
+          {draft.investment.type === 'stages' ? (
+            <div className="mt-6 space-y-2 rounded-xl bg-black p-4">
+              <p className="text-[10px] font-black uppercase tracking-widest text-white/35">Abonos por etapa</p>
+              {draft.investment.stages.map((stage) => (
+                <div key={stage.id} className="flex items-baseline justify-between gap-3 text-sm text-white/65">
+                  <span className="truncate">{stage.name}</span>
+                  <span className="shrink-0 font-black text-white">{money(stage.monthlyFee, draft.currency)}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-6 rounded-xl bg-black p-4">
+              <p className="text-[10px] font-black uppercase tracking-widest text-white/35">Total</p>
+              <p className="mt-1 text-3xl font-black text-white">{money(total, draft.currency)}</p>
+            </div>
+          )}
           <div className="mt-5 space-y-2 text-sm text-white/45">
             <p>{modalityLabel(draft.modality)}</p>
             <p>{draft.services.length} servicios seleccionados</p>
@@ -239,9 +251,10 @@ export default function BudgetBuilder() {
 
 function StepModality({ value, onChange }: { value: BudgetModality; onChange: (value: BudgetModality) => void }) {
   return (
-    <div className="grid gap-3 md:grid-cols-2">
+    <div className="grid gap-3 md:grid-cols-3">
       {([
         ['monthly', 'Abono mensual', 'Retainer mensual para obra o show.'],
+        ['staged-monthly', 'Mensual por etapas', 'Abonos y servicios distintos según cada período.'],
         ['fixed', 'Proyecto cerrado', 'Trabajo puntual con una o varias opciones.'],
       ] as const).map(([id, title, desc]) => (
         <button key={id} onClick={() => onChange(id)} className={`rounded-2xl border p-5 text-left transition ${value === id ? 'border-white bg-white text-black' : 'border-white/10 bg-white/5 text-white hover:border-white/25'}`}>
@@ -291,7 +304,13 @@ function StepServices(props: {
   const [openCategory, setOpenCategory] = useState(servicesCatalog[0]?.id || '')
 
   return (
-    <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
+    <div className="space-y-5">
+      {draft.modality === 'staged-monthly' ? (
+        <div className="rounded-xl border border-fuchsia-400/20 bg-fuchsia-400/5 p-4 text-sm leading-relaxed text-white/60">
+          Estos servicios se mostrarán como alcance general del proyecto. Los servicios propios de cada período se cargan en el paso <strong className="text-white">Etapas</strong>.
+        </div>
+      ) : null}
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
       <div className="space-y-4">
         {servicesCatalog.map((category) => (
           <section key={category.id} className="rounded-xl border border-white/10 bg-black/20 p-4">
@@ -374,6 +393,7 @@ function StepServices(props: {
           </button>
         ))}
       </div>
+      </div>
     </div>
   )
 }
@@ -389,7 +409,86 @@ function StepInvestment({ draft, update }: StepProps) {
     return <RowsEditor title="Opciones de inversión" rows={investment.options} columns={['label', 'amount']} labels={['Etiqueta', 'Monto']} onChange={(options) => update({ investment: { ...investment, options } })} />
   }
 
+  if (draft.investment.type === 'stages') {
+    return <StagesEditor investment={draft.investment} currency={draft.currency} onChange={(investment) => update({ investment })} />
+  }
+
   return null
+}
+
+function StagesEditor({ investment, currency, onChange }: { investment: StageInvestment; currency: BudgetDraft['currency']; onChange: (investment: StageInvestment) => void }) {
+  function updateStage(id: string, changes: Partial<BudgetStage>) {
+    onChange({ ...investment, stages: investment.stages.map((stage) => stage.id === id ? { ...stage, ...changes } : stage) })
+  }
+
+  function moveStage(index: number, direction: -1 | 1) {
+    const target = index + direction
+    if (target < 0 || target >= investment.stages.length) return
+    const stages = [...investment.stages]
+    const [stage] = stages.splice(index, 1)
+    stages.splice(target, 0, stage)
+    onChange({ ...investment, stages })
+  }
+
+  function addStage() {
+    const number = investment.stages.reduce((highest, stage) => {
+      const match = stage.name.match(/^Etapa\s+(\d+)$/i)
+      return match ? Math.max(highest, Number(match[1])) : highest
+    }, 0) + 1
+    onChange({ ...investment, stages: [...investment.stages, createStage(number)] })
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <PanelTitle>Abono mensual por etapas</PanelTitle>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/45">Cada etapa tendrá su propia hoja en el PDF. El resumen de inversiones y las condiciones generales aparecerán al final.</p>
+        </div>
+        <button type="button" onClick={addStage} className="rounded-xl bg-white px-4 py-2 text-sm font-black text-black">Agregar etapa</button>
+      </div>
+
+      {investment.stages.map((stage, index) => (
+        <section key={stage.id} className="relative rounded-2xl border border-white/10 bg-black/20 p-4 md:p-5">
+          <div className="mb-5 flex items-center justify-between gap-3 pr-9">
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-white/35">Etapa {index + 1}</p>
+            <div className="flex gap-2">
+              <button type="button" onClick={() => moveStage(index, -1)} disabled={index === 0} className="icon-mini" aria-label={`Subir ${stage.name}`} title="Subir">↑</button>
+              <button type="button" onClick={() => moveStage(index, 1)} disabled={index === investment.stages.length - 1} className="icon-mini" aria-label={`Bajar ${stage.name}`} title="Bajar">↓</button>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => onChange({ ...investment, stages: investment.stages.filter((item) => item.id !== stage.id) })}
+            className="danger-x absolute right-3 top-3"
+            aria-label={`Eliminar ${stage.name}`}
+            title="Eliminar"
+          >
+            ×
+          </button>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <Input label="Nombre" value={stage.name} onChange={(name) => updateStage(stage.id, { name })} wide />
+            <Input label="Desde" type="month" value={stage.startMonth} onChange={(startMonth) => updateStage(stage.id, { startMonth })} />
+            <Input label="Hasta" type="month" value={stage.endMonth} onChange={(endMonth) => updateStage(stage.id, { endMonth })} />
+            <label className="block md:col-span-2">
+              <span className="mb-2 block text-xs font-black uppercase tracking-widest text-white/35">Alcance / descripción</span>
+              <textarea rows={4} value={stage.description || ''} onChange={(event) => updateStage(stage.id, { description: event.target.value })} className="w-full rounded-xl border border-white/10 bg-black px-3 py-3 text-white outline-none focus:border-white/30" />
+            </label>
+            <label className="block md:col-span-2">
+              <span className="mb-2 block text-xs font-black uppercase tracking-widest text-white/35">Servicios — uno por línea</span>
+              <textarea rows={5} value={stage.services.join('\n')} onChange={(event) => updateStage(stage.id, { services: event.target.value.split('\n') })} className="w-full rounded-xl border border-white/10 bg-black px-3 py-3 text-white outline-none focus:border-white/30" />
+            </label>
+            <Input label={`Abono mensual (${currency})`} type="number" value={String(stage.monthlyFee || '')} onChange={(monthlyFee) => updateStage(stage.id, { monthlyFee: Number(monthlyFee) })} wide />
+          </div>
+        </section>
+      ))}
+
+      {!investment.stages.length ? (
+        <button type="button" onClick={addStage} className="w-full rounded-2xl border border-dashed border-white/15 px-4 py-10 text-sm font-bold text-white/45 hover:border-white/30 hover:text-white">Agregar la primera etapa</button>
+      ) : null}
+    </div>
+  )
 }
 
 function StepConditions({ draft, update }: StepProps) {
@@ -427,15 +526,22 @@ function Preview({ draft, total }: { draft: BudgetDraft; total: number }) {
         <h2 className="mt-2 font-enriq text-5xl font-black uppercase leading-[0.9] md:text-6xl">{draft.projectName || 'Nombre del proyecto'}</h2>
         {draft.opening ? <p className="mt-6 text-lg leading-relaxed">{draft.opening}</p> : null}
         {draft.understanding ? <PreviewSection title="Entendimiento del proyecto">{draft.understanding}</PreviewSection> : null}
-        <PreviewSection title="Servicios"><PreviewServices services={draft.services} /></PreviewSection>
+        {draft.services.length || draft.modality !== 'staged-monthly' ? <PreviewSection title={draft.modality === 'staged-monthly' ? 'Servicios generales' : 'Servicios'}><PreviewServices services={draft.services} /></PreviewSection> : null}
         {draft.notIncluded?.length ? <PreviewSection title="No incluye">{draft.notIncluded.map((item, index) => <PreviewBullet key={index}>{item}</PreviewBullet>)}</PreviewSection> : null}
-        <div className="mt-7 overflow-hidden rounded-2xl bg-[#111] text-[#fffdf8]">
-          <div className="gradient-bg h-1.5" />
-          <div className="flex flex-wrap items-center justify-between gap-3 p-5">
-            <p className="font-enriq text-xs font-black uppercase tracking-widest">{draft.modality === 'monthly' ? 'Inversión mensual' : 'Inversión'}</p>
-            <p className="font-enriq text-4xl font-black leading-none">{money(total, draft.currency)}</p>
+        {draft.investment.type === 'stages' ? (
+          <>
+            {draft.investment.stages.map((stage, index) => <PreviewStage key={stage.id} stage={stage} index={index} currency={draft.currency} />)}
+            <PreviewStagesSummary stages={draft.investment.stages} currency={draft.currency} />
+          </>
+        ) : (
+          <div className="mt-7 overflow-hidden rounded-2xl bg-[#111] text-[#fffdf8]">
+            <div className="gradient-bg h-1.5" />
+            <div className="flex flex-wrap items-center justify-between gap-3 p-5">
+              <p className="font-enriq text-xs font-black uppercase tracking-widest">{draft.modality === 'monthly' ? 'Inversión mensual' : 'Inversión'}</p>
+              <p className="font-enriq text-4xl font-black leading-none">{money(total, draft.currency)}</p>
+            </div>
           </div>
-        </div>
+        )}
         {draft.modality === 'fixed' && draft.deliveryNote ? <PreviewSection title="Plazo de entrega">{draft.deliveryNote}</PreviewSection> : null}
       <div className="ml-3 mt-7 space-y-2 text-sm leading-relaxed">
           <p>{renderValidity(draft.conditions.validity)}</p>
@@ -450,6 +556,44 @@ function Preview({ draft, total }: { draft: BudgetDraft; total: number }) {
         </div>
       </div>
     </div>
+  )
+}
+
+function PreviewStage({ stage, index, currency }: { stage: BudgetStage; index: number; currency: BudgetDraft['currency'] }) {
+  const services = stage.services.map((service) => service.trim()).filter(Boolean)
+  return (
+    <section className="mt-8 overflow-hidden rounded-2xl border border-[#ded8cf] bg-white">
+      <div className="gradient-bg px-5 py-3 font-enriq text-xs font-black uppercase tracking-[0.18em] text-black">Etapa {index + 1}</div>
+      <div className="p-5">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <h3 className="font-enriq text-3xl font-black uppercase leading-none">{stage.name || `Etapa ${index + 1}`}</h3>
+          <p className="text-xs font-bold uppercase tracking-wider text-[#6f6b67]">{formatStagePeriod(stage)}</p>
+        </div>
+        {stage.description ? <p className="mt-4 whitespace-pre-wrap text-sm leading-relaxed">{stage.description}</p> : null}
+        {services.length ? <div className="mt-5 space-y-2">{services.map((service, serviceIndex) => <PreviewBullet key={`${stage.id}-${serviceIndex}`}>{service}</PreviewBullet>)}</div> : null}
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-[#111] p-4 text-[#fffdf8]">
+          <p className="font-enriq text-xs font-black uppercase tracking-widest">Abono mensual</p>
+          <p className="font-enriq text-3xl font-black leading-none">{money(stage.monthlyFee, currency)}</p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function PreviewStagesSummary({ stages, currency }: { stages: BudgetStage[]; currency: BudgetDraft['currency'] }) {
+  return (
+    <PreviewSection title="Resumen de etapas">
+      <div className="overflow-hidden rounded-xl border border-[#ded8cf]">
+        {stages.map((stage, index) => (
+          <div key={stage.id} className="grid gap-2 border-b border-[#ded8cf] p-3 last:border-b-0 md:grid-cols-[1fr_1fr_auto] md:items-center">
+            <p className="font-enriq font-black uppercase">Etapa {index + 1}</p>
+            <p className="text-[#6f6b67]">{formatStagePeriod(stage)}</p>
+            <p className="font-enriq text-lg font-black">{money(stage.monthlyFee, currency)} / mes</p>
+          </div>
+        ))}
+        {!stages.length ? <p className="p-3 text-[#6f6b67]">Sin etapas cargadas.</p> : null}
+      </div>
+    </PreviewSection>
   )
 }
 
@@ -487,6 +631,20 @@ function PreviewServices({ services }: { services: ServiceItem[] }) {
 function formatPreviewDate(value: string) {
   if (!value) return ''
   return new Intl.DateTimeFormat('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(`${value}T00:00:00`))
+}
+
+function formatStagePeriod(stage: Pick<BudgetStage, 'startMonth' | 'endMonth'>) {
+  const start = formatMonth(stage.startMonth)
+  const end = formatMonth(stage.endMonth)
+  if (start && end) return `${start} — ${end}`
+  if (start) return `Desde ${start}`
+  if (end) return `Hasta ${end}`
+  return 'Período a definir'
+}
+
+function formatMonth(value: string) {
+  if (!value) return ''
+  return new Intl.DateTimeFormat('es-AR', { month: 'long', year: 'numeric' }).format(new Date(`${value}-01T00:00:00`))
 }
 
 function StoredList({ title, items, onOpen, onDelete, onDuplicate }: { title: string; items: BudgetDraft[]; onOpen: (item: BudgetDraft) => void; onDelete: (id: string) => void; onDuplicate: (item: BudgetDraft) => void }) {
@@ -585,14 +743,27 @@ function createDraft(modality: BudgetModality): BudgetDraft {
 
 function defaultInvestment(modality: BudgetModality): BudgetDraft['investment'] {
   if (modality === 'fixed') return { type: 'fixed-options', options: [{ id: makeId('option'), label: 'Opción 1', amount: 0 }] }
+  if (modality === 'staged-monthly') return { type: 'stages', stages: [createStage(1), createStage(2)] }
   return { type: 'monthly-total', total: 0 }
+}
+
+function createStage(number: number): BudgetStage {
+  return {
+    id: makeId('stage'),
+    name: `Etapa ${number}`,
+    startMonth: '',
+    endMonth: '',
+    description: '',
+    services: [],
+    monthlyFee: 0,
+  }
 }
 
 function defaultConditions(modality: BudgetModality): BudgetDraft['conditions'] {
   return {
     validity: { type: 'days', value: 20 },
-    adjustment: modality === 'monthly' ? { type: 'bimonthly-ipc', untilSeasonEnd: true } : { type: 'none' },
-    payment: modality === 'monthly' ? { type: 'monthly-1-5' } : { type: 'deposit', percentage: 30 },
+    adjustment: modality === 'monthly' || modality === 'staged-monthly' ? { type: 'bimonthly-ipc', untilSeasonEnd: true } : { type: 'none' },
+    payment: modality === 'monthly' || modality === 'staged-monthly' ? { type: 'monthly-1-5' } : { type: 'deposit', percentage: 30 },
     delayClause: false,
   }
 }
@@ -601,11 +772,14 @@ function getTotal(draft: BudgetDraft) {
   const investment = draft.investment
   if (investment.type === 'monthly-total') return investment.total
   if (investment.type === 'monthly-breakdown') return investment.rows.reduce((sum, row) => sum + Number(row.fee || 0), 0)
-  return investment.options.reduce((sum, option) => sum + Number(option.amount || 0), 0)
+  if (investment.type === 'fixed-options') return investment.options.reduce((sum, option) => sum + Number(option.amount || 0), 0)
+  return investment.stages.reduce((sum, stage) => sum + Number(stage.monthlyFee || 0), 0)
 }
 
 function modalityLabel(value: BudgetModality) {
-  return value === 'monthly' ? 'Abono mensual' : 'Proyecto cerrado'
+  if (value === 'monthly') return 'Abono mensual'
+  if (value === 'staged-monthly') return 'Mensual por etapas'
+  return 'Proyecto cerrado'
 }
 
 function normalizeLegacyDraft(draft: BudgetDraft): BudgetDraft {
@@ -615,24 +789,32 @@ function normalizeLegacyDraft(draft: BudgetDraft): BudgetDraft {
       type: string
     } | {
       type: 'stages'
-      stages: { fee?: number }[]
+      stages: Array<Partial<BudgetStage> & { duration?: string; deliverable?: string; fee?: number }>
     }
   }
 
   if (legacyDraft.modality !== 'stages' && legacyDraft.investment?.type !== 'stages') return draft
 
-  const total = legacyDraft.investment?.type === 'stages' && 'stages' in legacyDraft.investment
-    ? legacyDraft.investment.stages.reduce((sum, stage) => sum + Number(stage.fee || 0), 0)
-    : 0
+  const stages = legacyDraft.investment?.type === 'stages' && 'stages' in legacyDraft.investment
+    ? legacyDraft.investment.stages
+    : []
 
   return {
     ...draft,
-    modality: 'fixed',
+    modality: 'staged-monthly',
     investment: {
-      type: 'fixed-options',
-      options: [{ id: makeId('option'), label: 'Inversión', amount: total }],
+      type: 'stages',
+      stages: stages.map((stage, index) => ({
+        id: stage.id || makeId('stage'),
+        name: stage.name || `Etapa ${index + 1}`,
+        startMonth: stage.startMonth || '',
+        endMonth: stage.endMonth || '',
+        description: stage.description || (stage.duration ? `Duración: ${stage.duration}` : ''),
+        services: Array.isArray(stage.services) ? stage.services : stage.deliverable ? [stage.deliverable] : [],
+        monthlyFee: Number(stage.monthlyFee ?? stage.fee ?? 0),
+      })),
     },
-    conditions: defaultConditions('fixed'),
+    conditions: draft.conditions || defaultConditions('staged-monthly'),
   }
 }
 

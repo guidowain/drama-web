@@ -9,7 +9,7 @@ import {
 } from '@react-pdf/renderer'
 import { budgetBrand } from '@/lib/presupuestador/brand'
 import { delayClauseText, renderAdjustmentClause, renderPaymentClause, renderValidity } from '@/lib/presupuestador/clauses'
-import type { BudgetDraft, FixedInvestment, MonthlyInvestment } from '@/lib/presupuestador/types'
+import type { BudgetDraft, BudgetStage, FixedInvestment, MonthlyInvestment, StageInvestment } from '@/lib/presupuestador/types'
 
 const HEADER_WIDTH = 547
 const HEADER_HEIGHT = 104
@@ -240,17 +240,16 @@ const styles = StyleSheet.create({
 })
 
 export default function BudgetPDF({ data }: { data: BudgetDraft }) {
-  const adjustment = renderAdjustmentClause(data.conditions.adjustment)
   const investment = data.investment
+  if (investment.type === 'stages') return <StagedBudgetPDF data={data} investment={investment} />
+
+  const adjustment = renderAdjustmentClause(data.conditions.adjustment)
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.shell}>
-          <View style={styles.header}>
-            <HeaderGradient />
-            <Image src={budgetBrand.logoPath} style={styles.logo} />
-          </View>
+          <PdfHeader />
 
             <View style={styles.body}>
             <View style={styles.titleMetaRow}>
@@ -294,13 +293,108 @@ export default function BudgetPDF({ data }: { data: BudgetDraft }) {
             {data.extras ? <Section title="Extras / aclaraciones"><Text style={styles.conditions}>{data.extras}</Text></Section> : null}
           </View>
 
-          <View style={styles.footer}>
-            <Text>los@drama.com.ar</Text>
-            <Text>{budgetBrand.website}</Text>
-          </View>
+          <PdfFooter />
         </View>
       </Page>
     </Document>
+  )
+}
+
+function StagedBudgetPDF({ data, investment }: { data: BudgetDraft; investment: StageInvestment }) {
+  const adjustment = renderAdjustmentClause(data.conditions.adjustment)
+
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <View style={styles.shell}>
+          <PdfHeader />
+          <View style={styles.body}>
+            <View style={styles.titleMetaRow}>
+              <Text style={styles.client}>{data.client.name || 'Solicitante'}{data.client.company ? ` / ${data.client.company}` : ''}</Text>
+              <Text style={styles.meta}>{formatDate(data.date)}</Text>
+            </View>
+            <Text style={styles.project}>{data.projectName || 'Nombre del proyecto'}</Text>
+            {data.opening ? <Text style={styles.intro}>{data.opening}</Text> : null}
+            {data.understanding ? <Section title="Entendimiento del proyecto"><Text style={styles.paragraph}>{data.understanding}</Text></Section> : null}
+            {data.services.length ? <Section title="Servicios generales"><ServicesList services={data.services} /></Section> : null}
+            {data.notIncluded?.length ? (
+              <Section title="No incluye">
+                {data.notIncluded.map((item, index) => <Bullet key={`${item}-${index}`}>{item}</Bullet>)}
+              </Section>
+            ) : null}
+          </View>
+          <PdfFooter />
+        </View>
+      </Page>
+
+      {investment.stages.map((stage, index) => (
+        <Page key={stage.id} size="A4" style={styles.page}>
+          <View style={styles.shell}>
+            <PdfHeader />
+            <View style={styles.body}>
+              <View style={styles.titleMetaRow}>
+                <Text style={styles.client}>Etapa {index + 1} · {data.projectName || 'Proyecto'}</Text>
+                <Text style={styles.meta}>{formatStagePeriod(stage)}</Text>
+              </View>
+              <Text style={styles.project}>{stage.name || `Etapa ${index + 1}`}</Text>
+              {stage.description ? <Section title="Alcance de la etapa"><Text style={styles.paragraph}>{stage.description}</Text></Section> : null}
+              <Section title="Servicios">
+                <StageServicesList stage={stage} />
+              </Section>
+              <Total amount={stage.monthlyFee} label="Abono mensual" currency={data.currency} />
+            </View>
+            <PdfFooter />
+          </View>
+        </Page>
+      ))}
+
+      <Page size="A4" style={styles.page}>
+        <View style={styles.shell}>
+          <PdfHeader />
+          <View style={styles.body}>
+            <View style={styles.titleMetaRow}>
+              <Text style={styles.client}>{data.client.name || 'Solicitante'}{data.client.company ? ` / ${data.client.company}` : ''}</Text>
+              <Text style={styles.meta}>{formatDate(data.date)}</Text>
+            </View>
+            <Text style={styles.project}>Resumen de etapas</Text>
+            {investment.stages.length ? (
+              <Table
+                headers={['Etapa', 'Período', 'Inversión mensual']}
+                rows={investment.stages.map((stage, index) => [`Etapa ${index + 1}`, formatStagePeriod(stage), money(stage.monthlyFee, data.currency)])}
+              />
+            ) : <Text style={styles.conditions}>Sin etapas cargadas.</Text>}
+
+            <View style={styles.unlabelledSection}>
+              <Text style={styles.conditions}>{renderValidity(data.conditions.validity)}</Text>
+              <Text style={styles.conditions}>{renderPaymentClause(data.conditions.payment)}</Text>
+              {adjustment ? <Text style={styles.conditions}>{adjustment}</Text> : null}
+              {data.conditions.delayClause ? <Text style={styles.conditions}>{delayClauseText}</Text> : null}
+            </View>
+
+            {data.extras ? <Section title="Extras / aclaraciones"><Text style={styles.conditions}>{data.extras}</Text></Section> : null}
+          </View>
+          <PdfFooter />
+        </View>
+      </Page>
+    </Document>
+  )
+}
+
+function PdfHeader() {
+  return (
+    <View style={styles.header}>
+      <HeaderGradient />
+      <Image src={budgetBrand.logoPath} style={styles.logo} />
+    </View>
+  )
+}
+
+function PdfFooter() {
+  return (
+    <View style={styles.footer}>
+      <Text>los@drama.com.ar</Text>
+      <Text>{budgetBrand.website}</Text>
+    </View>
   )
 }
 
@@ -314,6 +408,15 @@ function AccentGradient() {
 
 function GradientBullet() {
   return <Image src={DOT_GRADIENT_SRC} style={styles.bulletDot} />
+}
+
+function Bullet({ children }: { children: React.ReactNode }) {
+  return (
+    <View style={styles.bullet}>
+      <GradientBullet />
+      <Text style={styles.bulletText}>{children}</Text>
+    </View>
+  )
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -337,6 +440,8 @@ function LabelGradient({ width }: { width: number }) {
 function sectionLabelWidth(title: string) {
   const widths: Record<string, number> = {
     'Entendimiento del proyecto': 182,
+    'Servicios generales': 144,
+    'Alcance de la etapa': 152,
     Servicios: 86,
     'No incluye': 98,
     'Plazo de entrega': 138,
@@ -352,6 +457,7 @@ function InvestmentSummary({ data }: { data: BudgetDraft }) {
 
   if (investment.type === 'monthly-total') return <Total amount={investment.total} label="Inversión mensual" currency={data.currency} />
   if (investment.type === 'monthly-breakdown') return <Total amount={investment.rows.reduce((sum, row) => sum + Number(row.fee || 0), 0)} label="Inversión mensual" currency={data.currency} />
+  if (investment.type === 'stages') return null
   return <Total amount={investment.options.reduce((sum, option) => sum + Number(option.amount || 0), 0)} label="Inversión" currency={data.currency} />
 }
 
@@ -374,6 +480,17 @@ function ServicesList({ services }: { services: BudgetDraft['services'] }) {
           {column.map((service, index) => <ServiceBullet key={service.id} service={service} index={(columnIndex * 100) + index} />)}
         </View>
       ))}
+    </View>
+  )
+}
+
+function StageServicesList({ stage }: { stage: BudgetStage }) {
+  const services = stage.services.map((service) => service.trim()).filter(Boolean)
+  if (!services.length) return <Text style={styles.conditions}>Sin servicios cargados.</Text>
+
+  return (
+    <View>
+      {services.map((service, index) => <Bullet key={`${stage.id}-${index}`}>{service}</Bullet>)}
     </View>
   )
 }
@@ -448,4 +565,18 @@ export function money(amount: number, currency: string) {
 function formatDate(value: string) {
   if (!value) return ''
   return new Intl.DateTimeFormat('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(`${value}T00:00:00`))
+}
+
+function formatStagePeriod(stage: Pick<BudgetStage, 'startMonth' | 'endMonth'>) {
+  const start = formatMonth(stage.startMonth)
+  const end = formatMonth(stage.endMonth)
+  if (start && end) return `${start} — ${end}`
+  if (start) return `Desde ${start}`
+  if (end) return `Hasta ${end}`
+  return 'Período a definir'
+}
+
+function formatMonth(value: string) {
+  if (!value) return ''
+  return new Intl.DateTimeFormat('es-AR', { month: 'long', year: 'numeric' }).format(new Date(`${value}-01T00:00:00`))
 }

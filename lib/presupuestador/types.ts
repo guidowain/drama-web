@@ -1,4 +1,4 @@
-export type BudgetModality = 'monthly' | 'fixed'
+export type BudgetModality = 'monthly' | 'staged-monthly' | 'fixed'
 export type BudgetCurrency = 'ARS' | 'USD'
 
 export type ServiceItem = {
@@ -40,8 +40,6 @@ export type FixedInvestment = {
 export type StageInvestment = {
   type: 'stages'
   stages: BudgetStage[]
-  timeline: TimelineRow[]
-  paymentTerms: string
 }
 
 export type InvestmentRow = {
@@ -54,18 +52,11 @@ export type InvestmentRow = {
 export type BudgetStage = {
   id: string
   name: string
+  startMonth: string
+  endMonth: string
   description?: string
-  duration?: string
-  deliverable?: string
-  modality: 'fixed' | 'monthly' | 'included'
-  fee: number
-}
-
-export type TimelineRow = {
-  id: string
-  week: string
-  phase: string
-  focus: string
+  services: string[]
+  monthlyFee: number
 }
 
 export type BudgetDraft = {
@@ -80,7 +71,7 @@ export type BudgetDraft = {
   understanding?: string
   services: ServiceItem[]
   notIncluded?: string[]
-  investment: MonthlyInvestment | FixedInvestment
+  investment: MonthlyInvestment | FixedInvestment | StageInvestment
   deliveryNote?: string
   conditions: BudgetConditions
   extras?: string
