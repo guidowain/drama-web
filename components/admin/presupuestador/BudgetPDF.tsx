@@ -568,15 +568,10 @@ function formatDate(value: string) {
 }
 
 function formatStagePeriod(stage: Pick<BudgetStage, 'startMonth' | 'endMonth'>) {
-  const start = formatMonth(stage.startMonth)
-  const end = formatMonth(stage.endMonth)
+  const start = stage.startMonth.trim()
+  const end = stage.endMonth.trim()
   if (start && end) return `${start} — ${end}`
   if (start) return `Desde ${start}`
   if (end) return `Hasta ${end}`
   return 'Período a definir'
-}
-
-function formatMonth(value: string) {
-  if (!value) return ''
-  return new Intl.DateTimeFormat('es-AR', { month: 'long', year: 'numeric' }).format(new Date(`${value}-01T00:00:00`))
 }

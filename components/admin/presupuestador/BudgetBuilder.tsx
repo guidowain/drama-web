@@ -469,8 +469,8 @@ function StagesEditor({ investment, currency, onChange }: { investment: StageInv
 
           <div className="grid gap-4 md:grid-cols-2">
             <Input label="Nombre" value={stage.name} onChange={(name) => updateStage(stage.id, { name })} wide />
-            <Input label="Desde" type="month" value={stage.startMonth} onChange={(startMonth) => updateStage(stage.id, { startMonth })} />
-            <Input label="Hasta" type="month" value={stage.endMonth} onChange={(endMonth) => updateStage(stage.id, { endMonth })} />
+            <Input label="Desde" value={stage.startMonth} placeholder="Ej: septiembre 2026" onChange={(startMonth) => updateStage(stage.id, { startMonth })} />
+            <Input label="Hasta" value={stage.endMonth} placeholder="Ej: diciembre 2026" onChange={(endMonth) => updateStage(stage.id, { endMonth })} />
             <label className="block md:col-span-2">
               <span className="mb-2 block text-xs font-black uppercase tracking-widest text-white/35">Alcance / descripción</span>
               <textarea rows={4} value={stage.description || ''} onChange={(event) => updateStage(stage.id, { description: event.target.value })} className="w-full rounded-xl border border-white/10 bg-black px-3 py-3 text-white outline-none focus:border-white/30" />
@@ -634,17 +634,12 @@ function formatPreviewDate(value: string) {
 }
 
 function formatStagePeriod(stage: Pick<BudgetStage, 'startMonth' | 'endMonth'>) {
-  const start = formatMonth(stage.startMonth)
-  const end = formatMonth(stage.endMonth)
+  const start = stage.startMonth.trim()
+  const end = stage.endMonth.trim()
   if (start && end) return `${start} — ${end}`
   if (start) return `Desde ${start}`
   if (end) return `Hasta ${end}`
   return 'Período a definir'
-}
-
-function formatMonth(value: string) {
-  if (!value) return ''
-  return new Intl.DateTimeFormat('es-AR', { month: 'long', year: 'numeric' }).format(new Date(`${value}-01T00:00:00`))
 }
 
 function StoredList({ title, items, onOpen, onDelete, onDuplicate }: { title: string; items: BudgetDraft[]; onOpen: (item: BudgetDraft) => void; onDelete: (id: string) => void; onDuplicate: (item: BudgetDraft) => void }) {
@@ -710,8 +705,8 @@ function PanelTitle({ children }: { children: React.ReactNode }) {
   return <h3 className="text-xs font-black uppercase tracking-[0.22em] text-white/35">{children}</h3>
 }
 
-function Input({ label, value, onChange, type = 'text', wide }: { label: string; value: string; onChange: (value: string) => void; type?: string; wide?: boolean }) {
-  return <label className={`block ${wide ? 'md:col-span-2' : ''}`}><span className="mb-2 block text-xs font-black uppercase tracking-widest text-white/35">{label}</span><input type={type} value={value} onChange={(event) => onChange(event.target.value)} className="w-full rounded-xl border border-white/10 bg-black px-3 py-3 text-white outline-none focus:border-white/30" /></label>
+function Input({ label, value, onChange, type = 'text', wide, placeholder }: { label: string; value: string; onChange: (value: string) => void; type?: string; wide?: boolean; placeholder?: string }) {
+  return <label className={`block ${wide ? 'md:col-span-2' : ''}`}><span className="mb-2 block text-xs font-black uppercase tracking-widest text-white/35">{label}</span><input type={type} value={value} placeholder={placeholder} onChange={(event) => onChange(event.target.value)} className="w-full rounded-xl border border-white/10 bg-black px-3 py-3 text-white outline-none focus:border-white/30" /></label>
 }
 
 function Textarea({ label, value, onChange, rows }: { label: string; value: string; onChange: (value: string) => void; rows: number }) {
@@ -807,8 +802,8 @@ function normalizeLegacyDraft(draft: BudgetDraft): BudgetDraft {
       stages: stages.map((stage, index) => ({
         id: stage.id || makeId('stage'),
         name: stage.name || `Etapa ${index + 1}`,
-        startMonth: stage.startMonth || '',
-        endMonth: stage.endMonth || '',
+        startMonth: normalizeStagePeriodText(stage.startMonth),
+        endMonth: normalizeStagePeriodText(stage.endMonth),
         description: stage.description || (stage.duration ? `Duración: ${stage.duration}` : ''),
         services: Array.isArray(stage.services) ? stage.services : stage.deliverable ? [stage.deliverable] : [],
         monthlyFee: Number(stage.monthlyFee ?? stage.fee ?? 0),
@@ -816,6 +811,12 @@ function normalizeLegacyDraft(draft: BudgetDraft): BudgetDraft {
     },
     conditions: draft.conditions || defaultConditions('staged-monthly'),
   }
+}
+
+function normalizeStagePeriodText(value?: string) {
+  if (!value) return ''
+  if (!/^\d{4}-\d{2}$/.test(value)) return value
+  return new Intl.DateTimeFormat('es-AR', { month: 'long', year: 'numeric' }).format(new Date(`${value}-01T00:00:00`))
 }
 
 function compactDate(value: string) {
