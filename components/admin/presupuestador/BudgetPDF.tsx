@@ -91,6 +91,9 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     paddingLeft: 45,
   },
+  stageBody: {
+    flexGrow: 1,
+  },
   eyebrow: {
     color: '#76716d',
     textTransform: 'uppercase',
@@ -222,6 +225,33 @@ const styles = StyleSheet.create({
     lineHeight: 1,
   },
   conditions: { color: budgetBrand.colors.muted, fontSize: 10.5, fontWeight: 400, lineHeight: 1.35, marginBottom: 5 },
+  stageConditions: {
+    marginTop: 'auto',
+    marginLeft: 11,
+    paddingTop: 20,
+    paddingBottom: 18,
+  },
+  stageConditionsTitle: {
+    color: '#050505',
+    fontFamily: 'Enriq',
+    fontSize: 8.2,
+    fontWeight: 900,
+    letterSpacing: 1.4,
+    lineHeight: 1,
+    marginBottom: 9,
+    textTransform: 'uppercase',
+  },
+  stageExtrasTitle: {
+    color: '#050505',
+    fontFamily: 'Enriq',
+    fontSize: 8.2,
+    fontWeight: 900,
+    letterSpacing: 1.4,
+    lineHeight: 1,
+    marginBottom: 7,
+    marginTop: 10,
+    textTransform: 'uppercase',
+  },
   footer: {
     position: 'absolute',
     left: 45,
@@ -308,7 +338,7 @@ function StagedBudgetPDF({ data, investment }: { data: BudgetDraft; investment: 
       <Page size="A4" style={styles.page}>
         <View style={styles.shell}>
           <PdfHeader />
-          <View style={styles.body}>
+          <View style={[styles.body, styles.stageBody]}>
             <View style={styles.titleMetaRow}>
               <Text style={styles.client}>{data.client.name || 'Solicitante'}{data.client.company ? ` / ${data.client.company}` : ''}</Text>
               <Text style={styles.meta}>{formatDate(data.date)}</Text>
@@ -316,67 +346,60 @@ function StagedBudgetPDF({ data, investment }: { data: BudgetDraft; investment: 
             <Text style={styles.project}>{data.projectName || 'Nombre del proyecto'}</Text>
             {data.opening ? <Text style={styles.intro}>{data.opening}</Text> : null}
             {data.understanding ? <Section title="Entendimiento del proyecto"><Text style={styles.paragraph}>{data.understanding}</Text></Section> : null}
-            {data.services.length ? <Section title="Servicios generales"><ServicesList services={data.services} /></Section> : null}
             {data.notIncluded?.length ? (
               <Section title="No incluye">
                 {data.notIncluded.map((item, index) => <Bullet key={`${item}-${index}`}>{item}</Bullet>)}
               </Section>
             ) : null}
+            {!investment.stages.length ? <StageClosingConditions data={data} adjustment={adjustment} /> : null}
           </View>
           <PdfFooter />
         </View>
       </Page>
 
-      {investment.stages.map((stage, index) => (
-        <Page key={stage.id} size="A4" style={styles.page}>
-          <View style={styles.shell}>
-            <PdfHeader />
-            <View style={styles.body}>
-              <View style={styles.titleMetaRow}>
-                <Text style={styles.client}>Etapa {index + 1} · {data.projectName || 'Proyecto'}</Text>
-                <Text style={styles.meta}>{formatStagePeriod(stage)}</Text>
+      {investment.stages.map((stage, index) => {
+        const isLastStage = index === investment.stages.length - 1
+        return (
+          <Page key={stage.id} size="A4" style={styles.page}>
+            <View style={styles.shell}>
+              <PdfHeader />
+              <View style={[styles.body, styles.stageBody]}>
+                <View style={styles.titleMetaRow}>
+                  <Text style={styles.client}>Etapa {index + 1} · {data.projectName || 'Proyecto'}</Text>
+                  <Text style={styles.meta}>{formatStagePeriod(stage)}</Text>
+                </View>
+                <Text style={styles.project}>{stage.name || `Etapa ${index + 1}`}</Text>
+                {stage.description ? <Section title="Alcance de la etapa"><Text style={styles.paragraph}>{stage.description}</Text></Section> : null}
+                <Section title="Servicios">
+                  <StageServicesList stage={stage} />
+                </Section>
+                <Total amount={stage.monthlyFee} label="Abono mensual" currency={data.currency} />
+                {isLastStage ? <StageClosingConditions data={data} adjustment={adjustment} /> : null}
               </View>
-              <Text style={styles.project}>{stage.name || `Etapa ${index + 1}`}</Text>
-              {stage.description ? <Section title="Alcance de la etapa"><Text style={styles.paragraph}>{stage.description}</Text></Section> : null}
-              <Section title="Servicios">
-                <StageServicesList stage={stage} />
-              </Section>
-              <Total amount={stage.monthlyFee} label="Abono mensual" currency={data.currency} />
+              <PdfFooter />
             </View>
-            <PdfFooter />
-          </View>
-        </Page>
-      ))}
-
-      <Page size="A4" style={styles.page}>
-        <View style={styles.shell}>
-          <PdfHeader />
-          <View style={styles.body}>
-            <View style={styles.titleMetaRow}>
-              <Text style={styles.client}>{data.client.name || 'Solicitante'}{data.client.company ? ` / ${data.client.company}` : ''}</Text>
-              <Text style={styles.meta}>{formatDate(data.date)}</Text>
-            </View>
-            <Text style={styles.project}>Resumen de etapas</Text>
-            {investment.stages.length ? (
-              <Table
-                headers={['Etapa', 'Período', 'Inversión mensual']}
-                rows={investment.stages.map((stage, index) => [`Etapa ${index + 1}`, formatStagePeriod(stage), money(stage.monthlyFee, data.currency)])}
-              />
-            ) : <Text style={styles.conditions}>Sin etapas cargadas.</Text>}
-
-            <View style={styles.unlabelledSection}>
-              <Text style={styles.conditions}>{renderValidity(data.conditions.validity)}</Text>
-              <Text style={styles.conditions}>{renderPaymentClause(data.conditions.payment)}</Text>
-              {adjustment ? <Text style={styles.conditions}>{adjustment}</Text> : null}
-              {data.conditions.delayClause ? <Text style={styles.conditions}>{delayClauseText}</Text> : null}
-            </View>
-
-            {data.extras ? <Section title="Extras / aclaraciones"><Text style={styles.conditions}>{data.extras}</Text></Section> : null}
-          </View>
-          <PdfFooter />
-        </View>
-      </Page>
+          </Page>
+        )
+      })}
     </Document>
+  )
+}
+
+function StageClosingConditions({ data, adjustment }: { data: BudgetDraft; adjustment: string }) {
+  return (
+    <View style={styles.stageConditions}>
+      <Text style={styles.stageConditionsTitle}>Condiciones</Text>
+      <Text style={styles.conditions}>{renderValidity(data.conditions.validity)}</Text>
+      <Text style={styles.conditions}>{renderPaymentClause(data.conditions.payment)}</Text>
+      {adjustment ? <Text style={styles.conditions}>{adjustment}</Text> : null}
+      {data.conditions.delayClause ? <Text style={styles.conditions}>{delayClauseText}</Text> : null}
+      {data.extras ? (
+        <>
+          <Text style={styles.stageExtrasTitle}>Extras / aclaraciones</Text>
+          <Text style={styles.conditions}>{data.extras}</Text>
+        </>
+      ) : null}
+    </View>
   )
 }
 
@@ -440,7 +463,6 @@ function LabelGradient({ width }: { width: number }) {
 function sectionLabelWidth(title: string) {
   const widths: Record<string, number> = {
     'Entendimiento del proyecto': 182,
-    'Servicios generales': 144,
     'Alcance de la etapa': 152,
     Servicios: 86,
     'No incluye': 98,
