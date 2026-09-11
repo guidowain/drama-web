@@ -76,31 +76,34 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  let isAdmin = false
+  // /admin y /meet son herramientas internas: no llevan el shell del sitio.
+  let isStandalone = false
   const requestLocale = getRequestLocale()
   const { locale, lockLocale } = requestLocale
 
   try {
     const headersList = headers()
     const pathname = headersList.get('x-pathname') ?? ''
-    isAdmin = pathname.startsWith('/admin')
+    isStandalone = pathname.startsWith('/admin') || pathname.startsWith('/meet')
   } catch (error) {
     if (isDynamicServerError(error)) {
       throw error
     }
 
-    isAdmin = false
+    isStandalone = false
   }
 
   let settings: Awaited<ReturnType<typeof getSiteSettings>> | null = null
-  try {
-    settings = await getSiteSettings()
-  } catch (error) {
-    if (isDynamicServerError(error)) {
-      throw error
-    }
+  if (!isStandalone) {
+    try {
+      settings = await getSiteSettings()
+    } catch (error) {
+      if (isDynamicServerError(error)) {
+        throw error
+      }
 
-    settings = null
+      settings = null
+    }
   }
 
   return (
@@ -110,7 +113,7 @@ export default async function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
-        {isAdmin ? (
+        {isStandalone ? (
           children
         ) : (
           <LocaleProvider initialLocale={locale} lockLocale={lockLocale}>

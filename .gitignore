@@ -13,3 +13,6 @@ tsconfig.tsbuildinfo
 
 # Worktrees de Claude (no versionar)
 .claude/worktrees/
+
+# Drama Meet — datos locales de desarrollo (en producción va Vercel Blob)
+.meet-data/
