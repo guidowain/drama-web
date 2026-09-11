@@ -1,5 +1,4 @@
 import { randomBytes } from 'crypto'
-import { del, get, list, put } from '@vercel/blob'
 import {
   meetResponseSchema,
   meetingSchema,
@@ -11,20 +10,28 @@ import {
 /**
  * Persistencia de Drama Meet.
  *
- * A diferencia del resto del sitio (que guarda JSON commiteando contra la API de
- * GitHub, y por lo tanto dispara un deploy en cada escritura), las reuniones se
- * guardan en Vercel Blob: los invitados escriben en cualquier momento y nada de
- * eso toca el repo ni redeploya la web.
+ * Los datos viven en un repo de GitHub aparte del sitio, por dos razones:
  *
- * Cada respuesta vive en su propio blob, así dos personas que responden al mismo
- * tiempo nunca se pisan entre sí.
+ * 1. Privacidad. drama-web es público; acá se guardan nombres y mails de gente
+ *    que responde una invitación. Van a un repo privado propio.
+ * 2. Deploys. Si esto commiteara en drama-web, cada respuesta de un invitado
+ *    redeployaría la web entera. En un repo aparte, nada de esto toca el sitio.
  *
- * En local, si no hay BLOB_READ_WRITE_TOKEN, se usa el filesystem para poder
- * desarrollar sin provisionar nada.
+ * Cada respuesta es un archivo propio, así una nunca sobrescribe a otra. Aun así
+ * GitHub serializa los commits por rama: dos escrituras simultáneas, aunque sean
+ * a archivos distintos, devuelven 409 porque la segunda quedó desactualizada
+ * respecto del head. Por eso `commit` reintenta con backoff releyendo el sha.
+ *
+ * En local, sin repo configurado, se usa el filesystem para desarrollar sin
+ * depender de nada.
  */
 
 const PREFIX = 'meet'
 const MAX_RESPONSES_PER_MEETING = 300
+const GITHUB_API = 'https://api.github.com'
+const MAX_COMMIT_RETRIES = 6
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const meetingPath = (meetingId: string) => `${PREFIX}/${meetingId}/meeting.json`
 const responsesPrefix = (meetingId: string) => `${PREFIX}/${meetingId}/responses/`
@@ -39,43 +46,117 @@ type Driver = {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Driver: Vercel Blob                                                        */
+/* Driver: repo privado de GitHub                                             */
 /* -------------------------------------------------------------------------- */
 
-const blobDriver: Driver = {
-  async readJson(path) {
-    // useCache:false evita leer una versión vieja del CDN justo después de escribir.
-    const result = await get(path, { access: 'private', useCache: false })
-    if (!result || result.statusCode !== 200) return null
-    return await new Response(result.stream).json()
-  },
+function githubConfig() {
+  const repo = process.env.MEET_GITHUB_REPO
+  const token =
+    process.env.MEET_GITHUB_TOKEN || process.env.GITHUB_CONTENT_TOKEN || process.env.GITHUB_TOKEN
 
-  async writeJson(path, data) {
-    await put(path, JSON.stringify(data), {
-      access: 'private',
-      addRandomSuffix: false,
-      allowOverwrite: true,
-      cacheControlMaxAge: 0,
-      contentType: 'application/json',
-    })
-  },
+  if (!repo || !token) return null
 
-  async listPaths(prefix) {
-    const paths: string[] = []
-    let cursor: string | undefined
+  return { repo, token, branch: process.env.MEET_GITHUB_BRANCH || 'main' }
+}
 
-    do {
-      const page = await list({ prefix, cursor, limit: 1000 })
-      paths.push(...page.blobs.map((blob) => blob.pathname))
-      cursor = page.hasMore ? page.cursor : undefined
-    } while (cursor)
+function createGithubDriver(config: NonNullable<ReturnType<typeof githubConfig>>): Driver {
+  const headers = {
+    Authorization: `Bearer ${config.token}`,
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+  }
 
-    return paths
-  },
+  const contentsUrl = (path: string) =>
+    `${GITHUB_API}/repos/${config.repo}/contents/${path.split('/').map(encodeURIComponent).join('/')}`
 
-  async remove(paths) {
-    if (paths.length) await del(paths)
-  },
+  /** sha actual del archivo, o null si todavía no existe. */
+  async function shaOf(path: string) {
+    const res = await fetch(`${contentsUrl(path)}?ref=${config.branch}`, { headers, cache: 'no-store' })
+    if (!res.ok) return null
+    const payload = await res.json()
+    return typeof payload?.sha === 'string' ? (payload.sha as string) : null
+  }
+
+  /**
+   * Escribe o borra un archivo reintentando cuando otro commit ganó la carrera.
+   * El sha se relee en cada intento porque la rama pudo haber avanzado.
+   */
+  async function commit(
+    path: string,
+    method: 'PUT' | 'DELETE',
+    body: (sha: string | null) => Record<string, unknown> | null
+  ) {
+    for (let attempt = 0; ; attempt += 1) {
+      const payload = body(await shaOf(path))
+      if (!payload) return
+
+      const res = await fetch(contentsUrl(path), {
+        method,
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+
+      if (res.ok) return
+
+      // 409/422 = la rama avanzó entre que leímos el sha y escribimos.
+      const contended = res.status === 409 || res.status === 422
+      if (!contended || attempt >= MAX_COMMIT_RETRIES) {
+        throw new Error(`GitHub ${res.status} en ${path}: ${await res.text()}`)
+      }
+
+      await sleep(120 * 2 ** attempt + Math.random() * 250)
+    }
+  }
+
+  return {
+    async readJson(path) {
+      const res = await fetch(`${contentsUrl(path)}?ref=${config.branch}`, { headers, cache: 'no-store' })
+
+      if (res.status === 404) return null
+      if (!res.ok) throw new Error(`GitHub ${res.status} leyendo ${path}`)
+
+      const payload = await res.json()
+      const decoded = Buffer.from(String(payload.content).replace(/\n/g, ''), 'base64').toString('utf-8')
+      return JSON.parse(decoded)
+    },
+
+    async writeJson(path, data) {
+      const content = Buffer.from(JSON.stringify(data, null, 2), 'utf-8').toString('base64')
+
+      await commit(path, 'PUT', (sha) => ({
+        message: `meet: ${sha ? 'actualizar' : 'crear'} ${path}`,
+        content,
+        branch: config.branch,
+        ...(sha ? { sha } : {}),
+      }))
+    },
+
+    async listPaths(prefix) {
+      // El árbol completo en una sola llamada, en vez de recorrer carpeta por carpeta.
+      const res = await fetch(
+        `${GITHUB_API}/repos/${config.repo}/git/trees/${config.branch}?recursive=1`,
+        { headers, cache: 'no-store' }
+      )
+
+      // 404/409 = repo recién creado y todavía vacío.
+      if (res.status === 404 || res.status === 409) return []
+      if (!res.ok) throw new Error(`GitHub ${res.status} listando ${prefix}`)
+
+      const payload = await res.json()
+      const tree: Array<{ path: string; type: string }> = Array.isArray(payload?.tree) ? payload.tree : []
+
+      return tree.filter((entry) => entry.type === 'blob' && entry.path.startsWith(prefix)).map((entry) => entry.path)
+    },
+
+    async remove(paths) {
+      // En serie: cada borrado es un commit y la rama los toma de a uno.
+      for (const path of paths) {
+        await commit(path, 'DELETE', (sha) =>
+          sha ? { message: `meet: borrar ${path}`, branch: config.branch, sha } : null
+        )
+      }
+    },
+  }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -135,27 +216,26 @@ function createFsDriver(): Driver {
 
     async remove(paths) {
       const { rm } = await fs()
-      await Promise.all(
-        paths.map(async (relative) => rm(await absolute(relative), { force: true }))
-      )
+      await Promise.all(paths.map(async (relative) => rm(await absolute(relative), { force: true })))
     },
   }
 }
 
 /* -------------------------------------------------------------------------- */
 
-export function meetStorageMode(): 'blob' | 'filesystem' {
-  return process.env.BLOB_READ_WRITE_TOKEN ? 'blob' : 'filesystem'
+export function meetStorageMode(): 'github' | 'filesystem' {
+  return githubConfig() ? 'github' : 'filesystem'
 }
 
 function driver(): Driver {
-  if (process.env.BLOB_READ_WRITE_TOKEN) return blobDriver
+  const config = githubConfig()
+  if (config) return createGithubDriver(config)
 
   if (process.env.VERCEL) {
     // El filesystem de una función es efímero: guardar ahí perdería las respuestas
     // en silencio. Mejor romper fuerte y con una instrucción concreta.
     throw new Error(
-      'Falta BLOB_READ_WRITE_TOKEN. Creá el store con `vercel blob create-store drama-meet` y volvé a deployar.'
+      'Falta MEET_GITHUB_REPO (repo privado donde se guardan las reuniones). Configurala en las env vars de Vercel.'
     )
   }
 

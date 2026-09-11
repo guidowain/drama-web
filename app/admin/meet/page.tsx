@@ -7,7 +7,7 @@ import type { MeetingSummary } from '@/lib/meet/types'
 
 export default function AdminMeetPage() {
   const [meetings, setMeetings] = useState<MeetingSummary[]>([])
-  const [storage, setStorage] = useState<'blob' | 'filesystem' | null>(null)
+  const [storage, setStorage] = useState<'github' | 'filesystem' | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [copiedId, setCopiedId] = useState('')
@@ -70,9 +70,9 @@ export default function AdminMeetPage() {
       {storage === 'filesystem' ? (
         <div className="mb-6 max-w-4xl rounded-xl border border-amber-400/20 bg-amber-400/5 p-4">
           <p className="text-sm text-amber-200/80">
-            Guardando en el filesystem local. Para producción falta crear el store:{' '}
-            <span className="font-mono text-amber-100">vercel blob create-store drama-meet</span> y sumar{' '}
-            <span className="font-mono text-amber-100">BLOB_READ_WRITE_TOKEN</span>.
+            Guardando en el filesystem local. Para producción falta configurar{' '}
+            <span className="font-mono text-amber-100">MEET_GITHUB_REPO</span> con el repo privado donde
+            van las reuniones.
           </p>
         </div>
       ) : null}
