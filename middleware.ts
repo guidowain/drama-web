@@ -27,6 +27,12 @@ export async function middleware(request: NextRequest) {
     return withPathnameHeader(request)
   }
 
+  // Drama Meet es público para los invitados. Pasa por acá solo para que el
+  // layout reciba x-pathname y sepa que no va el shell del sitio.
+  if (pathname.startsWith('/meet')) {
+    return withPathnameHeader(request)
+  }
+
   // Lecturas públicas: el sitio renderiza estos datos en /proyectos y el home.
   const publicReads = ['/api/admin/site', '/api/admin/proyectos']
   if (request.method === 'GET' && publicReads.includes(pathname)) {
@@ -56,5 +62,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*', '/api/upload'],
+  matcher: ['/admin/:path*', '/api/admin/:path*', '/api/upload', '/meet/:path*'],
 }

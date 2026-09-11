@@ -524,3 +524,420 @@ button,
 ::-webkit-scrollbar-track { background: #111; }
 ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* ========================================================================== */
+/* Drama Meet                                                                 */
+/* Vive en /meet (público) y dentro de /admin/meet (Drama). Las reglas cuelgan */
+/* de .meet-ui para ganarle a la tipografía sans del admin-shell sin tocarla.  */
+/* ========================================================================== */
+
+.meet-ui {
+  font-family: 'Archivo', system-ui, sans-serif;
+  color: #fff;
+}
+
+.meet-ui input,
+.meet-ui button {
+  font-family: 'Archivo', system-ui, sans-serif;
+}
+
+.meet-ui .meet-display {
+  font-family: 'Enriq', 'Archivo', system-ui, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.meet-ui .meet-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.meet-ui .meet-rule {
+  height: 3px;
+  width: 72px;
+  background: linear-gradient(90deg, #F504FF, #FE796D, #FCC028);
+}
+
+/* --- Campos --------------------------------------------------------------- */
+
+.meet-ui .meet-input {
+  width: 100%;
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 15px 18px;
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.meet-ui .meet-input:focus {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.meet-ui .meet-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* --- Botones -------------------------------------------------------------- */
+
+.meet-ui .meet-cta {
+  border: none;
+  border-radius: 9999px;
+  padding: 15px 38px;
+  font-family: 'Enriq', 'Archivo', system-ui, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 14px;
+  background: var(--gradient);
+  color: #000;
+  cursor: pointer;
+  transition: box-shadow 0.25s ease;
+}
+
+.meet-ui .meet-cta:hover:not(:disabled) {
+  box-shadow: 0 0 40px rgba(254, 120, 109, 0.35);
+}
+
+.meet-ui .meet-cta:disabled {
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.35);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.meet-ui .meet-cta-sm {
+  padding: 14px 34px;
+}
+
+.meet-ui .meet-cta-white {
+  background: #fff;
+  color: #000;
+  transition: background 0.3s ease;
+}
+
+.meet-ui .meet-cta-white:hover:not(:disabled) {
+  background: var(--gradient);
+  box-shadow: none;
+}
+
+/* Botón destructivo suave — "Limpiar todo". */
+.meet-ui .meet-ghost {
+  border: 2px solid #FE796D;
+  background: none;
+  color: #FE796D;
+  border-radius: 9999px;
+  padding: 10px 26px;
+  font-family: 'Enriq', 'Archivo', system-ui, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.meet-ui .meet-ghost:hover {
+  background: #FE796D;
+  color: #000;
+}
+
+.meet-ui .meet-outline {
+  border: 2px solid transparent;
+  border-radius: 9999px;
+  padding: 12px 30px;
+  font-family: 'Enriq', 'Archivo', system-ui, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 13px;
+  cursor: pointer;
+  color: #000;
+  background: linear-gradient(#fff, #fff) padding-box, var(--gradient) border-box;
+  transition: box-shadow 0.3s ease;
+}
+
+.meet-ui .meet-outline:hover {
+  box-shadow: 0 0 40px rgba(254, 120, 109, 0.5), 0 0 80px rgba(245, 4, 255, 0.3);
+}
+
+/* Pastilla redonda chica — flechas de mes y steppers de hora. */
+.meet-ui .meet-round {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  transition: border-color 0.15s ease;
+}
+
+.meet-ui .meet-round:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.meet-ui .meet-round:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.meet-ui .meet-round-sm {
+  width: 26px;
+  height: 26px;
+  font-size: 13px;
+}
+
+/* Pasos 01 / 02 / 03 del flujo de creación. */
+.meet-ui .meet-step {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.45);
+  border-radius: 9999px;
+  padding: 9px 18px;
+  font-family: 'Enriq', 'Archivo', system-ui, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.meet-ui .meet-step:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #fff;
+}
+
+.meet-ui .meet-step-done {
+  color: #fff;
+}
+
+.meet-ui .meet-step-active {
+  border-color: transparent;
+  background: var(--gradient);
+  color: #000;
+}
+
+.meet-ui .meet-step:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* --- Calendario ----------------------------------------------------------- */
+
+.meet-ui .meet-day {
+  height: 38px;
+  border-radius: 9999px;
+  font-family: 'Archivo', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.meet-ui .meet-day:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.meet-ui .meet-day-on {
+  color: #000;
+  border-color: transparent;
+  background: var(--gradient);
+}
+
+.meet-ui .meet-day:disabled {
+  color: rgba(255, 255, 255, 0.2);
+  cursor: default;
+}
+
+/* --- Grilla de franjas ---------------------------------------------------- */
+
+.meet-ui .meet-grid {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 20px;
+  overflow-x: auto;
+  background: #0a0a0a;
+}
+
+.meet-ui .meet-grid-inner {
+  display: flex;
+  gap: 10px;
+  min-width: min-content;
+}
+
+.meet-ui .meet-axis {
+  flex-shrink: 0;
+  padding-top: 54px;
+}
+
+.meet-ui .meet-axis-label {
+  height: 26px;
+  margin-bottom: 4px;
+  width: 52px;
+  font-size: 10px;
+  line-height: 26px;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.28);
+}
+
+.meet-ui .meet-axis-label-hour {
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 700;
+}
+
+.meet-ui .meet-cols {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  min-width: min-content;
+  touch-action: none;
+}
+
+.meet-ui .meet-col {
+  min-width: 104px;
+  flex: 1;
+}
+
+.meet-ui .meet-col-head {
+  height: 54px;
+}
+
+.meet-ui .meet-col-wd {
+  font-family: 'Enriq', 'Archivo', system-ui, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.meet-ui .meet-col-date {
+  font-family: 'Enriq', 'Archivo', system-ui, sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 20px;
+  line-height: 1.1;
+  margin-top: 2px;
+}
+
+/* Separador punteado entre días no consecutivos. */
+.meet-ui .meet-gap {
+  width: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 54px;
+}
+
+.meet-ui .meet-gap span {
+  width: 1px;
+  height: 100%;
+  background: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0 4px, transparent 4px 10px);
+}
+
+.meet-ui .meet-cell {
+  height: 26px;
+  margin-bottom: 4px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+.meet-ui .meet-cell-idle-soft {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.meet-ui .meet-cell-on {
+  background: var(--gradient);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Franja que Drama no habilitó: rayada y fuera de juego. */
+.meet-ui .meet-cell-off {
+  background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0 4px, transparent 4px 9px);
+  border-color: rgba(255, 255, 255, 0.05);
+  cursor: default;
+}
+
+.meet-ui .meet-cell-paintable:hover {
+  outline: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* Mapa de calor de resultados. */
+.meet-ui .meet-cell-heat {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+.meet-ui .meet-cell-heat-most {
+  background: #FE796D;
+}
+
+.meet-ui .meet-cell-heat-all {
+  background: var(--gradient);
+}
+
+.meet-ui .meet-cell-focus {
+  outline: 2px solid #FCC028;
+  outline-offset: -1px;
+}
+
+/* --- Barra fija de acción ------------------------------------------------- */
+
+.meet-ui .meet-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px 32px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+/* --- Ticker de la invitación ---------------------------------------------- */
+
+.meet-ui .meet-ticker {
+  overflow: hidden;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.meet-ui .meet-ticker-track {
+  display: flex;
+  white-space: nowrap;
+  width: max-content;
+  animation: ticker 25s linear infinite;
+  font-family: 'Enriq', 'Archivo', system-ui, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 15px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meet-ui .meet-ticker-track {
+    animation: none;
+  }
+}
