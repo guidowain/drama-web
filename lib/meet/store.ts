@@ -33,6 +33,9 @@ const MAX_COMMIT_RETRIES = 6
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
+/** Chequeo de acceso al repo, una vez por proceso. Ver `assertRepoAccess`. */
+const repoAccessChecks = new Map<string, Promise<void>>()
+
 const meetingPath = (meetingId: string) => `${PREFIX}/${meetingId}/meeting.json`
 const responsesPrefix = (meetingId: string) => `${PREFIX}/${meetingId}/responses/`
 const responsePath = (meetingId: string, responseId: string) =>
@@ -68,6 +71,38 @@ function createGithubDriver(config: NonNullable<ReturnType<typeof githubConfig>>
 
   const contentsUrl = (path: string) =>
     `${GITHUB_API}/repos/${config.repo}/contents/${path.split('/').map(encodeURIComponent).join('/')}`
+
+  /**
+   * GitHub responde 404 —no 403— cuando el token no puede ver un repo privado,
+   * o sea que "sin permiso" y "no existe" llegan idénticos. Sin este chequeo una
+   * credencial mal configurada se vería como una base vacía: las reuniones
+   * existirían pero el sitio diría que el link no existe, y peor, se podrían
+   * pisar creando otra con el mismo slug. Ante cualquier 404 confirmamos que el
+   * repo sea visible, una sola vez por proceso.
+   */
+  async function assertRepoAccess() {
+    const cached = repoAccessChecks.get(config.repo)
+    if (cached) return cached
+
+    const check = (async () => {
+      const res = await fetch(`${GITHUB_API}/repos/${config.repo}`, { headers, cache: 'no-store' })
+      if (res.ok) return
+
+      if (res.status === 401 || res.status === 403 || res.status === 404) {
+        throw new Error(
+          `El token de GitHub no tiene acceso a ${config.repo}. Dale permiso de Contents (lectura y escritura) sobre ese repo, o configurá MEET_GITHUB_TOKEN con uno que lo tenga.`
+        )
+      }
+
+      throw new Error(`GitHub ${res.status} verificando ${config.repo}`)
+    })()
+
+    // Un fallo transitorio no debe quedar cacheado como definitivo.
+    check.catch(() => repoAccessChecks.delete(config.repo))
+    repoAccessChecks.set(config.repo, check)
+
+    return check
+  }
 
   /** sha actual del archivo, o null si todavía no existe. */
   async function shaOf(path: string) {
@@ -112,7 +147,10 @@ function createGithubDriver(config: NonNullable<ReturnType<typeof githubConfig>>
     async readJson(path) {
       const res = await fetch(`${contentsUrl(path)}?ref=${config.branch}`, { headers, cache: 'no-store' })
 
-      if (res.status === 404) return null
+      if (res.status === 404) {
+        await assertRepoAccess()
+        return null
+      }
       if (!res.ok) throw new Error(`GitHub ${res.status} leyendo ${path}`)
 
       const payload = await res.json()
@@ -138,8 +176,12 @@ function createGithubDriver(config: NonNullable<ReturnType<typeof githubConfig>>
         { headers, cache: 'no-store' }
       )
 
-      // 404/409 = repo recién creado y todavía vacío.
-      if (res.status === 404 || res.status === 409) return []
+      // 404/409 = repo recién creado y todavía vacío (o sin acceso: lo distingue
+      // assertRepoAccess, porque GitHub usa 404 para las dos cosas).
+      if (res.status === 404 || res.status === 409) {
+        await assertRepoAccess()
+        return []
+      }
       if (!res.ok) throw new Error(`GitHub ${res.status} listando ${prefix}`)
 
       const payload = await res.json()
