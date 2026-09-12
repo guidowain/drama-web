@@ -15,24 +15,40 @@ type Props = {
   variant?: 'editor' | 'guest'
 }
 
-type Anchor = { dateIndex: number; minIndex: number }
+type Cell = { dateIndex: number; minIndex: number }
+
+type Gesture = {
+  anchor: Cell
+  key: string
+  startX: number
+  startY: number
+  touch: boolean
+  /** Se activa recién cuando el dedo (o el mouse) se movió lo suficiente. */
+  dragging: boolean
+  /** Valor del trazo: lo fija la primera celda. */
+  paint: boolean
+}
+
+/** Cuánto hay que moverse para que deje de ser un toque y pase a ser un arrastre. */
+const DRAG_THRESHOLD_TOUCH = 10
+const DRAG_THRESHOLD_MOUSE = 4
 
 /**
- * Grilla pintable: se arrastra para marcar franjas, como seleccionar celdas en
- * una planilla.
+ * Grilla pintable.
  *
- * El arrastre rellena todo el rectángulo entre la celda donde se apretó y la
- * celda de abajo del cursor, en vez de ir pintando las que va tocando. Eso lo
- * hace independiente de cuántos `pointermove` dispare el navegador — un arrastre
- * rápido no deja huecos — y de paso permite pintar un bloque de varios días de
- * una sola pasada.
+ * Un toque marca una sola franja. Recién cuando el dedo se corre lo suficiente
+ * empieza a arrastrar, y ahí rellena todo el rectángulo entre la celda donde
+ * empezó y la de abajo del cursor. El rectángulo se recalcula desde el estado
+ * original en cada movimiento, así que volver sobre los pasos deshace, y no
+ * depende de cuántos `pointermove` dispare el navegador: un arrastre rápido no
+ * deja huecos.
  *
- * El valor lo define el primer toque: si esa celda estaba prendida, todo el
- * trazo apaga; si estaba apagada, todo el trazo prende.
+ * En pantallas táctiles el gesto horizontal es del scroll, no del pincel: si el
+ * movimiento arranca para el costado se abandona el trazo y no se pinta nada.
+ * Sin eso, cualquier intento de correr la grilla dejaba celdas marcadas.
  */
 export default function SlotPainter({ dates, axis, value, onChange, enabled, variant = 'editor' }: Props) {
-  const paintRef = useRef<boolean | null>(null)
-  const anchorRef = useRef<Anchor | null>(null)
+  const gestureRef = useRef<Gesture | null>(null)
   const baseRef = useRef<Set<string>>(new Set())
 
   const dateIndex = useMemo(() => {
@@ -47,7 +63,7 @@ export default function SlotPainter({ dates, axis, value, onChange, enabled, var
     return map
   }, [axis])
 
-  function anchorAt(event: ReactPointerEvent<HTMLDivElement>) {
+  function cellAt(event: ReactPointerEvent<HTMLDivElement>) {
     const element = document.elementFromPoint(event.clientX, event.clientY)
     const key = element?.closest?.('[data-k]')?.getAttribute('data-k')
     if (!key) return null
@@ -57,24 +73,23 @@ export default function SlotPainter({ dates, axis, value, onChange, enabled, var
     const mIndex = minIndex.get(min)
     if (dIndex === undefined || mIndex === undefined) return null
 
-    return { key, anchor: { dateIndex: dIndex, minIndex: mIndex } }
+    return { key, cell: { dateIndex: dIndex, minIndex: mIndex } }
   }
 
-  /** Aplica el valor del trazo a todo el rectángulo anclado en el primer toque. */
-  function paintTo(target: Anchor) {
-    const anchor = anchorRef.current
-    const paint = paintRef.current
-    if (!anchor || paint === null) return
+  /** Aplica el valor del trazo a todo el rectángulo entre el ancla y el destino. */
+  function paintTo(target: Cell) {
+    const gesture = gestureRef.current
+    if (!gesture) return
 
     const next = new Set(baseRef.current)
-    const [fromDate, toDate] = sorted(anchor.dateIndex, target.dateIndex)
-    const [fromMin, toMin] = sorted(anchor.minIndex, target.minIndex)
+    const [fromDate, toDate] = sorted(gesture.anchor.dateIndex, target.dateIndex)
+    const [fromMin, toMin] = sorted(gesture.anchor.minIndex, target.minIndex)
 
     for (let d = fromDate; d <= toDate; d += 1) {
       for (let m = fromMin; m <= toMin; m += 1) {
         const key = slotKey(dates[d], axis[m].min)
         if (enabled && !enabled.has(key)) continue
-        if (paint) next.add(key)
+        if (gesture.paint) next.add(key)
         else next.delete(key)
       }
     }
@@ -84,32 +99,61 @@ export default function SlotPainter({ dates, axis, value, onChange, enabled, var
 
   const surface = {
     onPointerDown: (event: ReactPointerEvent<HTMLDivElement>) => {
-      const hit = anchorAt(event)
+      const hit = cellAt(event)
       if (!hit) return
 
-      event.preventDefault()
-      // Capturamos el puntero para que el arrastre siga funcionando aunque el
-      // dedo se vaya de la celda original — sin esto, en touch todos los eventos
-      // quedan pegados al primer elemento tocado.
-      event.currentTarget.setPointerCapture(event.pointerId)
-
-      paintRef.current = !value.has(hit.key)
-      anchorRef.current = hit.anchor
+      // Sin preventDefault: en táctil el navegador todavía tiene que poder
+      // quedarse con el gesto si resulta ser un scroll lateral.
+      gestureRef.current = {
+        anchor: hit.cell,
+        key: hit.key,
+        startX: event.clientX,
+        startY: event.clientY,
+        touch: event.pointerType === 'touch',
+        dragging: false,
+        paint: !value.has(hit.key),
+      }
       baseRef.current = new Set(value)
-      paintTo(hit.anchor)
     },
+
     onPointerMove: (event: ReactPointerEvent<HTMLDivElement>) => {
-      if (paintRef.current === null) return
-      const hit = anchorAt(event)
-      if (hit) paintTo(hit.anchor)
+      const gesture = gestureRef.current
+      if (!gesture) return
+
+      if (!gesture.dragging) {
+        const dx = event.clientX - gesture.startX
+        const dy = event.clientY - gesture.startY
+        const threshold = gesture.touch ? DRAG_THRESHOLD_TOUCH : DRAG_THRESHOLD_MOUSE
+
+        // Todavía es un toque con pulso: no tocamos nada.
+        if (Math.hypot(dx, dy) < threshold) return
+
+        // En táctil, mayormente horizontal = está scrolleando la grilla.
+        if (gesture.touch && Math.abs(dx) > Math.abs(dy)) {
+          gestureRef.current = null
+          return
+        }
+
+        gesture.dragging = true
+        // Recién ahora capturamos: el arrastre sigue aunque el dedo se vaya de
+        // la celda original, que en táctil es lo que pasa siempre.
+        event.currentTarget.setPointerCapture(event.pointerId)
+      }
+
+      const hit = cellAt(event)
+      if (hit) paintTo(hit.cell)
     },
+
     onPointerUp: () => {
-      paintRef.current = null
-      anchorRef.current = null
+      const gesture = gestureRef.current
+      // Nunca llegó a ser arrastre: fue un toque, marca una sola franja.
+      if (gesture && !gesture.dragging) paintTo(gesture.anchor)
+      gestureRef.current = null
     },
+
+    // El navegador se quedó con el gesto (scroll): no pintamos nada.
     onPointerCancel: () => {
-      paintRef.current = null
-      anchorRef.current = null
+      gestureRef.current = null
     },
   }
 
