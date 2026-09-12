@@ -12,6 +12,7 @@ export default function ResultadosPage({ params }: { params: { id: string } }) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [focusKey, setFocusKey] = useState<string | null>(null)
+  const [copyState, setCopyState] = useState<'idle' | 'done' | 'error'>('idle')
 
   useEffect(() => {
     let active = true
@@ -53,6 +54,33 @@ export default function ResultadosPage({ params }: { params: { id: string } }) {
     }
     return map
   }, [responses])
+
+  // El mail es opcional para el invitado, así que puede haber respuestas sin uno.
+  const emails = useMemo(() => {
+    const seen = new Set<string>()
+    for (const response of responses) {
+      const email = response.email.trim().toLowerCase()
+      if (email) seen.add(email)
+    }
+    return Array.from(seen)
+  }, [responses])
+
+  const sinMail = responses.length - responses.filter((r) => r.email.trim()).length
+
+  async function copyEmails() {
+    // Separados por coma: es lo que el campo "Agregar invitados" de Google
+    // Calendar convierte en un invitado por cada dirección al pegarlo.
+    const list = emails.join(', ')
+
+    try {
+      await navigator.clipboard.writeText(list)
+      setCopyState('done')
+    } catch {
+      setCopyState('error')
+    }
+
+    setTimeout(() => setCopyState('idle'), 4000)
+  }
 
   const focused = focusKey ? bySlot.get(focusKey) ?? [] : null
 
@@ -108,7 +136,27 @@ export default function ResultadosPage({ params }: { params: { id: string } }) {
                   )
                 })}
               </div>
+
+              {emails.length ? (
+                <button type="button" onClick={copyEmails} className="meet-ghost ml-auto">
+                  {copyState === 'done'
+                    ? 'Copiado'
+                    : `Copiar ${emails.length} ${emails.length === 1 ? 'mail' : 'mails'}`}
+                </button>
+              ) : null}
             </div>
+
+            {copyState === 'error' ? (
+              <p className="mb-4 select-text break-all rounded-xl border border-white/10 bg-black/40 p-3 font-mono text-xs text-white/60">
+                {emails.join(', ')}
+              </p>
+            ) : null}
+
+            {sinMail ? (
+              <p className="mb-5 text-[13px] text-white/35">
+                {sinMail === 1 ? 'Una persona no dejó' : `${sinMail} personas no dejaron`} su mail.
+              </p>
+            ) : null}
 
             <SlotHeatmap
               dates={meeting.dates}
