@@ -132,14 +132,10 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
               </div>
             </div>
 
-            <p className="meet-eyebrow">Drama te invita a una reunión</p>
-            <h1 className="meet-display mt-4 text-[clamp(40px,7.5vw,90px)] leading-[0.9]">{meeting.name}</h1>
+            <h1 className="meet-display text-[clamp(40px,7.5vw,90px)] leading-[0.9]">{meeting.name}</h1>
             <div className="meet-rule my-[30px]" />
-            <p className="max-w-[520px] text-[19px] leading-[1.5] text-white/70">
-              Marcá en qué franjas podés. Nada de mails de ida y vuelta.
-            </p>
 
-            <div className="mt-11">
+            <div>
               <p className="meet-eyebrow mb-3">Días propuestos</p>
               <div className="flex max-w-[520px] flex-col gap-2.5">
                 {proposed.map((entry) => (
@@ -157,9 +153,6 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
             <button type="button" onClick={() => go('responder')} className="meet-cta meet-cta-white mt-12 px-11 py-4">
               Marcar mi disponibilidad
             </button>
-            <p className="mt-4 text-[13px] text-white/35">
-              Horarios en {tzLabel} · {tzOffset}
-            </p>
           </section>
         ) : null}
 
@@ -217,7 +210,7 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
         {screen === 'confirmado' ? (
           <section className="mx-auto max-w-[1024px] px-5 pt-8 sm:px-8 sm:pt-[72px]">
             <div className="gradient-bg rounded-2xl p-[clamp(32px,5vw,64px)]">
-              <h1 className="meet-display text-[clamp(32px,6.2vw,80px)] leading-none text-black sm:whitespace-nowrap">
+              <h1 className="meet-display text-center text-[clamp(32px,6.2vw,80px)] leading-none text-black sm:text-left sm:whitespace-nowrap">
                 Gracias, {(who || '').trim().split(/\s+/)[0]}.
               </h1>
             </div>
@@ -227,7 +220,7 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
                 {mine.map((entry) => (
                   <div
                     key={entry.day}
-                    className="flex flex-col gap-1 border-b border-white/[0.08] pb-3 sm:flex-row sm:items-baseline sm:gap-4"
+                    className="flex flex-col items-center gap-1 border-b border-white/[0.08] pb-3 sm:flex-row sm:items-baseline sm:gap-4"
                   >
                     <p className="meet-display text-[15px] tracking-[0.06em] sm:min-w-[104px]">{entry.day}</p>
                     <p className="text-[15px] text-white/70">{entry.ranges}</p>
@@ -235,7 +228,7 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
                 ))}
               </div>
 
-              <div className="glass-card rounded-2xl p-[26px]">
+              <div className="glass-card rounded-2xl p-[26px] text-center sm:text-left">
                 <p className="meet-display text-[17px]">¿Te cambió la agenda?</p>
                 <button type="button" onClick={() => go('responder')} className="meet-outline mt-[18px]">
                   Editar mi respuesta
