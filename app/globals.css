@@ -534,6 +534,17 @@ button,
 .meet-ui {
   font-family: 'Archivo', system-ui, sans-serif;
   color: #fff;
+
+  /* La grilla se arma con estas medidas. El eje, la cabecera de cada día y las
+     celdas tienen que moverse juntos o las filas dejan de alinear, así que van
+     acá y no repetidas en cada regla. */
+  --meet-cell-h: 26px;
+  --meet-cell-gap: 4px;
+  --meet-head-h: 54px;
+  --meet-axis-w: 52px;
+  --meet-col-w: 104px;
+  --meet-track-gap: 10px;
+  --meet-grid-pad: 20px;
 }
 
 .meet-ui input,
@@ -763,31 +774,77 @@ button,
 
 /* --- Grilla de franjas ---------------------------------------------------- */
 
+.meet-ui .meet-grid-wrap {
+  position: relative;
+}
+
+/* Degradé sobre el borde derecho cuando quedan días sin mostrar: sin esta pista
+   la grilla parece terminar ahí. A la izquierda no hace falta, porque el eje
+   fijo ya marca dónde empieza. */
+.meet-ui .meet-grid-wrap::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  right: 1px;
+  width: 42px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 3;
+  border-radius: 1rem;
+  background: linear-gradient(270deg, #0a0a0a 0%, rgba(10, 10, 10, 0) 100%);
+}
+
+.meet-ui .meet-grid-wrap[data-overflow='end']::after,
+.meet-ui .meet-grid-wrap[data-overflow='both']::after {
+  opacity: 1;
+}
+
 .meet-ui .meet-grid {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1rem;
-  padding: 20px;
+  padding: var(--meet-grid-pad);
+  /* Sin padding izquierdo: sticky se ancla al borde de contenido, así que
+     cualquier padding de este lado queda como una franja que no scrollea y por
+     la que se ven pasar las celdas. El eje aporta ese espacio en su lugar. */
+  padding-left: 0;
   overflow-x: auto;
   background: #0a0a0a;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  /* El snap no sabe del eje fijo: sin esto encaja la primera columna justo
+     debajo de él y queda tapada. */
+  scroll-padding-left: calc(var(--meet-grid-pad) + var(--meet-axis-w) + 4px);
 }
 
 .meet-ui .meet-grid-inner {
   display: flex;
-  gap: 10px;
+  gap: var(--meet-track-gap);
   min-width: min-content;
 }
 
 .meet-ui .meet-axis {
   flex-shrink: 0;
-  padding-top: 54px;
+  padding-top: var(--meet-head-h);
+  /* Queda fijo al scrollear en horizontal: sin esto se pierde de vista a qué
+     hora corresponde cada fila apenas te movés un par de días. */
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: #0a0a0a;
+  padding-left: var(--meet-grid-pad);
+  padding-right: 4px;
+  /* Arrastrar sobre el eje scrollea la página con normalidad. */
+  touch-action: auto;
 }
 
 .meet-ui .meet-axis-label {
-  height: 26px;
-  margin-bottom: 4px;
-  width: 52px;
+  height: var(--meet-cell-h);
+  margin-bottom: var(--meet-cell-gap);
+  width: var(--meet-axis-w);
   font-size: 10px;
-  line-height: 26px;
+  line-height: var(--meet-cell-h);
   text-align: right;
   color: rgba(255, 255, 255, 0.28);
 }
@@ -799,19 +856,28 @@ button,
 
 .meet-ui .meet-cols {
   display: flex;
-  gap: 10px;
+  gap: var(--meet-track-gap);
   flex: 1;
   min-width: min-content;
-  touch-action: none;
+  /* pan-x deja que el navegador scrollee en horizontal con el dedo —sin esto
+     la grilla no se puede correr al costado en el celular— y nos manda los
+     arrastres verticales, que son los que pintan franjas. */
+  touch-action: pan-x pinch-zoom;
+}
+
+.meet-ui .meet-col-slot {
+  display: flex;
+  gap: var(--meet-track-gap);
+  scroll-snap-align: start;
 }
 
 .meet-ui .meet-col {
-  min-width: 104px;
+  min-width: var(--meet-col-w);
   flex: 1;
 }
 
 .meet-ui .meet-col-head {
-  height: 54px;
+  height: var(--meet-head-h);
 }
 
 .meet-ui .meet-col-wd {
@@ -838,7 +904,7 @@ button,
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 54px;
+  padding-top: var(--meet-head-h);
 }
 
 .meet-ui .meet-gap span {
@@ -848,8 +914,8 @@ button,
 }
 
 .meet-ui .meet-cell {
-  height: 26px;
-  margin-bottom: 4px;
+  height: var(--meet-cell-h);
+  margin-bottom: var(--meet-cell-gap);
   border-radius: 5px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -939,5 +1005,80 @@ button,
 @media (prefers-reduced-motion: reduce) {
   .meet-ui .meet-ticker-track {
     animation: none;
+  }
+}
+
+
+/* --- Mobile ---------------------------------------------------------------- */
+/* En 375px de ancho las columnas de 104px dejaban ver dos días y medio. Se
+   achican para que entren tres, y las celdas crecen para que el dedo acierte. */
+
+@media (max-width: 767px) {
+  .meet-ui {
+    --meet-cell-h: 30px;
+    --meet-head-h: 46px;
+    --meet-axis-w: 40px;
+    --meet-col-w: 68px;
+    --meet-track-gap: 8px;
+    --meet-grid-pad: 14px;
+  }
+
+  .meet-ui .meet-axis-label {
+    font-size: 9px;
+  }
+
+  .meet-ui .meet-col-wd {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+  }
+
+  .meet-ui .meet-col-date {
+    font-size: 15px;
+  }
+
+  .meet-ui .meet-gap {
+    width: 8px;
+  }
+
+  .meet-ui .meet-grid-wrap::after {
+    width: 30px;
+  }
+
+  /* La barra de acción pasa a ancho completo: es el objetivo táctil principal. */
+  .meet-ui .meet-bar {
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    gap: 10px;
+  }
+
+  .meet-ui .meet-bar .meet-cta {
+    width: 100%;
+    padding: 16px 20px;
+  }
+
+  .meet-ui .meet-input {
+    font-size: 16px; /* menos de 16px hace que iOS haga zoom al enfocar */
+  }
+
+  .meet-ui .meet-ghost,
+  .meet-ui .meet-outline {
+    padding: 11px 22px;
+  }
+
+  /* Dentro del admin la navegación ya ocupa el borde inferior fijo, así que acá
+     la barra de acción va en el flujo del documento en vez de pisarse con ella. */
+  .admin-shell .meet-ui .meet-bar {
+    position: static;
+    margin-top: 24px;
+    padding: 0;
+    border-top: none;
+    background: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  /* Los pasos 01/02/03 entran más cómodos con menos aire entre ellos. */
+  .meet-ui .meet-step {
+    padding: 8px 14px;
+    font-size: 11px;
   }
 }

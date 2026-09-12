@@ -116,8 +116,8 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
 
       <main className="min-h-screen pb-32 pt-[72px]">
         {screen === 'invitacion' ? (
-          <section className="mx-auto max-w-[1024px] px-5 pt-[72px] sm:px-8">
-            <div className="meet-ticker mb-14">
+          <section className="mx-auto max-w-[1024px] px-5 pt-8 sm:px-8 sm:pt-[72px]">
+            <div className="meet-ticker mb-10 sm:mb-14">
               <div className="meet-ticker-track">
                 {[0, 1].map((group) => (
                   <span key={group} className="flex shrink-0 items-center">
@@ -145,9 +145,9 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
                 {proposed.map((entry) => (
                   <div
                     key={entry.day}
-                    className="flex items-baseline gap-4 border-b border-white/[0.08] pb-2.5"
+                    className="flex flex-col gap-1 border-b border-white/[0.08] pb-2.5 sm:flex-row sm:items-baseline sm:gap-4"
                   >
-                    <p className="meet-display min-w-[104px] text-[15px] tracking-[0.06em]">{entry.day}</p>
+                    <p className="meet-display text-[15px] tracking-[0.06em] sm:min-w-[104px]">{entry.day}</p>
                     <p className="text-[15px] text-white/70">{entry.ranges}</p>
                   </div>
                 ))}
@@ -164,7 +164,7 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
         ) : null}
 
         {screen === 'responder' ? (
-          <section className="mx-auto max-w-[1120px] px-5 pt-12 sm:px-8">
+          <section className="mx-auto max-w-[1120px] px-5 pt-8 sm:px-8 sm:pt-12">
             <div className="flex flex-wrap items-end justify-between gap-5">
               <h1 className="meet-display mt-3 text-[clamp(28px,4.4vw,52px)] leading-[0.95]">{meeting.name}</h1>
               <TimezonePill label={tzLabel} offset={tzOffset} />
@@ -215,9 +215,9 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
         ) : null}
 
         {screen === 'confirmado' ? (
-          <section className="mx-auto max-w-[1024px] px-5 pt-[72px] sm:px-8">
+          <section className="mx-auto max-w-[1024px] px-5 pt-8 sm:px-8 sm:pt-[72px]">
             <div className="gradient-bg rounded-2xl p-[clamp(32px,5vw,64px)]">
-              <h1 className="meet-display whitespace-nowrap text-[clamp(32px,6.2vw,80px)] leading-none text-black">
+              <h1 className="meet-display text-[clamp(32px,6.2vw,80px)] leading-none text-black sm:whitespace-nowrap">
                 Gracias, {(who || '').trim().split(/\s+/)[0]}.
               </h1>
             </div>
@@ -227,9 +227,9 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
                 {mine.map((entry) => (
                   <div
                     key={entry.day}
-                    className="flex items-baseline gap-4 border-b border-white/[0.08] pb-3"
+                    className="flex flex-col gap-1 border-b border-white/[0.08] pb-3 sm:flex-row sm:items-baseline sm:gap-4"
                   >
-                    <p className="meet-display min-w-[104px] text-[15px] tracking-[0.06em]">{entry.day}</p>
+                    <p className="meet-display text-[15px] tracking-[0.06em] sm:min-w-[104px]">{entry.day}</p>
                     <p className="text-[15px] text-white/70">{entry.ranges}</p>
                   </div>
                 ))}

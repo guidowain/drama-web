@@ -114,7 +114,7 @@ export default function NuevaReunionPage() {
   return (
     <div className="meet-ui p-6 pb-32 md:p-12">
       <section className="mx-auto max-w-[1120px]">
-        <div className="mb-[34px] flex flex-wrap items-center gap-[18px]">
+        <div className="mb-7 flex flex-wrap items-center gap-2 sm:mb-[34px] sm:gap-[18px]">
           {STEPS.map(([num, label], index) => {
             const position = (index + 1) as 1 | 2 | 3
             const active = step === position
