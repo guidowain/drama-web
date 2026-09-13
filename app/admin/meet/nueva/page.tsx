@@ -139,7 +139,7 @@ export default function NuevaReunionPage() {
 
         {step === 1 ? (
           <div>
-            <h1 className="meet-display text-[clamp(40px,7vw,84px)] leading-[0.92]">
+            <h1 className="meet-display text-[clamp(40px,7vw,84px)] leading-[1.05]">
               Armá una
               <br />
               reunión.
@@ -240,7 +240,7 @@ export default function NuevaReunionPage() {
 
         {step === 2 ? (
           <div>
-            <h1 className="meet-display text-[clamp(30px,5vw,60px)] leading-[0.95]">
+            <h1 className="meet-display text-[clamp(30px,5vw,60px)] leading-[1.05]">
               ¿Qué franjas
               <br />
               habilitás?
@@ -286,7 +286,7 @@ export default function NuevaReunionPage() {
 
         {step === 3 && created ? (
           <div>
-            <h1 className="meet-display text-[clamp(36px,6vw,72px)] leading-[0.92]">
+            <h1 className="meet-display text-[clamp(36px,6vw,72px)] leading-[1.05]">
               Listo.
               <br />
               Mandá el link.

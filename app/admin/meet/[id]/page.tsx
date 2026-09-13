@@ -117,7 +117,7 @@ export default function ResultadosPage({ params }: { params: { id: string } }) {
     <div className="meet-ui p-6 pb-32 md:p-12">
       <section className="mx-auto max-w-[1200px]">
         <div className="flex flex-wrap items-end justify-between gap-5">
-          <h1 className="meet-display mt-3 text-[clamp(28px,4.4vw,52px)] leading-[0.95]">{meeting.name}</h1>
+          <h1 className="meet-display mt-3 text-[clamp(28px,4.4vw,52px)] leading-[1.05]">{meeting.name}</h1>
           <TimezoneSelect
             value={viewZone || meeting.timezone}
             onChange={setViewZone}

@@ -6,7 +6,7 @@ export default function MeetNotFound() {
       <MeetHeader />
       <main className="mx-auto max-w-[1024px] px-5 pb-32 pt-[144px] sm:px-8">
         <p className="meet-eyebrow">Drama Meet</p>
-        <h1 className="meet-display mt-4 text-[clamp(40px,7.5vw,90px)] leading-[0.9]">
+        <h1 className="meet-display mt-4 text-[clamp(40px,7.5vw,90px)] leading-[1.05]">
           Este link
           <br />
           no existe.

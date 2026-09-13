@@ -146,7 +146,7 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
               </div>
             </div>
 
-            <h1 className="meet-display text-[clamp(40px,7.5vw,90px)] leading-[0.9]">{meeting.name}</h1>
+            <h1 className="meet-display text-[clamp(40px,7.5vw,90px)] leading-[1.05]">{meeting.name}</h1>
             <div className="meet-rule my-[30px]" />
 
             <div>
@@ -173,7 +173,7 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
         {screen === 'responder' ? (
           <section className="mx-auto max-w-[1120px] px-5 pt-8 sm:px-8 sm:pt-12">
             <div className="flex flex-wrap items-end justify-between gap-5">
-              <h1 className="meet-display mt-3 text-[clamp(28px,4.4vw,52px)] leading-[0.95]">{meeting.name}</h1>
+              <h1 className="meet-display mt-3 text-[clamp(28px,4.4vw,52px)] leading-[1.05]">{meeting.name}</h1>
               <TimezoneSelect value={viewZone} onChange={setViewZone} ensure={[meeting.timezone]} />
             </div>
 
@@ -243,7 +243,7 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
         {screen === 'confirmado' ? (
           <section className="mx-auto max-w-[1024px] px-5 pt-8 sm:px-8 sm:pt-[72px]">
             <div className="gradient-bg rounded-2xl p-[clamp(32px,5vw,64px)]">
-              <h1 className="meet-display text-center text-[clamp(32px,6.2vw,80px)] leading-none text-black sm:text-left sm:whitespace-nowrap">
+              <h1 className="meet-display text-center text-[clamp(32px,6.2vw,80px)] leading-[1.05] text-black sm:text-left sm:whitespace-nowrap">
                 Gracias, {(who || '').trim().split(/\s+/)[0]}.
               </h1>
             </div>

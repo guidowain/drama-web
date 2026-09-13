@@ -759,12 +759,25 @@ button,
 .meet-ui .meet-step-active {
   border-color: transparent;
   background: var(--gradient);
+  /* El borde transparente de 1px sigue ocupando lugar para que la pastilla no
+     cambie de tamaño al activarse, pero el gradiente se dibuja desde el borde
+     y no desde el padding: si no, queda hundido y se ve un reborde negro
+     alrededor, sobre todo en las esquinas redondeadas. */
+  background-origin: border-box;
   color: #000;
 }
 
 .meet-ui .meet-step:disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+/* En el paso 03 la reunión ya existe y no se vuelve atrás, así que todos los
+   pasos quedan deshabilitados. El activo no tiene que apagarse: al 50% sobre
+   negro el extremo magenta del gradiente desaparece y parece que el relleno
+   no llega hasta el borde. */
+.meet-ui .meet-step-active:disabled {
+  opacity: 1;
 }
 
 /* --- Calendario ----------------------------------------------------------- */
@@ -790,6 +803,9 @@ button,
   color: #000;
   border-color: transparent;
   background: var(--gradient);
+  /* Mismo caso que la pastilla del paso activo: sin esto el círculo del día
+     elegido queda con un reborde negro. */
+  background-origin: border-box;
 }
 
 .meet-ui .meet-day:disabled {
