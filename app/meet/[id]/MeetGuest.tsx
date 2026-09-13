@@ -50,7 +50,10 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
     [selectedInView, view.dates, meeting.slotMinutes]
   )
 
-  const emailError = email.trim() !== '' && !EMAIL.test(email.trim())
+  // El mail es obligatorio, pero el error en rojo aparece recién cuando
+  // escribieron algo mal: un campo vacío al entrar no tiene por qué gritar.
+  const emailValid = EMAIL.test(email.trim())
+  const emailError = email.trim() !== '' && !emailValid
 
   // Si esta persona ya respondió desde este navegador, la llevamos directo a su
   // confirmación con lo que había marcado, lista para editar.
@@ -119,7 +122,7 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
     }
   }
 
-  const cantSubmit = selected.size === 0 || !who.trim() || emailError || saving
+  const cantSubmit = selected.size === 0 || !who.trim() || !emailValid || saving
 
   return (
     <div className="meet-ui min-h-screen bg-black">
@@ -175,15 +178,21 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
             </div>
 
             <div className="my-[26px] mt-[30px] grid max-w-[620px] grid-cols-1 gap-4 sm:grid-cols-2">
-              <input
-                className="meet-input"
-                value={who}
-                onChange={(event) => setWho(event.target.value)}
-                placeholder="Tu nombre"
-                aria-label="Tu nombre"
-                maxLength={80}
-              />
-              <div>
+              <div className="meet-field">
+                <input
+                  className="meet-input"
+                  value={who}
+                  onChange={(event) => setWho(event.target.value)}
+                  placeholder="Tu nombre"
+                  aria-label="Tu nombre"
+                  maxLength={80}
+                  required
+                />
+                <span className="meet-required" aria-hidden="true">
+                  *
+                </span>
+              </div>
+              <div className="meet-field">
                 <input
                   className="meet-input"
                   value={email}
@@ -194,11 +203,12 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
                   inputMode="email"
                   autoComplete="email"
                   maxLength={160}
+                  required
                   aria-invalid={emailError}
                 />
-                {emailError ? (
-                  <p className="mt-2 text-[13px] text-[#FE796D]">Poné un solo mail, sin comas.</p>
-                ) : null}
+                <span className="meet-required" aria-hidden="true">
+                  *
+                </span>
               </div>
             </div>
 

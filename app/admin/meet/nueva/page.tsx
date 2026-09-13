@@ -157,7 +157,7 @@ export default function NuevaReunionPage() {
                     className="meet-input"
                     value={name}
                     onChange={(event) => setName(event.target.value)}
-                    placeholder="Avenida — pauta Q4"
+                    placeholder="Reunión"
                     maxLength={120}
                   />
                 </div>

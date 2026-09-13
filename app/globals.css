@@ -594,6 +594,31 @@ button,
   color: rgba(255, 255, 255, 0.3);
 }
 
+/* Asterisco de campo obligatorio, dentro del propio campo: no empuja el layout
+   ni cambia la altura de la fila. */
+.meet-ui .meet-field {
+  position: relative;
+}
+
+.meet-ui .meet-field .meet-input {
+  padding-right: 34px;
+}
+
+.meet-ui .meet-required {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  line-height: 1;
+  pointer-events: none;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
 /* --- Botones -------------------------------------------------------------- */
 
 .meet-ui .meet-cta {
@@ -822,6 +847,20 @@ button,
   display: flex;
   gap: var(--meet-track-gap);
   min-width: min-content;
+  /* Cuando los días entran holgados se centran en vez de quedar pegados al
+     borde izquierdo. `safe` es la parte importante: si no entran, vuelve a
+     alinear al principio, porque centrar dentro de un contenedor con scroll
+     deja el arranque del contenido inalcanzable. */
+  justify-content: safe center;
+}
+
+/* El eje horario es referencia, no contenido: si contara para el centrado, las
+   columnas quedarían corridas a la derecha la mitad de su ancho. Este
+   espaciador lo equilibra del otro lado para que lo que quede centrado sean
+   las columnas. */
+.meet-ui .meet-grid-wrap[data-overflow='none'] .meet-grid-inner::after {
+  content: '';
+  flex: 0 0 calc(var(--meet-axis-w) + 4px);
 }
 
 .meet-ui .meet-axis {
@@ -857,7 +896,6 @@ button,
 .meet-ui .meet-cols {
   display: flex;
   gap: var(--meet-track-gap);
-  flex: 1;
   min-width: min-content;
   /* pan-x deja que el navegador scrollee en horizontal con el dedo —sin esto
      la grilla no se puede correr al costado en el celular— y nos manda los

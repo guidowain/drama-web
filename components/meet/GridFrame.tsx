@@ -33,13 +33,24 @@ type Overflow = 'none' | 'start' | 'end' | 'both'
  */
 export default function GridFrame({ dates, axis, renderCell, surface }: Props) {
   const scrollerRef = useRef<HTMLDivElement>(null)
+  const innerRef = useRef<HTMLDivElement>(null)
+  const axisRef = useRef<HTMLDivElement>(null)
+  const colsRef = useRef<HTMLDivElement>(null)
   const [overflow, setOverflow] = useState<Overflow>('none')
 
   // Degradé en el borde donde todavía hay días sin mostrar: en mobile entran
   // tres columnas y sin esta pista no se nota que hay más para el costado.
   const measure = useCallback(() => {
     const element = scrollerRef.current
-    if (!element) return
+    const inner = innerRef.current
+    if (!element || !inner) return
+
+    // Se mide el ancho real del eje y las columnas, no scrollWidth: cuando todo
+    // entra, el CSS agrega un espaciador para centrar, y medir con él haría que
+    // "entra" y "no entra" se alternen sin parar.
+    const gap = parseFloat(getComputedStyle(inner).columnGap) || 0
+    const content = (axisRef.current?.offsetWidth ?? 0) + gap + (colsRef.current?.offsetWidth ?? 0)
+    if (content <= element.clientWidth + 1) return setOverflow('none')
 
     const max = element.scrollWidth - element.clientWidth
     if (max <= 2) return setOverflow('none')
@@ -68,10 +79,10 @@ export default function GridFrame({ dates, axis, renderCell, surface }: Props) {
   return (
     <div className="meet-grid-wrap" data-overflow={overflow}>
       <div className="meet-grid" ref={scrollerRef}>
-        <div className="meet-grid-inner">
+        <div className="meet-grid-inner" ref={innerRef}>
           {/* touch-action libre: arrastrar sobre el eje scrollea la página, que
               es la única zona que queda para hacerlo cuando la grilla es alta. */}
-          <div className="meet-axis" aria-hidden="true">
+          <div className="meet-axis" ref={axisRef} aria-hidden="true">
             {axis.map((slot) => (
               <div
                 key={slot.min}
@@ -82,7 +93,7 @@ export default function GridFrame({ dates, axis, renderCell, surface }: Props) {
             ))}
           </div>
 
-          <div className="meet-cols" {...surface}>
+          <div className="meet-cols" ref={colsRef} {...surface}>
             {dates.map((date, index) => {
               const head = dayHead(date)
 

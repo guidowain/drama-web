@@ -48,13 +48,13 @@ const SINGLE_EMAIL = /^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]{2,}$/
 /** Respuesta de un invitado. Las franjas se validan después contra las de la reunión. */
 export const submitResponseInput = z.object({
   name: z.string().trim().min(1, 'Poné tu nombre.').max(80),
-  // Sigue siendo opcional, pero si lo cargan tiene que ser uno solo y válido.
+  // Obligatorio: con estos mails se arma después la invitación del calendario.
   email: z
     .string()
     .trim()
+    .min(1, 'Poné tu mail.')
     .max(160)
-    .default('')
-    .refine((value) => value === '' || SINGLE_EMAIL.test(value), 'Poné un solo mail, sin comas.'),
+    .refine((value) => SINGLE_EMAIL.test(value), 'Poné un solo mail, sin comas.'),
   slots: z.array(slotKeySchema).min(1, 'Marcá al menos una franja.').max(5000),
 })
 
