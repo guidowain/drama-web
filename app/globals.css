@@ -1000,6 +1000,24 @@ button,
 /* Mapa de calor de resultados. */
 .meet-ui .meet-cell-heat {
   border-color: rgba(255, 255, 255, 0.07);
+  position: relative;
+}
+
+/* Al pasar el mouse de un bloque al de al lado, el hover se apagaba un instante
+   en el espacio que los separa. Cada celda estira su zona sensible la mitad de
+   ese espacio para cada lado: el recorrido queda continuo y, como es
+   exactamente la mitad, las zonas de dos vecinas se tocan sin pisarse. No es
+   visible, sólo cuenta para el hit-testing. */
+.meet-ui .meet-cell-heat::after {
+  content: '';
+  position: absolute;
+  /* Los desplazamientos se miden contra la caja de padding, así que hay que
+     sumarle el borde de 1px para que la mitad del hueco se cuente desde el
+     borde visible de la celda. */
+  top: calc(var(--meet-cell-gap) / -2 - 1px);
+  bottom: calc(var(--meet-cell-gap) / -2 - 1px);
+  left: calc(var(--meet-track-gap) / -2 - 1px);
+  right: calc(var(--meet-track-gap) / -2 - 1px);
 }
 
 /* Coincide más de la mitad, pero no todos. Amarillo para que se lea distinto
