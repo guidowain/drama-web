@@ -42,10 +42,19 @@ export const createMeetingInput = z.object({
   timezone: z.string().trim().min(1).max(80).default('America/Argentina/Buenos_Aires'),
 })
 
+/** Un solo mail: sin comas, punto y coma ni espacios que separen direcciones. */
+const SINGLE_EMAIL = /^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]{2,}$/
+
 /** Respuesta de un invitado. Las franjas se validan después contra las de la reunión. */
 export const submitResponseInput = z.object({
   name: z.string().trim().min(1, 'Poné tu nombre.').max(80),
-  email: z.string().trim().max(160).default(''),
+  // Sigue siendo opcional, pero si lo cargan tiene que ser uno solo y válido.
+  email: z
+    .string()
+    .trim()
+    .max(160)
+    .default('')
+    .refine((value) => value === '' || SINGLE_EMAIL.test(value), 'Poné un solo mail, sin comas.'),
   slots: z.array(slotKeySchema).min(1, 'Marcá al menos una franja.').max(5000),
 })
 

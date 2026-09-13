@@ -3,17 +3,17 @@
 import { useEffect, useMemo, useState } from 'react'
 import MeetHeader from '@/components/meet/MeetHeader'
 import SlotPainter from '@/components/meet/SlotPainter'
-import {
-  axisForSlots,
-  summarize,
-  timezoneLabel,
-  timezoneOffset,
-} from '@/lib/meet/slots'
+import TimezoneSelect from '@/components/meet/TimezoneSelect'
+import { browserTimezone, summarize } from '@/lib/meet/slots'
+import { mapSlots, projectSlots } from '@/lib/meet/timezone'
 import type { Meeting, MeetResponse } from '@/lib/meet/types'
 
 type Screen = 'invitacion' | 'responder' | 'confirmado'
 
 const storageKey = (meetingId: string) => `drama-meet:${meetingId}`
+
+/** Un solo mail, sin comas ni espacios de por medio. */
+const EMAIL = /^[^\s@,;]+@[^\s@,;]+\.[^\s@,;]{2,}$/
 
 export default function MeetGuest({ meeting }: { meeting: Meeting }) {
   const [screen, setScreen] = useState<Screen>('invitacion')
@@ -23,23 +23,34 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
   const [responseId, setResponseId] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  // Arranca en la zona de la reunión para que servidor y cliente rendericen lo
+  // mismo, y pasa a la del navegador apenas monta.
+  const [viewZone, setViewZone] = useState(meeting.timezone)
 
-  const enabled = useMemo(() => new Set(meeting.slots), [meeting.slots])
-  const axis = useMemo(
-    () => axisForSlots(meeting.slots, meeting.slotMinutes),
-    [meeting.slots, meeting.slotMinutes]
+  useEffect(() => setViewZone(browserTimezone()), [])
+
+  // Las franjas se guardan en la zona de quien armó la reunión; acá se
+  // reexpresan en la zona que está mirando esta persona.
+  const view = useMemo(
+    () => projectSlots(meeting.slots, meeting.timezone, viewZone, meeting.slotMinutes),
+    [meeting.slots, meeting.timezone, viewZone, meeting.slotMinutes]
   )
+
+  const enabled = useMemo(() => new Set(view.slots), [view.slots])
+  // La selección se guarda siempre en claves canónicas, así cambiar de zona no
+  // la mueve de lugar.
+  const selectedInView = useMemo(() => mapSlots(selected, view.toDisplay), [selected, view.toDisplay])
+
   const proposed = useMemo(
-    () => summarize(meeting.slots, meeting.dates, meeting.slotMinutes),
-    [meeting.slots, meeting.dates, meeting.slotMinutes]
+    () => summarize(view.slots, view.dates, meeting.slotMinutes),
+    [view.slots, view.dates, meeting.slotMinutes]
   )
   const mine = useMemo(
-    () => summarize(Array.from(selected), meeting.dates, meeting.slotMinutes),
-    [selected, meeting.dates, meeting.slotMinutes]
+    () => summarize(Array.from(selectedInView), view.dates, meeting.slotMinutes),
+    [selectedInView, view.dates, meeting.slotMinutes]
   )
 
-  const tzLabel = timezoneLabel(meeting.timezone)
-  const tzOffset = timezoneOffset(meeting.timezone)
+  const emailError = email.trim() !== '' && !EMAIL.test(email.trim())
 
   // Si esta persona ya respondió desde este navegador, la llevamos directo a su
   // confirmación con lo que había marcado, lista para editar.
@@ -108,7 +119,7 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
     }
   }
 
-  const cantSubmit = selected.size === 0 || !who.trim() || saving
+  const cantSubmit = selected.size === 0 || !who.trim() || emailError || saving
 
   return (
     <div className="meet-ui min-h-screen bg-black">
@@ -160,7 +171,7 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
           <section className="mx-auto max-w-[1120px] px-5 pt-8 sm:px-8 sm:pt-12">
             <div className="flex flex-wrap items-end justify-between gap-5">
               <h1 className="meet-display mt-3 text-[clamp(28px,4.4vw,52px)] leading-[0.95]">{meeting.name}</h1>
-              <TimezonePill label={tzLabel} offset={tzOffset} />
+              <TimezoneSelect value={viewZone} onChange={setViewZone} ensure={[meeting.timezone]} />
             </div>
 
             <div className="my-[26px] mt-[30px] grid max-w-[620px] grid-cols-1 gap-4 sm:grid-cols-2">
@@ -172,15 +183,23 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
                 aria-label="Tu nombre"
                 maxLength={80}
               />
-              <input
-                className="meet-input"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                placeholder="Tu email"
-                aria-label="Tu email"
-                type="email"
-                maxLength={160}
-              />
+              <div>
+                <input
+                  className="meet-input"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  placeholder="Tu email"
+                  aria-label="Tu email"
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  maxLength={160}
+                  aria-invalid={emailError}
+                />
+                {emailError ? (
+                  <p className="mt-2 text-[13px] text-[#FE796D]">Poné un solo mail, sin comas.</p>
+                ) : null}
+              </div>
             </div>
 
             <div className="mb-4 flex">
@@ -190,10 +209,14 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
             </div>
 
             <SlotPainter
-              dates={meeting.dates}
-              axis={axis}
-              value={selected}
-              onChange={setSelected}
+              dates={view.dates}
+              axis={view.axis}
+              value={selectedInView}
+              onChange={(updater) =>
+                setSelected((previous) =>
+                  mapSlots(updater(mapSlots(previous, view.toDisplay)), view.toCanonical)
+                )
+              }
               enabled={enabled}
               variant="guest"
             />
@@ -238,17 +261,6 @@ export default function MeetGuest({ meeting }: { meeting: Meeting }) {
           </section>
         ) : null}
       </main>
-    </div>
-  )
-}
-
-function TimezonePill({ label, offset }: { label: string; offset: string }) {
-  return (
-    <div className="flex items-center gap-[9px] rounded-full border border-white/[0.16] px-3.5 py-[7px]">
-      <span className="gradient-bg h-[7px] w-[7px] shrink-0 rounded-full" />
-      <p className="whitespace-nowrap text-xs text-white/70">
-        Horarios en {label} · {offset}
-      </p>
     </div>
   )
 }

@@ -3,7 +3,9 @@
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import SlotHeatmap from '@/components/meet/SlotHeatmap'
-import { axisForSlots, timezoneLabel, timezoneOffset } from '@/lib/meet/slots'
+import TimezoneSelect from '@/components/meet/TimezoneSelect'
+import { browserTimezone } from '@/lib/meet/slots'
+import { mapSlots, projectSlots } from '@/lib/meet/timezone'
 import type { Meeting, MeetResponse } from '@/lib/meet/types'
 
 export default function ResultadosPage({ params }: { params: { id: string } }) {
@@ -13,6 +15,9 @@ export default function ResultadosPage({ params }: { params: { id: string } }) {
   const [error, setError] = useState('')
   const [focusKey, setFocusKey] = useState<string | null>(null)
   const [copyState, setCopyState] = useState<'idle' | 'done' | 'error'>('idle')
+  const [viewZone, setViewZone] = useState('')
+
+  useEffect(() => setViewZone(browserTimezone()), [])
 
   useEffect(() => {
     let active = true
@@ -36,24 +41,33 @@ export default function ResultadosPage({ params }: { params: { id: string } }) {
     }
   }, [params.id])
 
-  const enabled = useMemo(() => new Set(meeting?.slots ?? []), [meeting?.slots])
-  const axis = useMemo(
-    () => (meeting ? axisForSlots(meeting.slots, meeting.slotMinutes) : []),
-    [meeting]
+  // Las franjas se guardan en la zona con la que se armó la reunión; acá se
+  // reexpresan en la que se esté mirando.
+  const view = useMemo(
+    () =>
+      meeting
+        ? projectSlots(meeting.slots, meeting.timezone, viewZone || meeting.timezone, meeting.slotMinutes)
+        : null,
+    [meeting, viewZone]
   )
 
-  // Franja → quiénes pueden. Se arma una vez por carga, no por celda.
+  const enabled = useMemo(() => new Set(view?.slots ?? []), [view])
+
+  // Franja → quiénes pueden, ya en la zona que se está mirando. Se arma una vez
+  // por carga, no por celda.
   const bySlot = useMemo(() => {
     const map = new Map<string, string[]>()
+    if (!view) return map
+
     for (const response of responses) {
-      for (const slot of response.slots) {
+      for (const slot of Array.from(mapSlots(response.slots, view.toDisplay))) {
         const names = map.get(slot)
         if (names) names.push(response.name)
         else map.set(slot, [response.name])
       }
     }
     return map
-  }, [responses])
+  }, [responses, view])
 
   // El mail es opcional para el invitado, así que puede haber respuestas sin uno.
   const emails = useMemo(() => {
@@ -104,12 +118,11 @@ export default function ResultadosPage({ params }: { params: { id: string } }) {
       <section className="mx-auto max-w-[1200px]">
         <div className="flex flex-wrap items-end justify-between gap-5">
           <h1 className="meet-display mt-3 text-[clamp(28px,4.4vw,52px)] leading-[0.95]">{meeting.name}</h1>
-          <div className="flex items-center gap-[9px] rounded-full border border-white/[0.16] px-3.5 py-[7px]">
-            <span className="gradient-bg h-[7px] w-[7px] shrink-0 rounded-full" />
-            <p className="whitespace-nowrap text-xs text-white/70">
-              Horarios en {timezoneLabel(meeting.timezone)} · {timezoneOffset(meeting.timezone)}
-            </p>
-          </div>
+          <TimezoneSelect
+            value={viewZone || meeting.timezone}
+            onChange={setViewZone}
+            ensure={[meeting.timezone]}
+          />
         </div>
 
         {responses.length === 0 ? (
@@ -159,8 +172,8 @@ export default function ResultadosPage({ params }: { params: { id: string } }) {
             ) : null}
 
             <SlotHeatmap
-              dates={meeting.dates}
-              axis={axis}
+              dates={view?.dates ?? []}
+              axis={view?.axis ?? []}
               enabled={enabled}
               bySlot={bySlot}
               total={responses.length}
