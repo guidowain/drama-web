@@ -6,6 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "horarios:install": "node scripts/instalar-horarios-worker.mjs",
+    "horarios:sync": "node scripts/horarios-worker.mjs",
+    "horarios:sync:force": "node scripts/horarios-worker.mjs --force",
     "translate:en": "node scripts/translate-content.mjs en"
   },
   "dependencies": {
@@ -19,6 +22,7 @@
     "jose": "^5.6.3",
     "matter-js": "^0.20.0",
     "next": "14.2.15",
+    "playwright-core": "^1.63.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.75.0",

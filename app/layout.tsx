@@ -76,7 +76,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // /admin y /meet son herramientas internas: no llevan el shell del sitio.
+  // /admin, /meet y /horarios son herramientas internas: no llevan el shell del sitio.
   let isStandalone = false
   const requestLocale = getRequestLocale()
   const { locale, lockLocale } = requestLocale
@@ -84,7 +84,10 @@ export default async function RootLayout({
   try {
     const headersList = headers()
     const pathname = headersList.get('x-pathname') ?? ''
-    isStandalone = pathname.startsWith('/admin') || pathname.startsWith('/meet')
+    isStandalone =
+      pathname.startsWith('/admin') ||
+      pathname.startsWith('/meet') ||
+      pathname.startsWith('/horarios')
   } catch (error) {
     if (isDynamicServerError(error)) {
       throw error

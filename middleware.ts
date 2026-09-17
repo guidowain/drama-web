@@ -33,6 +33,12 @@ export async function middleware(request: NextRequest) {
     return withPathnameHeader(request)
   }
 
+  // Horarios tiene su propio acceso por PIN. El middleware solo marca la ruta
+  // para que el layout no cargue el shell público del sitio.
+  if (pathname.startsWith('/horarios')) {
+    return withPathnameHeader(request)
+  }
+
   // Lecturas públicas: el sitio renderiza estos datos en /proyectos y el home.
   const publicReads = ['/api/admin/site', '/api/admin/proyectos']
   if (request.method === 'GET' && publicReads.includes(pathname)) {
@@ -62,5 +68,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*', '/api/upload', '/meet/:path*'],
+  matcher: ['/admin/:path*', '/api/admin/:path*', '/api/upload', '/meet/:path*', '/horarios/:path*'],
 }
