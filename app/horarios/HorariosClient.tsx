@@ -193,10 +193,23 @@ function ShowCard({ show, tone }: { show: PublicShow; tone: 'pink' | 'orange' })
   )
 }
 
+/* El worker corre cada 2 h entre las 8 y las 18, asi que de noche hay un hueco
+   legitimo de 14 h. Por encima de eso, la obra dejo de actualizarse. */
+const STALE_AFTER_MS = 15 * 60 * 60 * 1000
+
 function Freshness({ value }: { value: string | null }) {
+  const stale = value ? Date.now() - new Date(value).getTime() > STALE_AFTER_MS : false
+
   return (
-    <span className="flex shrink-0 items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-white/30">
-      <span className={`h-2 w-2 rounded-full ${value ? 'bg-emerald-400' : 'bg-white/20'}`} aria-hidden="true" />
+    <span
+      className={`flex shrink-0 items-center gap-2 text-[10px] font-bold uppercase tracking-wider ${
+        stale ? 'text-amber-400/80' : 'text-white/30'
+      }`}
+    >
+      <span
+        className={`h-2 w-2 rounded-full ${!value ? 'bg-white/20' : stale ? 'bg-amber-400' : 'bg-emerald-400'}`}
+        aria-hidden="true"
+      />
       {value ? checkedLabel(value) : 'Pendiente'}
     </span>
   )
@@ -215,14 +228,15 @@ function timeLabel(value: string) {
 }
 
 function checkedLabel(value: string) {
-  const date = new Date(value)
-  const formatter = new Intl.DateTimeFormat('es-AR', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-    timeZone: 'America/Argentina/Buenos_Aires',
-  })
-  return formatter.format(date)
+  const minutes = Math.floor((Date.now() - new Date(value).getTime()) / 60_000)
+  if (minutes < 1) return 'recién'
+  if (minutes < 60) return `hace ${minutes} min`
+
+  const hours = Math.floor(minutes / 60)
+  if (hours < 24) return `hace ${hours} h`
+
+  const days = Math.floor(hours / 24)
+  return days === 1 ? 'hace 1 día' : `hace ${days} días`
 }
 
 function LoadingScreen() {
