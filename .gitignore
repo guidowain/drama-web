@@ -9,6 +9,8 @@ node_modules/
 .vercel/
 .vercel
 .env*.local
+.env*
+!.env.example
 tsconfig.tsbuildinfo
 
 # Worktrees de Claude (no versionar)
