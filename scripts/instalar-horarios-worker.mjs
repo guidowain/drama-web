@@ -46,7 +46,15 @@ const document = `<?xml version="1.0" encoding="UTF-8"?>
   </array>
   <key>WorkingDirectory</key><string>${escapeXml(projectRoot)}</string>
   <key>RunAtLoad</key><true/>
-  <key>StartInterval</key><integer>1800</integer>
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Hour</key><integer>10</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Hour</key><integer>12</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Hour</key><integer>14</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Hour</key><integer>16</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Hour</key><integer>18</integer><key>Minute</key><integer>0</integer></dict>
+  </array>
   <key>ThrottleInterval</key><integer>60</integer>
   <key>EnvironmentVariables</key>
   <dict>
@@ -67,7 +75,7 @@ try {
 } catch {}
 execFileSync('/bin/launchctl', ['bootstrap', domain, plist])
 
-console.log('Horarios instalado: cada 30 minutos, solo entre las 08:00 y las 23:00 de Buenos Aires.')
+console.log('Horarios instalado: a las 8, 10, 12, 14, 16 y 18 de Buenos Aires.')
 console.log(`Logs: ${logs}`)
 
 function escapeXml(value) {

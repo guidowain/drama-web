@@ -33,7 +33,7 @@ const selectedShows = requestedShow ? shows.filter((show) => show.id === request
 if (!selectedShows.length) throw new Error(`Obra no configurada: ${requestedShow}`)
 
 if (!force && !insideScheduleWindow()) {
-  console.log('Horarios: fuera de la ventana 08:00–23:00; no se ejecuta.')
+  console.log('Horarios: fuera de la ventana 08:00–19:00; no se ejecuta.')
   process.exit(0)
 }
 
@@ -305,7 +305,7 @@ function insideScheduleWindow() {
   const hour = Number(parts.find((part) => part.type === 'hour')?.value || 0)
   const minute = Number(parts.find((part) => part.type === 'minute')?.value || 0)
   const total = hour * 60 + minute
-  return total >= 8 * 60 && total <= 23 * 60
+  return total >= 8 * 60 && total <= 19 * 60
 }
 
 function message(error) {
