@@ -17,6 +17,9 @@ const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
 const MODEL = process.env.HORARIOS_QWEN_MODEL || 'qwen3.6:27b'
 const SYNC_URL = process.env.HORARIOS_API_URL || 'http://127.0.0.1:3000/api/horarios/sync'
 const SYNC_SECRET = process.env.HORARIOS_SYNC_SECRET || 'drama-horarios-local'
+const USER_AGENT =
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36'
+
 const CHROME_PATH =
   process.env.HORARIOS_CHROME_PATH ||
   '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
@@ -87,6 +90,11 @@ async function extractShow(browserInstance, show) {
     locale: 'es-AR',
     timezoneId: TIME_ZONE,
     viewport: { width: 1365, height: 900 },
+    // EntradaUno le sirve HTML en lugar de JavaScript a los User-Agent que
+    // dicen "HeadlessChrome": los bundles llegan con Content-Type: text/html,
+    // Chrome corta con "Unexpected token '<'" y la página queda vacía. Con un
+    // UA de Chrome normal responde bien. Verificado el 17/9/2026.
+    userAgent: USER_AGENT,
   })
   const page = await context.newPage()
   let lastPageText = ''
