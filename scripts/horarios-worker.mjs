@@ -14,7 +14,7 @@ const projectRoot = path.resolve(scriptDir, '..')
 loadEnvConfig(projectRoot)
 
 const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
-const MODEL = process.env.HORARIOS_QWEN_MODEL || 'qwen3.6:27b'
+const MODEL = process.env.HORARIOS_QWEN_MODEL || 'qwen3.8:27b'
 const SYNC_URL = process.env.HORARIOS_API_URL || 'http://127.0.0.1:3000/api/horarios/sync'
 const SYNC_SECRET = process.env.HORARIOS_SYNC_SECRET || 'drama-horarios-local'
 const USER_AGENT =
