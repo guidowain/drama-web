@@ -4,7 +4,7 @@
 
 ## 1. Qué es el Google Sheets
 
-El Sheets (`1Zov6WO-moJkFEEa_VA6xdXRO-OwM-3946Rjs1VPAx80`) es el sistema de gestión financiera de Drama. Tiene varias tablas apiladas en una misma hoja (gid=1444098922). La tabla principal y la única que vamos a editar desde la app es el **Cash Flow** (también llamada "Movimientos"). Las demás tablas son calculadas automáticamente por fórmulas del Sheets.
+El Sheets (su ID está en la variable de entorno `FINANZAS_SPREADSHEET_ID`, no en el repo) es el sistema de gestión financiera de Drama. Tiene varias tablas apiladas en una misma hoja. La tabla principal y la única que vamos a editar desde la app es el **Cash Flow** (también llamada "Movimientos"). Las demás tablas son calculadas automáticamente por fórmulas del Sheets.
 
 ---
 
@@ -125,10 +125,10 @@ components/admin/AdminSidebar.tsx  ← agregar "Cash Flow" en toolItems (igual q
 ### Nueva variable de entorno a configurar
 
 ```
-FINANZAS_SPREADSHEET_ID=1Zov6WO-moJkFEEa_VA6xdXRO-OwM-3946Rjs1VPAx80
+FINANZAS_SPREADSHEET_ID=<id-del-sheet>
 ```
 
-Hay que agregarla en `.env.local` y en Vercel. La auth de Google (Service Account) ya está configurada.
+Hay que agregarla en `.env.local` y en Vercel. El ID no va en el repo: es público. La auth de Google (Service Account) ya está configurada.
 
 ### También hay que instalar
 

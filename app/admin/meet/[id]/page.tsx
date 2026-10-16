@@ -1,14 +1,15 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useMemo, useState } from 'react'
+import { use, useEffect, useMemo, useState } from 'react'
 import SlotHeatmap from '@/components/meet/SlotHeatmap'
 import TimezoneSelect from '@/components/meet/TimezoneSelect'
 import { browserTimezone } from '@/lib/meet/slots'
 import { mapSlots, projectSlots } from '@/lib/meet/timezone'
 import type { Meeting, MeetResponse } from '@/lib/meet/types'
 
-export default function ResultadosPage({ params }: { params: { id: string } }) {
+export default function ResultadosPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
   const [meeting, setMeeting] = useState<Meeting | null>(null)
   const [responses, setResponses] = useState<MeetResponse[]>([])
   const [loading, setLoading] = useState(true)
@@ -22,7 +23,7 @@ export default function ResultadosPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     let active = true
 
-    fetch(`/api/admin/meet/${params.id}`)
+    fetch(`/api/admin/meet/${id}`)
       .then(async (res) => {
         const data = await res.json().catch(() => null)
         if (!active) return
@@ -39,7 +40,7 @@ export default function ResultadosPage({ params }: { params: { id: string } }) {
     return () => {
       active = false
     }
-  }, [params.id])
+  }, [id])
 
   // Las franjas se guardan en la zona con la que se armó la reunión; acá se
   // reexpresan en la que se esté mirando.

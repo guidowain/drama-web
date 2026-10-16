@@ -1,6 +1,8 @@
+import { requireAdminPage } from '@/lib/auth'
 import { getAnalyticsSummary } from '@/lib/google-analytics'
 
 export default async function AdminDashboard() {
+  await requireAdminPage()
   const analytics = await getAnalyticsSummary()
 
   return (

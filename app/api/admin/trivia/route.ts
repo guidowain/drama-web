@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getTriviaQuestions, saveTriviaQuestions } from '@/lib/api'
 import { generateId } from '@/lib/utils'
 import type { TriviaQuestion } from '@/lib/types'
+import { requireAdmin } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
 
@@ -33,11 +34,17 @@ function validateQuestion(question: TriviaQuestion) {
 }
 
 export async function GET() {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
   const questions = await getTriviaQuestions()
   return NextResponse.json(questions)
 }
 
 export async function PUT(request: NextRequest) {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
   const body = await request.json()
   const incoming = Array.isArray(body) ? body : []
   const normalized = incoming.map((item) => normalizeQuestion(item))

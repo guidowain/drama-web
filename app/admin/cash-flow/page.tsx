@@ -1,6 +1,7 @@
 import BalanceTransferButton from '@/components/admin/cash-flow/BalanceTransferButton'
 import CashFlowClientsPanel from '@/components/admin/cash-flow/CashFlowClientsPanel'
 import CashFlowExpensesPanel from '@/components/admin/cash-flow/CashFlowExpensesPanel'
+import { requireAdminPage } from '@/lib/auth'
 import { getCashFlowClientsData, getCashFlowExpensesData, getCashFlowViewerData, type CashFlowDashboardMonth } from '@/lib/cash-flow-sheets'
 
 export const dynamic = 'force-dynamic'
@@ -9,9 +10,10 @@ export const metadata = { title: 'Cash Flow — Drama Admin' }
 export default async function AdminCashFlowPage({
   searchParams,
 }: {
-  searchParams?: { tab?: string }
+  searchParams: Promise<{ tab?: string }>
 }) {
-  const activeTab = normalizeTab(searchParams?.tab)
+  await requireAdminPage()
+  const activeTab = normalizeTab((await searchParams).tab)
   const data = await getCashFlowViewerData()
   const clientsData = activeTab === 'ingresos' ? await getCashFlowClientsData() : null
   const expensesData = activeTab === 'egresos' ? await getCashFlowExpensesData() : null

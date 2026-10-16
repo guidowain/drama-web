@@ -2,10 +2,14 @@ import { NextResponse } from 'next/server'
 import { claimMeetingId, listMeetings, meetStorageMode, saveMeeting } from '@/lib/meet/store'
 import { createMeetingInput } from '@/lib/meet/types'
 import { slugify } from '@/lib/meet/slots'
+import { requireAdmin } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
   try {
     return NextResponse.json({ meetings: await listMeetings(), storage: meetStorageMode() })
   } catch (error) {
@@ -14,6 +18,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
   const parsed = createMeetingInput.safeParse(await request.json().catch(() => null))
 
   if (!parsed.success) {

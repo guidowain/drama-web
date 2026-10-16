@@ -5,15 +5,19 @@ import {
   type CashFlowBilledBy,
   type CashFlowCashbox,
 } from '@/lib/cash-flow-sheets'
+import { requireAdmin } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { row: string } }
+  { params }: { params: Promise<{ row: string }> }
 ) {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
   try {
-    const row = Number(params.row)
+    const row = Number((await params).row)
     const body = await request.json()
     const cashbox = parseCashbox(body.cashbox)
 
@@ -38,10 +42,13 @@ export async function PUT(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { row: string } }
+  { params }: { params: Promise<{ row: string }> }
 ) {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
   try {
-    const row = Number(params.row)
+    const row = Number((await params).row)
     const body = await request.json()
     const billedBy = parseBilledBy(body.billedBy)
 

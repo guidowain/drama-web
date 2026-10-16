@@ -1,17 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getProjects, saveProjects } from '@/lib/api'
+import { requireAdmin } from '@/lib/auth'
 
-export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
+  const { id } = await params
   const projects = await getProjects()
-  const project = projects.find((p) => p.id === params.id)
+  const project = projects.find((p) => p.id === id)
   if (!project) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   return NextResponse.json(project)
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
+  const { id } = await params
   const body = await request.json()
   const projects = await getProjects()
-  const index = projects.findIndex((p) => p.id === params.id)
+  const index = projects.findIndex((p) => p.id === id)
   if (index === -1) return NextResponse.json({ error: 'Not found' }, { status: 404 })
 
   projects[index] = {
@@ -37,9 +46,13 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   return NextResponse.json(projects[index])
 }
 
-export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
+  const { id } = await params
   const projects = await getProjects()
-  const filtered = projects.filter((p) => p.id !== params.id)
+  const filtered = projects.filter((p) => p.id !== id)
   if (filtered.length === projects.length) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 })
   }

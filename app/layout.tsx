@@ -78,11 +78,11 @@ export default async function RootLayout({
 }) {
   // /admin, /meet y /horarios son herramientas internas: no llevan el shell del sitio.
   let isStandalone = false
-  const requestLocale = getRequestLocale()
+  const requestLocale = await getRequestLocale()
   const { locale, lockLocale } = requestLocale
 
   try {
-    const headersList = headers()
+    const headersList = await headers()
     const pathname = headersList.get('x-pathname') ?? ''
     isStandalone =
       pathname.startsWith('/admin') ||
@@ -99,7 +99,7 @@ export default async function RootLayout({
   let settings: Awaited<ReturnType<typeof getSiteSettings>> | null = null
   if (!isStandalone) {
     try {
-      settings = await getSiteSettings()
+      settings = await getSiteSettings({ cached: true })
     } catch (error) {
       if (isDynamicServerError(error)) {
         throw error

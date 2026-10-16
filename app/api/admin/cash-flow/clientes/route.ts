@@ -5,16 +5,23 @@ import {
   type CashFlowBilledBy,
   type CashFlowCashbox,
 } from '@/lib/cash-flow-sheets'
+import { requireAdmin } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
   const data = await getCashFlowClientsData()
 
   return NextResponse.json(data)
 }
 
 export async function POST(request: NextRequest) {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
   try {
     const body = await request.json()
     const mode = body.mode === 'collected' ? 'collected' : 'pending'

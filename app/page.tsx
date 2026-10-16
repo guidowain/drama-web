@@ -11,8 +11,8 @@ import { getRequestLocale } from '@/lib/server-locale'
 import { localizeSiteSettings } from '@/lib/i18n-content'
 
 export default async function HomePage() {
-  const { locale } = getRequestLocale()
-  const settings = localizeSiteSettings(await getSiteSettings(), locale)
+  const { locale } = await getRequestLocale()
+  const settings = localizeSiteSettings(await getSiteSettings({ cached: true }), locale)
   const copy = getFixedSiteCopy(locale)
   const { home, settings: contact } = settings
   const heroVideoType = home.heroVideo.toLowerCase().endsWith('.webm') ? 'video/webm' : 'video/mp4'

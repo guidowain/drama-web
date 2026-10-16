@@ -11,8 +11,9 @@ import { submitResponseInput } from '@/lib/meet/types'
 export const dynamic = 'force-dynamic'
 
 /** Alta de la disponibilidad de un invitado. Devuelve el id, que es su token para editarla. */
-export async function POST(request: Request, { params }: { params: { id: string } }) {
-  const meeting = await getMeeting(params.id)
+export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const meeting = await getMeeting(id)
 
   if (!meeting) {
     return NextResponse.json({ error: 'Esta reunión no existe.' }, { status: 404 })

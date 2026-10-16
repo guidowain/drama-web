@@ -7,7 +7,7 @@ import { readHorariosStore } from '@/lib/horarios/store'
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
-  if (!(await verifyHorariosToken(cookies().get(HORARIOS_COOKIE)?.value))) {
+  if (!(await verifyHorariosToken((await cookies()).get(HORARIOS_COOKIE)?.value))) {
     return NextResponse.json({ error: 'Ingresá el PIN para ver los horarios.' }, { status: 401 })
   }
 

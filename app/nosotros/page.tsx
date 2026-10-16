@@ -16,8 +16,8 @@ export const metadata: Metadata = {
 }
 
 export default async function NosotrosPage() {
-  const { locale } = getRequestLocale()
-  const settings = localizeSiteSettings(await getSiteSettings(), locale)
+  const { locale } = await getRequestLocale()
+  const settings = localizeSiteSettings(await getSiteSettings({ cached: true }), locale)
   const copy = getFixedSiteCopy(locale)
   const { about, settings: siteSettings } = settings
   const aboutTitle = about.title.split('\n').map((line) => line.trim()).filter(Boolean)

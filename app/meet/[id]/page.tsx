@@ -5,10 +5,11 @@ import MeetGuest from './MeetGuest'
 
 export const dynamic = 'force-dynamic'
 
-type Props = { params: { id: string } }
+type Props = { params: Promise<{ id: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const meeting = await getMeeting(params.id).catch(() => null)
+  const { id } = await params
+  const meeting = await getMeeting(id).catch(() => null)
 
   return {
     title: meeting ? `${meeting.name} — Drama Meet` : 'Drama Meet',
@@ -18,7 +19,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function MeetPage({ params }: Props) {
-  const meeting = await getMeeting(params.id)
+  const { id } = await params
+  const meeting = await getMeeting(id)
   if (!meeting) notFound()
 
   return <MeetGuest meeting={meeting} />

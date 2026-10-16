@@ -7,7 +7,10 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
   const exclude = request.nextUrl.searchParams.get('exclude') ?? ''
-  const [allWords, projects] = await Promise.all([getDramaWords(), getProjects()])
+  const [allWords, projects] = await Promise.all([
+    getDramaWords({ cached: true }),
+    getProjects({ cached: true }),
+  ])
   const playable = allWords.filter((word) => /^[A-ZÁÉÍÓÚÜÑ]{5}$/.test(word.word) && word.projectId.trim())
 
   if (!playable.length) {

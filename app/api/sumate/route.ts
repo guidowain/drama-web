@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { base64Url, getGoogleAccessToken } from '@/lib/google-auth'
+import { clientIp, createRateLimiter } from '@/lib/rate-limit'
 import {
   CURRENT_STATUS_OPTIONS,
   EXPERIENCE_LEVEL_OPTIONS,
@@ -27,14 +28,40 @@ type SumatePayload = {
   salaryExpectation?: unknown
   email?: unknown
   foundUs?: unknown
+  /** Honeypot: campo oculto que una persona no ve ni completa. */
+  website?: unknown
 }
 
 const GOOGLE_SHEETS_SCOPE = 'https://www.googleapis.com/auth/spreadsheets'
 const GOOGLE_GMAIL_SEND_SCOPE = 'https://www.googleapis.com/auth/gmail.send'
+const MAX_BODY_BYTES = 30_000
+
+// El formulario es público y cada envío manda un mail desde la cuenta de Drama:
+// sin estos topes se podría usar para mandarle mails a cualquiera.
+const isIpLimited = createRateLimiter({ limit: 5, windowMs: 10 * 60 * 1000 })
+const isRecipientLimited = createRateLimiter({ limit: 1, windowMs: 24 * 60 * 60 * 1000 })
 
 export async function POST(request: Request) {
+  if (Number(request.headers.get('content-length') || 0) > MAX_BODY_BYTES) {
+    return NextResponse.json({ error: 'El formulario es demasiado largo.' }, { status: 413 })
+  }
+
+  if (isIpLimited(clientIp(request))) {
+    return NextResponse.json(
+      { error: 'Recibimos varios envíos seguidos. Probá de nuevo en unos minutos.' },
+      { status: 429 }
+    )
+  }
+
   try {
     const payload = await request.json() as SumatePayload
+
+    // Un bot que completa todos los campos cae acá. Le respondemos como si
+    // hubiera salido bien para no darle pistas.
+    if (typeof payload?.website === 'string' && payload.website.trim()) {
+      return NextResponse.json({ ok: true, confirmationEmailSent: false })
+    }
+
     const form = validatePayload(payload)
 
     const spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID
@@ -58,20 +85,22 @@ export async function POST(request: Request) {
         values: [
           [
             new Date().toLocaleString('es-AR', { timeZone: 'America/Argentina/Buenos_Aires' }),
-            form.fullName,
-            form.age,
-            form.location,
-            form.role,
-            form.experienceLevel,
-            form.currentStatus.join(', '),
-            form.skills.join(', '),
-            form.tools.join(', '),
-            form.workExperience.join(', '),
-            form.coverLetter,
-            form.portfolio,
-            form.salaryExpectation,
-            form.email,
-            form.foundUs.join(', '),
+            ...[
+              form.fullName,
+              form.age,
+              form.location,
+              form.role,
+              form.experienceLevel,
+              form.currentStatus.join(', '),
+              form.skills.join(', '),
+              form.tools.join(', '),
+              form.workExperience.join(', '),
+              form.coverLetter,
+              form.portfolio,
+              form.salaryExpectation,
+              form.email,
+              form.foundUs.join(', '),
+            ].map(asSheetText),
           ],
         ],
       }),
@@ -83,7 +112,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: message }, { status: 502 })
     }
 
-    const confirmationEmailSent = await sendConfirmationEmail(form)
+    const confirmationEmailSent = isRecipientLimited(form.email.toLowerCase())
+      ? false
+      : await sendConfirmationEmail(form)
 
     return NextResponse.json({ ok: true, confirmationEmailSent })
   } catch (error) {
@@ -93,18 +124,18 @@ export async function POST(request: Request) {
 }
 
 function validatePayload(payload: SumatePayload) {
-  const fullName = requiredString(payload.fullName, 'Nombre completo')
+  const fullName = requiredString(payload.fullName, 'Nombre completo', 120)
   const age = requiredInteger(payload.age, 'Edad')
-  const location = requiredString(payload.location, 'Ubicación')
+  const location = requiredString(payload.location, 'Ubicación', 120)
   const role = requiredOption(payload.role, ROLE_OPTIONS, 'Rol')
   const experienceLevel = requiredOption(payload.experienceLevel, EXPERIENCE_LEVEL_OPTIONS, 'Nivel de experiencia')
   const currentStatus = requiredOptions(payload.currentStatus, CURRENT_STATUS_OPTIONS, 'Estado actual')
   const skills = requiredOptions(payload.skills, SKILL_OPTIONS, 'Habilidades', 10)
   const tools = requiredOptions(payload.tools, TOOL_OPTIONS, 'Herramientas', 10)
   const workExperience = requiredOptions(payload.workExperience, WORK_EXPERIENCE_OPTIONS, 'Experiencia laboral')
-  const coverLetter = requiredString(payload.coverLetter, 'Carta de presentación')
-  const portfolio = requiredString(payload.portfolio, 'Portfolio')
-  const salaryExpectation = optionalString(payload.salaryExpectation)
+  const coverLetter = requiredString(payload.coverLetter, 'Carta de presentación', 5000)
+  const portfolio = requiredString(payload.portfolio, 'Portfolio', 500)
+  const salaryExpectation = optionalString(payload.salaryExpectation, 'Pretensión salarial', 200)
   const email = requiredEmail(payload.email, 'Contacto')
   const foundUs = requiredOptions(payload.foundUs, FOUND_US_OPTIONS, 'Cómo nos encontraste')
 
@@ -130,16 +161,32 @@ function validatePayload(payload: SumatePayload) {
   }
 }
 
-function requiredString(value: unknown, label: string) {
+function requiredString(value: unknown, label: string, maxLength = 200) {
   if (typeof value !== 'string' || !value.trim()) {
     throw new Error(`${label} es obligatorio.`)
   }
 
-  return value.trim()
+  return limitLength(value.trim(), label, maxLength)
 }
 
-function optionalString(value: unknown) {
-  return typeof value === 'string' ? value.trim() : ''
+function optionalString(value: unknown, label: string, maxLength: number) {
+  return typeof value === 'string' ? limitLength(value.trim(), label, maxLength) : ''
+}
+
+function limitLength(value: string, label: string, maxLength: number) {
+  if (value.length > maxLength) {
+    throw new Error(`${label} admite hasta ${maxLength} caracteres.`)
+  }
+
+  return value
+}
+
+/**
+ * La hoja se escribe con USER_ENTERED, así que un texto que empieza con = + - @
+ * se evaluaría como fórmula. El apóstrofo inicial lo fuerza a texto y Sheets no lo muestra.
+ */
+function asSheetText(value: string | number) {
+  return typeof value === 'string' && /^[=+\-@\t\r]/.test(value) ? `'${value}` : value
 }
 
 function requiredInteger(value: unknown, label: string) {
@@ -182,7 +229,7 @@ function requiredOptions(value: unknown, options: string[], label: string, max?:
 }
 
 function requiredEmail(value: unknown, label: string) {
-  const email = requiredString(value, label)
+  const email = requiredString(value, label, 160)
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
   if (!emailPattern.test(email)) {

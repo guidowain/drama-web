@@ -2,14 +2,14 @@ import { cookies, headers } from 'next/headers'
 import { isDynamicServerError } from 'next/dist/client/components/hooks-server-context'
 import { normalizeLocale, type Locale } from '@/lib/site-copy'
 
-export function getRequestLocale(): { locale: Locale; lockLocale: boolean; country: string } {
+export async function getRequestLocale(): Promise<{ locale: Locale; lockLocale: boolean; country: string }> {
   try {
-    const cookieLocale = cookies().get('drama-locale')?.value
+    const cookieLocale = (await cookies()).get('drama-locale')?.value
     if (cookieLocale === 'es' || cookieLocale === 'en' || cookieLocale === 'pt') {
       return { locale: cookieLocale, lockLocale: true, country: '' }
     }
 
-    const headersList = headers()
+    const headersList = await headers()
     const country = (
       headersList.get('x-vercel-ip-country') ||
       headersList.get('x-country-code') ||

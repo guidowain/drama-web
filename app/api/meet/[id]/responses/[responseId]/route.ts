@@ -4,7 +4,7 @@ import { submitResponseInput } from '@/lib/meet/types'
 
 export const dynamic = 'force-dynamic'
 
-type Params = { params: { id: string; responseId: string } }
+type Params = { params: Promise<{ id: string; responseId: string }> }
 
 /**
  * Lee o actualiza la respuesta de un invitado. El `responseId` es un token secreto
@@ -12,7 +12,8 @@ type Params = { params: { id: string; responseId: string } }
  * leer ni editar la disponibilidad de otro.
  */
 export async function GET(_request: Request, { params }: Params) {
-  const response = await getResponse(params.id, params.responseId)
+  const { id, responseId } = await params
+  const response = await getResponse(id, responseId)
 
   if (!response) {
     return NextResponse.json({ error: 'No encontramos tu respuesta.' }, { status: 404 })
@@ -22,9 +23,10 @@ export async function GET(_request: Request, { params }: Params) {
 }
 
 export async function PUT(request: Request, { params }: Params) {
+  const { id, responseId } = await params
   const [meeting, existing] = await Promise.all([
-    getMeeting(params.id),
-    getResponse(params.id, params.responseId),
+    getMeeting(id),
+    getResponse(id, responseId),
   ])
 
   if (!meeting || !existing) {
