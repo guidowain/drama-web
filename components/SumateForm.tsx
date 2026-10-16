@@ -28,6 +28,8 @@ type FormState = {
   salaryExpectation: string
   email: string
   foundUs: string[]
+  /** Honeypot: oculto para las personas, los bots lo completan. */
+  website: string
 }
 
 const EMPTY_FORM: FormState = {
@@ -45,6 +47,7 @@ const EMPTY_FORM: FormState = {
   salaryExpectation: '',
   email: '',
   foundUs: [],
+  website: '',
 }
 
 export default function SumateForm({ instagramUrl }: { instagramUrl: string }) {
@@ -240,6 +243,7 @@ export default function SumateForm({ instagramUrl }: { instagramUrl: string }) {
           value={form.fullName}
           onChange={(value) => updateField('fullName', value)}
           required
+          maxLength={120}
           placeholder="Tu nombre y apellido"
         />
         <TextInput
@@ -259,6 +263,7 @@ export default function SumateForm({ instagramUrl }: { instagramUrl: string }) {
         value={form.location}
         onChange={(value) => updateField('location', value)}
         required
+        maxLength={120}
         placeholder="Ciudad, País"
       />
 
@@ -317,6 +322,7 @@ export default function SumateForm({ instagramUrl }: { instagramUrl: string }) {
         value={form.coverLetter}
         onChange={(value) => updateField('coverLetter', value)}
         required
+        maxLength={5000}
         placeholder="Contanos quién sos, cómo pensás, por qué estás acá y cuál es tu vínculo con el entretenimiento."
       />
 
@@ -326,6 +332,7 @@ export default function SumateForm({ instagramUrl }: { instagramUrl: string }) {
           value={form.portfolio}
           onChange={(value) => updateField('portfolio', value)}
           required
+          maxLength={500}
           placeholder="Link a tu portfolio, Behance, Drive, Instagram, sitio, etc."
         />
         <TextInput
@@ -334,6 +341,7 @@ export default function SumateForm({ instagramUrl }: { instagramUrl: string }) {
           value={form.email}
           onChange={(value) => updateField('email', value)}
           required
+          maxLength={160}
           placeholder="tu@email.com"
         />
       </div>
@@ -342,6 +350,7 @@ export default function SumateForm({ instagramUrl }: { instagramUrl: string }) {
         label="Pretensión salarial / Tarifa por hora"
         value={form.salaryExpectation}
         onChange={(value) => updateField('salaryExpectation', value)}
+        maxLength={200}
         placeholder="Opcional. Ej: USD 800-1200/mes, ARS 5000/hora"
       />
 
@@ -377,6 +386,16 @@ export default function SumateForm({ instagramUrl }: { instagramUrl: string }) {
           Probar pantalla de gracias
         </button>
       )}
+      <input
+        type="text"
+        name="website"
+        value={form.website}
+        onChange={(event) => updateField('website', event.target.value)}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[9999px] h-px w-px opacity-0"
+      />
     </form>
   )
 }
@@ -442,6 +461,7 @@ function TextInput({
   placeholder,
   min,
   max,
+  maxLength,
 }: {
   label: string
   value: string
@@ -451,6 +471,7 @@ function TextInput({
   placeholder?: string
   min?: number
   max?: number
+  maxLength?: number
 }) {
   return (
     <label className="block">
@@ -463,6 +484,7 @@ function TextInput({
         placeholder={placeholder}
         min={min}
         max={max}
+        maxLength={maxLength}
         className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-base text-white placeholder-white/25 outline-none transition-colors focus:border-white/35"
       />
     </label>
@@ -475,12 +497,14 @@ function TextArea({
   onChange,
   required,
   placeholder,
+  maxLength,
 }: {
   label: string
   value: string
   onChange: (value: string) => void
   required?: boolean
   placeholder?: string
+  maxLength?: number
 }) {
   return (
     <label className="block">
@@ -490,6 +514,7 @@ function TextArea({
         onChange={(event) => onChange(event.target.value)}
         required={required}
         placeholder={placeholder}
+        maxLength={maxLength}
         rows={6}
         className="w-full resize-none rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-base text-white placeholder-white/25 outline-none transition-colors focus:border-white/35"
       />

@@ -5,16 +5,23 @@ import {
   type CashFlowCashbox,
   type CashFlowExpenseCategory,
 } from '@/lib/cash-flow-sheets'
+import { requireAdmin } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
   const data = await getCashFlowExpensesData()
 
   return NextResponse.json(data)
 }
 
 export async function POST(request: NextRequest) {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
   try {
     const body = await request.json()
     const category = parseCategory(body.category)

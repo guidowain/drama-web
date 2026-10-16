@@ -6,6 +6,10 @@ import type { HorariosPublicData, PublicShow } from '@/lib/horarios/types'
 
 type ViewState = 'loading' | 'locked' | 'ready' | 'error'
 
+// El PIN puede tener de 4 a 8 dígitos: cuantos más, más difícil de adivinar.
+const PIN_MIN_LENGTH = 4
+const PIN_MAX_LENGTH = 8
+
 export default function HorariosClient() {
   const [state, setState] = useState<ViewState>('loading')
   const [data, setData] = useState<HorariosPublicData | null>(null)
@@ -40,7 +44,7 @@ export default function HorariosClient() {
 
   async function submitPin(event: React.FormEvent) {
     event.preventDefault()
-    if (pin.length !== 4 || submitting) return
+    if (pin.length < PIN_MIN_LENGTH || submitting) return
 
     setSubmitting(true)
     setError('')
@@ -83,16 +87,16 @@ export default function HorariosClient() {
               inputMode="numeric"
               autoComplete="one-time-code"
               autoFocus
-              maxLength={4}
+              maxLength={PIN_MAX_LENGTH}
               value={pin}
-              onChange={(event) => setPin(event.target.value.replace(/\D/g, '').slice(0, 4))}
+              onChange={(event) => setPin(event.target.value.replace(/\D/g, '').slice(0, PIN_MAX_LENGTH))}
               aria-describedby={error ? 'pin-error' : undefined}
               className="h-16 w-full rounded-2xl border border-white/15 bg-zinc-900 px-5 text-center font-mono text-3xl font-bold tracking-[0.45em] text-white outline-none transition placeholder:text-white/15 focus:border-[#FE796D] focus:ring-4 focus:ring-[#FE796D]/15"
             />
             {error ? <p id="pin-error" className="mt-3 text-center text-sm text-rose-300">{error}</p> : null}
             <button
               type="submit"
-              disabled={pin.length !== 4 || submitting}
+              disabled={pin.length < PIN_MIN_LENGTH || submitting}
               className="gradient-bg mt-5 min-h-12 w-full rounded-xl px-5 py-3 text-sm font-black uppercase tracking-[0.18em] text-black transition hover:opacity-90 focus:outline-none focus:ring-4 focus:ring-[#FCC028]/25 disabled:cursor-not-allowed disabled:opacity-35"
             >
               {submitting ? 'Ingresando…' : 'Ingresar'}

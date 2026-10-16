@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSiteSettings, saveSiteSettings } from '@/lib/api'
 import type { FaqItem, Logo, SiteSettings } from '@/lib/types'
+import { isAdminRequest, requireAdmin } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
 
@@ -70,12 +71,16 @@ function mergeSiteSettings(current: SiteSettings, incoming: unknown): SiteSettin
   }
 }
 
+/** Pública: la usa el sitio. El admin lee fresco; el resto, desde el cache. */
 export async function GET() {
-  const settings = await getSiteSettings()
+  const settings = await getSiteSettings({ cached: !(await isAdminRequest()) })
   return NextResponse.json(settings)
 }
 
 export async function PUT(request: NextRequest) {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
   const body = await request.json()
   const current = await getSiteSettings()
   const merged = mergeSiteSettings(current, body)

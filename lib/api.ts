@@ -1,5 +1,6 @@
 import type { ContactSettings, DramaWord, Proyecto, SiteSettings, TriviaQuestion } from './types'
 import { isDynamicServerError } from 'next/dist/client/components/hooks-server-context'
+import { revalidateTag, unstable_cache } from 'next/cache'
 
 const GITHUB_OWNER = process.env.GITHUB_OWNER || 'guidowain'
 const GITHUB_REPO = process.env.GITHUB_REPO || 'drama-web'
@@ -12,6 +13,18 @@ const TRIVIA_PATH = 'data/trivia.json'
 const DRAMADLE_PATH = 'data/dramadle.json'
 const LEGACY_HERO_VIDEO = '/video/Logo Drama Match cut_export_16-9.mp4'
 const DEFAULT_HERO_VIDEO = '/video/Logo Drama Match cut_export_16-9.webm'
+
+/**
+ * Las lecturas del sitio público pasan por el Data Cache de Next en vez de pegarle
+ * a la API de GitHub en cada visita: el token tiene un tope de 5.000 llamadas por
+ * hora y un pico de tráfico lo agotaba. Cada guardado del admin invalida el tag; el
+ * revalidate cubre los cambios hechos por fuera del admin (un commit a mano).
+ * El admin siempre lee fresco, porque edita sobre lo que lee.
+ */
+const CONTENT_CACHE_TAG = 'github-content'
+const CONTENT_CACHE_SECONDS = 60
+
+type ReadOptions = { cached?: boolean }
 
 const DEFAULT_SITE_SETTINGS: SiteSettings = {
   home: {
@@ -156,29 +169,49 @@ function getGithubFileUrl(path: string) {
   return `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`
 }
 
-async function readGithubJson<T>(path: string, fallback: T): Promise<{ data: T; sha?: string }> {
+/** Lee un JSON del repo. Tira error si GitHub falla, para que el cache nunca guarde un fallback. */
+async function fetchGithubJson(path: string): Promise<{ data?: unknown; sha?: string }> {
+  const res = await fetch(`${getGithubFileUrl(path)}?ref=${GITHUB_BRANCH}`, {
+    headers: getGithubHeaders(),
+    cache: 'no-store',
+  })
+
+  if (res.status === 404) {
+    return {}
+  }
+
+  if (!res.ok) {
+    throw new Error(`GitHub ${res.status}: ${await res.text()}`)
+  }
+
+  const payload = await res.json()
+  const decoded = Buffer.from(String(payload.content).replace(/\n/g, ''), 'base64').toString('utf-8')
+
+  return {
+    data: JSON.parse(decoded),
+    sha: payload.sha,
+  }
+}
+
+const fetchCachedGithubJson = unstable_cache(
+  async (path: string, _branch: string) => (await fetchGithubJson(path)).data ?? null,
+  ['github-content'],
+  { revalidate: CONTENT_CACHE_SECONDS, tags: [CONTENT_CACHE_TAG] }
+)
+
+async function readGithubJson<T>(
+  path: string,
+  fallback: T,
+  { cached = false }: ReadOptions = {}
+): Promise<{ data: T; sha?: string }> {
   try {
-    const res = await fetch(`${getGithubFileUrl(path)}?ref=${GITHUB_BRANCH}`, {
-      headers: getGithubHeaders(),
-      cache: 'no-store',
-    })
-
-    if (res.status === 404) {
-      return { data: fallback }
+    if (cached) {
+      const data = await fetchCachedGithubJson(path, GITHUB_BRANCH)
+      return { data: (data ?? fallback) as T }
     }
 
-    if (!res.ok) {
-      console.error('GitHub read error:', await res.text())
-      return { data: fallback }
-    }
-
-    const payload = await res.json()
-    const decoded = Buffer.from(String(payload.content).replace(/\n/g, ''), 'base64').toString('utf-8')
-
-    return {
-      data: JSON.parse(decoded) as T,
-      sha: payload.sha,
-    }
+    const { data, sha } = await fetchGithubJson(path)
+    return data === undefined ? { data: fallback } : { data: data as T, sha }
   } catch (error) {
     if (isDynamicServerError(error)) {
       throw error
@@ -222,21 +255,22 @@ async function writeGithubJson(path: string, data: unknown, message: string) {
     throw new Error('GitHub write failed')
   }
 
+  revalidateTag(CONTENT_CACHE_TAG)
   return await res.json()
 }
 
-export async function getProjects(): Promise<Proyecto[]> {
-  const { data } = await readGithubJson<Proyecto[]>(PROJECTS_PATH, [])
+export async function getProjects(options?: ReadOptions): Promise<Proyecto[]> {
+  const { data } = await readGithubJson<Proyecto[]>(PROJECTS_PATH, [], options)
   return Array.isArray(data) ? data : []
 }
 
 export async function getPublishedProjects(): Promise<Proyecto[]> {
-  const projects = await getProjects()
+  const projects = await getProjects({ cached: true })
   return projects.filter((p) => p.published)
 }
 
 export async function getProjectBySlug(slug: string): Promise<Proyecto | undefined> {
-  const projects = await getProjects()
+  const projects = await getProjects({ cached: true })
   return projects.find((p) => p.slug === slug && p.published)
 }
 
@@ -265,8 +299,8 @@ function normalizeTriviaQuestions(raw: unknown): TriviaQuestion[] {
   })
 }
 
-export async function getTriviaQuestions(): Promise<TriviaQuestion[]> {
-  const { data } = await readGithubJson<TriviaQuestion[]>(TRIVIA_PATH, [])
+export async function getTriviaQuestions(options?: ReadOptions): Promise<TriviaQuestion[]> {
+  const { data } = await readGithubJson<TriviaQuestion[]>(TRIVIA_PATH, [], options)
   return normalizeTriviaQuestions(data)
 }
 
@@ -288,8 +322,8 @@ function normalizeDramaWords(raw: unknown): DramaWord[] {
   })
 }
 
-export async function getDramaWords(): Promise<DramaWord[]> {
-  const { data } = await readGithubJson<DramaWord[]>(DRAMADLE_PATH, [])
+export async function getDramaWords(options?: ReadOptions): Promise<DramaWord[]> {
+  const { data } = await readGithubJson<DramaWord[]>(DRAMADLE_PATH, [], options)
   return normalizeDramaWords(data)
 }
 
@@ -297,8 +331,8 @@ export async function saveDramaWords(words: DramaWord[]) {
   return await writeGithubJson(DRAMADLE_PATH, normalizeDramaWords(words), 'Update dramadle words')
 }
 
-export async function getSiteSettings(): Promise<SiteSettings> {
-  const { data } = await readGithubJson<SiteSettings>(SITE_PATH, DEFAULT_SITE_SETTINGS)
+export async function getSiteSettings(options?: ReadOptions): Promise<SiteSettings> {
+  const { data } = await readGithubJson<SiteSettings>(SITE_PATH, DEFAULT_SITE_SETTINGS, options)
   return normalizeSiteSettings(data)
 }
 

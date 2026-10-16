@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getProjects, saveProjects } from '@/lib/api'
+import { requireAdmin } from '@/lib/auth'
 
 export async function PUT(request: NextRequest) {
+  const unauthorized = await requireAdmin()
+  if (unauthorized) return unauthorized
+
   const body = await request.json()
   const ids: unknown[] = Array.isArray(body.ids) ? body.ids : []
 

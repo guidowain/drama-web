@@ -55,7 +55,9 @@ export async function middleware(request: NextRequest) {
   }
 
   try {
-    await jwtVerify(token, getSecret())
+    const { payload } = await jwtVerify(token, getSecret())
+    // Solo el token de admin lleva `username`: un JWT de otra herramienta no alcanza.
+    if (typeof payload.username !== 'string' || !payload.username) throw new Error('Token sin usuario.')
     return withPathnameHeader(request)
   } catch {
     if (isApi) {

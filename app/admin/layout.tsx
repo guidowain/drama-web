@@ -3,8 +3,8 @@ import { headers } from 'next/headers'
 
 export const metadata = { title: 'Admin — Drama' }
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const headersList = headers()
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  const headersList = await headers()
   const pathname = headersList.get('x-pathname') ?? ''
   const isLogin = pathname === '/admin/login'
 

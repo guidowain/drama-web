@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 }
 
 export default async function SumatePage() {
-  const settings = await getSiteSettings()
-  const { locale, country } = getRequestLocale()
+  const settings = await getSiteSettings({ cached: true })
+  const { locale, country } = await getRequestLocale()
 
   if (country !== 'AR') {
     redirect('/')
