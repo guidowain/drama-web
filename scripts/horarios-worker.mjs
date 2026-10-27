@@ -20,9 +20,10 @@ const SYNC_SECRET = process.env.HORARIOS_SYNC_SECRET || 'drama-horarios-local'
 const USER_AGENT =
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36'
 
-const CHROME_PATH =
-  process.env.HORARIOS_CHROME_PATH ||
-  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+// Chromium de Playwright, no el Chrome de la Mac: el navegador de todos los
+// días queda fuera de esto. HORARIOS_CHROME_PATH sigue sirviendo para forzar
+// otro ejecutable si algún día hace falta.
+const CHROME_PATH = process.env.HORARIOS_CHROME_PATH || undefined
 const TIME_ZONE = 'America/Argentina/Buenos_Aires'
 const force = process.argv.includes('--force')
 const debug = process.env.HORARIOS_DEBUG === '1'
