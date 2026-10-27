@@ -6,6 +6,12 @@ export const delayClauseText =
 export function renderAdjustmentClause(clause: AdjustmentClause) {
   if (clause.type === 'none') return ''
   if (clause.type === 'monthly-ipc') return 'Se realizarán ajustes por inflación ajustados al IPC mensual.'
+  if (clause.type === 'usd') {
+    return [
+      'Se revisará el presupuesto si la inflación anual de Estados Unidos supera el 5%.',
+      'Se revisará el presupuesto si la legislación argentina cambia las condiciones actuales para pagar en dólares. En ese caso, se abonará en pesos el monto necesario para comprar los mismos dólares en el mercado de Montevideo.',
+    ].join('\n')
+  }
   if (clause.type === 'custom') return clause.text
 
   const suffix = clause.untilSeasonEnd ? ' hasta el final de la temporada' : ''

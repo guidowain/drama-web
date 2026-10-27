@@ -364,7 +364,7 @@ export default function BudgetPDF({ data }: { data: BudgetDraft }) {
             <View style={styles.unlabelledSection}>
               <Text style={styles.conditions}>{renderValidity(data.conditions.validity)}</Text>
               <Text style={styles.conditions}>{renderPaymentClause(data.conditions.payment)}</Text>
-              {adjustment ? <Text style={styles.conditions}>{adjustment}</Text> : null}
+              {adjustment ? adjustment.split('\n').map((line, index) => <Text key={index} style={styles.conditions}>{line}</Text>) : null}
               {data.conditions.delayClause ? <Text style={styles.conditions}>{delayClauseText}</Text> : null}
             </View>
 
@@ -457,7 +457,7 @@ function StageClosingConditions({ data, adjustment }: { data: BudgetDraft; adjus
       <Text style={styles.stageConditionsTitle}>Condiciones</Text>
       <Text style={styles.conditions}>{renderValidity(data.conditions.validity)}</Text>
       <Text style={styles.conditions}>{renderPaymentClause(data.conditions.payment)}</Text>
-      {adjustment ? <Text style={styles.conditions}>{adjustment}</Text> : null}
+      {adjustment ? adjustment.split('\n').map((line, index) => <Text key={index} style={styles.conditions}>{line}</Text>) : null}
       {data.conditions.delayClause ? <Text style={styles.conditions}>{delayClauseText}</Text> : null}
       {data.extras ? (
         <>

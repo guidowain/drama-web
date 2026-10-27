@@ -12,6 +12,7 @@ export type ServiceItem = {
 export type AdjustmentClause =
   | { type: 'bimonthly-ipc'; untilSeasonEnd: boolean }
   | { type: 'monthly-ipc' }
+  | { type: 'usd' }
   | { type: 'none' }
   | { type: 'custom'; text: string }
 

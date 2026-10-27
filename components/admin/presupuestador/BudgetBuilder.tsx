@@ -5,7 +5,7 @@ import { servicesCatalog } from '@/data/services-catalog'
 import { budgetBrand } from '@/lib/presupuestador/brand'
 import { delayClauseText, renderAdjustmentClause, renderPaymentClause, renderValidity } from '@/lib/presupuestador/clauses'
 import { budgetStorage, makeId, sanitizePdfFilename } from '@/lib/presupuestador/storage'
-import type { BudgetDraft, BudgetModality, BudgetStage, FixedInvestment, ServiceItem, StageInvestment } from '@/lib/presupuestador/types'
+import type { AdjustmentClause, BudgetDraft, BudgetModality, BudgetStage, FixedInvestment, ServiceItem, StageInvestment } from '@/lib/presupuestador/types'
 
 const standardSteps = ['Modalidad', 'Datos', 'Textos', 'Servicios', 'Inversión', 'Condiciones', 'Preview'].map((label, step) => ({ label, step }))
 const stagedSteps = [
@@ -68,6 +68,15 @@ export default function BudgetBuilder() {
       conditions: defaultConditions(modality),
       services: modality === 'staged-monthly' ? [] : draft.services,
     })
+  }
+
+  function switchCurrency(currency: BudgetDraft['currency']) {
+    const adjustmentType = draft.conditions.adjustment.type
+    const swapsClause = currency === 'USD' ? adjustmentType === 'bimonthly-ipc' || adjustmentType === 'monthly-ipc' : adjustmentType === 'usd'
+    if (!swapsClause) return update({ currency })
+
+    const adjustment: AdjustmentClause = currency === 'USD' ? { type: 'usd' } : defaultConditions(draft.modality).adjustment
+    update({ currency, conditions: { ...draft.conditions, adjustment } })
   }
 
   function toggleCatalogService(service: { id: string; label: string }) {
@@ -135,7 +144,7 @@ export default function BudgetBuilder() {
             {(['ARS', 'USD'] as const).map((currency) => (
               <button
                 key={currency}
-                onClick={() => update({ currency })}
+                onClick={() => switchCurrency(currency)}
                 className={`rounded-lg px-4 py-2 text-xs font-black uppercase tracking-widest transition ${draft.currency === currency ? 'gradient-bg text-black' : 'text-white/45 hover:text-white'}`}
               >
                 {currency}
@@ -500,7 +509,7 @@ function StepConditions({ draft, update }: StepProps) {
 
   return (
     <FieldGrid>
-      <Select label="Cláusula de ajuste" value={conditions.adjustment.type === 'monthly-ipc' ? 'bimonthly-ipc' : conditions.adjustment.type} onChange={(type) => update({ conditions: { ...conditions, adjustment: type === 'bimonthly-ipc' ? { type, untilSeasonEnd: true } : type === 'custom' ? { type, text: '' } : { type } as any } })} options={[['bimonthly-ipc', 'Bimestral IPC'], ['none', 'Sin ajuste'], ['custom', 'Custom']]} />
+      <Select label="Cláusula de ajuste" value={conditions.adjustment.type === 'monthly-ipc' ? 'bimonthly-ipc' : conditions.adjustment.type} onChange={(type) => update({ conditions: { ...conditions, adjustment: type === 'bimonthly-ipc' ? { type, untilSeasonEnd: true } : type === 'custom' ? { type, text: '' } : { type } as any } })} options={[['bimonthly-ipc', 'Bimestral IPC'], ['usd', 'Dólares (inflación EE. UU.)'], ['none', 'Sin ajuste'], ['custom', 'Custom']]} />
       <Select label="Pago" value={conditions.payment.type} onChange={(type) => update({ conditions: { ...conditions, payment: type === 'deposit' ? { type, percentage: 30 } : type === 'custom' ? { type, text: '' } : { type } as any } })} options={[['monthly-1-5', 'Mes vencido 1 al 5'], ['deposit', 'Seña + saldo'], ['on-delivery', 'Contra entrega'], ['custom', 'Custom']]} />
       {conditions.payment.type === 'deposit' ? <Input label="% seña" type="number" value={String(conditions.payment.percentage)} onChange={(percentage) => update({ conditions: { ...conditions, payment: { type: 'deposit', percentage: Number(percentage) } } })} /> : null}
       {conditions.payment.type === 'custom' ? <Input label="Texto pago custom" value={conditions.payment.text} onChange={(text) => update({ conditions: { ...conditions, payment: { type: 'custom', text } } })} wide /> : null}
@@ -549,7 +558,7 @@ function Preview({ draft, total }: { draft: BudgetDraft; total: number }) {
       <div className="ml-3 mt-7 space-y-2 text-sm leading-relaxed">
           <p>{renderValidity(draft.conditions.validity)}</p>
           <p>{renderPaymentClause(draft.conditions.payment)}</p>
-          {adjustment ? <p>{adjustment}</p> : null}
+          {adjustment ? adjustment.split('\n').map((line, index) => <p key={index}>{line}</p>) : null}
           {draft.conditions.delayClause ? <p>{delayClauseText}</p> : null}
         </div>
       {draft.extras ? <PreviewSection title="Extras">{draft.extras}</PreviewSection> : null}
